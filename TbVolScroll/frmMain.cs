@@ -108,6 +108,12 @@ namespace TbVolScroll
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
+
         private static void ShowInactiveTopmost(Form frm)
         {
             frm.Invoke((MethodInvoker)delegate
@@ -127,7 +133,23 @@ namespace TbVolScroll
             public int Bottom;
         }
 
-        private RECT TaskbarREct;
+        public static bool IsTaskbarHidden()
+        {
+            return CheckTaskbarVisibility(null);
+        }
+
+        public static bool CheckTaskbarVisibility(Screen screen)
+        {
+            if (screen == null)
+            {
+                screen = Screen.PrimaryScreen;
+            }
+            RECT rect = new RECT();
+            GetWindowRect(new HandleRef(null, GetForegroundWindow()), ref rect);
+            return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
+        }
+
+        private RECT TaskbarRect;
         private IKeyboardMouseEvents MouseKeyEvents;
         private CoreAudioDevice DefaultPlaybackDevice = new CoreAudioController().GetDefaultDevice(AudioSwitcher.AudioApi.DeviceType.Playback, AudioSwitcher.AudioApi.Role.Communications);
         private CoreAudioController DefaultPlaybackDeviceController = new CoreAudioController();
@@ -141,7 +163,7 @@ namespace TbVolScroll
             InitializeComponent();
 
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
-            GetWindowRect(hwnd, out TaskbarREct);
+            GetWindowRect(hwnd, out TaskbarRect);
             MouseKeyEvents = Hook.GlobalEvents();
             MouseKeyEvents.MouseWheel += OnMouseScroll;
             MouseKeyEvents.MouseMove += UpdateBarPositionMouseMove;
@@ -191,7 +213,7 @@ namespace TbVolScroll
         {
             Invoke((MethodInvoker)delegate
             {
-                if (CursorInTaskbar())
+                if (CursorInTaskbar() && !IsTaskbarHidden())
                 {
                     ShowInactiveTopmost(this);
                     UpdateDefaultDevice();
@@ -237,7 +259,7 @@ namespace TbVolScroll
                         lblVolumePerc.Visible = false;
                     }
 
-                    
+
 
 
                     Point CursorPosition = Cursor.Position;
@@ -267,7 +289,7 @@ namespace TbVolScroll
 
         public bool CursorInTaskbar()
         {
-            Point position = Cursor.Position; if (position.Y >= TaskbarREct.Top && position.Y <= TaskbarREct.Bottom) { return true; } else { return false; }
+            Point position = Cursor.Position; if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom) { return true; } else { return false; }
         }
 
         private static Color CalculateColor(double percentage)
@@ -286,11 +308,11 @@ namespace TbVolScroll
 
         private async void AutoHideVolume()
         {
-            Application.DoEvents(); 
+            Application.DoEvents();
             IsDisplayingVolume = true;
             ShowInactiveTopmost(this);
 
-            while(TimeOutHelper != 0)
+            while (TimeOutHelper != 0)
             {
                 await PutTaskDelay();
                 TimeOutHelper--;
