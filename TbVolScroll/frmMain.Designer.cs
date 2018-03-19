@@ -36,6 +36,8 @@
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSeperator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsmLabel = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlColor.SuspendLayout();
             this.trayContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -48,7 +50,7 @@
             this.pnlColor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlColor.Location = new System.Drawing.Point(0, 0);
             this.pnlColor.Name = "pnlColor";
-            this.pnlColor.Size = new System.Drawing.Size(100, 16);
+            this.pnlColor.Size = new System.Drawing.Size(10, 10);
             this.pnlColor.TabIndex = 0;
             // 
             // lblVolumePerc
@@ -59,7 +61,7 @@
             this.lblVolumePerc.ForeColor = System.Drawing.Color.Black;
             this.lblVolumePerc.Location = new System.Drawing.Point(0, 0);
             this.lblVolumePerc.Name = "lblVolumePerc";
-            this.lblVolumePerc.Size = new System.Drawing.Size(98, 14);
+            this.lblVolumePerc.Size = new System.Drawing.Size(8, 8);
             this.lblVolumePerc.TabIndex = 0;
             this.lblVolumePerc.Text = "0%";
             this.lblVolumePerc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -80,33 +82,48 @@
             // 
             this.trayContextMenu.BackColor = System.Drawing.Color.White;
             this.trayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmLabel,
+            this.tsmSeperator,
             this.tsmExit,
             this.tsmRestart});
             this.trayContextMenu.Name = "trayContextMenu";
             this.trayContextMenu.ShowImageMargin = false;
-            this.trayContextMenu.Size = new System.Drawing.Size(86, 48);
+            this.trayContextMenu.Size = new System.Drawing.Size(133, 76);
             // 
             // tsmExit
             // 
             this.tsmExit.Name = "tsmExit";
-            this.tsmExit.Size = new System.Drawing.Size(85, 22);
+            this.tsmExit.Size = new System.Drawing.Size(132, 22);
             this.tsmExit.Text = "Exit";
             this.tsmExit.Click += new System.EventHandler(this.tsmExit_Click);
             // 
             // tsmRestart
             // 
             this.tsmRestart.Name = "tsmRestart";
-            this.tsmRestart.Size = new System.Drawing.Size(85, 22);
+            this.tsmRestart.Size = new System.Drawing.Size(132, 22);
             this.tsmRestart.Text = "Restart";
             this.tsmRestart.Click += new System.EventHandler(this.tsmRestart_Click);
+            // 
+            // tsmSeperator
+            // 
+            this.tsmSeperator.Name = "tsmSeperator";
+            this.tsmSeperator.Size = new System.Drawing.Size(129, 6);
+            // 
+            // tsmLabel
+            // 
+            this.tsmLabel.Enabled = false;
+            this.tsmLabel.Name = "tsmLabel";
+            this.tsmLabel.Size = new System.Drawing.Size(132, 22);
+            this.tsmLabel.Text = "TbVolScroll v1.2";
             // 
             // frmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(100, 16);
+            this.ClientSize = new System.Drawing.Size(10, 10);
             this.Controls.Add(this.pnlColor);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmMain";
+            this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -126,6 +143,8 @@
         private System.Windows.Forms.ContextMenuStrip trayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem tsmExit;
         private System.Windows.Forms.ToolStripMenuItem tsmRestart;
+        private System.Windows.Forms.ToolStripMenuItem tsmLabel;
+        private System.Windows.Forms.ToolStripSeparator tsmSeperator;
     }
 }
 

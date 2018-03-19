@@ -215,7 +215,6 @@ namespace TbVolScroll
             {
                 if (CursorInTaskbar() && !IsTaskbarHidden())
                 {
-                    ShowInactiveTopmost(this);
                     UpdateDefaultDevice();
                     if (delta < 0)
                     {
@@ -250,6 +249,7 @@ namespace TbVolScroll
 
 
                     lblVolumePerc.Text = DefaultPlaybackDevice.Volume.ToString() + "%";
+
                     if (DefaultPlaybackDevice.Volume <= 10 || IsAltDown)
                     {
                         lblVolumePerc.Visible = true;
@@ -274,6 +274,16 @@ namespace TbVolScroll
                         Task.Run(() => AutoHideVolume());
                     }
                 }
+                else
+                {
+                    Invoke((MethodInvoker)delegate
+                    {
+                        Hide();
+                        WindowState = FormWindowState.Minimized;
+                        lblVolumePerc.Visible = false;
+                    });
+                    IsDisplayingVolume = false;
+                }
             });
         }
 
@@ -289,7 +299,16 @@ namespace TbVolScroll
 
         public bool CursorInTaskbar()
         {
-            Point position = Cursor.Position; if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom) { return true; } else { return false; }
+            Point position = Cursor.Position;
+            Opacity = 1;
+            if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private static Color CalculateColor(double percentage)
@@ -311,6 +330,11 @@ namespace TbVolScroll
             Application.DoEvents();
             IsDisplayingVolume = true;
             ShowInactiveTopmost(this);
+
+            Invoke((MethodInvoker)delegate
+            {
+                Opacity = 1;
+            });
 
             while (TimeOutHelper != 0)
             {
