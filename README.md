@@ -6,9 +6,13 @@ Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/incr
 
 The volume bar will follow the cursor when it's moved. If the volume is lower than 10% precise volume control is automatically enabled.
 
+## Known problems
+
+- Incompatible with fullscreen games. Exit the application when playing them to avoid weird behavior.
+
 ## Preview
 
-![Preview](https://github.com/notcammy/TbVolScroll/blob/master/2018-03-15_21-01-18.gif?raw=true)
+![Preview](https://github.com/notcammy/TbVolScroll/blob/master/example.gif?raw=true)
 
 ## Thanks
 

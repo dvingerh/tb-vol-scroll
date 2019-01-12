@@ -30,42 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
-            this.pnlColor = new System.Windows.Forms.Panel();
-            this.lblVolumePerc = new System.Windows.Forms.Label();
             this.trayIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmLabel = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmRestart = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmSeperator = new System.Windows.Forms.ToolStripSeparator();
-            this.tsmLabel = new System.Windows.Forms.ToolStripMenuItem();
-            this.pnlColor.SuspendLayout();
+            this.tsmResetVolume = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblVolumePerc = new System.Windows.Forms.Label();
             this.trayContextMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnlColor
-            // 
-            this.pnlColor.BackColor = System.Drawing.Color.Red;
-            this.pnlColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlColor.Controls.Add(this.lblVolumePerc);
-            this.pnlColor.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlColor.Location = new System.Drawing.Point(0, 0);
-            this.pnlColor.Name = "pnlColor";
-            this.pnlColor.Size = new System.Drawing.Size(10, 10);
-            this.pnlColor.TabIndex = 0;
-            // 
-            // lblVolumePerc
-            // 
-            this.lblVolumePerc.BackColor = System.Drawing.Color.Transparent;
-            this.lblVolumePerc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVolumePerc.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVolumePerc.ForeColor = System.Drawing.Color.Black;
-            this.lblVolumePerc.Location = new System.Drawing.Point(0, 0);
-            this.lblVolumePerc.Name = "lblVolumePerc";
-            this.lblVolumePerc.Size = new System.Drawing.Size(8, 8);
-            this.lblVolumePerc.TabIndex = 0;
-            this.lblVolumePerc.Text = "0%";
-            this.lblVolumePerc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblVolumePerc.Visible = false;
             // 
             // trayIcon
             // 
@@ -85,10 +59,23 @@
             this.tsmLabel,
             this.tsmSeperator,
             this.tsmExit,
-            this.tsmRestart});
+            this.tsmRestart,
+            this.tsmResetVolume});
             this.trayContextMenu.Name = "trayContextMenu";
             this.trayContextMenu.ShowImageMargin = false;
-            this.trayContextMenu.Size = new System.Drawing.Size(133, 76);
+            this.trayContextMenu.Size = new System.Drawing.Size(133, 98);
+            // 
+            // tsmLabel
+            // 
+            this.tsmLabel.Enabled = false;
+            this.tsmLabel.Name = "tsmLabel";
+            this.tsmLabel.Size = new System.Drawing.Size(132, 22);
+            this.tsmLabel.Text = "TbVolScroll v1.3";
+            // 
+            // tsmSeperator
+            // 
+            this.tsmSeperator.Name = "tsmSeperator";
+            this.tsmSeperator.Size = new System.Drawing.Size(129, 6);
             // 
             // tsmExit
             // 
@@ -104,23 +91,34 @@
             this.tsmRestart.Text = "Restart";
             this.tsmRestart.Click += new System.EventHandler(this.tsmRestart_Click);
             // 
-            // tsmSeperator
+            // tsmResetVolume
             // 
-            this.tsmSeperator.Name = "tsmSeperator";
-            this.tsmSeperator.Size = new System.Drawing.Size(129, 6);
+            this.tsmResetVolume.Name = "tsmResetVolume";
+            this.tsmResetVolume.Size = new System.Drawing.Size(132, 22);
+            this.tsmResetVolume.Text = "Reset Volume";
+            this.tsmResetVolume.Click += new System.EventHandler(this.tsmResetVolume_Click);
             // 
-            // tsmLabel
+            // lblVolumePerc
             // 
-            this.tsmLabel.Enabled = false;
-            this.tsmLabel.Name = "tsmLabel";
-            this.tsmLabel.Size = new System.Drawing.Size(132, 22);
-            this.tsmLabel.Text = "TbVolScroll v1.2";
+            this.lblVolumePerc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblVolumePerc.BackColor = System.Drawing.Color.Red;
+            this.lblVolumePerc.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblVolumePerc.ForeColor = System.Drawing.Color.Black;
+            this.lblVolumePerc.Location = new System.Drawing.Point(2, 2);
+            this.lblVolumePerc.Name = "lblVolumePerc";
+            this.lblVolumePerc.Size = new System.Drawing.Size(121, 13);
+            this.lblVolumePerc.TabIndex = 1;
+            this.lblVolumePerc.Text = "0%";
+            this.lblVolumePerc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // frmMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(10, 10);
-            this.Controls.Add(this.pnlColor);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(125, 17);
+            this.Controls.Add(this.lblVolumePerc);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "frmMain";
             this.Opacity = 0D;
@@ -129,22 +127,20 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TbVolScroll";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.pnlColor.ResumeLayout(false);
             this.trayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlColor;
-        private System.Windows.Forms.Label lblVolumePerc;
         private System.Windows.Forms.NotifyIcon trayIcon;
         private System.Windows.Forms.ContextMenuStrip trayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem tsmExit;
         private System.Windows.Forms.ToolStripMenuItem tsmRestart;
         private System.Windows.Forms.ToolStripMenuItem tsmLabel;
         private System.Windows.Forms.ToolStripSeparator tsmSeperator;
+        private System.Windows.Forms.ToolStripMenuItem tsmResetVolume;
+        private System.Windows.Forms.Label lblVolumePerc;
     }
 }
 

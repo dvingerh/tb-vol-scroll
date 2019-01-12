@@ -250,25 +250,22 @@ namespace TbVolScroll
 
                     lblVolumePerc.Text = DefaultPlaybackDevice.Volume.ToString() + "%";
 
-                    if (DefaultPlaybackDevice.Volume <= 10 || IsAltDown)
+                    if (DefaultPlaybackDevice.Volume < 0 || lblVolumePerc.Text.Contains("-1"))
                     {
-                        lblVolumePerc.Visible = true;
+                        UpdateDefaultDevice();
+                        DefaultPlaybackDevice.Volume = 0;
+                        DoVolumeChanges(120);
                     }
-                    else if (!IsAltDown)
-                    {
-                        lblVolumePerc.Visible = false;
-                    }
-
-
 
 
                     Point CursorPosition = Cursor.Position;
                     Width = (int)DefaultPlaybackDevice.Volume + 30;
-                    Height = 16;
+                    Height = 17;
                     Left = CursorPosition.X - Width / 2;
                     Top = CursorPosition.Y - 20;
 
-                    pnlColor.BackColor = CalculateColor(DefaultPlaybackDevice.Volume);
+                    lblVolumePerc.BackColor = CalculateColor(DefaultPlaybackDevice.Volume);
+                    Refresh();
                     if (!IsDisplayingVolume)
                     {
                         Task.Run(() => AutoHideVolume());
@@ -280,7 +277,6 @@ namespace TbVolScroll
                     {
                         Hide();
                         WindowState = FormWindowState.Minimized;
-                        lblVolumePerc.Visible = false;
                     });
                     IsDisplayingVolume = false;
                 }
@@ -347,7 +343,6 @@ namespace TbVolScroll
             {
                 Hide();
                 WindowState = FormWindowState.Minimized;
-                lblVolumePerc.Visible = false;
             });
             IsDisplayingVolume = false;
         }
@@ -360,6 +355,12 @@ namespace TbVolScroll
         private void tsmRestart_Click(object sender, EventArgs e)
         {
             Application.Restart();
+        }
+
+        private void tsmResetVolume_Click(object sender, EventArgs e)
+        {
+            UpdateDefaultDevice();
+            DefaultPlaybackDevice.Volume = 0;
         }
     }
 }

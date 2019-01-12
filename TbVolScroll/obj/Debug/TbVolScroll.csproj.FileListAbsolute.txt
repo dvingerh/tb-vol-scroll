@@ -7,4 +7,4 @@ C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.csproj
 C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.csproj.CoreCompileInputs.cache
 C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.exe
 C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.pdb
-C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.csprojResolveAssemblyReference.cache
+C:\Users\Dirk\Documents\Git\TbVolScroll\TbVolScroll\obj\Debug\TbVolScroll.csprojAssemblyReference.cache
