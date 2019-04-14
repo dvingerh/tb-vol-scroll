@@ -8,17 +8,13 @@ The volume bar will follow the cursor when it's moved. If the volume is lower th
 
 ## Known problems
 
-- Incompatible with fullscreen games. Exit the application when playing them to avoid weird behavior.
+- If volume is above 95% it won't go up to 100% unless using the precise volume control option.
 
 ## Preview
 
 ![Preview](https://github.com/notcammy/TbVolScroll/blob/master/example.gif?raw=true)
 
 ## Thanks
-
-- AudioSwitcher.AudioApi.3.0.0
-
-- AudioSwitcher.AudioApi.CoreAudio.3.0.0.1
 
 - Costura.Fody.1.6.2
 
