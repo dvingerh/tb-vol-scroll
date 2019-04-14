@@ -1,0 +1,10 @@
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\bin\Debug\TbVolScroll.exe.config
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\bin\Debug\TbVolScroll.exe
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\bin\Debug\TbVolScroll.pdb
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll_Reloaded.frmMain.resources
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll_Reloaded.Properties.Resources.resources
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll-Reloaded.csproj.GenerateResource.cache
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll-Reloaded.csproj.CoreCompileInputs.cache
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll.exe
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll.pdb
+C:\Users\User\Documents\Git\TbVolScroll-Reloaded\obj\Debug\TbVolScroll-Reloaded.csprojAssemblyReference.cache
