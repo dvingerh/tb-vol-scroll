@@ -22,5 +22,29 @@ namespace TbVolScroll_Reloaded.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int VolumeStep {
+            get {
+                return ((int)(this["VolumeStep"]));
+            }
+            set {
+                this["VolumeStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int PreciseScrollThreshold {
+            get {
+                return ((int)(this["PreciseScrollThreshold"]));
+            }
+            set {
+                this["PreciseScrollThreshold"] = value;
+            }
+        }
     }
 }

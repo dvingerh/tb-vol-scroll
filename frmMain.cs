@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -93,13 +88,13 @@ namespace TbVolScroll_Reloaded
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume - 1);
                             }
-                            else if (CurrentVolume <= 10)
+                            else if (CurrentVolume <= Properties.Settings.Default.PreciseScrollThreshold)
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume - 1);
                             }
                             else
                             {
-                                VolumeHandler.SetMasterVolume(CurrentVolume - 5);
+                                VolumeHandler.SetMasterVolume(CurrentVolume - Properties.Settings.Default.VolumeStep);
                             }
                         }
                         else
@@ -108,18 +103,19 @@ namespace TbVolScroll_Reloaded
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume + 1);
                             }
-                            else if (CurrentVolume < 10)
+                            else if (CurrentVolume < Properties.Settings.Default.PreciseScrollThreshold)
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume + 1);
                             }
                             else
                             {
-                                VolumeHandler.SetMasterVolume(CurrentVolume + 5);
+                                VolumeHandler.SetMasterVolume(CurrentVolume + Properties.Settings.Default.VolumeStep);
                             }
                         }
 
                         CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
                         lblVolumeText.Text = CurrentVolume + "%";
+                        trayIcon.Text = "TbVolScroll - " + CurrentVolume + "%";
 
 
                         Point CursorPosition = Cursor.Position;
@@ -201,17 +197,17 @@ namespace TbVolScroll_Reloaded
             }
         }
 
-        private void tsmExit_Click(object sender, EventArgs e)
+        private void ExitApplication(object sender, EventArgs e)
         {
             Environment.Exit(0);
         }
 
-        private void tsmRestart_Click(object sender, EventArgs e)
+        private void RestartApplication(object sender, EventArgs e)
         {
             Application.Restart();
         }
 
-        private void tsmResetVolume_Click(object sender, EventArgs e)
+        private void ResetVolume(object sender, EventArgs e)
         {
             VolumeHandler.SetMasterVolume(0);
         }
@@ -235,10 +231,20 @@ namespace TbVolScroll_Reloaded
 
         }
 
-        private void TrayIcon_Click(object sender, EventArgs e)
+        private void ShowTrayMenuOnClick(object sender, EventArgs e)
         {
             System.Reflection.MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
             mi.Invoke(trayIcon, null);
+        }
+
+        private void OpenSetVolumeStepDialog(object sender, EventArgs e)
+        {
+            new FrmSetVolumeStep().ShowDialog();
+        }
+
+        private void OpenSetPreciseScrollThreshold(object sender, EventArgs e)
+        {
+            new FrmSetPreciseThreshold().ShowDialog();
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TbVolScroll_Reloaded
@@ -64,14 +59,7 @@ namespace TbVolScroll_Reloaded
         {
             Point position = Cursor.Position;
             callbackForm.Opacity = 1;
-            if (position.Y >= callbackForm.TaskbarRect.Top && position.Y <= callbackForm.TaskbarRect.Bottom)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return position.Y >= callbackForm.TaskbarRect.Top && position.Y <= callbackForm.TaskbarRect.Bottom;
         }
 
         public static InputHandler Instance

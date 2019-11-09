@@ -1,3 +1,9 @@
 
 .vs/
 *.cache
+
+bin/
+
+obj/
+
+packages/
