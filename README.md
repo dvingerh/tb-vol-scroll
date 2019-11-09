@@ -10,7 +10,7 @@ In the tray icon menu a few additional settings can be found to change.
 
 ## Known problems
 
-- Scrolling isn't detected when certain windows have focus (e.g. Task Manager)
+- Scrolling isn't detected when Task Manager window has focus.
 
 ## Preview
 
