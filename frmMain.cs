@@ -215,11 +215,6 @@ namespace TbVolScroll_Reloaded
 
         private void SetupProgramVars(object sender, EventArgs e)
         {
-            if (Height != 15)
-            {
-                Height = 15;
-            }
-
             ShowInactiveTopmost(this);
             lblVolumeText.Text = "Detecting taskbar  . . .";
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
