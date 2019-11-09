@@ -4,7 +4,7 @@ Simple (and ugly written) utility to enable volume control when your mouse curso
 
 Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/increase volume by 1%). Standard volume step is 5%.
 
-The volume bar will follow the cursor when it's moved. If the volume is lower than 10% precise volume control is automatically enabled.
+The volume bar will follow the cursor when it's moved. By default, if the volume is lower than 10% precise volume control is automatically enabled.
 
 In the tray icon menu a few additional settings can be found to change.
 
