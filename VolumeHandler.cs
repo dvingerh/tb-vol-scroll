@@ -1,4 +1,4 @@
-﻿using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.CoreAudio;
 using Gma.System.MouseKeyHook;
 using System;
 using System.Collections.Generic;
@@ -69,6 +69,9 @@ namespace TbVolScroll_Reloaded
         /// <param name="newLevel">Value between 0 and 100 indicating the desired scalar value of the volume</param>
         public static void SetMasterVolume(float newLevel)
         {
+            if (newLevel > 100) { newLevel = 100; }
+            if (newLevel < 0) { newLevel = 0; }
+
             IAudioEndpointVolume masterVol = null;
             try
             {
