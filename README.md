@@ -25,6 +25,5 @@ In the tray icon menu a few additional settings can be found to change.
 - MouseKeyHook.5.4.0
 
 - [Sverrir's AudioManger script](https://gist.github.com/sverrirs/d099b34b7f72bb4fb386)
-- 
 
 And several StackOverflow answers.
