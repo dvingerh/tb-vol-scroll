@@ -24,6 +24,6 @@ In the tray icon menu a few additional settings can be found to change the bar's
 
 - MouseKeyHook.5.4.0
 
-- ![sverrirs' AudioManger snippet](https://gist.github.com/sverrirs/d099b34b7f72bb4fb386)
+- [Sverrir's AudioManager script](https://gist.github.com/sverrirs/d099b34b7f72bb4fb386)
 
 And several StackOverflow answers.
