@@ -6,7 +6,7 @@ Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/incr
 
 The volume bar will follow the cursor when it's moved. By default, if the volume is lower than 10% precise volume control is automatically enabled.
 
-In the tray icon menu a few additional settings can be found to change.
+In the tray icon menu a few additional settings can be found to change the bar's dimensions, color and opacity.
 
 ## Known problems
 
