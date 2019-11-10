@@ -29,7 +29,7 @@ namespace TbVolScroll
             {
                 Point CursorPosition = Cursor.Position;
                 callbackForm.Left = CursorPosition.X - callbackForm.Width / 2;
-                callbackForm.Top = CursorPosition.Y - 20;
+                callbackForm.Top = CursorPosition.Y - callbackForm.Height - 5;
             }
         }
 
