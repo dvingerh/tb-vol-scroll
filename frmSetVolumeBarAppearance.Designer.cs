@@ -228,7 +228,7 @@
             this.MinimizeBox = false;
             this.Name = "frmSetBarAppearance";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Set Volume Bar Appearance";
+            this.Text = "TbVolScroll - Set Volume Bar Appearance";
             this.Load += new System.EventHandler(this.LoadBarAppearance);
             ((System.ComponentModel.ISupportInitialize)(this.numSetBarWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSetBarHeight)).EndInit();
