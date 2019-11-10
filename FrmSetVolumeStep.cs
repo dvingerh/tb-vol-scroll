@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TbVolScroll_Reloaded
+namespace TbVolScroll
 {
     public partial class FrmSetVolumeStep : Form
     {
@@ -20,6 +20,7 @@ namespace TbVolScroll_Reloaded
         private void SaveNewVolumeStep(object sender, EventArgs e)
         {
             Properties.Settings.Default.VolumeStep = (int)numSetVolumeStep.Value;
+            Properties.Settings.Default.Save();
             Close();
         }
 

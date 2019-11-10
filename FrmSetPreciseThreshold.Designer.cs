@@ -1,4 +1,4 @@
-﻿namespace TbVolScroll_Reloaded
+﻿namespace TbVolScroll
 {
     partial class FrmSetPreciseThreshold
     {

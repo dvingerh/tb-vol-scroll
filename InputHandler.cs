@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace TbVolScroll_Reloaded
+namespace TbVolScroll
 {
     public sealed class InputHandler
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TbVolScroll_Reloaded
+namespace TbVolScroll
 {
     public partial class FrmSetPreciseThreshold : Form
     {
@@ -20,6 +20,7 @@ namespace TbVolScroll_Reloaded
         private void SavenewThreshold(object sender, EventArgs e)
         {
             Properties.Settings.Default.PreciseScrollThreshold = (int)numSetPreciseThreshold.Value;
+            Properties.Settings.Default.Save();
             Close();
         }
 

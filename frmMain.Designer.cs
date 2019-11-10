@@ -1,4 +1,4 @@
-﻿namespace TbVolScroll_Reloaded
+﻿namespace TbVolScroll
 {
     partial class frmMain
     {
@@ -40,6 +40,7 @@
             this.tsmRestart = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSeperator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tmiSetVolumeStep = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmSetVolumeBarAppearance = new System.Windows.Forms.ToolStripMenuItem();
             this.tmiSetPreciseScollThreshold = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContextMenu.SuspendLayout();
@@ -53,7 +54,7 @@
             this.lblVolumeText.BackColor = System.Drawing.Color.White;
             this.lblVolumeText.Location = new System.Drawing.Point(1, 1);
             this.lblVolumeText.Name = "lblVolumeText";
-            this.lblVolumeText.Size = new System.Drawing.Size(123, 15);
+            this.lblVolumeText.Size = new System.Drawing.Size(123, 13);
             this.lblVolumeText.TabIndex = 0;
             this.lblVolumeText.Text = "Loading . . .";
             this.lblVolumeText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -100,6 +101,7 @@
             this.tsmRestart,
             this.tsmSeperator2,
             this.tmiSetVolumeStep,
+            this.tsmSetVolumeBarAppearance,
             this.tmiSetPreciseScollThreshold});
             this.tsmOptions.Name = "tsmOptions";
             this.tsmOptions.Size = new System.Drawing.Size(157, 22);
@@ -108,33 +110,40 @@
             // tsmResetVolume
             // 
             this.tsmResetVolume.Name = "tsmResetVolume";
-            this.tsmResetVolume.Size = new System.Drawing.Size(223, 22);
+            this.tsmResetVolume.Size = new System.Drawing.Size(226, 22);
             this.tsmResetVolume.Text = "Reset volume";
             this.tsmResetVolume.Click += new System.EventHandler(this.ResetVolume);
             // 
             // tsmRestart
             // 
             this.tsmRestart.Name = "tsmRestart";
-            this.tsmRestart.Size = new System.Drawing.Size(223, 22);
+            this.tsmRestart.Size = new System.Drawing.Size(226, 22);
             this.tsmRestart.Text = "Restart";
             this.tsmRestart.Click += new System.EventHandler(this.RestartApplication);
             // 
             // tsmSeperator2
             // 
             this.tsmSeperator2.Name = "tsmSeperator2";
-            this.tsmSeperator2.Size = new System.Drawing.Size(220, 6);
+            this.tsmSeperator2.Size = new System.Drawing.Size(223, 6);
             // 
             // tmiSetVolumeStep
             // 
             this.tmiSetVolumeStep.Name = "tmiSetVolumeStep";
-            this.tmiSetVolumeStep.Size = new System.Drawing.Size(223, 22);
+            this.tmiSetVolumeStep.Size = new System.Drawing.Size(226, 22);
             this.tmiSetVolumeStep.Text = "Set volume scroll step...";
             this.tmiSetVolumeStep.Click += new System.EventHandler(this.OpenSetVolumeStepDialog);
+            // 
+            // tsmSetVolumeBarAppearance
+            // 
+            this.tsmSetVolumeBarAppearance.Name = "tsmSetVolumeBarAppearance";
+            this.tsmSetVolumeBarAppearance.Size = new System.Drawing.Size(226, 22);
+            this.tsmSetVolumeBarAppearance.Text = "Set volume bar appearance...";
+            this.tsmSetVolumeBarAppearance.Click += new System.EventHandler(this.TsmSetVolumeBarDimensions_Click);
             // 
             // tmiSetPreciseScollThreshold
             // 
             this.tmiSetPreciseScollThreshold.Name = "tmiSetPreciseScollThreshold";
-            this.tmiSetPreciseScollThreshold.Size = new System.Drawing.Size(223, 22);
+            this.tmiSetPreciseScollThreshold.Size = new System.Drawing.Size(226, 22);
             this.tmiSetPreciseScollThreshold.Text = "Set precise scroll threshold...";
             this.tmiSetPreciseScollThreshold.Click += new System.EventHandler(this.OpenSetPreciseScrollThreshold);
             // 
@@ -150,7 +159,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(5F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(125, 17);
+            this.ClientSize = new System.Drawing.Size(125, 15);
             this.ControlBox = false;
             this.Controls.Add(this.lblVolumeText);
             this.Font = new System.Drawing.Font("Segoe UI", 6.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -158,7 +167,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(125, 17);
+            this.MaximumSize = new System.Drawing.Size(125, 15);
             this.MinimizeBox = false;
             this.Name = "frmMain";
             this.ShowIcon = false;
@@ -185,6 +194,7 @@
         private System.Windows.Forms.ToolStripSeparator tsmSeperator2;
         private System.Windows.Forms.ToolStripMenuItem tmiSetVolumeStep;
         private System.Windows.Forms.ToolStripMenuItem tmiSetPreciseScollThreshold;
+        private System.Windows.Forms.ToolStripMenuItem tsmSetVolumeBarAppearance;
     }
 }
 

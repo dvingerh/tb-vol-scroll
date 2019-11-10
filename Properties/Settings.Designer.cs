@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TbVolScroll_Reloaded.Properties {
+namespace TbVolScroll.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -44,6 +44,66 @@ namespace TbVolScroll_Reloaded.Properties {
             }
             set {
                 this["PreciseScrollThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int BarWidth {
+            get {
+                return ((int)(this["BarWidth"]));
+            }
+            set {
+                this["BarWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public int BarHeight {
+            get {
+                return ((int)(this["BarHeight"]));
+            }
+            set {
+                this["BarHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UseBarGradient {
+            get {
+                return ((bool)(this["UseBarGradient"]));
+            }
+            set {
+                this["UseBarGradient"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("DodgerBlue")]
+        public global::System.Drawing.Color BarColor {
+            get {
+                return ((global::System.Drawing.Color)(this["BarColor"]));
+            }
+            set {
+                this["BarColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double BarOpacity {
+            get {
+                return ((double)(this["BarOpacity"]));
+            }
+            set {
+                this["BarOpacity"] = value;
             }
         }
     }

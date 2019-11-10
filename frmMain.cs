@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace TbVolScroll_Reloaded
+namespace TbVolScroll
 {
     public partial class frmMain : Form
     {
@@ -119,11 +119,18 @@ namespace TbVolScroll_Reloaded
 
 
                         Point CursorPosition = Cursor.Position;
-                        Width = CurrentVolume + 30;
-                        Height = 17;
+                        Width = CurrentVolume + Properties.Settings.Default.BarWidth;
                         Left = CursorPosition.X - Width / 2;
-                        Top = CursorPosition.Y - 20;
-                        lblVolumeText.BackColor = CalculateColor(CurrentVolume);
+                        Top = CursorPosition.Y - Height - 5;
+                        if (Properties.Settings.Default.UseBarGradient)
+                        {
+                            lblVolumeText.BackColor = CalculateColor(CurrentVolume);
+
+                        }
+                        else
+                        {
+                            lblVolumeText.BackColor = Properties.Settings.Default.BarColor;
+                        }
                         if (!IsDisplayingVolume)
                         {
                             AutoHideVolume();
@@ -166,7 +173,7 @@ namespace TbVolScroll_Reloaded
 
             Invoke((MethodInvoker)delegate
             {
-                Opacity = 1;
+                Opacity = Properties.Settings.Default.BarOpacity / 100;
             });
 
             while (inputHandler.TimeOutHelper != 0)
@@ -186,7 +193,7 @@ namespace TbVolScroll_Reloaded
         public bool CursorInTaskbar()
         {
             Point position = Cursor.Position;
-            Opacity = 1;
+            Opacity = Properties.Settings.Default.BarOpacity;
             if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom)
             {
                 return true;
@@ -215,14 +222,14 @@ namespace TbVolScroll_Reloaded
 
         private void SetupProgramVars(object sender, EventArgs e)
         {
-            ShowInactiveTopmost(this);
-            lblVolumeText.Text = "Detecting taskbar  . . .";
+            MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
+            MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
+            Width = 100 + Properties.Settings.Default.BarWidth;
+            Height = Properties.Settings.Default.BarHeight;
+            Hide();
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
             GetWindowRect(hwnd, out TaskbarRect);
-            lblVolumeText.Text = "Initializing input hooks  . . .";
             inputHandler = new InputHandler(this);
-            lblVolumeText.Text = "Initializing audio hooks  . . .";
-            Hide();
 
         }
 
@@ -240,6 +247,12 @@ namespace TbVolScroll_Reloaded
         private void OpenSetPreciseScrollThreshold(object sender, EventArgs e)
         {
             new FrmSetPreciseThreshold().ShowDialog();
+        }
+
+        private void TsmSetVolumeBarDimensions_Click(object sender, EventArgs e)
+        {
+            new frmSetBarAppearance(this).ShowDialog();
+
         }
     }
 }
