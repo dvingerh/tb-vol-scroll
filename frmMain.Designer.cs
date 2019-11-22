@@ -87,7 +87,7 @@
             this.tsmTitleLabel.Enabled = false;
             this.tsmTitleLabel.Name = "tsmTitleLabel";
             this.tsmTitleLabel.Size = new System.Drawing.Size(157, 22);
-            this.tsmTitleLabel.Text = "TbVolScroll v1.7";
+            this.tsmTitleLabel.Text = "TbVolScroll v1.8";
             // 
             // tsmSeperator
             // 
