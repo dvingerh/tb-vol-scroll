@@ -51,14 +51,12 @@ namespace TbVolScroll
 
         public void OnMouseScroll(object sender, MouseEventArgs e)
         {
-                TimeOutHelper = 10;
                 callbackForm.DoVolumeChanges(e.Delta);
         }
 
         public bool CursorInTaskbar()
         {
             Point position = Cursor.Position;
-            callbackForm.Opacity = 1;
             return position.Y >= callbackForm.TaskbarRect.Top && position.Y <= callbackForm.TaskbarRect.Bottom;
         }
 

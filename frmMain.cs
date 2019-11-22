@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -82,6 +82,7 @@ namespace TbVolScroll
                     int CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
                     if (CursorInTaskbar() && !IsTaskbarHidden())
                     {
+                        inputHandler.TimeOutHelper = 10;
                         if (delta < 0)
                         {
                             if (inputHandler.IsAltDown)
@@ -122,6 +123,7 @@ namespace TbVolScroll
                         Width = CurrentVolume + Properties.Settings.Default.BarWidth;
                         Left = CursorPosition.X - Width / 2;
                         Top = CursorPosition.Y - Height - 5;
+                        Opacity = Properties.Settings.Default.BarOpacity;
                         if (Properties.Settings.Default.UseBarGradient)
                         {
                             lblVolumeText.BackColor = CalculateColor(CurrentVolume);
@@ -133,6 +135,8 @@ namespace TbVolScroll
                         }
                         if (!IsDisplayingVolume)
                         {
+                            IsDisplayingVolume = true;
+                            Application.DoEvents();
                             AutoHideVolume();
                         }
                     }
@@ -141,7 +145,6 @@ namespace TbVolScroll
                         Invoke((MethodInvoker)delegate
                         {
                             Hide();
-                            WindowState = FormWindowState.Minimized;
                         });
                         IsDisplayingVolume = false;
                     }
@@ -167,14 +170,7 @@ namespace TbVolScroll
 
         private async void AutoHideVolume()
         {
-            Application.DoEvents();
-            IsDisplayingVolume = true;
             ShowInactiveTopmost(this);
-
-            Invoke((MethodInvoker)delegate
-            {
-                Opacity = Properties.Settings.Default.BarOpacity / 100;
-            });
 
             while (inputHandler.TimeOutHelper != 0)
             {
@@ -193,7 +189,6 @@ namespace TbVolScroll
         public bool CursorInTaskbar()
         {
             Point position = Cursor.Position;
-            Opacity = Properties.Settings.Default.BarOpacity;
             if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom)
             {
                 return true;
