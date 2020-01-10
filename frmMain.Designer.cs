@@ -1,4 +1,4 @@
-﻿namespace TbVolScroll
+namespace TbVolScroll
 {
     partial class frmMain
     {
@@ -38,6 +38,8 @@
             this.tsmOptions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmResetVolume = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmRestart = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmRestartNormal = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmRestartAsAdmin = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSeperator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tmiSetVolumeStep = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmSetVolumeBarAppearance = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,10 +118,26 @@
             // 
             // tsmRestart
             // 
+            this.tsmRestart.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmRestartNormal,
+            this.tsmRestartAsAdmin});
             this.tsmRestart.Name = "tsmRestart";
             this.tsmRestart.Size = new System.Drawing.Size(226, 22);
             this.tsmRestart.Text = "Restart";
-            this.tsmRestart.Click += new System.EventHandler(this.RestartApplication);
+            // 
+            // tsmRestartNormal
+            // 
+            this.tsmRestartNormal.Name = "tsmRestartNormal";
+            this.tsmRestartNormal.Size = new System.Drawing.Size(208, 22);
+            this.tsmRestartNormal.Text = "Restart";
+            this.tsmRestartNormal.Click += new System.EventHandler(this.RestartAppNormal);
+            // 
+            // tsmRestartAsAdmin
+            // 
+            this.tsmRestartAsAdmin.Name = "tsmRestartAsAdmin";
+            this.tsmRestartAsAdmin.Size = new System.Drawing.Size(208, 22);
+            this.tsmRestartAsAdmin.Text = "Restart (as Administrator)";
+            this.tsmRestartAsAdmin.Click += new System.EventHandler(this.RestartAppAsAdministrator);
             // 
             // tsmSeperator2
             // 
@@ -195,6 +213,8 @@
         private System.Windows.Forms.ToolStripMenuItem tmiSetVolumeStep;
         private System.Windows.Forms.ToolStripMenuItem tmiSetPreciseScollThreshold;
         private System.Windows.Forms.ToolStripMenuItem tsmSetVolumeBarAppearance;
+        private System.Windows.Forms.ToolStripMenuItem tsmRestartNormal;
+        private System.Windows.Forms.ToolStripMenuItem tsmRestartAsAdmin;
     }
 }
 

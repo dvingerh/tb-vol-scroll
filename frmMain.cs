@@ -204,7 +204,7 @@ namespace TbVolScroll
             Environment.Exit(0);
         }
 
-        private void RestartApplication(object sender, EventArgs e)
+        private void RestartAppNormal(object sender, EventArgs e)
         {
             Application.Restart();
         }
@@ -248,6 +248,16 @@ namespace TbVolScroll
         {
             new frmSetBarAppearance(this).ShowDialog();
 
+        }
+
+        private void RestartAppAsAdministrator(object sender, EventArgs e)
+        {
+            Process proc = new Process();
+            proc.StartInfo.FileName = Application.ExecutablePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.StartInfo.Verb = "runas";
+            proc.Start();
+            Environment.Exit(0);
         }
     }
 }
