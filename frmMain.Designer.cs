@@ -1,4 +1,4 @@
-namespace TbVolScroll
+﻿namespace TbVolScroll
 {
     partial class frmMain
     {
@@ -72,7 +72,7 @@ namespace TbVolScroll
             // 
             // trayContextMenu
             // 
-            this.trayContextMenu.BackColor = System.Drawing.Color.White;
+            this.trayContextMenu.BackColor = System.Drawing.SystemColors.Control;
             this.trayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmTitleLabel,
             this.tsmSeperator,
@@ -82,22 +82,25 @@ namespace TbVolScroll
             this.trayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.trayContextMenu.ShowCheckMargin = true;
             this.trayContextMenu.ShowImageMargin = false;
-            this.trayContextMenu.Size = new System.Drawing.Size(158, 76);
+            this.trayContextMenu.Size = new System.Drawing.Size(181, 98);
             // 
             // tsmTitleLabel
             // 
+            this.tsmTitleLabel.BackColor = System.Drawing.SystemColors.Control;
             this.tsmTitleLabel.Enabled = false;
             this.tsmTitleLabel.Name = "tsmTitleLabel";
-            this.tsmTitleLabel.Size = new System.Drawing.Size(157, 22);
-            this.tsmTitleLabel.Text = "TbVolScroll v1.8";
+            this.tsmTitleLabel.Size = new System.Drawing.Size(180, 22);
+            this.tsmTitleLabel.Text = "TbVolScroll v0.0";
             // 
             // tsmSeperator
             // 
+            this.tsmSeperator.BackColor = System.Drawing.SystemColors.Control;
             this.tsmSeperator.Name = "tsmSeperator";
-            this.tsmSeperator.Size = new System.Drawing.Size(154, 6);
+            this.tsmSeperator.Size = new System.Drawing.Size(177, 6);
             // 
             // tsmOptions
             // 
+            this.tsmOptions.BackColor = System.Drawing.SystemColors.Control;
             this.tsmOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmResetVolume,
             this.tsmRestart,
@@ -106,7 +109,7 @@ namespace TbVolScroll
             this.tsmSetVolumeBarAppearance,
             this.tmiSetPreciseScollThreshold});
             this.tsmOptions.Name = "tsmOptions";
-            this.tsmOptions.Size = new System.Drawing.Size(157, 22);
+            this.tsmOptions.Size = new System.Drawing.Size(180, 22);
             this.tsmOptions.Text = "Options";
             // 
             // tsmResetVolume
@@ -167,8 +170,9 @@ namespace TbVolScroll
             // 
             // tsmExit
             // 
+            this.tsmExit.BackColor = System.Drawing.SystemColors.Control;
             this.tsmExit.Name = "tsmExit";
-            this.tsmExit.Size = new System.Drawing.Size(157, 22);
+            this.tsmExit.Size = new System.Drawing.Size(180, 22);
             this.tsmExit.Text = "Exit";
             this.tsmExit.Click += new System.EventHandler(this.ExitApplication);
             // 

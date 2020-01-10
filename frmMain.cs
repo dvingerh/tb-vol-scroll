@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Security.Principal;
 
 namespace TbVolScroll
 {
@@ -71,6 +73,19 @@ namespace TbVolScroll
         public frmMain()
         {
             InitializeComponent();
+            if (IsAdministrator())
+            {
+                tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion} (Admin)";
+            }
+            else
+            {
+                tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion}";
+            }
+        }
+
+        public static bool IsAdministrator()
+        {
+            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         public void DoVolumeChanges(int delta)
