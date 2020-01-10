@@ -10,7 +10,7 @@ In the tray icon menu a few additional settings can be found to change the bar's
 
 ## Known problems
 
-- Scrolling isn't detected when Task Manager window has focus.
+- Scrolling isn't detected when certain system windows have focus, such as Task Manager or the Group Policy Management Console. This is likely a security measure by Windows of some sorts.
 
 ## Preview
 
