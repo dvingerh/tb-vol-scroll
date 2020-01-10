@@ -1,4 +1,4 @@
-## TbVolScroll
+## TbVolScroll 1.9
 
 Simple (and ugly written) utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
@@ -12,6 +12,8 @@ In the tray icon menu a few additional settings can be found to change the bar's
 
 - Scrolling isn't detected when certain windows have focus, such as Task Manager or the Group Policy Management Console. This is likely a security measure by Windows of some sorts.  
 **Running the software as Administrator solves this problem**.
+
+There as of version 1.9 there is an option in the context menu to restart the program as Administrator. If the program is running with Administrator privileges this will be indicated in the context menu as well.
 
 ## Preview
 
