@@ -21,6 +21,12 @@ There as of version 1.9 there is an option in the context menu to restart the pr
 
 ## Thanks
 
+This software was [tested and approved](https://www.softpedia.com/get/Multimedia/Audio/Other-AUDIO-Tools/TbVolScroll.shtml) by SoftPedia.
+
+![](https://s1.softpedia-static.com/_img/sp100clean.png?1)  
+
+##
+
 - Costura.Fody.1.6.2
 
 - Fody.2.0.0
