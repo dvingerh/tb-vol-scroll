@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## TbVolScroll 1.9
+## TbVolScroll 1.91
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
@@ -7,7 +7,7 @@ Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/incr
 
 The volume bar will follow the cursor when it's moved. By default, if the volume is lower than 10% precise volume control is automatically enabled.
 
-In the tray icon menu a few additional settings can be found to change the bar's dimensions, color and opacity.
+In the tray icon menu a few additional settings can be found to change the bar's dimensions, font style, color and opacity.
 
 ## Known problems
 
