@@ -1,6 +1,7 @@
+[![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
 ## TbVolScroll 1.9
 
-Simple (and ugly written) utility to enable volume control when your mouse cursor is positioned above the taskbar.
+Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
 Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/increase volume by 1%). Standard volume step is 5%.
 
@@ -20,6 +21,12 @@ There as of version 1.9 there is an option in the context menu to restart the pr
 ![Preview](https://github.com/notcammy/TbVolScroll/blob/master/example.gif?raw=true)
 
 ## Thanks
+
+This software was [tested and approved](https://www.softpedia.com/get/Multimedia/Audio/Other-AUDIO-Tools/TbVolScroll.shtml) by SoftPedia.
+
+![](https://s1.softpedia-static.com/_img/sp100clean.png?1)  
+
+##
 
 - Costura.Fody.1.6.2
 
