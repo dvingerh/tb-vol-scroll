@@ -74,13 +74,9 @@ namespace TbVolScroll
         {
             InitializeComponent();
             if (IsAdministrator())
-            {
                 tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion} (Admin)";
-            }
             else
-            {
                 tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion}";
-            }
         }
 
         public static bool IsAdministrator()
@@ -240,6 +236,11 @@ namespace TbVolScroll
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
             GetWindowRect(hwnd, out TaskbarRect);
             inputHandler = new InputHandler(this);
+
+            lblVolumeText.Font = Properties.Settings.Default.FontStyle;
+            int CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
+            lblVolumeText.Text = CurrentVolume + "%";
+            trayIcon.Text = "TbVolScroll - " + CurrentVolume + "%";
 
         }
 

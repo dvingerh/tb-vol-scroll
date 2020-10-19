@@ -6,12 +6,12 @@ namespace TbVolScroll
 {
     public sealed class InputHandler
     {
-        private static InputHandler instance = null;
+        private static readonly InputHandler instance = null;
         private static readonly object padlock = new object();
         public bool IsAltDown;
         public int TimeOutHelper;
-        private IKeyboardMouseEvents MouseKeyEvents;
-        private frmMain callbackForm;
+        private readonly IKeyboardMouseEvents MouseKeyEvents;
+        private readonly frmMain callbackForm;
 
         public InputHandler(frmMain callbackForm)
         {

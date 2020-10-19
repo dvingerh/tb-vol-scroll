@@ -13,6 +13,7 @@ namespace TbVolScroll
     public partial class frmSetBarAppearance : Form
     {
         private frmMain frmMain;
+        private bool doSetFont = false;
         public frmSetBarAppearance(frmMain frmMain)
         {
             this.frmMain = frmMain;
@@ -41,18 +42,27 @@ namespace TbVolScroll
 
         private void SaveBarAppearance(object sender, EventArgs e)
         {
+
+
             Properties.Settings.Default.BarWidth = (int)numSetBarWidth.Value;
             Properties.Settings.Default.BarHeight = (int)numSetBarHeight.Value;
-            frmMain.MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            frmMain.MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            frmMain.Width = 100 + Properties.Settings.Default.BarWidth;
-            frmMain.Height = Properties.Settings.Default.BarHeight;
-            
+
+            if (doSetFont)
+                Properties.Settings.Default.FontStyle = fontStyleDialog.Font;
+
             Properties.Settings.Default.UseBarGradient = chkGradient.Checked;
             Properties.Settings.Default.BarColor = picColorPreview.BackColor;
             Properties.Settings.Default.BarOpacity = ((double)(tbBarOpacity.Value) / 100.0);
 
             Properties.Settings.Default.Save();
+
+            frmMain.MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
+            frmMain.MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
+            frmMain.Width = 100 + Properties.Settings.Default.BarWidth;
+            frmMain.Height = Properties.Settings.Default.BarHeight;
+            if (doSetFont)
+                frmMain.lblVolumeText.Font = fontStyleDialog.Font;
+
             Close();
         }
 
@@ -76,6 +86,14 @@ namespace TbVolScroll
         private void BarOpacityChanged(object sender, EventArgs e)
         {
             lblOpacityValue.Text = "Current value: " + tbBarOpacity.Value + "%";
+        }
+
+        private void SetFontStyle(object sender, EventArgs e)
+        {
+            fontStyleDialog.Font = Properties.Settings.Default.FontStyle;
+            DialogResult dialogResult = fontStyleDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+                doSetFont = true;
         }
     }
 }

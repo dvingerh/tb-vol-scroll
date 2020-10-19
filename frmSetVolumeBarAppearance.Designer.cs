@@ -41,6 +41,9 @@
             this.lblBarOpacity = new System.Windows.Forms.Label();
             this.tbBarOpacity = new System.Windows.Forms.TrackBar();
             this.lblOpacityValue = new System.Windows.Forms.Label();
+            this.lblFontStyle = new System.Windows.Forms.Label();
+            this.btnFontStyle = new System.Windows.Forms.Button();
+            this.fontStyleDialog = new System.Windows.Forms.FontDialog();
             ((System.ComponentModel.ISupportInitialize)(this.numSetBarWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSetBarHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picColorPreview)).BeginInit();
@@ -49,7 +52,7 @@
             // 
             // btnSaveVolumeBarAppearance
             // 
-            this.btnSaveVolumeBarAppearance.Location = new System.Drawing.Point(130, 276);
+            this.btnSaveVolumeBarAppearance.Location = new System.Drawing.Point(142, 376);
             this.btnSaveVolumeBarAppearance.Name = "btnSaveVolumeBarAppearance";
             this.btnSaveVolumeBarAppearance.Size = new System.Drawing.Size(75, 23);
             this.btnSaveVolumeBarAppearance.TabIndex = 3;
@@ -60,7 +63,7 @@
             // lblSetBarDimensions
             // 
             this.lblSetBarDimensions.AutoSize = true;
-            this.lblSetBarDimensions.Location = new System.Drawing.Point(4, 8);
+            this.lblSetBarDimensions.Location = new System.Drawing.Point(16, 8);
             this.lblSetBarDimensions.Name = "lblSetBarDimensions";
             this.lblSetBarDimensions.Size = new System.Drawing.Size(327, 39);
             this.lblSetBarDimensions.TabIndex = 4;
@@ -71,7 +74,7 @@
             // numSetBarWidth
             // 
             this.numSetBarWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numSetBarWidth.Location = new System.Drawing.Point(110, 57);
+            this.numSetBarWidth.Location = new System.Drawing.Point(122, 57);
             this.numSetBarWidth.Maximum = new decimal(new int[] {
             500,
             0,
@@ -95,7 +98,7 @@
             // lblDimensionX
             // 
             this.lblDimensionX.AutoSize = true;
-            this.lblDimensionX.Location = new System.Drawing.Point(161, 61);
+            this.lblDimensionX.Location = new System.Drawing.Point(173, 61);
             this.lblDimensionX.Name = "lblDimensionX";
             this.lblDimensionX.Size = new System.Drawing.Size(12, 13);
             this.lblDimensionX.TabIndex = 6;
@@ -105,7 +108,7 @@
             // numSetBarHeight
             // 
             this.numSetBarHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numSetBarHeight.Location = new System.Drawing.Point(175, 57);
+            this.numSetBarHeight.Location = new System.Drawing.Point(187, 57);
             this.numSetBarHeight.Maximum = new decimal(new int[] {
             250,
             0,
@@ -129,7 +132,7 @@
             // lblBarColor
             // 
             this.lblBarColor.AutoSize = true;
-            this.lblBarColor.Location = new System.Drawing.Point(30, 108);
+            this.lblBarColor.Location = new System.Drawing.Point(42, 108);
             this.lblBarColor.Name = "lblBarColor";
             this.lblBarColor.Size = new System.Drawing.Size(274, 26);
             this.lblBarColor.TabIndex = 7;
@@ -143,7 +146,7 @@
             this.chkGradient.AutoSize = true;
             this.chkGradient.Checked = true;
             this.chkGradient.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkGradient.Location = new System.Drawing.Point(83, 142);
+            this.chkGradient.Location = new System.Drawing.Point(95, 142);
             this.chkGradient.Name = "chkGradient";
             this.chkGradient.Size = new System.Drawing.Size(62, 23);
             this.chkGradient.TabIndex = 8;
@@ -155,7 +158,7 @@
             // 
             this.chkSetCustomColor.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkSetCustomColor.AutoSize = true;
-            this.chkSetCustomColor.Location = new System.Drawing.Point(151, 142);
+            this.chkSetCustomColor.Location = new System.Drawing.Point(163, 142);
             this.chkSetCustomColor.Name = "chkSetCustomColor";
             this.chkSetCustomColor.Size = new System.Drawing.Size(71, 23);
             this.chkSetCustomColor.TabIndex = 9;
@@ -167,7 +170,7 @@
             // 
             this.picColorPreview.BackColor = System.Drawing.Color.DodgerBlue;
             this.picColorPreview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picColorPreview.Location = new System.Drawing.Point(228, 142);
+            this.picColorPreview.Location = new System.Drawing.Point(240, 142);
             this.picColorPreview.Name = "picColorPreview";
             this.picColorPreview.Size = new System.Drawing.Size(23, 23);
             this.picColorPreview.TabIndex = 10;
@@ -176,7 +179,7 @@
             // lblBarOpacity
             // 
             this.lblBarOpacity.AutoSize = true;
-            this.lblBarOpacity.Location = new System.Drawing.Point(94, 191);
+            this.lblBarOpacity.Location = new System.Drawing.Point(106, 291);
             this.lblBarOpacity.Name = "lblBarOpacity";
             this.lblBarOpacity.Size = new System.Drawing.Size(146, 26);
             this.lblBarOpacity.TabIndex = 11;
@@ -185,7 +188,7 @@
             // 
             // tbBarOpacity
             // 
-            this.tbBarOpacity.Location = new System.Drawing.Point(67, 217);
+            this.tbBarOpacity.Location = new System.Drawing.Point(79, 317);
             this.tbBarOpacity.Maximum = 100;
             this.tbBarOpacity.Name = "tbBarOpacity";
             this.tbBarOpacity.Size = new System.Drawing.Size(200, 45);
@@ -196,19 +199,47 @@
             // 
             // lblOpacityValue
             // 
-            this.lblOpacityValue.Location = new System.Drawing.Point(94, 238);
+            this.lblOpacityValue.Location = new System.Drawing.Point(106, 338);
             this.lblOpacityValue.Name = "lblOpacityValue";
             this.lblOpacityValue.Size = new System.Drawing.Size(146, 20);
             this.lblOpacityValue.TabIndex = 13;
             this.lblOpacityValue.Text = "Current value: 100%";
             this.lblOpacityValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblFontStyle
+            // 
+            this.lblFontStyle.AutoSize = true;
+            this.lblFontStyle.Location = new System.Drawing.Point(7, 195);
+            this.lblFontStyle.Name = "lblFontStyle";
+            this.lblFontStyle.Size = new System.Drawing.Size(344, 39);
+            this.lblFontStyle.TabIndex = 14;
+            this.lblFontStyle.Text = "Set the font size and style for the volume bar.\r\nDefault style is Segoe UI Semibo" +
+    "ld at 8px.\r\nNote: volume bar height does not scale to font size automatically.";
+            this.lblFontStyle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnFontStyle
+            // 
+            this.btnFontStyle.Location = new System.Drawing.Point(135, 242);
+            this.btnFontStyle.Name = "btnFontStyle";
+            this.btnFontStyle.Size = new System.Drawing.Size(88, 23);
+            this.btnFontStyle.TabIndex = 15;
+            this.btnFontStyle.Text = "Set font style";
+            this.btnFontStyle.UseVisualStyleBackColor = true;
+            this.btnFontStyle.Click += new System.EventHandler(this.SetFontStyle);
+            // 
+            // fontStyleDialog
+            // 
+            this.fontStyleDialog.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fontStyleDialog.FontMustExist = true;
+            // 
             // frmSetBarAppearance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(334, 311);
+            this.ClientSize = new System.Drawing.Size(359, 411);
+            this.Controls.Add(this.btnFontStyle);
+            this.Controls.Add(this.lblFontStyle);
             this.Controls.Add(this.lblOpacityValue);
             this.Controls.Add(this.lblBarOpacity);
             this.Controls.Add(this.picColorPreview);
@@ -253,5 +284,8 @@
         private System.Windows.Forms.Label lblBarOpacity;
         private System.Windows.Forms.TrackBar tbBarOpacity;
         private System.Windows.Forms.Label lblOpacityValue;
+        private System.Windows.Forms.Label lblFontStyle;
+        private System.Windows.Forms.Button btnFontStyle;
+        private System.Windows.Forms.FontDialog fontStyleDialog;
     }
 }
