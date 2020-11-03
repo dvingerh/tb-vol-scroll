@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace TbVolScroll
 {
@@ -14,9 +15,11 @@ namespace TbVolScroll
         [STAThread]
         static void Main()
         {
+            string[] args = Environment.GetCommandLineArgs();
+            bool noTrayArg = args.Length > 1 && args[1] == "notray";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new frmMain(noTray: noTrayArg));
         }
     }
 }

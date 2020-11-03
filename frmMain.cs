@@ -70,13 +70,16 @@ namespace TbVolScroll
 
         #endregion
 
-        public frmMain()
+        public frmMain(bool noTray = false)
         {
             InitializeComponent();
             if (IsAdministrator())
                 tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion} (Admin)";
             else
                 tsmTitleLabel.Text = $"TbVolScroll v{Properties.Settings.Default.AppVersion}";
+
+            if (noTray)
+                trayIcon.Visible = false;
         }
 
         public static bool IsAdministrator()
