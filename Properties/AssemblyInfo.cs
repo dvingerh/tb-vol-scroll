@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TbVolScroll")]
+[assembly: AssemblyTitle("tb-vol-scroll")]
 [assembly: AssemblyDescription("Tool to enable volume control when your mouse cursor is positioned above the taskbar.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dirk Vingerhoeds")]
-[assembly: AssemblyProduct("TbVolScroll")]
+[assembly: AssemblyProduct("tb-vol-scroll")]
 [assembly: AssemblyCopyright("Copyright © Dirk Vingerhoeds 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

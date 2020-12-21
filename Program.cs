@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace TbVolScroll
+namespace tbvolscroll
 {
     static class Program
     {
@@ -19,7 +19,7 @@ namespace TbVolScroll
             bool noTrayArg = args.Length > 1 && args[1] == "notray";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain(noTray: noTrayArg));
+            Application.Run(new MainForm(noTray: noTrayArg));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace TbVolScroll
+namespace tbvolscroll
 {
     public static class VolumeHandler
     {

@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace TbVolScroll
+namespace tbvolscroll
 {
     public sealed class InputHandler
     {
@@ -11,9 +11,9 @@ namespace TbVolScroll
         public bool IsAltDown;
         public int TimeOutHelper;
         private readonly IKeyboardMouseEvents MouseKeyEvents;
-        private readonly frmMain callbackForm;
+        private readonly MainForm callbackForm;
 
-        public InputHandler(frmMain callbackForm)
+        public InputHandler(MainForm callbackForm)
         {
             this.callbackForm = callbackForm;
             MouseKeyEvents = Hook.GlobalEvents();
