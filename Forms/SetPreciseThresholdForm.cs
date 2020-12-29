@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tbvolscroll
+namespace TbVolScrollNet5.Forms
 {
     public partial class SetPreciseThresholdForm : Form
     {
@@ -19,14 +12,14 @@ namespace tbvolscroll
 
         private void SavenewThreshold(object sender, EventArgs e)
         {
-            Properties.Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
-            Properties.Settings.Default.Save();
+            tbvolscroll.Properties.Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
+            tbvolscroll.Properties.Settings.Default.Save();
             Close();
         }
 
         private void LoadCurrentThreshold(object sender, EventArgs e)
         {
-            ThresholdNumericUpDown.Value = Properties.Settings.Default.PreciseScrollThreshold;
+            ThresholdNumericUpDown.Value = tbvolscroll.Properties.Settings.Default.PreciseScrollThreshold;
             
         }
     }

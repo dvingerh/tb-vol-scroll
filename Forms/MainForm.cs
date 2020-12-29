@@ -1,13 +1,14 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Security.Principal;
-using System.Reflection;
+using TbVolScrollNet5.Classes;
 
-namespace tbvolscroll
+namespace TbVolScrollNet5.Forms
 {
     public partial class MainForm : Form
     {
@@ -75,9 +76,9 @@ namespace tbvolscroll
         {
             InitializeComponent();
             if (IsAdministrator())
-                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{Properties.Settings.Default.AppVersion} (Admin)";
+                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{tbvolscroll.Properties.Settings.Default.AppVersion} (Admin)";
             else
-                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{Properties.Settings.Default.AppVersion}";
+                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{tbvolscroll.Properties.Settings.Default.AppVersion}";
 
             if (noTray)
                 TrayNotifyIcon.Visible = false;
@@ -104,13 +105,13 @@ namespace tbvolscroll
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume - 1);
                             }
-                            else if (CurrentVolume <= Properties.Settings.Default.PreciseScrollThreshold)
+                            else if (CurrentVolume <= tbvolscroll.Properties.Settings.Default.PreciseScrollThreshold)
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume - 1);
                             }
                             else
                             {
-                                VolumeHandler.SetMasterVolume(CurrentVolume - Properties.Settings.Default.VolumeStep);
+                                VolumeHandler.SetMasterVolume(CurrentVolume - tbvolscroll.Properties.Settings.Default.VolumeStep);
                             }
                         }
                         else
@@ -119,13 +120,13 @@ namespace tbvolscroll
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume + 1);
                             }
-                            else if (CurrentVolume < Properties.Settings.Default.PreciseScrollThreshold)
+                            else if (CurrentVolume < tbvolscroll.Properties.Settings.Default.PreciseScrollThreshold)
                             {
                                 VolumeHandler.SetMasterVolume(CurrentVolume + 1);
                             }
                             else
                             {
-                                VolumeHandler.SetMasterVolume(CurrentVolume + Properties.Settings.Default.VolumeStep);
+                                VolumeHandler.SetMasterVolume(CurrentVolume + tbvolscroll.Properties.Settings.Default.VolumeStep);
                             }
                         }
 
@@ -135,7 +136,7 @@ namespace tbvolscroll
 
 
                         Point CursorPosition = Cursor.Position;
-                        Width = CurrentVolume + Properties.Settings.Default.BarWidth;
+                        Width = CurrentVolume + tbvolscroll.Properties.Settings.Default.BarWidth;
                         Left = CursorPosition.X - Width / 2;
                         Top = CursorPosition.Y - Height - 5;
 
@@ -144,15 +145,15 @@ namespace tbvolscroll
                         VolumeTextLabel.Height = Height - 2;
                         VolumeTextLabel.Width = Width - 2;
 
-                        Opacity = Properties.Settings.Default.BarOpacity;
-                        if (Properties.Settings.Default.UseBarGradient)
+                        Opacity = tbvolscroll.Properties.Settings.Default.BarOpacity;
+                        if (tbvolscroll.Properties.Settings.Default.UseBarGradient)
                         {
                             VolumeTextLabel.BackColor = CalculateColor(CurrentVolume);
 
                         }
                         else
                         {
-                            VolumeTextLabel.BackColor = Properties.Settings.Default.BarColor;
+                            VolumeTextLabel.BackColor = tbvolscroll.Properties.Settings.Default.BarColor;
                         }
                         if (!IsDisplayingVolume)
                         {
@@ -233,15 +234,15 @@ namespace tbvolscroll
 
         private void SetupProgramVars(object sender, EventArgs e)
         {
-            VolumeTextLabel.Font = Properties.Settings.Default.FontStyle;
+            VolumeTextLabel.Font = tbvolscroll.Properties.Settings.Default.FontStyle;
             int CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
             VolumeTextLabel.Text = $"{CurrentVolume}%";
             TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {CurrentVolume}%";
 
-            MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            Width = 100 + Properties.Settings.Default.BarWidth;
-            Height = Properties.Settings.Default.BarHeight;
+            MaximumSize = new Size(100 + tbvolscroll.Properties.Settings.Default.BarWidth, tbvolscroll.Properties.Settings.Default.BarHeight);
+            MinimumSize = new Size(tbvolscroll.Properties.Settings.Default.BarWidth, tbvolscroll.Properties.Settings.Default.BarHeight);
+            Width = 100 + tbvolscroll.Properties.Settings.Default.BarWidth;
+            Height = tbvolscroll.Properties.Settings.Default.BarHeight;
             Hide();
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
             GetWindowRect(hwnd, out TaskbarRect);

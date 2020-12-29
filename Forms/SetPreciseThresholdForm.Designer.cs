@@ -1,4 +1,4 @@
-﻿namespace tbvolscroll
+﻿namespace TbVolScrollNet5.Forms
 {
     partial class SetPreciseThresholdForm
     {

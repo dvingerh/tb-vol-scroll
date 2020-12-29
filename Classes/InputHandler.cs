@@ -1,8 +1,9 @@
-﻿using Gma.System.MouseKeyHook;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
+using Gma.System.MouseKeyHook;
+using TbVolScrollNet5.Forms;
 
-namespace tbvolscroll
+namespace TbVolScrollNet5.Classes
 {
     public sealed class InputHandler
     {

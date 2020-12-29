@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tbvolscroll
+namespace TbVolScrollNet5.Forms
 {
     public partial class SetAppearanceForm : Form
     {
@@ -22,11 +16,11 @@ namespace tbvolscroll
 
         private void LoadBarAppearance(object sender, EventArgs e)
         {
-            SetBarWidthNumericUpDown.Value = Properties.Settings.Default.BarWidth;
-            SetBarHeightNumericUpDown.Value = Properties.Settings.Default.BarHeight;
-            ColorPreviewPictureBox.BackColor = Properties.Settings.Default.BarColor;
-            BarOpacityTrackBar.Value = Convert.ToInt32(Properties.Settings.Default.BarOpacity * 100);
-            if (Properties.Settings.Default.UseBarGradient)
+            SetBarWidthNumericUpDown.Value = tbvolscroll.Properties.Settings.Default.BarWidth;
+            SetBarHeightNumericUpDown.Value = tbvolscroll.Properties.Settings.Default.BarHeight;
+            ColorPreviewPictureBox.BackColor = tbvolscroll.Properties.Settings.Default.BarColor;
+            BarOpacityTrackBar.Value = Convert.ToInt32(tbvolscroll.Properties.Settings.Default.BarOpacity * 100);
+            if (tbvolscroll.Properties.Settings.Default.UseBarGradient)
             {
                 GradientCheckBox.Checked = true;
                 CustomColorCheckBox.Checked = false;
@@ -44,22 +38,22 @@ namespace tbvolscroll
         {
 
 
-            Properties.Settings.Default.BarWidth = (int)SetBarWidthNumericUpDown.Value;
-            Properties.Settings.Default.BarHeight = (int)SetBarHeightNumericUpDown.Value;
+            tbvolscroll.Properties.Settings.Default.BarWidth = (int)SetBarWidthNumericUpDown.Value;
+            tbvolscroll.Properties.Settings.Default.BarHeight = (int)SetBarHeightNumericUpDown.Value;
 
             if (doSetFont)
-                Properties.Settings.Default.FontStyle = CustomFontDialog.Font;
+                tbvolscroll.Properties.Settings.Default.FontStyle = CustomFontDialog.Font;
 
-            Properties.Settings.Default.UseBarGradient = GradientCheckBox.Checked;
-            Properties.Settings.Default.BarColor = ColorPreviewPictureBox.BackColor;
-            Properties.Settings.Default.BarOpacity = ((double)(BarOpacityTrackBar.Value) / 100.0);
+            tbvolscroll.Properties.Settings.Default.UseBarGradient = GradientCheckBox.Checked;
+            tbvolscroll.Properties.Settings.Default.BarColor = ColorPreviewPictureBox.BackColor;
+            tbvolscroll.Properties.Settings.Default.BarOpacity = ((double)(BarOpacityTrackBar.Value) / 100.0);
 
-            Properties.Settings.Default.Save();
+            tbvolscroll.Properties.Settings.Default.Save();
 
-            mainForm.MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            mainForm.MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            mainForm.Width = 100 + Properties.Settings.Default.BarWidth;
-            mainForm.Height = Properties.Settings.Default.BarHeight;
+            mainForm.MinimumSize = new Size(tbvolscroll.Properties.Settings.Default.BarWidth, tbvolscroll.Properties.Settings.Default.BarHeight);
+            mainForm.MaximumSize = new Size(100 + tbvolscroll.Properties.Settings.Default.BarWidth, tbvolscroll.Properties.Settings.Default.BarHeight);
+            mainForm.Width = 100 + tbvolscroll.Properties.Settings.Default.BarWidth;
+            mainForm.Height = tbvolscroll.Properties.Settings.Default.BarHeight;
             if (doSetFont)
                 mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
 
@@ -90,7 +84,7 @@ namespace tbvolscroll
 
         private void SetFontStyle(object sender, EventArgs e)
         {
-            CustomFontDialog.Font = Properties.Settings.Default.FontStyle;
+            CustomFontDialog.Font = tbvolscroll.Properties.Settings.Default.FontStyle;
             DialogResult dialogResult = CustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
                 doSetFont = true;
