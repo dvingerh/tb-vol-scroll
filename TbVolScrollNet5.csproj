@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>D:\src\eb\github\elbruno\tb-vol-scroll\AppImages\tray.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
