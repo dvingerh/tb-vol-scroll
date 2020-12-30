@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 1.93
+## tb-vol-scroll 1.94
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
