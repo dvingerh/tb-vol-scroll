@@ -54,12 +54,6 @@ namespace tbvolscroll
                 callbackForm.DoVolumeChanges(e.Delta);
         }
 
-        public bool CursorInTaskbar()
-        {
-            Point position = Cursor.Position;
-            return position.Y >= callbackForm.TaskbarRect.Top && position.Y <= callbackForm.TaskbarRect.Bottom;
-        }
-
         public static InputHandler Instance
         {
             get

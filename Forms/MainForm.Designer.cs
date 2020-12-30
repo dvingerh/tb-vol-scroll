@@ -50,10 +50,10 @@
             // VolumeTextLabel
             // 
             this.VolumeTextLabel.BackColor = System.Drawing.Color.White;
-            this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
+            this.VolumeTextLabel.Location = new System.Drawing.Point(1, 1);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(100, 100);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(118, 21);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "Loading . . .";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -170,7 +170,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(0, 0);
+            this.ClientSize = new System.Drawing.Size(120, 23);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
@@ -184,6 +184,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Shown += new System.EventHandler(this.SetupProgramVars);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);

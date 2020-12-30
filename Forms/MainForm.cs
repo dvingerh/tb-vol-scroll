@@ -30,6 +30,10 @@ namespace tbvolscroll
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
 
+
+        #endregion
+
+
         private static void ShowInactiveTopmost(Form frm)
         {
             frm.Invoke((MethodInvoker)delegate
@@ -51,15 +55,7 @@ namespace tbvolscroll
 
         public static bool IsTaskbarHidden()
         {
-            return CheckTaskbarVisibility(null);
-        }
-
-        public static bool CheckTaskbarVisibility(Screen screen)
-        {
-            if (screen == null)
-            {
-                screen = Screen.PrimaryScreen;
-            }
+            Screen screen = Screen.PrimaryScreen;
             RECT rect = new RECT();
             GetWindowRect(new HandleRef(null, GetForegroundWindow()), ref rect);
             return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
@@ -68,8 +64,6 @@ namespace tbvolscroll
         public RECT TaskbarRect;
         public InputHandler inputHandler;
         public bool IsDisplayingVolume = false;
-
-        #endregion
 
         public MainForm(bool noTray = false)
         {
@@ -135,7 +129,7 @@ namespace tbvolscroll
 
 
                         Point CursorPosition = Cursor.Position;
-                        Width = CurrentVolume + Properties.Settings.Default.BarWidth;
+                        Width = CurrentVolume + Properties.Settings.Default.BarWidth + 5;
                         Left = CursorPosition.X - Width / 2;
                         Top = CursorPosition.Y - Height - 5;
                         VolumeTextLabel.Top = 1;
@@ -157,7 +151,6 @@ namespace tbvolscroll
                         if (!IsDisplayingVolume)
                         {
                             IsDisplayingVolume = true;
-                            Application.DoEvents();
                             AutoHideVolume();
                         }
                     }
@@ -202,7 +195,6 @@ namespace tbvolscroll
             Invoke((MethodInvoker)delegate
             {
                 Hide();
-                WindowState = FormWindowState.Minimized;
             });
             IsDisplayingVolume = false;
         }
@@ -244,8 +236,7 @@ namespace tbvolscroll
 
             MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
             MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
-            Width = 100 + Properties.Settings.Default.BarWidth;
-            Height = Properties.Settings.Default.BarHeight;
+            WindowState = FormWindowState.Normal;
             Hide();
             IntPtr hwnd = FindWindow("Shell_traywnd", "");
             GetWindowRect(hwnd, out TaskbarRect);
