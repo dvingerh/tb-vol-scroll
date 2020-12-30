@@ -130,7 +130,7 @@ namespace tbvolscroll
                         }
 
                         CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
-                        VolumeTextLabel.Text = $"{CurrentVolume}%";
+                        VolumeTextLabel.Text = $"{CurrentVolume}% ";
                         TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {CurrentVolume}%";
 
 
@@ -138,11 +138,11 @@ namespace tbvolscroll
                         Width = CurrentVolume + Properties.Settings.Default.BarWidth;
                         Left = CursorPosition.X - Width / 2;
                         Top = CursorPosition.Y - Height - 5;
-
                         VolumeTextLabel.Top = 1;
                         VolumeTextLabel.Left = 1;
                         VolumeTextLabel.Height = Height - 2;
                         VolumeTextLabel.Width = Width - 2;
+                        Refresh();
 
                         Opacity = Properties.Settings.Default.BarOpacity;
                         if (Properties.Settings.Default.UseBarGradient)
@@ -210,7 +210,11 @@ namespace tbvolscroll
         public bool CursorInTaskbar()
         {
             Point position = Cursor.Position;
-            if (position.Y >= TaskbarRect.Top && position.Y <= TaskbarRect.Bottom)
+            Screen screen = Screen.FromPoint(position);
+            int taskbarHeight = TaskbarRect.Bottom - TaskbarRect.Top;
+            int minY = screen.Bounds.Height - taskbarHeight;
+            int maxY = screen.Bounds.Height;
+            if (position.Y >= minY && position.Y <= maxY)
             {
                 return true;
             }
@@ -279,6 +283,11 @@ namespace tbvolscroll
             proc.StartInfo.Verb = "runas";
             proc.Start();
             Environment.Exit(0);
+        }
+
+        private void DebugInfoMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show($"({Cursor.Position.ToString() } inside {TaskbarRect.Left} x {TaskbarRect.Right})");
         }
     }
 }
