@@ -6,63 +6,42 @@ namespace tbvolscroll
 {
     public sealed class InputHandler
     {
-        private static readonly InputHandler instance = null;
-        private static readonly object padlock = new object();
-        public bool IsAltDown;
-        public int TimeOutHelper;
-        private readonly IKeyboardMouseEvents MouseKeyEvents;
+        public bool isAltDown;
+        private readonly IKeyboardMouseEvents mouseEvents;
         private readonly MainForm callbackForm;
 
         public InputHandler(MainForm callbackForm)
         {
             this.callbackForm = callbackForm;
-            MouseKeyEvents = Hook.GlobalEvents();
-            MouseKeyEvents.MouseWheel += OnMouseScroll;
-            MouseKeyEvents.MouseMove += UpdateBarPositionMouseMove;
-            MouseKeyEvents.KeyDown += EnableAltDown;
-            MouseKeyEvents.KeyUp += DisableAltDown;
+            mouseEvents = Hook.GlobalEvents();
+            mouseEvents.MouseWheel += OnMouseScroll;
+            mouseEvents.MouseMove += UpdateBarPositionMouseMove;
+            mouseEvents.KeyDown += EnableAltDown;
+            mouseEvents.KeyUp += DisableAltDown;
         }
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
-            if (callbackForm.IsDisplayingVolume)
-            {
-                Point CursorPosition = Cursor.Position;
-                callbackForm.Left = CursorPosition.X - callbackForm.Width / 2;
-                callbackForm.Top = CursorPosition.Y - callbackForm.Height - 5;
-            }
+            Point cursorPosition = Cursor.Position;
+            callbackForm.Left = cursorPosition.X - callbackForm.Width / 2;
+            callbackForm.Top = cursorPosition.Y - callbackForm.Height - 5;
         }
 
         private void DisableAltDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.LMenu)
-            {
-                IsAltDown = false;
-            }
+                isAltDown = false;
         }
 
         private void EnableAltDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.LMenu)
-            {
-                IsAltDown = true;
-            }
+                isAltDown = true;
         }
 
-        public void OnMouseScroll(object sender, MouseEventArgs e)
+        private void OnMouseScroll(object sender, MouseEventArgs e)
         {
-                callbackForm.DoVolumeChanges(e.Delta);
-        }
-
-        public static InputHandler Instance
-        {
-            get
-            {
-                lock (padlock)
-                {
-                    return instance;
-                }
-            }
+            callbackForm.DoVolumeChanges(e.Delta);
         }
     }
 }

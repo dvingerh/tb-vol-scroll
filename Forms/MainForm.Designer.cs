@@ -148,7 +148,7 @@
             this.SetAppearanceMenuITem.Name = "SetAppearanceMenuITem";
             this.SetAppearanceMenuITem.Size = new System.Drawing.Size(226, 22);
             this.SetAppearanceMenuITem.Text = "Set volume bar appearance...";
-            this.SetAppearanceMenuITem.Click += new System.EventHandler(this.TsmSetVolumeBarDimensions_Click);
+            this.SetAppearanceMenuITem.Click += new System.EventHandler(this.OpenSetAppearanceDialog);
             // 
             // SetPreciseScollThresholdMenuItem
             // 
@@ -185,7 +185,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Shown += new System.EventHandler(this.SetupProgramVars);
+            this.Shown += new System.EventHandler(this.LoadProgramSettings);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
