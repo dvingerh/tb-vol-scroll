@@ -13,28 +13,21 @@ namespace tbvolscroll
     {
 
         #region DLLImports
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern bool GetWindowRect(IntPtr hwnd, out RECT lpRect);
-
         [DllImport("user32.dll")]
         private static extern bool SetWindowPos(int hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        #endregion
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
-
-
+        #region Variables
+        private InputHandler inputHandler;
+        private int volumeBarHideTimeout = 10;
+        private bool isDisplayingVolume = false;
         #endregion
 
 
-        private static void ShowInactiveTopmost(Form frm)
+        private void ShowInactiveTopmost(Form frm)
         {
             frm.Invoke((MethodInvoker)delegate
             {
@@ -42,28 +35,6 @@ namespace tbvolscroll
                 SetWindowPos(frm.Handle.ToInt32(), -1, frm.Left, frm.Top, frm.Width, frm.Height, 16u);
             });
         }
-        public struct RECT
-        {
-            public int Left;
-
-            public int Top;
-
-            public int Right;
-
-            public int Bottom;
-        }
-
-        public static bool IsTaskbarHidden()
-        {
-            Screen screen = Screen.PrimaryScreen;
-            RECT rect = new RECT();
-            GetWindowRect(new HandleRef(null, GetForegroundWindow()), ref rect);
-            return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
-        }
-
-        public RECT TaskbarRect;
-        public InputHandler inputHandler;
-        public bool IsDisplayingVolume = false;
 
         public MainForm(bool noTray = false)
         {
@@ -77,7 +48,7 @@ namespace tbvolscroll
                 TrayNotifyIcon.Visible = false;
         }
 
-        public static bool IsAdministrator()
+        private bool IsAdministrator()
         {
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
@@ -88,50 +59,33 @@ namespace tbvolscroll
             {
                 Invoke((MethodInvoker)delegate
                 {
-                    int CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
-                    if (CursorInTaskbar() && !IsTaskbarHidden())
+                    int currentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
+                    if (CursorInTaskbar())
                     {
-                        inputHandler.TimeOutHelper = 10;
                         if (delta < 0)
                         {
-                            if (inputHandler.IsAltDown)
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume - 1);
-                            }
-                            else if (CurrentVolume <= Properties.Settings.Default.PreciseScrollThreshold)
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume - 1);
-                            }
+                            if (inputHandler.isAltDown || currentVolume <= Properties.Settings.Default.PreciseScrollThreshold)
+                                VolumeHandler.SetMasterVolume(currentVolume - 1);
                             else
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume - Properties.Settings.Default.VolumeStep);
-                            }
+                                VolumeHandler.SetMasterVolume(currentVolume - Properties.Settings.Default.VolumeStep);
                         }
                         else
                         {
-                            if (inputHandler.IsAltDown)
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume + 1);
-                            }
-                            else if (CurrentVolume < Properties.Settings.Default.PreciseScrollThreshold)
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume + 1);
-                            }
+                            if (inputHandler.isAltDown || currentVolume < Properties.Settings.Default.PreciseScrollThreshold)
+                                VolumeHandler.SetMasterVolume(currentVolume + 1);
                             else
-                            {
-                                VolumeHandler.SetMasterVolume(CurrentVolume + Properties.Settings.Default.VolumeStep);
-                            }
+                                VolumeHandler.SetMasterVolume(currentVolume + Properties.Settings.Default.VolumeStep);
                         }
 
-                        CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
-                        VolumeTextLabel.Text = $"{CurrentVolume}% ";
-                        TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {CurrentVolume}%";
+                        currentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
+                        VolumeTextLabel.Text = $"{currentVolume}% ";
+                        TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {currentVolume}%";
 
 
-                        Point CursorPosition = Cursor.Position;
-                        Width = CurrentVolume + Properties.Settings.Default.BarWidth + 5;
-                        Left = CursorPosition.X - Width / 2;
-                        Top = CursorPosition.Y - Height - 5;
+                        Point cursorPosition = Cursor.Position;
+                        Width = currentVolume + Properties.Settings.Default.BarWidth + 5;
+                        Left = cursorPosition.X - Width / 2;
+                        Top = cursorPosition.Y - Height - 5;
                         VolumeTextLabel.Top = 1;
                         VolumeTextLabel.Left = 1;
                         VolumeTextLabel.Height = Height - 2;
@@ -140,34 +94,22 @@ namespace tbvolscroll
 
                         Opacity = Properties.Settings.Default.BarOpacity;
                         if (Properties.Settings.Default.UseBarGradient)
-                        {
-                            VolumeTextLabel.BackColor = CalculateColor(CurrentVolume);
-
-                        }
+                            VolumeTextLabel.BackColor = CalculateColor(currentVolume);
                         else
-                        {
                             VolumeTextLabel.BackColor = Properties.Settings.Default.BarColor;
-                        }
-                        if (!IsDisplayingVolume)
+
+                        if (!isDisplayingVolume)
                         {
-                            IsDisplayingVolume = true;
+                            isDisplayingVolume = true;
                             AutoHideVolume();
                         }
-                    }
-                    else
-                    {
-                        Invoke((MethodInvoker)delegate
-                        {
-                            Hide();
-                        });
-                        IsDisplayingVolume = false;
                     }
                 });
             }
             catch { }
         }
 
-        private static Color CalculateColor(double percentage)
+        private Color CalculateColor(double percentage)
         {
             double num = ((percentage > 50.0) ? (1.0 - 2.0 * (percentage - 50.0) / 100.0) : 1.0) * 255.0;
             double num2 = ((percentage > 50.0) ? 1.0 : (2.0 * percentage / 100.0)) * 255.0;
@@ -175,45 +117,37 @@ namespace tbvolscroll
             return Color.FromArgb((int)num, (int)num2, (int)num3);
         }
 
-        async Task PutTaskDelay()
+        private async Task PutTaskDelay()
         {
             await Task.Delay(100);
         }
-
-
 
         private async void AutoHideVolume()
         {
             ShowInactiveTopmost(this);
 
-            while (inputHandler.TimeOutHelper != 0)
+            while (volumeBarHideTimeout != 0)
             {
                 await PutTaskDelay();
-                inputHandler.TimeOutHelper--;
+                volumeBarHideTimeout--;
             }
 
             Invoke((MethodInvoker)delegate
             {
                 Hide();
             });
-            IsDisplayingVolume = false;
+            volumeBarHideTimeout = 10;
+            isDisplayingVolume = false;
         }
 
-        public bool CursorInTaskbar()
+        private bool CursorInTaskbar()
         {
-            Point position = Cursor.Position;
-            Screen screen = Screen.FromPoint(position);
-            int taskbarHeight = TaskbarRect.Bottom - TaskbarRect.Top;
-            int minY = screen.Bounds.Height - taskbarHeight;
-            int maxY = screen.Bounds.Height;
-            if (position.Y >= minY && position.Y <= maxY)
-            {
+            Point cursorPosition = Cursor.Position;
+            Rectangle taskbarBounds = TaskbarHelper.CurrentBounds;
+            if (taskbarBounds.Contains(cursorPosition) && !TaskbarHelper.IsTaskbarHidden())
                 return true;
-            }
             else
-            {
                 return false;
-            }
         }
 
         private void ExitApplication(object sender, EventArgs e)
@@ -227,26 +161,26 @@ namespace tbvolscroll
             Application.Restart();
         }
 
-        private void SetupProgramVars(object sender, EventArgs e)
+        private void LoadProgramSettings(object sender, EventArgs e)
         {
+            int currentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
+            
             VolumeTextLabel.Font = Properties.Settings.Default.FontStyle;
-            int CurrentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
-            VolumeTextLabel.Text = $"{CurrentVolume}%";
-            TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {CurrentVolume}%";
+            VolumeTextLabel.Text = $"{currentVolume}%";
+            TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {currentVolume}%";
 
             MaximumSize = new Size(100 + Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
             MinimumSize = new Size(Properties.Settings.Default.BarWidth, Properties.Settings.Default.BarHeight);
             WindowState = FormWindowState.Normal;
             Hide();
-            IntPtr hwnd = FindWindow("Shell_traywnd", "");
-            GetWindowRect(hwnd, out TaskbarRect);
+
             inputHandler = new InputHandler(this);
 
         }
 
         private void ShowTrayMenuOnClick(object sender, EventArgs e)
         {
-            System.Reflection.MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
             mi.Invoke(TrayNotifyIcon, null);
         }
 
@@ -260,10 +194,9 @@ namespace tbvolscroll
             new SetPreciseThresholdForm().ShowDialog();
         }
 
-        private void TsmSetVolumeBarDimensions_Click(object sender, EventArgs e)
+        private void OpenSetAppearanceDialog(object sender, EventArgs e)
         {
             new SetAppearanceForm(this).ShowDialog();
-
         }
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)
@@ -273,12 +206,7 @@ namespace tbvolscroll
             proc.StartInfo.UseShellExecute = true;
             proc.StartInfo.Verb = "runas";
             proc.Start();
-            Environment.Exit(0);
-        }
-
-        private void DebugInfoMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show($"({Cursor.Position.ToString() } inside {TaskbarRect.Left} x {TaskbarRect.Right})");
+            ExitMenuItem.PerformClick();
         }
     }
 }
