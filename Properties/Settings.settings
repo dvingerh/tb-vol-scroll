@@ -24,7 +24,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="AppVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1.94</Value>
+      <Value Profile="(Default)">1.95</Value>
     </Setting>
     <Setting Name="FontStyle" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>

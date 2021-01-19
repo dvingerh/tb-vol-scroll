@@ -109,7 +109,7 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.94")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.95")]
         public string AppVersion {
             get {
                 return ((string)(this["AppVersion"]));

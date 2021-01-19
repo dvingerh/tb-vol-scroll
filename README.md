@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 1.94
+## tb-vol-scroll 1.95
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
@@ -27,13 +27,5 @@ This software was [tested and approved](https://www.softpedia.com/get/Multimedia
 ![](https://s1.softpedia-static.com/_img/sp100clean.png?1)  
 
 ##
-
-- Costura.Fody
-
-- Fody.2.0.0
-
-- MouseKeyHook
-
+- [Taskbar.cs by Franz Alex Gaisie-Essilfie](https://gist.githubusercontent.com/franzalex/e747e6b318ab8f328aa02301f25ec534/raw/84f731f2e2396dc8ce28b564a75b712bf56b184f/Taskbar.cs)
 - [Sverrir's AudioManager script](https://gist.github.com/sverrirs/d099b34b7f72bb4fb386)
-
-And several StackOverflow answers.
