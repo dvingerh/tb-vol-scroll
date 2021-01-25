@@ -210,14 +210,16 @@ namespace tbvolscroll
 
         private void ExitApplication(object sender, EventArgs e)
         {
-            inputHandler.inputEvents.Dispose();
+            if (inputHandler != null)
+                inputHandler.inputEvents.Dispose();
             TrayNotifyIcon.Dispose();
             Environment.Exit(0);
         }
 
         private void RestartAppNormal(object sender, EventArgs e)
         {
-            inputHandler.inputEvents.Dispose();
+            if (inputHandler != null)
+                inputHandler.inputEvents.Dispose();
             TrayNotifyIcon.Dispose();
             Application.Restart();
         }

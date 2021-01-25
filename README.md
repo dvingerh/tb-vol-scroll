@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 1.97
+## tb-vol-scroll 1.98
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
@@ -21,6 +21,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 - Volume scroll step: Change scrolling step percentage.
 - Precise control threshold: Change threshold at which to auto-enable precise volume control.
+- Try to restart with Administrator privileges on initial launch (if not obtained already).
 - Open Startup Folder
 - Restart application:
   - Normal
@@ -36,10 +37,6 @@ The volume bar will follow the cursor when it's moved around and display the cur
 ![Preview](https://github.com/dvingerh/tb-vol-scroll/blob/master/example.gif?raw=true)
 
 ## Thanks
-
-This software was [tested and approved](https://www.softpedia.com/get/Multimedia/Audio/Other-AUDIO-Tools/TbVolScroll.shtml) by SoftPedia.
-
-![](https://s1.softpedia-static.com/_img/sp100clean.png?1)  
 
 ##
 - [Taskbar.cs by Franz Alex Gaisie-Essilfie](https://gist.githubusercontent.com/franzalex/e747e6b318ab8f328aa02301f25ec534/raw/84f731f2e2396dc8ce28b564a75b712bf56b184f/Taskbar.cs)
