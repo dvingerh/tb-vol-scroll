@@ -1,5 +1,4 @@
 ﻿using Gma.System.MouseKeyHook;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,17 +9,17 @@ namespace tbvolscroll
         public bool isAltDown;
         public bool isCtrlDown;
         public bool isScrolling;
-        private readonly IKeyboardMouseEvents mouseEvents;
+        public readonly IKeyboardMouseEvents inputEvents;
         private readonly MainForm callbackForm;
 
         public InputHandler(MainForm callbackForm)
         {
             this.callbackForm = callbackForm;
-            mouseEvents = Hook.GlobalEvents();
-            mouseEvents.MouseWheel += OnMouseScroll;
-            mouseEvents.MouseMove += UpdateBarPositionMouseMove;
-            mouseEvents.KeyDown += EnableKeyActions;
-            mouseEvents.KeyUp += DisableKeyActions;
+            inputEvents = Hook.GlobalEvents();
+            inputEvents.MouseWheel += OnMouseScroll;
+            inputEvents.MouseMove += UpdateBarPositionMouseMove;
+            inputEvents.KeyDown += EnableKeyActions;
+            inputEvents.KeyUp += DisableKeyActions;
         }
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)

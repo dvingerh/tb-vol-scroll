@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Reflection;
-using System.Threading;
 
 namespace tbvolscroll
 {
@@ -28,26 +27,41 @@ namespace tbvolscroll
         #endregion
 
 
-        private void ShowInactiveTopmost(Form frm)
+        private void ShowInactiveTopmost()
         {
-            frm.Invoke((MethodInvoker)delegate
+            Invoke((MethodInvoker)delegate
             {
-                ShowWindow(frm.Handle, 4);
-                SetWindowPos(frm.Handle.ToInt32(), -1, frm.Left, frm.Top, frm.Width, frm.Height, 16u);
+                ShowWindow(Handle, 4);
+                SetWindowPos(Handle.ToInt32(), -1, Left, Top, Width, Height, 16u);
             });
         }
 
-        public MainForm(bool noTray = false)
+        public MainForm(bool noTray = false, bool attemptedAdmin = false)
         {
             InitializeComponent();
 
-            if (IsAdministrator())
-                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{Properties.Settings.Default.AppVersion} (Admin)";
-            else
-                TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{Properties.Settings.Default.AppVersion}";
+            bool hasAdmin = IsAdministrator();
+
+            TitleLabelMenuItem.Text = $"{Assembly.GetEntryAssembly().GetName().Name} v{Application.ProductVersion}" + (hasAdmin ? " (Administrator)" : "");
 
             if (noTray)
                 TrayNotifyIcon.Visible = false;
+
+            if (!attemptedAdmin && !hasAdmin && Properties.Settings.Default.AutoRetryAdmin)
+            {
+                Process proc = new Process();
+                proc.StartInfo.FileName = Application.ExecutablePath;
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.Verb = "runas";
+                proc.StartInfo.Arguments = "admin";
+                proc.Start();
+                ExitMenuItem.PerformClick();
+            }
+            else
+            {
+                if (attemptedAdmin && !hasAdmin)
+                    TrayNotifyIcon.ShowBalloonTip(1000, "Warning", "Could not obtain administrator rights, scrolling may not work in all cases.", ToolTipIcon.Warning);
+            }
         }
 
         private bool IsAdministrator()
@@ -161,13 +175,12 @@ namespace tbvolscroll
         {
             isDisplayingVolume = true;
             volumeBarAutoHideTimeout = Properties.Settings.Default.AutoHideTimeOut;
-            ShowInactiveTopmost(this);
+            ShowInactiveTopmost();
 
-            while (volumeBarAutoHideTimeout >= 50)
+            while (volumeBarAutoHideTimeout >= 10)
             {
-                await Task.Delay(50);
-                volumeBarAutoHideTimeout -= 50;
-                Console.WriteLine(volumeBarAutoHideTimeout);
+                await Task.Delay(10);
+                volumeBarAutoHideTimeout -= 10;
             }
 
             if (!inputHandler.isScrolling)
@@ -197,12 +210,15 @@ namespace tbvolscroll
 
         private void ExitApplication(object sender, EventArgs e)
         {
+            inputHandler.inputEvents.Dispose();
             TrayNotifyIcon.Dispose();
             Environment.Exit(0);
         }
 
         private void RestartAppNormal(object sender, EventArgs e)
         {
+            inputHandler.inputEvents.Dispose();
+            TrayNotifyIcon.Dispose();
             Application.Restart();
         }
 
@@ -235,19 +251,9 @@ namespace tbvolscroll
             mi.Invoke(TrayNotifyIcon, null);
         }
 
-        private void OpenSetVolumeStepDialog(object sender, EventArgs e)
+        private void OpenSettingsDialog(object sender, EventArgs e)
         {
-            new SetVolumeStepForm().ShowDialog();
-        }
-
-        private void OpenSetPreciseScrollThreshold(object sender, EventArgs e)
-        {
-            new SetPreciseThresholdForm().ShowDialog();
-        }
-
-        private void OpenSetAppearanceDialog(object sender, EventArgs e)
-        {
-            new SetAppearanceForm(this).ShowDialog();
+            new SettingsForm(this).ShowDialog();
         }
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)

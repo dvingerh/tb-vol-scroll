@@ -13,13 +13,18 @@ namespace tbvolscroll
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            string[] args = Environment.GetCommandLineArgs();
-            bool noTrayArg = args.Length > 1 && args[1] == "notray";
+            bool noTrayArg = false;
+            bool adminArg = false;
+            foreach(string arg in args)
+            {
+                noTrayArg = arg == "notray";
+                adminArg = arg == "admin";
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTray: noTrayArg));
+            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg));
         }
     }
 }

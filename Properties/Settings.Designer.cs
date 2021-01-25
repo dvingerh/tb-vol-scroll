@@ -109,18 +109,6 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.97")]
-        public string AppVersion {
-            get {
-                return ((string)(this["AppVersion"]));
-            }
-            set {
-                this["AppVersion"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 8.25pt, style=Bold")]
         public global::System.Drawing.Font FontStyle {
             get {
@@ -152,6 +140,18 @@ namespace tbvolscroll.Properties {
             }
             set {
                 this["AutoHideTimeOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoRetryAdmin {
+            get {
+                return ((bool)(this["AutoRetryAdmin"]));
+            }
+            set {
+                this["AutoRetryAdmin"] = value;
             }
         }
     }

@@ -41,9 +41,7 @@
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.SetVolumeStepMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SetAppearanceMenuITem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SetPreciseScollThresholdMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SetAppearanceBehaviourMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +86,7 @@
             // TitleLabelMenuItem
             // 
             this.TitleLabelMenuItem.BackColor = System.Drawing.SystemColors.Control;
+            this.TitleLabelMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.TitleLabelMenuItem.Enabled = false;
             this.TitleLabelMenuItem.Name = "TitleLabelMenuItem";
             this.TitleLabelMenuItem.Size = new System.Drawing.Size(139, 22);
@@ -103,12 +102,10 @@
             // 
             this.OptionsMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.OptionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RestartMenuItem,
-            this.OpenStartupFolderMenuItem,
+            this.SetAppearanceBehaviourMenuItem,
             this.SeparatorMenuItem2,
-            this.SetVolumeStepMenuItem,
-            this.SetAppearanceMenuITem,
-            this.SetPreciseScollThresholdMenuItem});
+            this.OpenStartupFolderMenuItem,
+            this.RestartMenuItem});
             this.OptionsMenuItem.Name = "OptionsMenuItem";
             this.OptionsMenuItem.Size = new System.Drawing.Size(139, 22);
             this.OptionsMenuItem.Text = "Options";
@@ -119,8 +116,8 @@
             this.RestartNormalMenuItem,
             this.RestartAsAdminMenuItem});
             this.RestartMenuItem.Name = "RestartMenuItem";
-            this.RestartMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.RestartMenuItem.Text = "Restart";
+            this.RestartMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RestartMenuItem.Text = "Restart application";
             // 
             // RestartNormalMenuItem
             // 
@@ -139,35 +136,21 @@
             // OpenStartupFolderMenuItem
             // 
             this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
-            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(180, 22);
             this.OpenStartupFolderMenuItem.Text = "Open startup folder";
             this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // SeparatorMenuItem2
             // 
             this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(214, 6);
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(177, 6);
             // 
-            // SetVolumeStepMenuItem
+            // SetAppearanceBehaviourMenuItem
             // 
-            this.SetVolumeStepMenuItem.Name = "SetVolumeStepMenuItem";
-            this.SetVolumeStepMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.SetVolumeStepMenuItem.Text = "Set volume scroll step";
-            this.SetVolumeStepMenuItem.Click += new System.EventHandler(this.OpenSetVolumeStepDialog);
-            // 
-            // SetAppearanceMenuITem
-            // 
-            this.SetAppearanceMenuITem.Name = "SetAppearanceMenuITem";
-            this.SetAppearanceMenuITem.Size = new System.Drawing.Size(217, 22);
-            this.SetAppearanceMenuITem.Text = "Set volume bar appearance";
-            this.SetAppearanceMenuITem.Click += new System.EventHandler(this.OpenSetAppearanceDialog);
-            // 
-            // SetPreciseScollThresholdMenuItem
-            // 
-            this.SetPreciseScollThresholdMenuItem.Name = "SetPreciseScollThresholdMenuItem";
-            this.SetPreciseScollThresholdMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.SetPreciseScollThresholdMenuItem.Text = "Set precise scroll threshold";
-            this.SetPreciseScollThresholdMenuItem.Click += new System.EventHandler(this.OpenSetPreciseScrollThreshold);
+            this.SetAppearanceBehaviourMenuItem.Name = "SetAppearanceBehaviourMenuItem";
+            this.SetAppearanceBehaviourMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SetAppearanceBehaviourMenuItem.Text = "Settings";
+            this.SetAppearanceBehaviourMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
             // 
             // ExitMenuItem
             // 
@@ -196,6 +179,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Shown += new System.EventHandler(this.LoadProgramSettings);
             this.TrayContextMenu.ResumeLayout(false);
@@ -212,9 +196,7 @@
         private System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem SetVolumeStepMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SetPreciseScollThresholdMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SetAppearanceMenuITem;
+        private System.Windows.Forms.ToolStripMenuItem SetAppearanceBehaviourMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;

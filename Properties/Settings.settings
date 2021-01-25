@@ -23,9 +23,6 @@
     <Setting Name="BarOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="AppVersion" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1.97</Value>
-    </Setting>
     <Setting Name="FontStyle" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
     </Setting>
@@ -34,6 +31,9 @@
     </Setting>
     <Setting Name="AutoHideTimeOut" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="AutoRetryAdmin" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
