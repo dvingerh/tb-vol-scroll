@@ -34,7 +34,9 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 ## Preview
 
-![Preview](https://github.com/dvingerh/tb-vol-scroll/blob/master/example.gif?raw=true)
+![Preview](example.gif?raw=true)
+
+![Settings](settings.png?raw=true)
 
 ## Thanks
 
