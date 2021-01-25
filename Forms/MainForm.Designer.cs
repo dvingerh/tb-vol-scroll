@@ -39,6 +39,7 @@
             this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.SetVolumeStepMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SetAppearanceMenuITem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,14 +50,16 @@
             // 
             // VolumeTextLabel
             // 
-            this.VolumeTextLabel.BackColor = System.Drawing.Color.White;
-            this.VolumeTextLabel.Location = new System.Drawing.Point(1, 1);
+            this.VolumeTextLabel.BackColor = System.Drawing.Color.DodgerBlue;
+            this.VolumeTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(118, 21);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(120, 23);
             this.VolumeTextLabel.TabIndex = 0;
-            this.VolumeTextLabel.Text = "Loading . . .";
+            this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VolumeTextLabel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawVolumeBarBorder);
             // 
             // TrayNotifyIcon
             // 
@@ -66,6 +69,7 @@
             this.TrayNotifyIcon.Text = "tb-vol-scroll - Loading";
             this.TrayNotifyIcon.Visible = true;
             this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
+            this.TrayNotifyIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTrayIconText);
             // 
             // TrayContextMenu
             // 
@@ -100,6 +104,7 @@
             this.OptionsMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.OptionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.RestartMenuItem,
+            this.OpenStartupFolderMenuItem,
             this.SeparatorMenuItem2,
             this.SetVolumeStepMenuItem,
             this.SetAppearanceMenuITem,
@@ -114,7 +119,7 @@
             this.RestartNormalMenuItem,
             this.RestartAsAdminMenuItem});
             this.RestartMenuItem.Name = "RestartMenuItem";
-            this.RestartMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.RestartMenuItem.Size = new System.Drawing.Size(217, 22);
             this.RestartMenuItem.Text = "Restart";
             // 
             // RestartNormalMenuItem
@@ -131,30 +136,37 @@
             this.RestartAsAdminMenuItem.Text = "Restart (as Administrator)";
             this.RestartAsAdminMenuItem.Click += new System.EventHandler(this.RestartAppAsAdministrator);
             // 
+            // OpenStartupFolderMenuItem
+            // 
+            this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
+            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.OpenStartupFolderMenuItem.Text = "Open startup folder";
+            this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
+            // 
             // SeparatorMenuItem2
             // 
             this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(223, 6);
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(214, 6);
             // 
             // SetVolumeStepMenuItem
             // 
             this.SetVolumeStepMenuItem.Name = "SetVolumeStepMenuItem";
-            this.SetVolumeStepMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.SetVolumeStepMenuItem.Text = "Set volume scroll step...";
+            this.SetVolumeStepMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.SetVolumeStepMenuItem.Text = "Set volume scroll step";
             this.SetVolumeStepMenuItem.Click += new System.EventHandler(this.OpenSetVolumeStepDialog);
             // 
             // SetAppearanceMenuITem
             // 
             this.SetAppearanceMenuITem.Name = "SetAppearanceMenuITem";
-            this.SetAppearanceMenuITem.Size = new System.Drawing.Size(226, 22);
-            this.SetAppearanceMenuITem.Text = "Set volume bar appearance...";
+            this.SetAppearanceMenuITem.Size = new System.Drawing.Size(217, 22);
+            this.SetAppearanceMenuITem.Text = "Set volume bar appearance";
             this.SetAppearanceMenuITem.Click += new System.EventHandler(this.OpenSetAppearanceDialog);
             // 
             // SetPreciseScollThresholdMenuItem
             // 
             this.SetPreciseScollThresholdMenuItem.Name = "SetPreciseScollThresholdMenuItem";
-            this.SetPreciseScollThresholdMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.SetPreciseScollThresholdMenuItem.Text = "Set precise scroll threshold...";
+            this.SetPreciseScollThresholdMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.SetPreciseScollThresholdMenuItem.Text = "Set precise scroll threshold";
             this.SetPreciseScollThresholdMenuItem.Click += new System.EventHandler(this.OpenSetPreciseScrollThreshold);
             // 
             // ExitMenuItem
@@ -206,6 +218,7 @@
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
+        private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
     }
 }
 

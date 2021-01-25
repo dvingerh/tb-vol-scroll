@@ -29,5 +29,11 @@
     <Setting Name="FontStyle" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
     </Setting>
+    <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AutoHideTimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

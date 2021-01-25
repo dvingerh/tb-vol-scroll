@@ -56,10 +56,11 @@
             // 
             // ThresholdLabel
             // 
-            this.ThresholdLabel.AutoSize = true;
-            this.ThresholdLabel.Location = new System.Drawing.Point(24, 9);
+            this.ThresholdLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ThresholdLabel.Location = new System.Drawing.Point(12, 9);
             this.ThresholdLabel.Name = "ThresholdLabel";
-            this.ThresholdLabel.Size = new System.Drawing.Size(210, 26);
+            this.ThresholdLabel.Size = new System.Drawing.Size(235, 26);
             this.ThresholdLabel.TabIndex = 1;
             this.ThresholdLabel.Text = "Change the threshold for when precise\r\nscrolling is enabled. Default value is 10." +
     "";
@@ -96,7 +97,6 @@
             this.Load += new System.EventHandler(this.LoadCurrentThreshold);
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

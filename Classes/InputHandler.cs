@@ -1,5 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tbvolscroll
@@ -7,6 +8,8 @@ namespace tbvolscroll
     public sealed class InputHandler
     {
         public bool isAltDown;
+        public bool isCtrlDown;
+        public bool isScrolling;
         private readonly IKeyboardMouseEvents mouseEvents;
         private readonly MainForm callbackForm;
 
@@ -16,8 +19,8 @@ namespace tbvolscroll
             mouseEvents = Hook.GlobalEvents();
             mouseEvents.MouseWheel += OnMouseScroll;
             mouseEvents.MouseMove += UpdateBarPositionMouseMove;
-            mouseEvents.KeyDown += EnableAltDown;
-            mouseEvents.KeyUp += DisableAltDown;
+            mouseEvents.KeyDown += EnableKeyActions;
+            mouseEvents.KeyUp += DisableKeyActions;
         }
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
@@ -25,21 +28,28 @@ namespace tbvolscroll
             callbackForm.SetVolumeBarPosition(TaskbarHelper.Position);
         }
 
-        private void DisableAltDown(object sender, KeyEventArgs e)
+        private void DisableKeyActions(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.LMenu)
+            if (e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu)
                 isAltDown = false;
+            if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
+                isCtrlDown = false;
         }
 
-        private void EnableAltDown(object sender, KeyEventArgs e)
+        private void EnableKeyActions(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.LMenu)
+            if (e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu)
                 isAltDown = true;
+            if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
+                isCtrlDown = true;
         }
 
-        private void OnMouseScroll(object sender, MouseEventArgs e)
+        private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
+            isScrolling = true;
             callbackForm.DoVolumeChanges(e.Delta);
+            await Task.Delay(100);
+            isScrolling = false;
         }
     }
 }

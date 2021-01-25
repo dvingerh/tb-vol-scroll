@@ -44,15 +44,18 @@
             this.FontStyleLabel = new System.Windows.Forms.Label();
             this.FontStyleButton = new System.Windows.Forms.Button();
             this.CustomFontDialog = new System.Windows.Forms.FontDialog();
+            this.AutoHideTimeOutLabel = new System.Windows.Forms.Label();
+            this.AutoHideTimeOutNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.SetBarWidthNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SetBarHeightNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ColorPreviewPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BarOpacityTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoHideTimeOutNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // SaveVolumeBarAppearanceButton
             // 
-            this.SaveVolumeBarAppearanceButton.Location = new System.Drawing.Point(142, 376);
+            this.SaveVolumeBarAppearanceButton.Location = new System.Drawing.Point(142, 451);
             this.SaveVolumeBarAppearanceButton.Name = "SaveVolumeBarAppearanceButton";
             this.SaveVolumeBarAppearanceButton.Size = new System.Drawing.Size(75, 23);
             this.SaveVolumeBarAppearanceButton.TabIndex = 3;
@@ -199,9 +202,10 @@
             // 
             // OpacityValueLabel
             // 
-            this.OpacityValueLabel.Location = new System.Drawing.Point(106, 338);
+            this.OpacityValueLabel.AutoSize = true;
+            this.OpacityValueLabel.Location = new System.Drawing.Point(125, 338);
             this.OpacityValueLabel.Name = "OpacityValueLabel";
-            this.OpacityValueLabel.Size = new System.Drawing.Size(146, 20);
+            this.OpacityValueLabel.Size = new System.Drawing.Size(109, 13);
             this.OpacityValueLabel.TabIndex = 13;
             this.OpacityValueLabel.Text = "Current value: 100%";
             this.OpacityValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -232,12 +236,48 @@
             this.CustomFontDialog.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CustomFontDialog.FontMustExist = true;
             // 
+            // AutoHideTimeOutLabel
+            // 
+            this.AutoHideTimeOutLabel.AutoSize = true;
+            this.AutoHideTimeOutLabel.Location = new System.Drawing.Point(70, 374);
+            this.AutoHideTimeOutLabel.Name = "AutoHideTimeOutLabel";
+            this.AutoHideTimeOutLabel.Size = new System.Drawing.Size(218, 26);
+            this.AutoHideTimeOutLabel.TabIndex = 16;
+            this.AutoHideTimeOutLabel.Text = "Set the autohide timeout in milliseconds.\r\nDefault value is 1000.";
+            this.AutoHideTimeOutLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AutoHideTimeOutNumericUpDown
+            // 
+            this.AutoHideTimeOutNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(150, 409);
+            this.AutoHideTimeOutNumericUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.AutoHideTimeOutNumericUpDown.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.AutoHideTimeOutNumericUpDown.Name = "AutoHideTimeOutNumericUpDown";
+            this.AutoHideTimeOutNumericUpDown.Size = new System.Drawing.Size(59, 22);
+            this.AutoHideTimeOutNumericUpDown.TabIndex = 17;
+            this.AutoHideTimeOutNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.AutoHideTimeOutNumericUpDown.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            // 
             // SetAppearanceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(359, 411);
+            this.ClientSize = new System.Drawing.Size(359, 486);
+            this.Controls.Add(this.AutoHideTimeOutNumericUpDown);
+            this.Controls.Add(this.AutoHideTimeOutLabel);
             this.Controls.Add(this.FontStyleButton);
             this.Controls.Add(this.FontStyleLabel);
             this.Controls.Add(this.OpacityValueLabel);
@@ -265,6 +305,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.SetBarHeightNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ColorPreviewPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BarOpacityTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AutoHideTimeOutNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,5 +328,7 @@
         private System.Windows.Forms.Label FontStyleLabel;
         private System.Windows.Forms.Button FontStyleButton;
         private System.Windows.Forms.FontDialog CustomFontDialog;
+        private System.Windows.Forms.Label AutoHideTimeOutLabel;
+        private System.Windows.Forms.NumericUpDown AutoHideTimeOutNumericUpDown;
     }
 }

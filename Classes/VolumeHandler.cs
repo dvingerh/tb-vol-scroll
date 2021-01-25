@@ -8,6 +8,28 @@ namespace tbvolscroll
         #region Master Volume Manipulation
 
         /// <summary>
+        /// Mute or unmute the master volume
+        /// </summary>
+        /// <param name="isMuted">true to mute the master volume, false to unmute</param>
+        public static void SetMasterVolumeMute(bool isMuted)
+        {
+            IAudioEndpointVolume masterVol = null;
+            try
+            {
+                masterVol = GetMasterVolumeObject();
+                if (masterVol == null)
+                    return;
+
+                masterVol.SetMute(isMuted, Guid.Empty);
+            }
+            finally
+            {
+                if (masterVol != null)
+                    Marshal.ReleaseComObject(masterVol);
+            }
+        }
+
+        /// <summary>
         /// Gets the current master volume in scalar values (percentage)
         /// </summary>
         /// <returns>-1 in case of an error, if successful the value will be between 0 and 100</returns>

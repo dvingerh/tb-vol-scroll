@@ -56,10 +56,11 @@
             // 
             // SetVolumeStepLabel
             // 
-            this.SetVolumeStepLabel.AutoSize = true;
-            this.SetVolumeStepLabel.Location = new System.Drawing.Point(33, 9);
+            this.SetVolumeStepLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SetVolumeStepLabel.Location = new System.Drawing.Point(12, 9);
             this.SetVolumeStepLabel.Name = "SetVolumeStepLabel";
-            this.SetVolumeStepLabel.Size = new System.Drawing.Size(193, 26);
+            this.SetVolumeStepLabel.Size = new System.Drawing.Size(235, 26);
             this.SetVolumeStepLabel.TabIndex = 1;
             this.SetVolumeStepLabel.Text = "Change the volume step percentage\r\nfor each scroll. Default value is 5.";
             this.SetVolumeStepLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -95,7 +96,6 @@
             this.Load += new System.EventHandler(this.LoadCurrentVolumeStep);
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeStepNumericUpDown)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

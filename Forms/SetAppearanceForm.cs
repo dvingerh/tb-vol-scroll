@@ -24,6 +24,7 @@ namespace tbvolscroll
         {
             SetBarWidthNumericUpDown.Value = Properties.Settings.Default.BarWidth;
             SetBarHeightNumericUpDown.Value = Properties.Settings.Default.BarHeight;
+            AutoHideTimeOutNumericUpDown.Value = Properties.Settings.Default.AutoHideTimeOut;
             ColorPreviewPictureBox.BackColor = Properties.Settings.Default.BarColor;
             BarOpacityTrackBar.Value = Convert.ToInt32(Properties.Settings.Default.BarOpacity * 100);
             if (Properties.Settings.Default.UseBarGradient)
@@ -42,8 +43,6 @@ namespace tbvolscroll
 
         private void SaveBarAppearance(object sender, EventArgs e)
         {
-
-
             Properties.Settings.Default.BarWidth = (int)SetBarWidthNumericUpDown.Value;
             Properties.Settings.Default.BarHeight = (int)SetBarHeightNumericUpDown.Value;
 
@@ -53,6 +52,8 @@ namespace tbvolscroll
             Properties.Settings.Default.UseBarGradient = GradientCheckBox.Checked;
             Properties.Settings.Default.BarColor = ColorPreviewPictureBox.BackColor;
             Properties.Settings.Default.BarOpacity = ((double)(BarOpacityTrackBar.Value) / 100.0);
+
+            Properties.Settings.Default.AutoHideTimeOut = (int)AutoHideTimeOutNumericUpDown.Value;
 
             Properties.Settings.Default.Save();
 
