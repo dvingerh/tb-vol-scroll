@@ -82,10 +82,8 @@ namespace tbvolscroll
                         TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {currentVolume}%";
 
 
-                        Point cursorPosition = Cursor.Position;
                         Width = currentVolume + Properties.Settings.Default.BarWidth + 5;
-                        Left = cursorPosition.X - Width / 2;
-                        Top = cursorPosition.Y - Height - 5;
+                        SetVolumeBarPosition(TaskbarHelper.Position);
                         VolumeTextLabel.Top = 1;
                         VolumeTextLabel.Left = 1;
                         VolumeTextLabel.Height = Height - 2;
@@ -107,6 +105,30 @@ namespace tbvolscroll
                 });
             }
             catch { }
+        }
+
+        private void SetVolumeBarPosition(TaskbarPosition taskbarPosition)
+        {
+            Point cursorPosition = Cursor.Position;
+            switch (taskbarPosition)
+            {
+                case TaskbarPosition.Bottom:
+                    Left = cursorPosition.X - Width / 2;
+                    Top = cursorPosition.Y - Height - 5;
+                    break;
+                case TaskbarPosition.Left:
+                    Left = cursorPosition.X + 25;
+                    Top = cursorPosition.Y - 5;
+                    break;
+                case TaskbarPosition.Top:
+                    Left = cursorPosition.X - Width / 2;
+                    Top = cursorPosition.Y + 25;
+                    break;
+                case TaskbarPosition.Right:
+                    Left = cursorPosition.X - Width - 25;
+                    Top = cursorPosition.Y - 5;
+                    break;
+            }
         }
 
         private Color CalculateColor(double percentage)
