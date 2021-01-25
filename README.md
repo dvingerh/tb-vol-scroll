@@ -23,9 +23,9 @@ The volume bar will follow the cursor when it's moved around and display the cur
 - Precise control threshold: Change threshold at which to auto-enable precise volume control.
 - Open Startup Folder
 - Restart application:
-  -  Normal
-  - Administrator
-- `notray` argument: Don't show tray icon while running.z
+  - Normal
+  - Administrator Privileges
+- `notray` argument: Don't show tray icon while running
 
 ## Known problems
 
