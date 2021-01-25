@@ -3,16 +3,33 @@
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
 
-Hold the left <kbd>ALT</kbd> key to enable precise volume control (decrease/increase volume by 1%). Standard volume step is 5%.
+The volume bar will follow the cursor when it's moved around and display the current volume when scrolling up or down.
 
-The volume bar will follow the cursor when it's moved. By default, if the volume is lower than 10% precise volume control is automatically enabled.
+### Functionality
 
-In the tray icon menu a few additional settings can be found to change the bar's dimensions, font style, color and opacity. To hide the tray icon, pass the `notray` switch as an argument when executing the program.
+- Taskbar scroll: Control system volume.
+- Hold <kbd>ALT</kbd>: Enable precise volume control.
+- Hold <kbd>CTRL</kbd>: Toggle system audio mute.
+
+### Settings
+
+- Ability to change the following visual settings:
+  - Color
+  - Opacity
+  - Dimensions
+  - Autohide time-out
+
+- Volume scroll step: Change scrolling step percentage.
+- Precise control threshold: Change threshold at which to auto-enable precise volume control.
+- Open Startup Folder
+- Restart application:
+  -  Normal
+  - Administrator
+- `notray` argument: Don't show tray icon while running.z
 
 ## Known problems
 
-- Scrolling isn't detected when certain windows have focus, such as Task Manager or the Group Policy Management Console. This is likely a security measure by Windows of some sorts.  
-**Running the software as Administrator solves this problem**.
+- Windows prevents scroll event detection while certain windows are focused (i.e. Task Manager) when the program does not have Administrator privileges.
 
 ## Preview
 

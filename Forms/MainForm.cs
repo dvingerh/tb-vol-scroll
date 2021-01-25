@@ -170,15 +170,17 @@ namespace tbvolscroll
                 Console.WriteLine(volumeBarAutoHideTimeout);
             }
 
-            if (volumeBarAutoHideTimeout <= 50 && !inputHandler.isScrolling)
+            if (!inputHandler.isScrolling)
             {
                 Invoke((MethodInvoker)delegate
                 {
                     Hide();
+                    volumeBarAutoHideTimeout = Properties.Settings.Default.AutoHideTimeOut;
+                    isDisplayingVolume = false;
                 });
             }
-            volumeBarAutoHideTimeout = Properties.Settings.Default.AutoHideTimeOut;
-            isDisplayingVolume = false;
+            else
+                AutoHideVolume();
         }
 
         private bool CursorInTaskbar()
