@@ -187,7 +187,9 @@ namespace tbvolscroll
         {
             Point cursorPosition = Cursor.Position;
             Rectangle taskbarBounds = TaskbarHelper.CurrentBounds;
-            if (taskbarBounds.Contains(cursorPosition) && !TaskbarHelper.IsTaskbarHidden())
+            bool cursorInTaskBar = taskbarBounds.Contains(cursorPosition);
+            bool taskBarHidden = TaskbarHelper.IsTaskbarHidden();
+            if (cursorInTaskBar && !taskBarHidden)
                 return true;
             else
                 return false;

@@ -13,6 +13,7 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace tbvolscroll
@@ -77,7 +78,17 @@ namespace tbvolscroll
         {
             Screen screen = Screen.PrimaryScreen;
             RECT rect = new RECT();
-            GetWindowRect(new HandleRef(null, GetForegroundWindow()), ref rect);
+            IntPtr windowHandle = GetForegroundWindow();
+
+            StringBuilder classNameHolder = new StringBuilder(256);
+            if (GetClassName(windowHandle.ToInt32(), classNameHolder, 256) > 0)
+            {
+                string className = classNameHolder.ToString();
+                if (className == "Progman" || className == "WorkerW")
+                    return false; // Always allow volume scrolling when desktop is visible and active window
+            }
+
+            GetWindowRect(new HandleRef(null, windowHandle), ref rect);
             return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
         }
 
@@ -175,6 +186,13 @@ namespace tbvolscroll
         }
 
         #region DllImports
+
+        [DllImport("user32.dll")]
+        static extern int GetClassName(int hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [DllImport("kernel32.dll")]
+        static extern int GetProcessId(IntPtr handle);
+
 
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
