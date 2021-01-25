@@ -107,7 +107,7 @@ namespace tbvolscroll
             catch { }
         }
 
-        private void SetVolumeBarPosition(TaskbarPosition taskbarPosition)
+        public void SetVolumeBarPosition(TaskbarPosition taskbarPosition)
         {
             Point cursorPosition = Cursor.Position;
             switch (taskbarPosition)

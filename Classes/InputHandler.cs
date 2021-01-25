@@ -22,9 +22,7 @@ namespace tbvolscroll
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
-            Point cursorPosition = Cursor.Position;
-            callbackForm.Left = cursorPosition.X - callbackForm.Width / 2;
-            callbackForm.Top = cursorPosition.Y - callbackForm.Height - 5;
+            callbackForm.SetVolumeBarPosition(TaskbarHelper.Position);
         }
 
         private void DisableAltDown(object sender, KeyEventArgs e)
