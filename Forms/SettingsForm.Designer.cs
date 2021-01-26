@@ -78,7 +78,7 @@
             // SetBarDimensionsLabel
             // 
             this.SetBarDimensionsLabel.AutoSize = true;
-            this.SetBarDimensionsLabel.Location = new System.Drawing.Point(14, 39);
+            this.SetBarDimensionsLabel.Location = new System.Drawing.Point(12, 39);
             this.SetBarDimensionsLabel.Name = "SetBarDimensionsLabel";
             this.SetBarDimensionsLabel.Size = new System.Drawing.Size(327, 39);
             this.SetBarDimensionsLabel.TabIndex = 4;
@@ -89,7 +89,7 @@
             // SetBarWidthNumericUpDown
             // 
             this.SetBarWidthNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetBarWidthNumericUpDown.Location = new System.Drawing.Point(120, 88);
+            this.SetBarWidthNumericUpDown.Location = new System.Drawing.Point(118, 88);
             this.SetBarWidthNumericUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -113,7 +113,7 @@
             // DimensionXLabel
             // 
             this.DimensionXLabel.AutoSize = true;
-            this.DimensionXLabel.Location = new System.Drawing.Point(171, 92);
+            this.DimensionXLabel.Location = new System.Drawing.Point(169, 92);
             this.DimensionXLabel.Name = "DimensionXLabel";
             this.DimensionXLabel.Size = new System.Drawing.Size(12, 13);
             this.DimensionXLabel.TabIndex = 6;
@@ -123,7 +123,7 @@
             // SetBarHeightNumericUpDown
             // 
             this.SetBarHeightNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetBarHeightNumericUpDown.Location = new System.Drawing.Point(185, 88);
+            this.SetBarHeightNumericUpDown.Location = new System.Drawing.Point(183, 88);
             this.SetBarHeightNumericUpDown.Maximum = new decimal(new int[] {
             250,
             0,
@@ -147,7 +147,7 @@
             // BarColorLabel
             // 
             this.BarColorLabel.AutoSize = true;
-            this.BarColorLabel.Location = new System.Drawing.Point(40, 139);
+            this.BarColorLabel.Location = new System.Drawing.Point(38, 139);
             this.BarColorLabel.Name = "BarColorLabel";
             this.BarColorLabel.Size = new System.Drawing.Size(274, 26);
             this.BarColorLabel.TabIndex = 7;
@@ -161,7 +161,7 @@
             this.GradientCheckBox.AutoSize = true;
             this.GradientCheckBox.Checked = true;
             this.GradientCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.GradientCheckBox.Location = new System.Drawing.Point(93, 173);
+            this.GradientCheckBox.Location = new System.Drawing.Point(91, 173);
             this.GradientCheckBox.Name = "GradientCheckBox";
             this.GradientCheckBox.Size = new System.Drawing.Size(62, 23);
             this.GradientCheckBox.TabIndex = 8;
@@ -173,7 +173,7 @@
             // 
             this.CustomColorCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.CustomColorCheckBox.AutoSize = true;
-            this.CustomColorCheckBox.Location = new System.Drawing.Point(161, 173);
+            this.CustomColorCheckBox.Location = new System.Drawing.Point(159, 173);
             this.CustomColorCheckBox.Name = "CustomColorCheckBox";
             this.CustomColorCheckBox.Size = new System.Drawing.Size(71, 23);
             this.CustomColorCheckBox.TabIndex = 9;
@@ -185,7 +185,7 @@
             // 
             this.ColorPreviewPictureBox.BackColor = System.Drawing.Color.DodgerBlue;
             this.ColorPreviewPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ColorPreviewPictureBox.Location = new System.Drawing.Point(238, 173);
+            this.ColorPreviewPictureBox.Location = new System.Drawing.Point(236, 173);
             this.ColorPreviewPictureBox.Name = "ColorPreviewPictureBox";
             this.ColorPreviewPictureBox.Size = new System.Drawing.Size(23, 23);
             this.ColorPreviewPictureBox.TabIndex = 10;
@@ -194,7 +194,7 @@
             // BarOpacityLabel
             // 
             this.BarOpacityLabel.AutoSize = true;
-            this.BarOpacityLabel.Location = new System.Drawing.Point(104, 322);
+            this.BarOpacityLabel.Location = new System.Drawing.Point(102, 322);
             this.BarOpacityLabel.Name = "BarOpacityLabel";
             this.BarOpacityLabel.Size = new System.Drawing.Size(146, 26);
             this.BarOpacityLabel.TabIndex = 11;
@@ -203,7 +203,7 @@
             // 
             // BarOpacityTrackBar
             // 
-            this.BarOpacityTrackBar.Location = new System.Drawing.Point(77, 348);
+            this.BarOpacityTrackBar.Location = new System.Drawing.Point(75, 354);
             this.BarOpacityTrackBar.Maximum = 100;
             this.BarOpacityTrackBar.Name = "BarOpacityTrackBar";
             this.BarOpacityTrackBar.Size = new System.Drawing.Size(200, 45);
@@ -215,7 +215,7 @@
             // OpacityValueLabel
             // 
             this.OpacityValueLabel.AutoSize = true;
-            this.OpacityValueLabel.Location = new System.Drawing.Point(123, 370);
+            this.OpacityValueLabel.Location = new System.Drawing.Point(121, 375);
             this.OpacityValueLabel.Name = "OpacityValueLabel";
             this.OpacityValueLabel.Size = new System.Drawing.Size(109, 13);
             this.OpacityValueLabel.TabIndex = 13;
@@ -225,7 +225,7 @@
             // FontStyleLabel
             // 
             this.FontStyleLabel.AutoSize = true;
-            this.FontStyleLabel.Location = new System.Drawing.Point(5, 226);
+            this.FontStyleLabel.Location = new System.Drawing.Point(3, 226);
             this.FontStyleLabel.Name = "FontStyleLabel";
             this.FontStyleLabel.Size = new System.Drawing.Size(344, 39);
             this.FontStyleLabel.TabIndex = 14;
@@ -235,7 +235,7 @@
             // 
             // FontStyleButton
             // 
-            this.FontStyleButton.Location = new System.Drawing.Point(133, 273);
+            this.FontStyleButton.Location = new System.Drawing.Point(131, 273);
             this.FontStyleButton.Name = "FontStyleButton";
             this.FontStyleButton.Size = new System.Drawing.Size(88, 23);
             this.FontStyleButton.TabIndex = 15;
@@ -251,7 +251,7 @@
             // AutoHideTimeOutLabel
             // 
             this.AutoHideTimeOutLabel.AutoSize = true;
-            this.AutoHideTimeOutLabel.Location = new System.Drawing.Point(17, 28);
+            this.AutoHideTimeOutLabel.Location = new System.Drawing.Point(17, 39);
             this.AutoHideTimeOutLabel.Name = "AutoHideTimeOutLabel";
             this.AutoHideTimeOutLabel.Size = new System.Drawing.Size(316, 26);
             this.AutoHideTimeOutLabel.TabIndex = 16;
@@ -262,7 +262,7 @@
             // AutoHideTimeOutNumericUpDown
             // 
             this.AutoHideTimeOutNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(146, 63);
+            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(146, 76);
             this.AutoHideTimeOutNumericUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -324,11 +324,12 @@
             // AutoRetryAdminCheckBox
             // 
             this.AutoRetryAdminCheckBox.AutoSize = true;
-            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(51, 348);
+            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(33, 322);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
-            this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(248, 30);
+            this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(297, 30);
             this.AutoRetryAdminCheckBox.TabIndex = 22;
-            this.AutoRetryAdminCheckBox.Text = "Automatically try to restart as Administrator\r\non initial launch.";
+            this.AutoRetryAdminCheckBox.Text = "Automatically try to restart as Administrator on initial\r\nlaunch if not running w" +
+    "ith Administrator privileges.";
             this.AutoRetryAdminCheckBox.UseVisualStyleBackColor = true;
             // 
             // SetVolumeStepLabel
@@ -344,7 +345,7 @@
             // SetVolumeStepNumericUpDown
             // 
             this.SetVolumeStepNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(151, 177);
+            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(151, 173);
             this.SetVolumeStepNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -374,7 +375,7 @@
             // ThresholdNumericUpDown
             // 
             this.ThresholdNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(151, 270);
+            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(151, 267);
             this.ThresholdNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,

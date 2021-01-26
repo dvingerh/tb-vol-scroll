@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
  * Name:        Taskbar.cs
  * Description: Class to get the taskbar's position, size and other properties.
  * Author:      Franz Alex Gaisie-Essilfie
@@ -30,11 +30,6 @@ namespace tbvolscroll
 
     public static class TaskbarHelper
     {
-        private enum ABS
-        {
-            AutoHide = 0x01,
-            AlwaysOnTop = 0x02,
-        }
 
         ////private enum ABE : uint
         private enum AppBarEdge : uint
@@ -61,22 +56,13 @@ namespace tbvolscroll
             SetState = 0x0000000A,
         }
 
-        private const string ClassName = "Shell_TrayWnd";
         private static APPBARDATA _appBarData;
 
-        /// <summary>Static initializer of the <see cref="Taskbar" /> class.</summary>
-        static TaskbarHelper()
-        {
-            _appBarData = new APPBARDATA
-            {
-                cbSize = (uint)Marshal.SizeOf(typeof(APPBARDATA)),
-                hWnd = FindWindow(TaskbarHelper.ClassName, null)
-            };
-        }
+
 
         public static bool IsTaskbarHidden()
         {
-            Screen screen = Screen.PrimaryScreen;
+            Screen screen = Screen.FromPoint(Cursor.Position);
             RECT rect = new RECT();
             IntPtr windowHandle = GetForegroundWindow();
 
@@ -89,68 +75,16 @@ namespace tbvolscroll
             }
 
             GetWindowRect(new HandleRef(null, windowHandle), ref rect);
-            return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
+            bool isHidden = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
+            return isHidden;
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether the taskbar is always on top of other windows.
-        /// </summary>
-        /// <value><c>true</c> if the taskbar is always on top of other windows; otherwise, <c>false</c>.</value>
-        /// <remarks>This property always returns <c>false</c> on Windows 7 and newer.</remarks>
-        public static bool AlwaysOnTop
+        public static bool CursorInTaskbar()
         {
-            get
-            {
-                int state = SHAppBarMessage(AppBarMessage.GetState, ref _appBarData).ToInt32();
-                return ((ABS)state).HasFlag(ABS.AlwaysOnTop);
-            }
-        }
-
-        /// <summary>
-        ///   Gets a value indicating whether the taskbar is automatically hidden when inactive.
-        /// </summary>
-        /// <value><c>true</c> if the taskbar is set to auto-hide is enabled; otherwise, <c>false</c>.</value>
-        public static bool AutoHide
-        {
-            get
-            {
-                int state = SHAppBarMessage(AppBarMessage.GetState, ref _appBarData).ToInt32();
-                return ((ABS)state).HasFlag(ABS.AutoHide);
-            }
-        }
-
-        /// <summary>Gets the current display bounds of the taskbar.</summary>
-        public static Rectangle CurrentBounds
-        {
-            get
-            {
-                var rect = new RECT();
-                if (GetWindowRect(Handle, ref rect))
-                    return Rectangle.FromLTRB(rect.Left, rect.Top, rect.Right, rect.Bottom);
-
-                return Rectangle.Empty;
-            }
-        }
-
-        /// <summary>Gets the display bounds when the taskbar is fully visible.</summary>
-        public static Rectangle DisplayBounds
-        {
-            get
-            {
-                if (RefreshBoundsAndPosition())
-                    return Rectangle.FromLTRB(_appBarData.rect.Left,
-                                              _appBarData.rect.Top,
-                                              _appBarData.rect.Right,
-                                              _appBarData.rect.Bottom);
-
-                return CurrentBounds;
-            }
-        }
-
-        /// <summary>Gets the taskbar's window handle.</summary>
-        public static IntPtr Handle
-        {
-            get { return _appBarData.hWnd; }
+            Point position = Cursor.Position;
+            Screen screen = Screen.FromPoint(position);
+            Rectangle workingArea = screen.WorkingArea;
+            return !workingArea.Contains(position);
         }
 
         /// <summary>Gets the taskbar's position on the screen.</summary>
@@ -165,20 +99,6 @@ namespace tbvolscroll
             }
         }
 
-        /// <summary>Hides the taskbar.</summary>
-        public static void Hide()
-        {
-            const int SW_HIDE = 0;
-            ShowWindow(Handle, SW_HIDE);
-        }
-
-        /// <summary>Shows the taskbar.</summary>
-        public static void Show()
-        {
-            const int SW_SHOW = 1;
-            ShowWindow(Handle, SW_SHOW);
-        }
-
         private static bool RefreshBoundsAndPosition()
         {
             //! SHAppBarMessage returns IntPtr.Zero **if it fails**
@@ -187,12 +107,9 @@ namespace tbvolscroll
 
         #region DllImports
 
+
         [DllImport("user32.dll")]
         static extern int GetClassName(int hWnd, StringBuilder lpClassName, int nMaxCount);
-
-        [DllImport("kernel32.dll")]
-        static extern int GetProcessId(IntPtr handle);
-
 
         [DllImport("user32.dll")]
         private static extern bool GetWindowRect(HandleRef hWnd, [In, Out] ref RECT rect);
@@ -200,18 +117,9 @@ namespace tbvolscroll
         [DllImport("user32.dll")]
         private static extern IntPtr GetForegroundWindow();
 
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetWindowRect(IntPtr hWnd, ref RECT lpRect);
-
         [DllImport("shell32.dll", SetLastError = true)]
         private static extern IntPtr SHAppBarMessage(AppBarMessage dwMessage, [In] ref APPBARDATA pData);
 
-        [DllImport("user32.dll")]
-        private static extern int ShowWindow(IntPtr hwnd, int command);
 
         #endregion DllImports
 
