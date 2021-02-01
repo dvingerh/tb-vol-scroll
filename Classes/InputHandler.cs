@@ -24,7 +24,7 @@ namespace tbvolscroll
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
-            callbackForm.SetVolumeBarPosition(TaskbarHelper.Position);
+            callbackForm.SetVolumeBarPosition();
         }
 
         private void DisableKeyActions(object sender, KeyEventArgs e)
@@ -45,10 +45,13 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            isScrolling = true;
-            callbackForm.DoVolumeChanges(e.Delta);
-            await Task.Delay(100);
-            isScrolling = false;
+            if (TaskbarHelper.IsValidMouseScroll())
+            {
+                isScrolling = true;
+                callbackForm.DoVolumeChanges(e.Delta);
+                await Task.Delay(100);
+                isScrolling = false;
+            }
         }
     }
 }

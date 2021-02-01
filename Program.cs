@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,13 +16,20 @@ namespace tbvolscroll
         [STAThread]
         static void Main(string[] args)
         {
-            bool noTrayArg = false;
-            bool adminArg = false;
-            foreach(string arg in args)
+            Process[] processes = Process.GetProcesses();
+            Process currentProc = Process.GetCurrentProcess();
+            foreach (Process process in processes)
             {
-                noTrayArg = arg == "notray";
-                adminArg = arg == "admin";
+                if (currentProc.ProcessName == process.ProcessName && currentProc.Id != process.Id)
+                {
+                    MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Environment.Exit(1);
+                }
             }
+
+            bool noTrayArg = args.Any("notray".Contains);
+            bool adminArg = args.Any("admin".Contains);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg));

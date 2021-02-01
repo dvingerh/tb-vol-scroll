@@ -53,7 +53,7 @@ namespace tbvolscroll
 
             Properties.Settings.Default.UseBarGradient = GradientCheckBox.Checked;
             Properties.Settings.Default.BarColor = ColorPreviewPictureBox.BackColor;
-            Properties.Settings.Default.BarOpacity = ((double)(BarOpacityTrackBar.Value) / 100.0);
+            Properties.Settings.Default.BarOpacity = BarOpacityTrackBar.Value / 100.0;
 
             Properties.Settings.Default.AutoHideTimeOut = (int)AutoHideTimeOutNumericUpDown.Value;
 
@@ -86,12 +86,11 @@ namespace tbvolscroll
 
         private void BarOpacityChanged(object sender, EventArgs e)
         {
-            OpacityValueLabel.Text = "Current value: " + BarOpacityTrackBar.Value + "%";
+            OpacityValueLabel.Text = $"{BarOpacityTrackBar.Value}%";
         }
 
         private void SetFontStyle(object sender, EventArgs e)
         {
-            CustomFontDialog.Font = Properties.Settings.Default.FontStyle;
             DialogResult dialogResult = CustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
                 doSetFont = true;
@@ -109,7 +108,7 @@ namespace tbvolscroll
             BarOpacityTrackBar.Value = 100;
             GradientCheckBox.Checked = true;
             CustomColorCheckBox.Checked = false;
-            OpacityValueLabel.Text = "Current value: 100%";
+            OpacityValueLabel.Text = $"{BarOpacityTrackBar.Value}%";
             Properties.Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
         }
     }

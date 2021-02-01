@@ -58,7 +58,15 @@ namespace tbvolscroll
 
         private static APPBARDATA _appBarData;
 
-
+        public static bool IsValidMouseScroll()
+        {
+            bool cursorInTaskBar = IsCursorInTaskbar();
+            bool taskBarHidden = IsTaskbarHidden();
+            if (cursorInTaskBar && !taskBarHidden)
+                return true;
+            else
+                return false;
+        }
 
         public static bool IsTaskbarHidden()
         {
@@ -79,7 +87,7 @@ namespace tbvolscroll
             return isHidden;
         }
 
-        public static bool CursorInTaskbar()
+        public static bool IsCursorInTaskbar()
         {
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);

@@ -36,12 +36,12 @@
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.OptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.SetAppearanceBehaviourMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -102,13 +102,32 @@
             // 
             this.OptionsMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.OptionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SetAppearanceBehaviourMenuItem,
+            this.SettingsMenuItem,
             this.SeparatorMenuItem2,
             this.OpenStartupFolderMenuItem,
             this.RestartMenuItem});
             this.OptionsMenuItem.Name = "OptionsMenuItem";
             this.OptionsMenuItem.Size = new System.Drawing.Size(139, 22);
             this.OptionsMenuItem.Text = "Options";
+            // 
+            // SettingsMenuItem
+            // 
+            this.SettingsMenuItem.Name = "SettingsMenuItem";
+            this.SettingsMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SettingsMenuItem.Text = "Settings";
+            this.SettingsMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
+            // 
+            // SeparatorMenuItem2
+            // 
+            this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // OpenStartupFolderMenuItem
+            // 
+            this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
+            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.OpenStartupFolderMenuItem.Text = "Open startup folder";
+            this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // RestartMenuItem
             // 
@@ -133,25 +152,6 @@
             this.RestartAsAdminMenuItem.Text = "Restart (as Administrator)";
             this.RestartAsAdminMenuItem.Click += new System.EventHandler(this.RestartAppAsAdministrator);
             // 
-            // OpenStartupFolderMenuItem
-            // 
-            this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
-            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.OpenStartupFolderMenuItem.Text = "Open startup folder";
-            this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
-            // 
-            // SeparatorMenuItem2
-            // 
-            this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(177, 6);
-            // 
-            // SetAppearanceBehaviourMenuItem
-            // 
-            this.SetAppearanceBehaviourMenuItem.Name = "SetAppearanceBehaviourMenuItem";
-            this.SetAppearanceBehaviourMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.SetAppearanceBehaviourMenuItem.Text = "Settings";
-            this.SetAppearanceBehaviourMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
-            // 
             // ExitMenuItem
             // 
             this.ExitMenuItem.BackColor = System.Drawing.SystemColors.Control;
@@ -164,6 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(120, 23);
             this.ControlBox = false;
@@ -181,7 +182,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Shown += new System.EventHandler(this.LoadProgramSettings);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -196,7 +196,7 @@
         private System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem SetAppearanceBehaviourMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SettingsMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
