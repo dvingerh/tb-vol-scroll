@@ -30,6 +30,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 ## Known problems
 
+- The auto-hide taskbar feature is **not** supported. 
 - Windows prevents scroll event detection while certain windows are focused (i.e. Task Manager) when the program does not have Administrator privileges.
 
 ## Preview
