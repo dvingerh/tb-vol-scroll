@@ -119,6 +119,10 @@ namespace tbvolscroll
                     if (!inputHandler.isCtrlDown)
                     {
                         currentVolume = (int)Math.Round(VolumeHandler.GetMasterVolume());
+                        if (currentVolume == 0)
+                            VolumeHandler.SetMasterVolumeMute(isMuted: true);
+                        else
+                            VolumeHandler.SetMasterVolumeMute(isMuted: false);
                         VolumeTextLabel.Text = $"{currentVolume}% ";
                         TrayNotifyIcon.Text = $"{Assembly.GetEntryAssembly().GetName().Name} - {currentVolume}%";
 
