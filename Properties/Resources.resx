@@ -117,4 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="vol10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol10.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol100" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol100.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol20" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol20.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol30" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol30.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol40" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol40.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol50.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol60" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol60.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol70" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol70.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol80" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol80.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="vol90" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vol90.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="volmute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\volmute.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="voltray" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\voltray.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

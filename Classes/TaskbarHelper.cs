@@ -58,7 +58,7 @@ namespace tbvolscroll
 
         private static APPBARDATA _appBarData;
 
-        public static bool IsValidMouseScroll()
+        public static bool IsValidAction()
         {
             bool cursorInTaskBar = IsCursorInTaskbar();
             bool taskBarHidden = IsTaskbarHidden();

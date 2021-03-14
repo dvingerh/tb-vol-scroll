@@ -1,6 +1,10 @@
 ﻿using Gma.System.MouseKeyHook;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AudioSwitcher.AudioApi.CoreAudio;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace tbvolscroll
 {
@@ -8,6 +12,7 @@ namespace tbvolscroll
     {
         public bool isAltDown;
         public bool isCtrlDown;
+        public bool isShiftDown;
         public bool isScrolling;
         public readonly IKeyboardMouseEvents inputEvents;
         private readonly MainForm callbackForm;
@@ -33,6 +38,8 @@ namespace tbvolscroll
                 isAltDown = false;
             if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
                 isCtrlDown = false;
+            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
+                isShiftDown = false;
         }
 
         private void EnableKeyActions(object sender, KeyEventArgs e)
@@ -41,14 +48,21 @@ namespace tbvolscroll
                 isAltDown = true;
             if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
                 isCtrlDown = true;
+            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
+                isShiftDown = true;
         }
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            if (TaskbarHelper.IsValidMouseScroll())
+            if (TaskbarHelper.IsValidAction())
             {
                 isScrolling = true;
-                callbackForm.DoVolumeChanges(e.Delta);
+                if (!isShiftDown && !isCtrlDown)
+                    callbackForm.SetAudioVolume(e.Delta);
+                else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
+                    callbackForm.SetMuteStatus(e.Delta);
+                else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
+                    await callbackForm.ToggleAudioPlaybackDevice();
                 await Task.Delay(100);
                 isScrolling = false;
             }

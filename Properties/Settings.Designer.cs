@@ -154,5 +154,29 @@ namespace tbvolscroll.Properties {
                 this["AutoRetryAdmin"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ToggleMuteShortcut {
+            get {
+                return ((bool)(this["ToggleMuteShortcut"]));
+            }
+            set {
+                this["ToggleMuteShortcut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SwitchDefaultPlaybackDeviceShortcut {
+            get {
+                return ((bool)(this["SwitchDefaultPlaybackDeviceShortcut"]));
+            }
+            set {
+                this["SwitchDefaultPlaybackDeviceShortcut"] = value;
+            }
+        }
     }
 }
