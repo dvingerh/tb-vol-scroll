@@ -292,6 +292,7 @@ namespace tbvolscroll
             MinimumSize = new Size(Settings.Default.BarWidth, Settings.Default.BarHeight);
 
             inputHandler = new InputHandler(this);
+            AudioHandler.UpdateAudioState();
             SetTrayIcon();
         }
 
@@ -305,6 +306,7 @@ namespace tbvolscroll
         {
             SetPlaybackAudioDeviceForm audioDevicesForm = new SetPlaybackAudioDeviceForm();
             audioDevicesForm.ShowDialog();
+            AudioHandler.UpdateAudioState();
             SetTrayIcon();
         }
 
