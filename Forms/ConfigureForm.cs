@@ -16,6 +16,8 @@ namespace tbvolscroll
 
         private void LoadBarAppearance(object sender, EventArgs e)
         {
+            SwitchAudioPlaybackDevicesCheckBox.Checked = Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
+            ToggleMuteCheckBox.Checked = Properties.Settings.Default.ToggleMuteShortcut;
             AutoRetryAdminCheckBox.Checked = Properties.Settings.Default.AutoRetryAdmin;
             SetVolumeStepNumericUpDown.Value = Properties.Settings.Default.VolumeStep;
             ThresholdNumericUpDown.Value = Properties.Settings.Default.PreciseScrollThreshold;
@@ -44,6 +46,10 @@ namespace tbvolscroll
             Properties.Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
             Properties.Settings.Default.BarWidth = (int)SetBarWidthNumericUpDown.Value;
             Properties.Settings.Default.BarHeight = (int)SetBarHeightNumericUpDown.Value;
+
+            Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut = SwitchAudioPlaybackDevicesCheckBox.Checked;
+            Properties.Settings.Default.ToggleMuteShortcut = ToggleMuteCheckBox.Checked;
+
 
             Properties.Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
 
