@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Observables;
 
 namespace tbvolscroll.Forms
 {
@@ -23,6 +25,14 @@ namespace tbvolscroll.Forms
             };
             DevicesListView.SmallImageList = listViewHeightFix;
             this.callbackForm = callbackForm;
+            callbackForm.audioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+        }
+        public void OnDeviceChanged(DeviceChangedArgs value)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                RefreshButton.PerformClick();
+            });
         }
 
         private async void OnFormShown(object sender, EventArgs e)
