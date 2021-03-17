@@ -1,7 +1,7 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
 ## tb-vol-scroll 2.0
 
-Simple utility to enable volume control when your mouse cursor is positioned above the taskbar.
+Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
 
 The volume bar will follow the cursor when it's moved around and display the current volume when scrolling up or down.
 
@@ -10,23 +10,27 @@ The volume bar will follow the cursor when it's moved around and display the cur
 - Taskbar scroll: Control system volume.
 - Hold <kbd>ALT</kbd>: Enable precise volume control.
 - Hold <kbd>CTRL</kbd>: Toggle system audio mute.
+- Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
 
 ### Settings
 
-- Ability to change the following visual settings:
+- Appearance:
   - Color
   - Opacity
-  - Dimensions
-  - Autohide time-out
+  - Text padding (affects volume bar size)
 
-- Volume scroll step: Change scrolling step percentage.
-- Precise control threshold: Change threshold at which to auto-enable precise volume control.
-- Try to restart with Administrator privileges on initial launch (if not obtained already).
-- Open Startup Folder
-- Restart application:
-  - Normal
-  - Administrator Privileges
-- `notray` argument: Don't show tray icon while running
+- Behavior:
+  - Volume bar autohide time-out
+  - Volume scroll step percentage
+  - Precise volume control threshold
+  - Enable/disable <kbd>CTRL</kbd> to toggle system audio mute
+  - Enable/disable <kbd>SHIFT</kbd> to cycle through available audio playback devices
+  - Enable/disable requesting of Administrator permissions on start
+
+### Tray menu
+
+![Tray menu](traymenu.png?raw=true)
+
 
 ## Known problems
 
