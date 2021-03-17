@@ -86,9 +86,9 @@
             this.SetBarDimensionsLabel.AutoSize = true;
             this.SetBarDimensionsLabel.Location = new System.Drawing.Point(12, 23);
             this.SetBarDimensionsLabel.Name = "SetBarDimensionsLabel";
-            this.SetBarDimensionsLabel.Size = new System.Drawing.Size(112, 13);
+            this.SetBarDimensionsLabel.Size = new System.Drawing.Size(115, 13);
             this.SetBarDimensionsLabel.TabIndex = 4;
-            this.SetBarDimensionsLabel.Text = "Volume bar margins:";
+            this.SetBarDimensionsLabel.Text = "Volume bar padding:";
             this.SetBarDimensionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SetBarWidthNumericUpDown
@@ -301,11 +301,13 @@
             // 
             this.ColorPreviewPictureBox.BackColor = System.Drawing.Color.DodgerBlue;
             this.ColorPreviewPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ColorPreviewPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorPreviewPictureBox.Location = new System.Drawing.Point(293, 63);
             this.ColorPreviewPictureBox.Name = "ColorPreviewPictureBox";
             this.ColorPreviewPictureBox.Size = new System.Drawing.Size(21, 21);
             this.ColorPreviewPictureBox.TabIndex = 10;
             this.ColorPreviewPictureBox.TabStop = false;
+            this.ColorPreviewPictureBox.Click += new System.EventHandler(this.PickBarColor);
             // 
             // AutoRetryAdminCheckBox
             // 

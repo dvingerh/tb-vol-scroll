@@ -22,11 +22,12 @@ namespace tbvolscroll
             AutoRetryAdminCheckBox.Checked = Settings.Default.AutoRetryAdmin;
             SetVolumeStepNumericUpDown.Value = Settings.Default.VolumeStep;
             ThresholdNumericUpDown.Value = Settings.Default.PreciseScrollThreshold;
-            SetBarWidthNumericUpDown.Value = Settings.Default.BarWidth;
-            SetBarHeightNumericUpDown.Value = Settings.Default.BarHeight;
+            SetBarWidthNumericUpDown.Value = Settings.Default.BarWidthPadding;
+            SetBarHeightNumericUpDown.Value = Settings.Default.BarHeightPadding;
             AutoHideTimeOutNumericUpDown.Value = Settings.Default.AutoHideTimeOut;
             ColorPreviewPictureBox.BackColor = Settings.Default.BarColor;
-            BarOpacityTrackBar.Value = Convert.ToInt32(Settings.Default.BarOpacity * 100);
+            BarOpacityTrackBar.Value = (int)Settings.Default.BarOpacity * 100;
+            CustomFontDialog.Font = Settings.Default.FontStyle;
             if (Settings.Default.UseBarGradient)
             {
                 GradientCheckBox.Checked = true;
@@ -45,8 +46,8 @@ namespace tbvolscroll
         {
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
-            Settings.Default.BarWidth = (int)SetBarWidthNumericUpDown.Value;
-            Settings.Default.BarHeight = (int)SetBarHeightNumericUpDown.Value;
+            Settings.Default.BarWidthPadding = (int)SetBarWidthNumericUpDown.Value;
+            Settings.Default.BarHeightPadding = (int)SetBarHeightNumericUpDown.Value;
 
             Settings.Default.SwitchDefaultPlaybackDeviceShortcut = SwitchAudioPlaybackDevicesCheckBox.Checked;
             Settings.Default.ToggleMuteShortcut = ToggleMuteCheckBox.Checked;
@@ -70,7 +71,7 @@ namespace tbvolscroll
                 mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
 
             SizeF newMinSizes = mainForm.CalculateBarSize("0%");
-            mainForm.MinimumSize = new Size(Settings.Default.BarWidth + (int)newMinSizes.Width, Settings.Default.BarHeight + (int)newMinSizes.Height);
+            mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
             mainForm.Width = mainForm.MinimumSize.Width;
             mainForm.Height = mainForm.MinimumSize.Height;
 
@@ -81,9 +82,6 @@ namespace tbvolscroll
         {
             CustomColorCheckBox.Checked = true;
             GradientCheckBox.Checked = false;
-            ColorDialog customColor = new ColorDialog();
-            if (customColor.ShowDialog() == DialogResult.OK)
-                ColorPreviewPictureBox.BackColor = customColor.Color;
         }
 
         private void SetGradient(object sender, EventArgs e)
@@ -118,6 +116,19 @@ namespace tbvolscroll
             CustomColorCheckBox.Checked = false;
             OpacityValueLabel.Text = $"{BarOpacityTrackBar.Value}%";
             Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            CustomFontDialog.Font = Settings.Default.FontStyle;
+        }
+
+        private void PickBarColor(object sender, EventArgs e)
+        {
+            ColorDialog customColor = new ColorDialog
+            {
+                Color = ColorPreviewPictureBox.BackColor,
+                FullOpen = true
+            };
+            if (customColor.ShowDialog() == DialogResult.OK)
+                ColorPreviewPictureBox.BackColor = customColor.Color;
+
         }
     }
 }

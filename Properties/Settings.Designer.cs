@@ -49,25 +49,25 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public int BarWidth {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int BarWidthPadding {
             get {
-                return ((int)(this["BarWidth"]));
+                return ((int)(this["BarWidthPadding"]));
             }
             set {
-                this["BarWidth"] = value;
+                this["BarWidthPadding"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
-        public int BarHeight {
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int BarHeightPadding {
             get {
-                return ((int)(this["BarHeight"]));
+                return ((int)(this["BarHeightPadding"]));
             }
             set {
-                this["BarHeight"] = value;
+                this["BarHeightPadding"] = value;
             }
         }
         
@@ -85,7 +85,7 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("DodgerBlue")]
+        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
         public global::System.Drawing.Color BarColor {
             get {
                 return ((global::System.Drawing.Color)(this["BarColor"]));
