@@ -12,7 +12,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 - Hold <kbd>CTRL</kbd>: Toggle system audio mute.
 - Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
 
-### Settings
+### Configure
 
 - Appearance:
   - Color
@@ -27,11 +27,6 @@ The volume bar will follow the cursor when it's moved around and display the cur
   - Enable/disable <kbd>SHIFT</kbd> to cycle through available audio playback devices
   - Enable/disable requesting of Administrator permissions on start
 
-### Tray menu
-
-![Tray menu](traymenu.png?raw=true)
-
-
 ## Known problems
 
 - The auto-hide taskbar feature is **not** supported. 
@@ -39,12 +34,27 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 ## Preview
 
-![Preview](example.gif?raw=true)
 
-![Settings](settings.png?raw=true)
+#### Volume bar
+![Volume bar](Images/gif_volumebar.gif?raw=true)
+
+#### Cycle audio playback devices
+![Volume bar](Images/gif_audiodevices.gif?raw=true)
+
+#### Mute and unmute
+![Volume bar](Images/gif_mute.gif?raw=true)
+
+#### Audio Playback Devices
+![Audio Playback Devices](Images/audioplaybackdevices.png?raw=true)
+
+#### Configure
+![Configure](Images/configure.png?raw=true)
+
+#### Tray menu
+
+![Tray menu](Images/traymenu.png?raw=true)
+
 
 ## Thanks
-
-##
+ #
 - [Taskbar.cs by Franz Alex Gaisie-Essilfie](https://gist.githubusercontent.com/franzalex/e747e6b318ab8f328aa02301f25ec534/raw/84f731f2e2396dc8ce28b564a75b712bf56b184f/Taskbar.cs)
-- [Sverrir's AudioManager script](https://gist.github.com/sverrirs/d099b34b7f72bb4fb386)
