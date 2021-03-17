@@ -11,9 +11,10 @@ using AudioSwitcher.AudioApi.CoreAudio;
 
 namespace tbvolscroll.Forms
 {
-    public partial class SetPlaybackAudioDeviceForm : Form
+    public partial class AudioDevicesForm : Form
     {
-        public SetPlaybackAudioDeviceForm()
+        private readonly MainForm callbackForm;
+        public AudioDevicesForm(MainForm callbackForm)
         {
             InitializeComponent();
             ImageList listViewHeightFix = new ImageList
@@ -21,6 +22,7 @@ namespace tbvolscroll.Forms
                 ImageSize = new Size(1, 30)
             };
             DevicesListView.SmallImageList = listViewHeightFix;
+            this.callbackForm = callbackForm;
         }
 
         private async void OnFormShown(object sender, EventArgs e)
@@ -32,8 +34,8 @@ namespace tbvolscroll.Forms
 
         private async Task LoadAudioPlaybackDevicesList()
         {
-            await AudioHandler.RefreshPlaybackDevices();
-            foreach (CoreAudioDevice d in AudioHandler.AudioDevices)
+            await callbackForm.audioHandler.RefreshPlaybackDevices();
+            foreach (CoreAudioDevice d in callbackForm.audioHandler.AudioDevices)
             {
                 ListViewItem deviceItem = new ListViewItem()
                 {

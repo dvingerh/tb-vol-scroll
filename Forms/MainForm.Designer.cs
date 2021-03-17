@@ -36,10 +36,10 @@
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.systemVolumeMixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.audioPlaybackDevicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SettingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConfigureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +55,7 @@
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(120, 23);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(130, 15);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -69,7 +69,6 @@
             this.TrayNotifyIcon.Text = "tb-vol-scroll - Loading";
             this.TrayNotifyIcon.Visible = true;
             this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
-            this.TrayNotifyIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateTrayIconText);
             // 
             // TrayContextMenu
             // 
@@ -78,8 +77,8 @@
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
             this.systemVolumeMixerToolStripMenuItem,
-            this.audioPlaybackDevicesToolStripMenuItem,
-            this.toolStripSeparator1,
+            this.AudioPlaybackDevicesMenuItem,
+            this.SeparatorMenuItem3,
             this.MoreMenuItem,
             this.ExitMenuItem});
             this.TrayContextMenu.Name = "trayContextMenu";
@@ -110,24 +109,24 @@
             this.systemVolumeMixerToolStripMenuItem.Text = "System Volume Mixer";
             this.systemVolumeMixerToolStripMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
             // 
-            // audioPlaybackDevicesToolStripMenuItem
+            // AudioPlaybackDevicesMenuItem
             // 
-            this.audioPlaybackDevicesToolStripMenuItem.Name = "audioPlaybackDevicesToolStripMenuItem";
-            this.audioPlaybackDevicesToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.audioPlaybackDevicesToolStripMenuItem.Text = "Audio Playback Devices";
-            this.audioPlaybackDevicesToolStripMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItem_Click);
+            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
+            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
+            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
             // 
-            // toolStripSeparator1
+            // SeparatorMenuItem3
             // 
-            this.toolStripSeparator1.BackColor = System.Drawing.SystemColors.Control;
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(196, 6);
+            this.SeparatorMenuItem3.BackColor = System.Drawing.SystemColors.Control;
+            this.SeparatorMenuItem3.Name = "SeparatorMenuItem3";
+            this.SeparatorMenuItem3.Size = new System.Drawing.Size(196, 6);
             // 
             // MoreMenuItem
             // 
             this.MoreMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.MoreMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SettingsMenuItem,
+            this.ConfigureMenuItem,
             this.OpenStartupFolderMenuItem,
             this.SeparatorMenuItem2,
             this.RestartAsAdminMenuItem,
@@ -136,12 +135,12 @@
             this.MoreMenuItem.Size = new System.Drawing.Size(199, 22);
             this.MoreMenuItem.Text = "More";
             // 
-            // SettingsMenuItem
+            // ConfigureMenuItem
             // 
-            this.SettingsMenuItem.Name = "SettingsMenuItem";
-            this.SettingsMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.SettingsMenuItem.Text = "Settings";
-            this.SettingsMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
+            this.ConfigureMenuItem.Name = "ConfigureMenuItem";
+            this.ConfigureMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.ConfigureMenuItem.Text = "Configure...";
+            this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
             // 
             // OpenStartupFolderMenuItem
             // 
@@ -183,7 +182,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(120, 23);
+            this.ClientSize = new System.Drawing.Size(130, 15);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
@@ -191,13 +190,15 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(130, 15);
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(130, 15);
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.TopMost = true;
+            this.Text = "tb-vol-scroll";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -212,14 +213,14 @@
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MoreMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem SettingsMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ConfigureMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
         private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem audioPlaybackDevicesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem systemVolumeMixerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
     }
 }
 

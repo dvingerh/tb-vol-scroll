@@ -1,7 +1,7 @@
 ﻿
 namespace tbvolscroll.Forms
 {
-    partial class SetPlaybackAudioDeviceForm
+    partial class AudioDevicesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetPlaybackAudioDeviceForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioDevicesForm));
             this.SaveButton = new System.Windows.Forms.Button();
             this.DevicesListView = new System.Windows.Forms.ListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));

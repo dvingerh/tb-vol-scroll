@@ -62,6 +62,7 @@
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
+  <PropertyGroup />
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -106,11 +107,11 @@
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\InputHandler.cs" />
-    <Compile Include="Forms\SetPlaybackAudioDeviceForm.cs">
+    <Compile Include="Forms\AudioDevicesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SetPlaybackAudioDeviceForm.Designer.cs">
-      <DependentUpon>SetPlaybackAudioDeviceForm.cs</DependentUpon>
+    <Compile Include="Forms\AudioDevicesForm.Designer.cs">
+      <DependentUpon>AudioDevicesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,8 +121,8 @@
     <EmbeddedResource Include="Forms\ConfigureForm.resx">
       <DependentUpon>ConfigureForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SetPlaybackAudioDeviceForm.resx">
-      <DependentUpon>SetPlaybackAudioDeviceForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AudioDevicesForm.resx">
+      <DependentUpon>AudioDevicesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -147,31 +148,31 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="voltray.ico" />
-    <None Include="Resources\voltray.ico" />
-    <None Include="Resources\volmute.ico" />
-    <None Include="Resources\vol100.ico" />
-    <None Include="Resources\vol90.ico" />
-    <None Include="Resources\vol80.ico" />
-    <None Include="Resources\vol70.ico" />
-    <None Include="Resources\vol60.ico" />
-    <None Include="Resources\vol50.ico" />
-    <None Include="Resources\vol40.ico" />
-    <None Include="Resources\vol30.ico" />
-    <None Include="Resources\vol20.ico" />
     <None Include="Resources\vol10.ico" />
+    <None Include="Resources\vol20.ico" />
+    <None Include="Resources\vol30.ico" />
+    <None Include="Resources\vol40.ico" />
+    <None Include="Resources\vol50.ico" />
+    <None Include="Resources\vol60.ico" />
+    <None Include="Resources\vol70.ico" />
+    <None Include="Resources\vol80.ico" />
+    <None Include="Resources\vol90.ico" />
+    <None Include="Resources\vol100.ico" />
+    <None Include="Resources\volmute.ico" />
+    <None Include="Resources\voltray.ico" />
+    <Content Include="voltray.ico" />
     <None Include="Resources\tray.png" />
     <None Include="AppImages\tray.png" />
     <Content Include="FodyWeavers.xml" />
     <Content Include="AppImages\tray.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\Fody.6.0.0\build\Fody.targets" Condition="Exists('packages\Fody.6.0.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Fody.6.0.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.0.0\build\Fody.targets'))" />
     <Error Condition="!Exists('packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
+    <Error Condition="!Exists('packages\Fody.6.4.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.4.0\build\Fody.targets'))" />
   </Target>
+  <Import Project="packages\Fody.6.4.0\build\Fody.targets" Condition="Exists('packages\Fody.6.4.0\build\Fody.targets')" />
 </Project>
