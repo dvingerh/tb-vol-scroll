@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AudioSwitcher.AudioApi;
@@ -13,10 +8,10 @@ using AudioSwitcher.AudioApi.Observables;
 
 namespace tbvolscroll.Forms
 {
-    public partial class AudioDevicesForm : Form
+    public partial class AudioPlaybackDevicesForm : Form
     {
         private readonly MainForm callbackForm;
-        public AudioDevicesForm(MainForm callbackForm)
+        public AudioPlaybackDevicesForm(MainForm callbackForm)
         {
             InitializeComponent();
             ImageList listViewHeightFix = new ImageList

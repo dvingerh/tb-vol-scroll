@@ -1,7 +1,7 @@
 ﻿
 namespace tbvolscroll.Forms
 {
-    partial class AudioDevicesForm
+    partial class AudioPlaybackDevicesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioDevicesForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlaybackDevicesForm));
             this.SaveButton = new System.Windows.Forms.Button();
             this.DevicesListView = new System.Windows.Forms.ListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -76,13 +76,14 @@ namespace tbvolscroll.Forms
             // 
             // IsDefaultColumn
             // 
-            this.IsDefaultColumn.Text = "Is default?";
+            this.IsDefaultColumn.Text = "Default";
             this.IsDefaultColumn.Width = 75;
             // 
             // MutedColumn
             // 
             this.MutedColumn.DisplayIndex = 3;
             this.MutedColumn.Text = "Muted";
+            this.MutedColumn.Width = 50;
             // 
             // VolumeColumn
             // 
@@ -100,7 +101,7 @@ namespace tbvolscroll.Forms
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButtonClick);
             // 
-            // SetPlaybackAudioDeviceForm
+            // AudioPlaybackDevicesForm
             // 
             this.AcceptButton = this.SaveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -114,9 +115,9 @@ namespace tbvolscroll.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SetPlaybackAudioDeviceForm";
+            this.Name = "AudioPlaybackDevicesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Set Audio Playback Device";
+            this.Text = "Audio Playback Devices";
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.ResumeLayout(false);
 

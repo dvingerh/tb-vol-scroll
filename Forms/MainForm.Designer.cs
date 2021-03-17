@@ -55,7 +55,7 @@
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(130, 23);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(100, 15);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -73,6 +73,7 @@
             // TrayContextMenu
             // 
             this.TrayContextMenu.BackColor = System.Drawing.SystemColors.Control;
+            this.TrayContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
@@ -138,33 +139,33 @@
             // ConfigureMenuItem
             // 
             this.ConfigureMenuItem.Name = "ConfigureMenuItem";
-            this.ConfigureMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.ConfigureMenuItem.Size = new System.Drawing.Size(194, 22);
             this.ConfigureMenuItem.Text = "Configure...";
             this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
             // OpenStartupFolderMenuItem
             // 
             this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
-            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.OpenStartupFolderMenuItem.Text = "Open startup folder";
+            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.OpenStartupFolderMenuItem.Text = "Open Startup Folder";
             this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // SeparatorMenuItem2
             // 
             this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(205, 6);
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(191, 6);
             // 
             // RestartAsAdminMenuItem
             // 
             this.RestartAsAdminMenuItem.Name = "RestartAsAdminMenuItem";
-            this.RestartAsAdminMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.RestartAsAdminMenuItem.Text = "Restart (as Administrator)";
+            this.RestartAsAdminMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.RestartAsAdminMenuItem.Text = "Restart (Administrator)";
             this.RestartAsAdminMenuItem.Click += new System.EventHandler(this.RestartAppAsAdministrator);
             // 
             // RestartNormalMenuItem
             // 
             this.RestartNormalMenuItem.Name = "RestartNormalMenuItem";
-            this.RestartNormalMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.RestartNormalMenuItem.Size = new System.Drawing.Size(194, 22);
             this.RestartNormalMenuItem.Text = "Restart";
             this.RestartNormalMenuItem.Click += new System.EventHandler(this.RestartAppNormal);
             // 
@@ -182,13 +183,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(130, 23);
+            this.ClientSize = new System.Drawing.Size(100, 15);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";

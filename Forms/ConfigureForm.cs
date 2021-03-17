@@ -26,7 +26,7 @@ namespace tbvolscroll
             SetBarHeightNumericUpDown.Value = Settings.Default.BarHeightPadding;
             AutoHideTimeOutNumericUpDown.Value = Settings.Default.AutoHideTimeOut;
             ColorPreviewPictureBox.BackColor = Settings.Default.BarColor;
-            BarOpacityTrackBar.Value = (int)Settings.Default.BarOpacity * 100;
+            BarOpacityTrackBar.Value = Convert.ToInt32(Settings.Default.BarOpacity * 100);
             CustomFontDialog.Font = Settings.Default.FontStyle;
             if (Settings.Default.UseBarGradient)
             {

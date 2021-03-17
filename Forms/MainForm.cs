@@ -274,7 +274,7 @@ namespace tbvolscroll
 
         private void AudioDevicesMenuItemClick(object sender, EventArgs e)
         {
-            new AudioDevicesForm(this).ShowDialog();
+            new AudioPlaybackDevicesForm(this).ShowDialog();
             audioHandler.UpdateAudioState();
             SetTrayIcon();
         }
