@@ -239,7 +239,7 @@ namespace tbvolscroll
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Startup));
         }
 
-        private void LoadProgramSettings()
+        private async void LoadProgramSettings()
         {
             if (Settings.Default.UpdateSettings)
             {
@@ -249,6 +249,7 @@ namespace tbvolscroll
             }
 
             audioHandler = new AudioHandler();
+            await audioHandler.RefreshPlaybackDevices();
             audioHandler.UpdateAudioState();
             SetTrayIcon();
 
@@ -345,38 +346,43 @@ namespace tbvolscroll
 
         public async Task ToggleAudioPlaybackDevice(int delta)
         {
-            List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
-            audioDevicesList.AddRange(audioHandler.AudioDevices);
-            CoreAudioDevice curDevice = audioHandler.CoreAudioController.DefaultPlaybackDevice;
-            int newDeviceIndex = curDeviceIndex;
-            if (curDeviceIndex == -1)
-                curDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
+            try
+            {
+                List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
+                audioDevicesList.AddRange(audioHandler.AudioDevices);
+                CoreAudioDevice curDevice = audioHandler.CoreAudioController.DefaultPlaybackDevice;
+                if (curDeviceIndex == -1)
+                    curDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
+                int newDeviceIndex = curDeviceIndex;
 
-            if (delta < 0)
-            {
-                if (curDeviceIndex > 0)
-                    --curDeviceIndex;
+                if (delta < 0)
+                {
+                    if (curDeviceIndex > 0)
+                        --curDeviceIndex;
+                    else
+                        curDeviceIndex = 0;
+                }
                 else
-                    curDeviceIndex = 0;
-            }
-            else
-            {
-                if (curDeviceIndex < audioDevicesList.Count - 1)
-                    ++curDeviceIndex;
-                else
-                    curDeviceIndex = audioDevicesList.Count - 1;
-            }
+                {
+                    if (curDeviceIndex < audioDevicesList.Count - 1)
+                        ++curDeviceIndex;
+                    else
+                        curDeviceIndex = audioDevicesList.Count - 1;
+                }
 
-            if (newDeviceIndex != curDeviceIndex)
-            {
-                CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
-                await newPlaybackDevice.SetAsDefaultAsync();
-            }
+                if (newDeviceIndex != curDeviceIndex)
+                {
+                    CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
+                    await newPlaybackDevice.SetAsDefaultAsync();
+                }
                 VolumeTextLabel.Text = audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
                 Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
                 VolumeTextLabel.BackColor = Color.SkyBlue;
                 DoAppearanceUpdate();
-            
+            } catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         public SizeF CalculateBarSize(string text)

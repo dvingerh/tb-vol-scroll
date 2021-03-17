@@ -13,7 +13,7 @@ namespace tbvolscroll
 {
     public class AudioHandler
     {
-        private static IEnumerable<CoreAudioDevice> audioDevices;
+        private static IEnumerable<CoreAudioDevice> audioDevices = null;
         private static CoreAudioController coreAudioController;
         private static int volume = 0;
         private static bool muted = false;
@@ -21,7 +21,6 @@ namespace tbvolscroll
         public AudioHandler()
         {
             coreAudioController = new CoreAudioController();
-            audioDevices = null;
             coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
         }
         public async void OnDeviceChanged(DeviceChangedArgs value)
