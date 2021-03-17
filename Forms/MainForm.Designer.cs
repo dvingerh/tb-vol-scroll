@@ -140,7 +140,7 @@
             this.ConfigureMenuItem.Name = "ConfigureMenuItem";
             this.ConfigureMenuItem.Size = new System.Drawing.Size(208, 22);
             this.ConfigureMenuItem.Text = "Configure...";
-            this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenSettingsDialog);
+            this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
             // OpenStartupFolderMenuItem
             // 
@@ -190,9 +190,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(130, 15);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(130, 15);
             this.Name = "MainForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

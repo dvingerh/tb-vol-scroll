@@ -116,7 +116,8 @@ namespace tbvolscroll
                     VolumeTextLabel.Text = $"{audioHandler.Volume}% ";
                     TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
                     Refresh();
-                    Width = audioHandler.Volume + Settings.Default.BarWidth;
+
+                    Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + audioHandler.Volume + Settings.Default.BarWidth;
                     Opacity = Settings.Default.BarOpacity;
                     if (Settings.Default.UseBarGradient)
                         VolumeTextLabel.BackColor = CalculateColor(audioHandler.Volume);
@@ -218,9 +219,9 @@ namespace tbvolscroll
             mi.Invoke(TrayNotifyIcon, null);
         }
 
-        private void OpenSettingsDialog(object sender, EventArgs e)
+        private void OpenConfigureDialog(object sender, EventArgs e)
         {
-            new SettingsForm(this).ShowDialog();
+            new ConfigureForm(this).ShowDialog();
         }
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)
@@ -261,8 +262,10 @@ namespace tbvolscroll
             VolumeTextLabel.Text = $"{audioHandler.Volume}%";
             TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
 
-            MaximumSize = new Size(100 + Settings.Default.BarWidth, Settings.Default.BarHeight);
-            MinimumSize = new Size(Settings.Default.BarWidth, Settings.Default.BarHeight);
+            SizeF newMinSizes = CalculateBarSize("0%");
+            MinimumSize = new Size(Settings.Default.BarWidth + (int)newMinSizes.Width, Settings.Default.BarHeight + (int)newMinSizes.Height);
+            Width = MinimumSize.Width;
+            Height = MinimumSize.Height;
 
             inputHandler = new InputHandler(this);
         }
@@ -342,7 +345,7 @@ namespace tbvolscroll
                 TrayNotifyIcon.Text = $"Volume: {audioHandler.Volume}%";
             }
             audioHandler.Muted = isMuted;
-            Width = Settings.Default.BarWidth + 100;
+            Width = Settings.Default.BarWidth + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
             VolumeTextLabel.BackColor = Color.SkyBlue;
             DoAppearanceUpdate();
         }
@@ -375,9 +378,14 @@ namespace tbvolscroll
             CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
             await newPlaybackDevice.SetAsDefaultAsync();
             VolumeTextLabel.Text = audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
-            Width = Settings.Default.BarWidth + 100;
+            Width = Settings.Default.BarWidth + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
             VolumeTextLabel.BackColor = Color.SkyBlue;
             DoAppearanceUpdate();
+        }
+
+        public SizeF CalculateBarSize(string text)
+        {
+            return VolumeTextLabel.CreateGraphics().MeasureString(text, VolumeTextLabel.Font);
         }
     }
 }

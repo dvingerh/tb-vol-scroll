@@ -5,11 +5,11 @@ using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
-    public partial class SettingsForm : Form
+    public partial class ConfigureForm : Form
     {
         private readonly MainForm mainForm;
         private bool doSetFont = false;
-        public SettingsForm(MainForm mainForm)
+        public ConfigureForm(MainForm mainForm)
         {
             this.mainForm = mainForm;
             InitializeComponent();
@@ -66,12 +66,13 @@ namespace tbvolscroll
 
             Settings.Default.Save();
 
-            mainForm.MinimumSize = new Size(Settings.Default.BarWidth, Settings.Default.BarHeight);
-            mainForm.MaximumSize = new Size(100 + Settings.Default.BarWidth, Settings.Default.BarHeight);
-            mainForm.Width = 100 + Settings.Default.BarWidth;
-            mainForm.Height = Settings.Default.BarHeight;
             if (doSetFont)
                 mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
+
+            SizeF newMinSizes = mainForm.CalculateBarSize("0%");
+            mainForm.MinimumSize = new Size(Settings.Default.BarWidth + (int)newMinSizes.Width, Settings.Default.BarHeight + (int)newMinSizes.Height);
+            mainForm.Width = mainForm.MinimumSize.Width;
+            mainForm.Height = mainForm.MinimumSize.Height;
 
             Close();
         }

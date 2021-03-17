@@ -1,6 +1,6 @@
 ﻿namespace tbvolscroll
 {
-    partial class SettingsForm
+    partial class ConfigureForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigureForm));
             this.SaveVolumeBarAppearanceButton = new System.Windows.Forms.Button();
             this.SetBarDimensionsLabel = new System.Windows.Forms.Label();
             this.SetBarWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -86,9 +86,9 @@
             this.SetBarDimensionsLabel.AutoSize = true;
             this.SetBarDimensionsLabel.Location = new System.Drawing.Point(12, 23);
             this.SetBarDimensionsLabel.Name = "SetBarDimensionsLabel";
-            this.SetBarDimensionsLabel.Size = new System.Drawing.Size(130, 13);
+            this.SetBarDimensionsLabel.Size = new System.Drawing.Size(112, 13);
             this.SetBarDimensionsLabel.TabIndex = 4;
-            this.SetBarDimensionsLabel.Text = "Volume bar dimensions:";
+            this.SetBarDimensionsLabel.Text = "Volume bar margins:";
             this.SetBarDimensionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // SetBarWidthNumericUpDown
@@ -100,17 +100,12 @@
             0,
             0,
             0});
-            this.SetBarWidthNumericUpDown.Minimum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
             this.SetBarWidthNumericUpDown.Name = "SetBarWidthNumericUpDown";
             this.SetBarWidthNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.SetBarWidthNumericUpDown.TabIndex = 1;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetBarWidthNumericUpDown.Value = new decimal(new int[] {
-            30,
+            5,
             0,
             0,
             0});
@@ -134,17 +129,12 @@
             0,
             0,
             0});
-            this.SetBarHeightNumericUpDown.Minimum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
             this.SetBarHeightNumericUpDown.Name = "SetBarHeightNumericUpDown";
             this.SetBarHeightNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.SetBarHeightNumericUpDown.TabIndex = 2;
             this.SetBarHeightNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetBarHeightNumericUpDown.Value = new decimal(new int[] {
-            15,
+            5,
             0,
             0,
             0});
@@ -467,7 +457,7 @@
             this.RestoreDefaultValuesButton.UseVisualStyleBackColor = true;
             this.RestoreDefaultValuesButton.Click += new System.EventHandler(this.RestoreDefaultValues);
             // 
-            // SettingsForm
+            // ConfigureForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -482,7 +472,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SettingsForm";
+            this.Name = "ConfigureForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configure";
             this.Load += new System.EventHandler(this.LoadBarAppearance);

@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6C8DDAB2-EEEC-48A0-A411-95CCAE4CD381}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>tbvolscroll</RootNamespace>
     <AssemblyName>tb-vol-scroll</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -39,7 +39,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>voltray.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\voltray.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -160,11 +160,7 @@
     <None Include="Resources\vol100.ico" />
     <None Include="Resources\volmute.ico" />
     <None Include="Resources\voltray.ico" />
-    <Content Include="voltray.ico" />
-    <None Include="Resources\tray.png" />
-    <None Include="AppImages\tray.png" />
     <Content Include="FodyWeavers.xml" />
-    <Content Include="AppImages\tray.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
