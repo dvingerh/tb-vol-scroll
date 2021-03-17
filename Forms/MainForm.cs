@@ -70,11 +70,6 @@ namespace tbvolscroll
                 proc.Start();
                 ExitMenuItem.PerformClick();
             }
-            else
-            {
-                if (attemptedAdmin && !hasAdmin)
-                    TrayNotifyIcon.ShowBalloonTip(1000, "Warning", "Could not obtain administrator rights, scrolling may not work in all cases.", ToolTipIcon.Warning);
-            }
 
             LoadProgramSettings();
         }
@@ -117,7 +112,7 @@ namespace tbvolscroll
                     TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
                     Refresh();
 
-                    Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + audioHandler.Volume + Settings.Default.BarWidth;
+                    Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + audioHandler.Volume + Settings.Default.BarWidthPadding;
                     Opacity = Settings.Default.BarOpacity;
                     if (Settings.Default.UseBarGradient)
                         VolumeTextLabel.BackColor = CalculateColor(audioHandler.Volume);
@@ -263,7 +258,7 @@ namespace tbvolscroll
             TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
 
             SizeF newMinSizes = CalculateBarSize("0%");
-            MinimumSize = new Size(Settings.Default.BarWidth + (int)newMinSizes.Width, Settings.Default.BarHeight + (int)newMinSizes.Height);
+            MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
             Width = MinimumSize.Width;
             Height = MinimumSize.Height;
 
@@ -278,8 +273,7 @@ namespace tbvolscroll
 
         private void AudioDevicesMenuItemClick(object sender, EventArgs e)
         {
-            AudioDevicesForm audioDevicesForm = new AudioDevicesForm(this);
-            audioDevicesForm.ShowDialog();
+            new AudioDevicesForm(this).ShowDialog();
             audioHandler.UpdateAudioState();
             SetTrayIcon();
         }
@@ -344,8 +338,7 @@ namespace tbvolscroll
                 VolumeTextLabel.Text = "System Unmuted";
                 TrayNotifyIcon.Text = $"Volume: {audioHandler.Volume}%";
             }
-            audioHandler.Muted = isMuted;
-            Width = Settings.Default.BarWidth + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
+            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
             VolumeTextLabel.BackColor = Color.SkyBlue;
             DoAppearanceUpdate();
         }
@@ -353,9 +346,9 @@ namespace tbvolscroll
         public async Task ToggleAudioPlaybackDevice(int delta)
         {
             List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
-            await audioHandler.RefreshPlaybackDevices();
             audioDevicesList.AddRange(audioHandler.AudioDevices);
             CoreAudioDevice curDevice = audioHandler.CoreAudioController.DefaultPlaybackDevice;
+            int newDeviceIndex = curDeviceIndex;
             if (curDeviceIndex == -1)
                 curDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
 
@@ -374,13 +367,16 @@ namespace tbvolscroll
                     curDeviceIndex = audioDevicesList.Count - 1;
             }
 
-
-            CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
-            await newPlaybackDevice.SetAsDefaultAsync();
-            VolumeTextLabel.Text = audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
-            Width = Settings.Default.BarWidth + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
-            VolumeTextLabel.BackColor = Color.SkyBlue;
-            DoAppearanceUpdate();
+            if (newDeviceIndex != curDeviceIndex)
+            {
+                CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
+                await newPlaybackDevice.SetAsDefaultAsync();
+            }
+                VolumeTextLabel.Text = audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+                Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
+                VolumeTextLabel.BackColor = Color.SkyBlue;
+                DoAppearanceUpdate();
+            
         }
 
         public SizeF CalculateBarSize(string text)
