@@ -1,10 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using AudioSwitcher.AudioApi.CoreAudio;
-using System.Linq;
-using System;
-using System.Collections.Generic;
 
 namespace tbvolscroll
 {
@@ -15,6 +11,7 @@ namespace tbvolscroll
         public bool isShiftDown;
         public bool isScrolling;
         public readonly IKeyboardMouseEvents inputEvents;
+        
         private readonly MainForm callbackForm;
 
         public InputHandler(MainForm callbackForm)
@@ -58,11 +55,11 @@ namespace tbvolscroll
             {
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)
-                    callbackForm.SetAudioVolume(e.Delta);
+                    callbackForm.DoVolumeChanges(e.Delta);
                 else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
                     callbackForm.SetMuteStatus(e.Delta);
                 else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
-                    await callbackForm.ToggleAudioPlaybackDevice();
+                    await callbackForm.ToggleAudioPlaybackDevice(e.Delta);
                 await Task.Delay(100);
                 isScrolling = false;
             }

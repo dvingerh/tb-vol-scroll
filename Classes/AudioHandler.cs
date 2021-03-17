@@ -1,5 +1,6 @@
 ﻿using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Observables;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,12 +11,24 @@ using System.Windows.Forms;
 
 namespace tbvolscroll
 {
-    public static class AudioHandler
+    public class AudioHandler
     {
-        private static IEnumerable<CoreAudioDevice> audioDevices = null;
-        private static CoreAudioController coreAudioController = new CoreAudioController();
+        private static IEnumerable<CoreAudioDevice> audioDevices;
+        private static CoreAudioController coreAudioController;
         private static int volume = 0;
         private static bool muted = false;
+
+        public AudioHandler()
+        {
+            coreAudioController = new CoreAudioController();
+            audioDevices = null;
+            coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+        }
+        public async void OnDeviceChanged(DeviceChangedArgs value)
+        {
+            await RefreshPlaybackDevices();
+            UpdateAudioState();
+        }
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool MoveWindow(
@@ -32,37 +45,37 @@ namespace tbvolscroll
         [DllImport("User32.dll")]
         internal static extern bool GetClientRect(IntPtr hWnd, out WindowRect lpRect);
 
-        public static int Volume
+        public int Volume
         {
             get => volume;
             set => volume = value;
         }
 
-        public static bool Muted
+        public bool Muted
         {
             get => muted;
             set => muted = value;
         }
 
-        public static IEnumerable<CoreAudioDevice> AudioDevices
+        public IEnumerable<CoreAudioDevice> AudioDevices
         {
             get => audioDevices;
             set => audioDevices = value;
         }
 
-        public static CoreAudioController CoreAudioController
+        public CoreAudioController CoreAudioController
         {
             get => coreAudioController;
             set => coreAudioController = value;
         }
 
-        public static void UpdateAudioState()
+        public void UpdateAudioState()
         {
             Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
             Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
         }
 
-        public static async Task RefreshPlaybackDevices()
+        public async Task RefreshPlaybackDevices()
         {
             if (coreAudioController == null)
                 coreAudioController = new CoreAudioController();
@@ -70,7 +83,7 @@ namespace tbvolscroll
             audioDevices = coreAudioDevices;
         }
 
-        public static double GetMasterVolume()
+        public double GetMasterVolume()
         {
             try
             {
@@ -82,7 +95,7 @@ namespace tbvolscroll
             }
         }
 
-        public static void SetMasterVolume(int volume)
+        public void SetMasterVolume(int volume)
         {
             try
             {
@@ -95,7 +108,7 @@ namespace tbvolscroll
             }
         }
 
-        public static void SetMasterVolumeMute(bool isMuted = false)
+        public void SetMasterVolumeMute(bool isMuted = false)
         {
             try
             {
@@ -108,7 +121,7 @@ namespace tbvolscroll
             }
         }
 
-        public async static void OpenSndVol()
+        public async void OpenSndVol()
         {
             Process sndvolProc = new Process();
             sndvolProc.StartInfo.FileName = "sndvol.exe";
