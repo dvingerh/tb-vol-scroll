@@ -375,7 +375,7 @@ namespace tbvolscroll
                     CoreAudioDevice newPlaybackDevice = audioDevicesList[curDeviceIndex];
                     await newPlaybackDevice.SetAsDefaultAsync();
                 }
-                VolumeTextLabel.Text = audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+                VolumeTextLabel.Text = $"({curDeviceIndex + 1}/{audioDevicesList.Count}) {audioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
                 Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
                 VolumeTextLabel.BackColor = Color.SkyBlue;
                 DoAppearanceUpdate();
