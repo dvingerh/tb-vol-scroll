@@ -35,7 +35,7 @@
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.systemVolumeMixerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,9 +53,9 @@
             this.VolumeTextLabel.BackColor = System.Drawing.Color.DodgerBlue;
             this.VolumeTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
-            this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(100, 15);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(185, 36);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -77,7 +77,7 @@
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
-            this.systemVolumeMixerToolStripMenuItem,
+            this.SystemVolumeMixerMenuItem,
             this.AudioPlaybackDevicesMenuItem,
             this.SeparatorMenuItem3,
             this.MoreMenuItem,
@@ -86,7 +86,8 @@
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.TrayContextMenu.ShowCheckMargin = true;
             this.TrayContextMenu.ShowImageMargin = false;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 126);
+            this.TrayContextMenu.Size = new System.Drawing.Size(236, 164);
+            this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayContextMenu_MouseClick);
             // 
             // TitleLabelMenuItem
             // 
@@ -94,26 +95,26 @@
             this.TitleLabelMenuItem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.TitleLabelMenuItem.Enabled = false;
             this.TitleLabelMenuItem.Name = "TitleLabelMenuItem";
-            this.TitleLabelMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.TitleLabelMenuItem.Size = new System.Drawing.Size(235, 24);
             this.TitleLabelMenuItem.Text = "tb-vol-scroll";
             // 
             // SeparatorMenuItem1
             // 
             this.SeparatorMenuItem1.BackColor = System.Drawing.SystemColors.Control;
             this.SeparatorMenuItem1.Name = "SeparatorMenuItem1";
-            this.SeparatorMenuItem1.Size = new System.Drawing.Size(196, 6);
+            this.SeparatorMenuItem1.Size = new System.Drawing.Size(232, 6);
             // 
-            // systemVolumeMixerToolStripMenuItem
+            // SystemVolumeMixerMenuItem
             // 
-            this.systemVolumeMixerToolStripMenuItem.Name = "systemVolumeMixerToolStripMenuItem";
-            this.systemVolumeMixerToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.systemVolumeMixerToolStripMenuItem.Text = "System Volume Mixer";
-            this.systemVolumeMixerToolStripMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
+            this.SystemVolumeMixerMenuItem.Name = "SystemVolumeMixerMenuItem";
+            this.SystemVolumeMixerMenuItem.Size = new System.Drawing.Size(235, 24);
+            this.SystemVolumeMixerMenuItem.Text = "System Volume Mixer";
+            this.SystemVolumeMixerMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
             // 
             // AudioPlaybackDevicesMenuItem
             // 
             this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
-            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(235, 24);
             this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
             this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
             // 
@@ -121,7 +122,7 @@
             // 
             this.SeparatorMenuItem3.BackColor = System.Drawing.SystemColors.Control;
             this.SeparatorMenuItem3.Name = "SeparatorMenuItem3";
-            this.SeparatorMenuItem3.Size = new System.Drawing.Size(196, 6);
+            this.SeparatorMenuItem3.Size = new System.Drawing.Size(232, 6);
             // 
             // MoreMenuItem
             // 
@@ -133,39 +134,39 @@
             this.RestartAsAdminMenuItem,
             this.RestartNormalMenuItem});
             this.MoreMenuItem.Name = "MoreMenuItem";
-            this.MoreMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.MoreMenuItem.Size = new System.Drawing.Size(235, 24);
             this.MoreMenuItem.Text = "More";
             // 
             // ConfigureMenuItem
             // 
             this.ConfigureMenuItem.Name = "ConfigureMenuItem";
-            this.ConfigureMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.ConfigureMenuItem.Size = new System.Drawing.Size(235, 26);
             this.ConfigureMenuItem.Text = "Configure...";
             this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
             // OpenStartupFolderMenuItem
             // 
             this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
-            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(235, 26);
             this.OpenStartupFolderMenuItem.Text = "Open Startup Folder";
             this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // SeparatorMenuItem2
             // 
             this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(191, 6);
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(232, 6);
             // 
             // RestartAsAdminMenuItem
             // 
             this.RestartAsAdminMenuItem.Name = "RestartAsAdminMenuItem";
-            this.RestartAsAdminMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.RestartAsAdminMenuItem.Size = new System.Drawing.Size(235, 26);
             this.RestartAsAdminMenuItem.Text = "Restart (Administrator)";
             this.RestartAsAdminMenuItem.Click += new System.EventHandler(this.RestartAppAsAdministrator);
             // 
             // RestartNormalMenuItem
             // 
             this.RestartNormalMenuItem.Name = "RestartNormalMenuItem";
-            this.RestartNormalMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.RestartNormalMenuItem.Size = new System.Drawing.Size(235, 26);
             this.RestartNormalMenuItem.Text = "Restart";
             this.RestartNormalMenuItem.Click += new System.EventHandler(this.RestartAppNormal);
             // 
@@ -173,23 +174,23 @@
             // 
             this.ExitMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.ExitMenuItem.Name = "ExitMenuItem";
-            this.ExitMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.ExitMenuItem.Size = new System.Drawing.Size(235, 24);
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(100, 15);
+            this.ClientSize = new System.Drawing.Size(185, 36);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -218,7 +219,7 @@
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem systemVolumeMixerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
     }
 }

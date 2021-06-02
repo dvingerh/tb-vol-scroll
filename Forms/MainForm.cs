@@ -10,6 +10,7 @@ using AudioSwitcher.AudioApi.CoreAudio;
 using System.Collections.Generic;
 using tbvolscroll.Properties;
 using tbvolscroll.Forms;
+using System.Media;
 
 namespace tbvolscroll
 {
@@ -388,6 +389,15 @@ namespace tbvolscroll
         public SizeF CalculateBarSize(string text)
         {
             return VolumeTextLabel.CreateGraphics().MeasureString(text, VolumeTextLabel.Font);
+        }
+
+        private void TrayContextMenu_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (TitleLabelMenuItem.ContentRectangle.Contains(e.Location))
+            {
+                SystemSounds.Exclamation.Play();
+            }
+
         }
     }
 }
