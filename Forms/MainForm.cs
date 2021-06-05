@@ -72,7 +72,7 @@ namespace tbvolscroll
                 ExitMenuItem.PerformClick();
             }
 
-            LoadProgramSettings();
+            LoadProgramConfiguration();
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
             MoreMenuItem.Enabled = true;
@@ -220,7 +220,7 @@ namespace tbvolscroll
 
         private void OpenConfigureDialog(object sender, EventArgs e)
         {
-            new ConfigureForm(this).ShowDialog();
+            new ConfigurationForm(this).ShowDialog();
         }
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)
@@ -243,7 +243,7 @@ namespace tbvolscroll
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Startup));
         }
 
-        private async void LoadProgramSettings()
+        private async void LoadProgramConfiguration()
         {
             if (Settings.Default.UpdateSettings)
             {

@@ -5,11 +5,11 @@ using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
-    public partial class ConfigureForm : Form
+    public partial class ConfigurationForm : Form
     {
         private readonly MainForm mainForm;
         private bool doSetFont = false;
-        public ConfigureForm(MainForm mainForm)
+        public ConfigurationForm(MainForm mainForm)
         {
             this.mainForm = mainForm;
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace tbvolscroll
             }
 
             Control.ControlCollection appearanceControls = AppearanceGroupBox.Controls;
-            Control.ControlCollection behaviorControls = BehaviorGroupBox.Controls;
+            Control.ControlCollection behaviourControls = BehaviourGroupBox.Controls;
             foreach (Control ctrl in appearanceControls)
             {
                 if (ctrl is CheckBox)
@@ -57,7 +57,7 @@ namespace tbvolscroll
                 }
             }
 
-            foreach (Control ctrl in behaviorControls)
+            foreach (Control ctrl in behaviourControls)
             {
                 if (ctrl is CheckBox)
                 {
@@ -77,9 +77,10 @@ namespace tbvolscroll
         private void OnSettingsChanged(object sender, EventArgs e)
         {
             ApplyConfigurationButton.Enabled = true;
+            RestoreDefaultValuesButton.Enabled = true;
         }
 
-        private void SaveBarConfiguration(object sender, EventArgs e)
+        private void ApplyBarConfiguration(object sender, EventArgs e)
         {
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
@@ -144,6 +145,7 @@ namespace tbvolscroll
 
         private void RestoreDefaultValues(object sender, EventArgs e)
         {
+            RestoreDefaultValuesButton.Enabled = false;
             AutoRetryAdminCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
@@ -157,6 +159,7 @@ namespace tbvolscroll
             OpacityValueLabel.Text = $"{BarOpacityTrackBar.Value}%";
             Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
             CustomFontDialog.Font = Settings.Default.FontStyle;
+            RestoreDefaultValuesButton.Enabled = false;
         }
 
         private void PickBarColor(object sender, EventArgs e)

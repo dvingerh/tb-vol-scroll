@@ -1,6 +1,6 @@
 ﻿namespace tbvolscroll
 {
-    partial class ConfigureForm
+    partial class ConfigurationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigureForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             this.ApplyConfigurationButton = new System.Windows.Forms.Button();
             this.SetBarDimensionsLabel = new System.Windows.Forms.Label();
             this.SetBarWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -49,7 +49,7 @@
             this.PixelsLabel = new System.Windows.Forms.Label();
             this.ColorPreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.AutoRetryAdminCheckBox = new System.Windows.Forms.CheckBox();
-            this.BehaviorGroupBox = new System.Windows.Forms.GroupBox();
+            this.BehaviourGroupBox = new System.Windows.Forms.GroupBox();
             this.SwitchAudioPlaybackDevicesCheckBox = new System.Windows.Forms.CheckBox();
             this.ToggleMuteCheckBox = new System.Windows.Forms.CheckBox();
             this.Percent2Label = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.AutoHideTimeOutNumericUpDown)).BeginInit();
             this.AppearanceGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ColorPreviewPictureBox)).BeginInit();
-            this.BehaviorGroupBox.SuspendLayout();
+            this.BehaviourGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeStepNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +80,7 @@
             this.ApplyConfigurationButton.TabIndex = 3;
             this.ApplyConfigurationButton.Text = "Apply";
             this.ApplyConfigurationButton.UseVisualStyleBackColor = true;
-            this.ApplyConfigurationButton.Click += new System.EventHandler(this.SaveBarConfiguration);
+            this.ApplyConfigurationButton.Click += new System.EventHandler(this.ApplyBarConfiguration);
             // 
             // SetBarDimensionsLabel
             // 
@@ -320,26 +320,26 @@
             this.AutoRetryAdminCheckBox.Text = "Request Administrator permissions on start if needed";
             this.AutoRetryAdminCheckBox.UseVisualStyleBackColor = true;
             // 
-            // BehaviorGroupBox
+            // BehaviourGroupBox
             // 
-            this.BehaviorGroupBox.Controls.Add(this.SwitchAudioPlaybackDevicesCheckBox);
-            this.BehaviorGroupBox.Controls.Add(this.ToggleMuteCheckBox);
-            this.BehaviorGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
-            this.BehaviorGroupBox.Controls.Add(this.Percent2Label);
-            this.BehaviorGroupBox.Controls.Add(this.Percent1Label);
-            this.BehaviorGroupBox.Controls.Add(this.MillisecondsLabel);
-            this.BehaviorGroupBox.Controls.Add(this.SetVolumeStepLabel);
-            this.BehaviorGroupBox.Controls.Add(this.SetVolumeStepNumericUpDown);
-            this.BehaviorGroupBox.Controls.Add(this.ThresholdLabel);
-            this.BehaviorGroupBox.Controls.Add(this.ThresholdNumericUpDown);
-            this.BehaviorGroupBox.Controls.Add(this.AutoHideTimeOutNumericUpDown);
-            this.BehaviorGroupBox.Controls.Add(this.AutoHideTimeOutLabel);
-            this.BehaviorGroupBox.Location = new System.Drawing.Point(12, 12);
-            this.BehaviorGroupBox.Name = "BehaviorGroupBox";
-            this.BehaviorGroupBox.Size = new System.Drawing.Size(340, 262);
-            this.BehaviorGroupBox.TabIndex = 19;
-            this.BehaviorGroupBox.TabStop = false;
-            this.BehaviorGroupBox.Text = "Behavior";
+            this.BehaviourGroupBox.Controls.Add(this.SwitchAudioPlaybackDevicesCheckBox);
+            this.BehaviourGroupBox.Controls.Add(this.ToggleMuteCheckBox);
+            this.BehaviourGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
+            this.BehaviourGroupBox.Controls.Add(this.Percent2Label);
+            this.BehaviourGroupBox.Controls.Add(this.Percent1Label);
+            this.BehaviourGroupBox.Controls.Add(this.MillisecondsLabel);
+            this.BehaviourGroupBox.Controls.Add(this.SetVolumeStepLabel);
+            this.BehaviourGroupBox.Controls.Add(this.SetVolumeStepNumericUpDown);
+            this.BehaviourGroupBox.Controls.Add(this.ThresholdLabel);
+            this.BehaviourGroupBox.Controls.Add(this.ThresholdNumericUpDown);
+            this.BehaviourGroupBox.Controls.Add(this.AutoHideTimeOutNumericUpDown);
+            this.BehaviourGroupBox.Controls.Add(this.AutoHideTimeOutLabel);
+            this.BehaviourGroupBox.Location = new System.Drawing.Point(12, 12);
+            this.BehaviourGroupBox.Name = "BehaviourGroupBox";
+            this.BehaviourGroupBox.Size = new System.Drawing.Size(340, 262);
+            this.BehaviourGroupBox.TabIndex = 19;
+            this.BehaviourGroupBox.TabStop = false;
+            this.BehaviourGroupBox.Text = "Behaviour";
             // 
             // SwitchAudioPlaybackDevicesCheckBox
             // 
@@ -460,7 +460,7 @@
             this.RestoreDefaultValuesButton.UseVisualStyleBackColor = true;
             this.RestoreDefaultValuesButton.Click += new System.EventHandler(this.RestoreDefaultValues);
             // 
-            // ConfigureForm
+            // ConfigurationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -469,15 +469,15 @@
             this.Controls.Add(this.RestoreDefaultValuesButton);
             this.Controls.Add(this.ApplyConfigurationButton);
             this.Controls.Add(this.AppearanceGroupBox);
-            this.Controls.Add(this.BehaviorGroupBox);
+            this.Controls.Add(this.BehaviourGroupBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ConfigureForm";
+            this.Name = "ConfigurationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Configure";
+            this.Text = "Configuration";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfirmCloseWithoutSaving);
             this.Load += new System.EventHandler(this.LoadBarConfiguration);
             ((System.ComponentModel.ISupportInitialize)(this.SetBarWidthNumericUpDown)).EndInit();
@@ -487,8 +487,8 @@
             this.AppearanceGroupBox.ResumeLayout(false);
             this.AppearanceGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ColorPreviewPictureBox)).EndInit();
-            this.BehaviorGroupBox.ResumeLayout(false);
-            this.BehaviorGroupBox.PerformLayout();
+            this.BehaviourGroupBox.ResumeLayout(false);
+            this.BehaviourGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeStepNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).EndInit();
             this.ResumeLayout(false);
@@ -515,7 +515,7 @@
         private System.Windows.Forms.Label AutoHideTimeOutLabel;
         private System.Windows.Forms.NumericUpDown AutoHideTimeOutNumericUpDown;
         private System.Windows.Forms.GroupBox AppearanceGroupBox;
-        private System.Windows.Forms.GroupBox BehaviorGroupBox;
+        private System.Windows.Forms.GroupBox BehaviourGroupBox;
         private System.Windows.Forms.Label ThresholdLabel;
         private System.Windows.Forms.NumericUpDown ThresholdNumericUpDown;
         private System.Windows.Forms.Label SetVolumeStepLabel;

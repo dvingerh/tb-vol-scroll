@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,7 +11,7 @@ namespace tbvolscroll.Forms
     public partial class AudioPlaybackDevicesForm : Form
     {
         private readonly MainForm callbackForm;
-        private bool didDoubleClickSave = false;
+        private bool didApplyDevice = false;
         public AudioPlaybackDevicesForm(MainForm callbackForm)
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace tbvolscroll.Forms
         }
         public void OnDeviceChanged(DeviceChangedArgs value)
         {
-            if (!didDoubleClickSave)
+            if (!didApplyDevice)
             {
                 Invoke((MethodInvoker)delegate
                 {
@@ -62,25 +62,30 @@ namespace tbvolscroll.Forms
             RefreshButton.Enabled = true;
         }
 
-        private async void SaveButtonClick(object sender, EventArgs e)
+        private async void ApplyButtonClick(object sender, EventArgs e)
         {
             if (DevicesListView.SelectedItems.Count > 0)
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
+            }
+            ApplyButton.Enabled = false;
+        }
+
+        private void ToggleApplyButton(object sender, EventArgs e)
+        {
+            ApplyButton.Enabled = DevicesListView.SelectedItems.Count > 0;
+        }
+
+        private async void DevicesListViewDoubleClick(object sender, EventArgs e)
+        {
+            if (DevicesListView.SelectedItems.Count > 0)
+            {
+                didApplyDevice = true;
+                CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
+                await newPlaybackDevice.SetAsDefaultAsync();
                 Close();
             }
-        }
-
-        private void ToggleSaveButton(object sender, EventArgs e)
-        {
-            SaveButton.Enabled = DevicesListView.SelectedItems.Count > 0;
-        }
-
-        private void DevicesListViewDoubleClick(object sender, EventArgs e)
-        {
-            didDoubleClickSave = true;
-            SaveButton.PerformClick();
         }
 
         private async void RefreshButtonClick(object sender, EventArgs e)

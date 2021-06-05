@@ -100,11 +100,11 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ConfigureForm.cs">
+    <Compile Include="Forms\ConfigurationForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigureForm.Designer.cs">
-      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    <Compile Include="Forms\ConfigurationForm.Designer.cs">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\InputHandler.cs" />
     <Compile Include="Forms\AudioPlaybackDevicesForm.cs">
@@ -118,8 +118,8 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ConfigureForm.resx">
-      <DependentUpon>ConfigureForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AudioPlaybackDevicesForm.resx">
       <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
