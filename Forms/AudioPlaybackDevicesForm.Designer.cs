@@ -42,7 +42,7 @@ namespace tbvolscroll.Forms
             // SaveButton
             // 
             this.SaveButton.Enabled = false;
-            this.SaveButton.Location = new System.Drawing.Point(189, 151);
+            this.SaveButton.Location = new System.Drawing.Point(214, 176);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(75, 23);
             this.SaveButton.TabIndex = 0;
@@ -55,14 +55,14 @@ namespace tbvolscroll.Forms
             this.DevicesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameColumn,
             this.IsDefaultColumn,
-            this.MutedColumn,
-            this.VolumeColumn});
+            this.VolumeColumn,
+            this.MutedColumn});
             this.DevicesListView.FullRowSelect = true;
             this.DevicesListView.HideSelection = false;
             this.DevicesListView.Location = new System.Drawing.Point(12, 12);
             this.DevicesListView.MultiSelect = false;
             this.DevicesListView.Name = "DevicesListView";
-            this.DevicesListView.Size = new System.Drawing.Size(510, 133);
+            this.DevicesListView.Size = new System.Drawing.Size(560, 158);
             this.DevicesListView.TabIndex = 1;
             this.DevicesListView.UseCompatibleStateImageBehavior = false;
             this.DevicesListView.View = System.Windows.Forms.View.Details;
@@ -81,19 +81,18 @@ namespace tbvolscroll.Forms
             // 
             // MutedColumn
             // 
-            this.MutedColumn.DisplayIndex = 3;
             this.MutedColumn.Text = "Muted";
-            this.MutedColumn.Width = 50;
+            this.MutedColumn.Width = 75;
             // 
             // VolumeColumn
             // 
-            this.VolumeColumn.DisplayIndex = 2;
             this.VolumeColumn.Text = "Volume";
+            this.VolumeColumn.Width = 75;
             // 
             // RefreshButton
             // 
             this.RefreshButton.Enabled = false;
-            this.RefreshButton.Location = new System.Drawing.Point(270, 151);
+            this.RefreshButton.Location = new System.Drawing.Point(295, 176);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(75, 23);
             this.RefreshButton.TabIndex = 2;
@@ -106,7 +105,7 @@ namespace tbvolscroll.Forms
             this.AcceptButton = this.SaveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(534, 186);
+            this.ClientSize = new System.Drawing.Size(584, 211);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DevicesListView);
             this.Controls.Add(this.SaveButton);

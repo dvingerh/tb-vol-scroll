@@ -11,6 +11,7 @@ namespace tbvolscroll.Forms
     public partial class AudioPlaybackDevicesForm : Form
     {
         private readonly MainForm callbackForm;
+        private bool didDoubleClickSave = false;
         public AudioPlaybackDevicesForm(MainForm callbackForm)
         {
             InitializeComponent();
@@ -24,10 +25,13 @@ namespace tbvolscroll.Forms
         }
         public void OnDeviceChanged(DeviceChangedArgs value)
         {
-            Invoke((MethodInvoker)delegate
+            if (!didDoubleClickSave)
             {
-                RefreshButton.PerformClick();
-            });
+                Invoke((MethodInvoker)delegate
+                {
+                    RefreshButton.PerformClick();
+                });
+            }
         }
 
         private async void OnFormShown(object sender, EventArgs e)
@@ -53,6 +57,7 @@ namespace tbvolscroll.Forms
                 deviceItem.Tag = d;
                 DevicesListView.Items.Add(deviceItem);
             }
+            DevicesListView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
 
             RefreshButton.Enabled = true;
         }
@@ -74,6 +79,7 @@ namespace tbvolscroll.Forms
 
         private void DevicesListViewDoubleClick(object sender, EventArgs e)
         {
+            didDoubleClickSave = true;
             SaveButton.PerformClick();
         }
 
