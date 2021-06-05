@@ -15,7 +15,7 @@ namespace tbvolscroll
             InitializeComponent();
         }
 
-        private void LoadBarAppearance(object sender, EventArgs e)
+        private void LoadBarConfiguration(object sender, EventArgs e)
         {
             SwitchAudioPlaybackDevicesCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
             ToggleMuteCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
@@ -39,10 +39,47 @@ namespace tbvolscroll
                 CustomColorCheckBox.Checked = true;
             }
 
+            Control.ControlCollection appearanceControls = AppearanceGroupBox.Controls;
+            Control.ControlCollection behaviorControls = BehaviorGroupBox.Controls;
+            foreach (Control ctrl in appearanceControls)
+            {
+                if (ctrl is CheckBox)
+                {
+                    ((CheckBox)ctrl).CheckedChanged += new EventHandler(OnSettingsChanged);
+                }
+                if (ctrl is NumericUpDown)
+                {
+                    ((NumericUpDown)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                }
+                if (ctrl is TrackBar)
+                {
+                    ((TrackBar)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                }
+            }
 
+            foreach (Control ctrl in behaviorControls)
+            {
+                if (ctrl is CheckBox)
+                {
+                    ((CheckBox)ctrl).CheckedChanged += new EventHandler(OnSettingsChanged);
+                }
+                if (ctrl is NumericUpDown)
+                {
+                    ((NumericUpDown)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                }
+                if (ctrl is TrackBar)
+                {
+                    ((TrackBar)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                }
+            }
         }
 
-        private void SaveBarAppearance(object sender, EventArgs e)
+        private void OnSettingsChanged(object sender, EventArgs e)
+        {
+            ApplyConfigurationButton.Enabled = true;
+        }
+
+        private void SaveBarConfiguration(object sender, EventArgs e)
         {
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
@@ -75,7 +112,7 @@ namespace tbvolscroll
             mainForm.Width = mainForm.MinimumSize.Width;
             mainForm.Height = mainForm.MinimumSize.Height;
 
-            Close();
+            ApplyConfigurationButton.Enabled = false;
         }
 
         private void SetCustomColor(object sender, EventArgs e)
@@ -99,7 +136,10 @@ namespace tbvolscroll
         {
             DialogResult dialogResult = CustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
+            {
                 doSetFont = true;
+                OnSettingsChanged(null, null);
+            }
         }
 
         private void RestoreDefaultValues(object sender, EventArgs e)
@@ -127,8 +167,23 @@ namespace tbvolscroll
                 FullOpen = true
             };
             if (customColor.ShowDialog() == DialogResult.OK)
+            {
                 ColorPreviewPictureBox.BackColor = customColor.Color;
+                OnSettingsChanged(null, null);
+            }
+        }
 
+        private void ConfirmCloseWithoutSaving(object sender, FormClosingEventArgs e)
+        {
+            if (ApplyConfigurationButton.Enabled == true)
+            {
+                DialogResult confirmLeave = MessageBox.Show("You have unsaved changes. Leave anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (confirmLeave == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
         }
     }
 }

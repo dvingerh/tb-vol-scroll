@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigureForm));
-            this.SaveVolumeBarAppearanceButton = new System.Windows.Forms.Button();
+            this.ApplyConfigurationButton = new System.Windows.Forms.Button();
             this.SetBarDimensionsLabel = new System.Windows.Forms.Label();
             this.SetBarWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.DimensionXLabel = new System.Windows.Forms.Label();
@@ -71,15 +71,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // SaveVolumeBarAppearanceButton
+            // ApplyConfigurationButton
             // 
-            this.SaveVolumeBarAppearanceButton.Location = new System.Drawing.Point(358, 221);
-            this.SaveVolumeBarAppearanceButton.Name = "SaveVolumeBarAppearanceButton";
-            this.SaveVolumeBarAppearanceButton.Size = new System.Drawing.Size(340, 24);
-            this.SaveVolumeBarAppearanceButton.TabIndex = 3;
-            this.SaveVolumeBarAppearanceButton.Text = "Save";
-            this.SaveVolumeBarAppearanceButton.UseVisualStyleBackColor = true;
-            this.SaveVolumeBarAppearanceButton.Click += new System.EventHandler(this.SaveBarAppearance);
+            this.ApplyConfigurationButton.Enabled = false;
+            this.ApplyConfigurationButton.Location = new System.Drawing.Point(358, 221);
+            this.ApplyConfigurationButton.Name = "ApplyConfigurationButton";
+            this.ApplyConfigurationButton.Size = new System.Drawing.Size(340, 24);
+            this.ApplyConfigurationButton.TabIndex = 3;
+            this.ApplyConfigurationButton.Text = "Apply";
+            this.ApplyConfigurationButton.UseVisualStyleBackColor = true;
+            this.ApplyConfigurationButton.Click += new System.EventHandler(this.SaveBarConfiguration);
             // 
             // SetBarDimensionsLabel
             // 
@@ -466,7 +467,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(709, 286);
             this.Controls.Add(this.RestoreDefaultValuesButton);
-            this.Controls.Add(this.SaveVolumeBarAppearanceButton);
+            this.Controls.Add(this.ApplyConfigurationButton);
             this.Controls.Add(this.AppearanceGroupBox);
             this.Controls.Add(this.BehaviorGroupBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -477,7 +478,8 @@
             this.Name = "ConfigureForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configure";
-            this.Load += new System.EventHandler(this.LoadBarAppearance);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfirmCloseWithoutSaving);
+            this.Load += new System.EventHandler(this.LoadBarConfiguration);
             ((System.ComponentModel.ISupportInitialize)(this.SetBarWidthNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SetBarHeightNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BarOpacityTrackBar)).EndInit();
@@ -495,7 +497,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button SaveVolumeBarAppearanceButton;
+        private System.Windows.Forms.Button ApplyConfigurationButton;
         private System.Windows.Forms.Label SetBarDimensionsLabel;
         private System.Windows.Forms.NumericUpDown SetBarWidthNumericUpDown;
         private System.Windows.Forms.Label DimensionXLabel;
