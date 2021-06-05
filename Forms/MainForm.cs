@@ -73,6 +73,9 @@ namespace tbvolscroll
             }
 
             LoadProgramSettings();
+            SystemVolumeMixerMenuItem.Enabled = true;
+            AudioPlaybackDevicesMenuItem.Enabled = true;
+            MoreMenuItem.Enabled = true;
         }
 
         private bool IsAdministrator()
@@ -340,7 +343,7 @@ namespace tbvolscroll
                 VolumeTextLabel.Text = "System Unmuted";
                 TrayNotifyIcon.Text = $"Volume: {audioHandler.Volume}%";
             }
-            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
+            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
             VolumeTextLabel.BackColor = Color.SkyBlue;
             DoAppearanceUpdate();
         }
@@ -377,7 +380,7 @@ namespace tbvolscroll
                     await newPlaybackDevice.SetAsDefaultAsync();
                 }
                 VolumeTextLabel.Text = $"({curDeviceIndex + 1}/{audioDevicesList.Count}) {audioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
-                Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width;
+                Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
                 VolumeTextLabel.BackColor = Color.SkyBlue;
                 DoAppearanceUpdate();
             } catch(Exception ex)
