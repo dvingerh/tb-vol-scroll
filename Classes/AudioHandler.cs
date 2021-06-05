@@ -120,7 +120,7 @@ namespace tbvolscroll
             }
         }
 
-        public async void OpenSndVol()
+        public void OpenSndVol()
         {
             Process sndvolProc = new Process();
             sndvolProc.StartInfo.FileName = "sndvol.exe";
@@ -141,15 +141,13 @@ namespace tbvolscroll
                         hasWindow = true;
                     }
                 }
-                await Task.Delay(10);
             }
 
-            Screen screen = Screen.FromPoint(Cursor.Position);
-            int sndvolWidth = screen.WorkingArea.Width; // 1000;
+            int sndvolWidth = 1000;
             int sndvolHeight = 500;
-            int posX = 0; // - (sndvolWidth / 2);
-            int posY = screen.WorkingArea.Height / 2 - (sndvolHeight / 2);
-            MoveWindow(windowHandle, posX, posY, sndvolWidth, sndvolHeight, true);
+            Point curPoint = Cursor.Position;
+            Point location = new Point(curPoint.X - sndvolWidth, curPoint.Y - sndvolHeight);
+            MoveWindow(windowHandle, location.X, location.Y, sndvolWidth, sndvolHeight, true);
 
         }
 
