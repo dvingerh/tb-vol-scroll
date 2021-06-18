@@ -51,8 +51,8 @@ namespace tbvolscroll.Forms
                     Text = d.FullName
                 };
                 deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
-                deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");
                 deviceItem.SubItems.Add($"{d.Volume}%");
+                deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");
                 deviceItem.BackColor = d.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
                 deviceItem.Tag = d;
                 DevicesListView.Items.Add(deviceItem);
