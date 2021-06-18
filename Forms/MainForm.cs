@@ -296,7 +296,7 @@ namespace tbvolscroll
             AutoHideVolume();
         }
 
-        private void SetTrayIcon()
+        public void SetTrayIcon()
         {
             if (audioHandler.Muted)
             {
@@ -394,13 +394,22 @@ namespace tbvolscroll
             return VolumeTextLabel.CreateGraphics().MeasureString(text, VolumeTextLabel.Font);
         }
 
-        private void TrayContextMenu_MouseClick(object sender, MouseEventArgs e)
+        private void PlaySystemSoundTrayMenu(object sender, MouseEventArgs e)
         {
             if (TitleLabelMenuItem.ContentRectangle.Contains(e.Location))
             {
                 SystemSounds.Exclamation.Play();
             }
 
+        }
+
+        private void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle)
+            {
+                TrayContextMenu.Hide();
+                new VolumeSliderPopupForm(this).ShowDialog();
+            }
         }
     }
 }

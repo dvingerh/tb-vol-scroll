@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,6 +94,9 @@
   <ItemGroup>
     <Compile Include="Classes\AudioHandler.cs" />
     <Compile Include="Classes\TaskbarHelper.cs" />
+    <Compile Include="Classes\TrackBarNoFocus.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +116,12 @@
     <Compile Include="Forms\AudioPlaybackDevicesForm.Designer.cs">
       <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\VolumeSliderPopupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VolumeSliderPopupForm.Designer.cs">
+      <DependentUpon>VolumeSliderPopupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
@@ -123,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AudioPlaybackDevicesForm.resx">
       <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VolumeSliderPopupForm.resx">
+      <DependentUpon>VolumeSliderPopupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

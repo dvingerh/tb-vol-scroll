@@ -55,7 +55,7 @@
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 20);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 23);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -69,6 +69,7 @@
             this.TrayNotifyIcon.Text = "tb-vol-scroll - Loading";
             this.TrayNotifyIcon.Visible = true;
             this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
+            this.TrayNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShowVolumeSliderPopupForm);
             // 
             // TrayContextMenu
             // 
@@ -87,7 +88,7 @@
             this.TrayContextMenu.ShowCheckMargin = true;
             this.TrayContextMenu.ShowImageMargin = false;
             this.TrayContextMenu.Size = new System.Drawing.Size(200, 126);
-            this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayContextMenu_MouseClick);
+            this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
             // 
@@ -187,7 +188,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(125, 20);
+            this.ClientSize = new System.Drawing.Size(125, 23);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
@@ -209,7 +210,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.NotifyIcon TrayNotifyIcon;
         private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem TitleLabelMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem1;
@@ -224,6 +224,7 @@
         private System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
+        public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
     }
 }
 
