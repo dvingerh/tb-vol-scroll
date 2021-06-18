@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -16,6 +17,10 @@ namespace tbvolscroll
         [STAThread]
         static void Main(string[] args)
         {
+            bool noTrayArg = args.Any("notray".Contains);
+            bool adminArg = args.Any("admin".Contains);
+            if (adminArg)
+                Thread.Sleep(1000);
             Process[] processes = Process.GetProcesses();
             Process currentProc = Process.GetCurrentProcess();
             foreach (Process process in processes)
@@ -27,8 +32,6 @@ namespace tbvolscroll
                 }
             }
 
-            bool noTrayArg = args.Any("notray".Contains);
-            bool adminArg = args.Any("admin".Contains);
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
