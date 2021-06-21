@@ -39,7 +39,23 @@ namespace tbvolscroll.Forms
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
-            Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+
+            switch (TaskbarHelper.Position)
+            {
+                case TaskbarPosition.Bottom:
+                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    break;
+                case TaskbarPosition.Right:
+                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    break;
+                case TaskbarPosition.Left:
+                    Location = new Point(workingArea.Left, workingArea.Bottom - Height);
+                    break;
+                case TaskbarPosition.Top:
+                    Location = new Point(workingArea.Right - Width, workingArea.Top);
+                    break;
+
+            }
             await LoadAudioPlaybackDevicesList();
         }
 

@@ -145,8 +145,26 @@ namespace tbvolscroll
 
             int sndvolWidth = 1000;
             int sndvolHeight = 500;
-            Point curPoint = Cursor.Position;
-            Point location = new Point(curPoint.X - sndvolWidth, curPoint.Y - sndvolHeight);
+            Point position = Cursor.Position;
+            Screen screen = Screen.FromPoint(position);
+            Point location = new Point();
+            Rectangle workingArea = screen.WorkingArea;
+
+            switch (TaskbarHelper.Position)
+            {
+                case TaskbarPosition.Bottom:
+                    location = new Point(workingArea.Right - sndvolWidth, workingArea.Bottom - sndvolHeight);
+                    break;
+                case TaskbarPosition.Right:
+                    location = new Point(workingArea.Right - sndvolWidth, workingArea.Bottom - sndvolHeight);
+                    break;
+                case TaskbarPosition.Left:
+                    location = new Point(workingArea.Left, workingArea.Bottom - sndvolHeight);
+                    break;
+                case TaskbarPosition.Top:
+                    location = new Point(workingArea.Right - sndvolWidth, workingArea.Top);
+                    break;
+            }
             MoveWindow(windowHandle, location.X, location.Y, sndvolWidth, sndvolHeight, true);
 
         }
