@@ -129,6 +129,7 @@ namespace tbvolscroll.Forms
             this.Name = "AudioPlaybackDevicesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Playback Devices";
+            this.Deactivate += new System.EventHandler(this.CloseFormOnDeactivate);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.ResumeLayout(false);
             this.PerformLayout();

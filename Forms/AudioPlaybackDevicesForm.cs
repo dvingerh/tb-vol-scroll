@@ -36,8 +36,10 @@ namespace tbvolscroll.Forms
 
         private async void OnFormShown(object sender, EventArgs e)
         {
-            Point curPoint = Cursor.Position;
-            Location = new Point(curPoint.X - Width, curPoint.Y - Height);
+            Point position = Cursor.Position;
+            Screen screen = Screen.FromPoint(position);
+            Rectangle workingArea = screen.WorkingArea;
+            Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
             await LoadAudioPlaybackDevicesList();
         }
 
@@ -104,6 +106,11 @@ namespace tbvolscroll.Forms
                 return true;
             }
             return base.ProcessDialogKey(keyData);
+        }
+
+        private void CloseFormOnDeactivate(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
