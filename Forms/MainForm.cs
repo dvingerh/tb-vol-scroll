@@ -423,9 +423,17 @@ namespace tbvolscroll
 
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
+            VolumeSliderPopupMenuItem.Enabled = true;
             MoreMenuItem.Enabled = true;
             isReady = true;
             Hide();
+        }
+
+        private void VolumeSliderPopupMenuItemClick(object sender, EventArgs e)
+        {
+            inputHandler.popupShowing = true;
+            new VolumeSliderPopupForm(this).ShowDialog();
+            inputHandler.popupShowing = false;
         }
     }
 }

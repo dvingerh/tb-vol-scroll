@@ -45,6 +45,7 @@
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,8 +79,9 @@
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
-            this.SystemVolumeMixerMenuItem,
             this.AudioPlaybackDevicesMenuItem,
+            this.SystemVolumeMixerMenuItem,
+            this.VolumeSliderPopupMenuItem,
             this.SeparatorMenuItem3,
             this.MoreMenuItem,
             this.ExitMenuItem});
@@ -87,7 +89,7 @@
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.TrayContextMenu.ShowCheckMargin = true;
             this.TrayContextMenu.ShowImageMargin = false;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 126);
+            this.TrayContextMenu.Size = new System.Drawing.Size(200, 170);
             this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
@@ -182,6 +184,14 @@
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
+            // VolumeSliderPopupMenuItem
+            // 
+            this.VolumeSliderPopupMenuItem.Enabled = false;
+            this.VolumeSliderPopupMenuItem.Name = "VolumeSliderPopupMenuItem";
+            this.VolumeSliderPopupMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.VolumeSliderPopupMenuItem.Text = "Volume Slider Popup";
+            this.VolumeSliderPopupMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -226,6 +236,7 @@
         private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
+        private System.Windows.Forms.ToolStripMenuItem VolumeSliderPopupMenuItem;
     }
 }
 
