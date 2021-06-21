@@ -20,18 +20,26 @@ namespace tbvolscroll.Forms
             this.callback = callback;
             VolumeTrackBar.Value = callback.audioHandler.Volume;
             VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
+            AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
         }
 
         private void VolumeSliderPopupFormShown(object sender, EventArgs e)
         {
-            Point curPoint = Cursor.Position;
-            Location = new Point(curPoint.X - Width - 15, curPoint.Y - Height - 15);
-            Size = new Size(200, 25);
+            Point position = Cursor.Position;
+            Screen screen = Screen.FromPoint(position);
+            Rectangle workingArea = screen.WorkingArea;
+            Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+            Size = new Size(250, 50);
         }
 
         private void UpdateVolume(object sender, EventArgs e)
         {
             callback.audioHandler.SetMasterVolume(VolumeTrackBar.Value);
+            callback.audioHandler.UpdateAudioState();
+            if (callback.audioHandler.Volume == 0 && callback.audioHandler.Muted == false)
+                callback.audioHandler.SetMasterVolumeMute(isMuted: true);
+            else if (callback.audioHandler.Volume > 0 && callback.audioHandler.Muted == true)
+                callback.audioHandler.SetMasterVolumeMute(isMuted: false);
             callback.audioHandler.UpdateAudioState();
             VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
             callback.TrayNotifyIcon.Text = $"{Application.ProductName} - {callback.audioHandler.Volume}%";

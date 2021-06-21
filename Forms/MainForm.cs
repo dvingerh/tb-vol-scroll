@@ -26,7 +26,8 @@ namespace tbvolscroll
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         #endregion
 
-        #region Variables 
+        #region Variables
+        public bool isReady = false;
         private int curDeviceIndex = -1;
         private InputHandler inputHandler;
         public AudioHandler audioHandler;
@@ -76,6 +77,8 @@ namespace tbvolscroll
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
             MoreMenuItem.Enabled = true;
+            isReady = true;
+            Hide();
         }
 
         private bool IsAdministrator()
@@ -266,8 +269,8 @@ namespace tbvolscroll
             MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
             Width = MinimumSize.Width;
             Height = MinimumSize.Height;
-
             inputHandler = new InputHandler(this);
+                
         }
 
 
@@ -405,10 +408,15 @@ namespace tbvolscroll
 
         private void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle)
+            if (isReady)
             {
-                TrayContextMenu.Hide();
-                new VolumeSliderPopupForm(this).ShowDialog();
+                if (e.Button == MouseButtons.Left)
+                {
+                    inputHandler.popupShowing = true;
+                    TrayContextMenu.Hide();
+                    new VolumeSliderPopupForm(this).ShowDialog();
+                    inputHandler.popupShowing = false;
+                }
             }
         }
     }

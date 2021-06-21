@@ -10,6 +10,7 @@ namespace tbvolscroll
         public bool isCtrlDown;
         public bool isShiftDown;
         public bool isScrolling;
+        public bool popupShowing = false;
         public readonly IKeyboardMouseEvents inputEvents;
         
         private readonly MainForm callbackForm;
@@ -51,7 +52,7 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            if (TaskbarHelper.IsValidAction())
+            if (TaskbarHelper.IsValidAction() && !popupShowing && callbackForm.isReady)
             {
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)
