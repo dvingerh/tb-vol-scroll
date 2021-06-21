@@ -23,7 +23,7 @@ namespace tbvolscroll.Forms
             AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
         }
 
-        private void VolumeSliderPopupFormShown(object sender, EventArgs e)
+        private void OnFormShown(object sender, EventArgs e)
         {
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
@@ -47,7 +47,7 @@ namespace tbvolscroll.Forms
             SystemSounds.Exclamation.Play();
         }
 
-        private void CloseForm(object sender, EventArgs e)
+        private void CloseFormOnDeacivate(object sender, EventArgs e)
         {
             Close();
         }

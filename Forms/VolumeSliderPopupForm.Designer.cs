@@ -95,8 +95,8 @@ namespace tbvolscroll.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.TopMost = true;
-            this.Deactivate += new System.EventHandler(this.CloseForm);
-            this.Shown += new System.EventHandler(this.VolumeSliderPopupFormShown);
+            this.Deactivate += new System.EventHandler(this.CloseFormOnDeacivate);
+            this.Shown += new System.EventHandler(this.OnFormShown);
             this.BorderPanel.ResumeLayout(false);
             this.BorderPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).EndInit();
