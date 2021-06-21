@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 2.3
+## tb-vol-scroll 2.4
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
 
@@ -11,7 +11,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 - Hold <kbd>ALT</kbd>: Enable precise volume control.
 - Hold <kbd>CTRL</kbd>: Toggle system audio mute.
 - Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
-- <kbd>Middle Mouse Button</kbd> on Tray Icon: Open volume slider popup.
+- <kbd>Middle Mouse Button</kbd> on Tray Icon: Open popup with a volume slider in case scrolling is not available.
 
 ### Configure
 
@@ -20,7 +20,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
   - Opacity
   - Text padding (affects volume bar size)
 
-- Behavior:
+- Behaviour:
   - Volume bar autohide time-out
   - Volume scroll step percentage
   - Precise volume control threshold
@@ -47,6 +47,10 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 #### Audio Playback Devices
 ![Audio Playback Devices](Images/audioplaybackdevices.png?raw=true)
+
+#### Volume Slider Popup
+
+![Tray menu](Images/volumesliderpopup.png?raw=true)
 
 #### Configure
 ![Configure](Images/configure.png?raw=true)
