@@ -204,6 +204,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Load += new System.EventHandler(this.LoadProgramConfiguration);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

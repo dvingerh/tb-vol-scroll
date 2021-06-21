@@ -35,6 +35,16 @@ namespace tbvolscroll
         private bool isDisplayingVolume = false;
         #endregion
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                var Params = base.CreateParams;
+                Params.ExStyle |= 0x80;
+
+                return Params;
+            }
+        }
 
         private void SetPositionTopmost()
         {
@@ -72,13 +82,6 @@ namespace tbvolscroll
                 proc.Start();
                 ExitMenuItem.PerformClick();
             }
-
-            LoadProgramConfiguration();
-            SystemVolumeMixerMenuItem.Enabled = true;
-            AudioPlaybackDevicesMenuItem.Enabled = true;
-            MoreMenuItem.Enabled = true;
-            isReady = true;
-            Hide();
         }
 
         private bool IsAdministrator()
@@ -246,33 +249,6 @@ namespace tbvolscroll
             Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Startup));
         }
 
-        private async void LoadProgramConfiguration()
-        {
-            if (Settings.Default.UpdateSettings)
-            {
-                Settings.Default.Upgrade();
-                Settings.Default.UpdateSettings = false;
-                Settings.Default.Save();
-            }
-
-            audioHandler = new AudioHandler();
-            await audioHandler.RefreshPlaybackDevices();
-            audioHandler.UpdateAudioState();
-            SetTrayIcon();
-
-            volumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
-            VolumeTextLabel.Font = Settings.Default.FontStyle;
-            VolumeTextLabel.Text = $"{audioHandler.Volume}%";
-            TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
-
-            SizeF newMinSizes = CalculateBarSize("0%");
-            MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
-            Width = MinimumSize.Width;
-            Height = MinimumSize.Height;
-            inputHandler = new InputHandler(this);
-                
-        }
-
 
         private void VolumeMixerMenuItemClick(object sender, EventArgs e)
         {
@@ -410,7 +386,7 @@ namespace tbvolscroll
         {
             if (isReady)
             {
-                if (e.Button == MouseButtons.Left)
+                if (e.Button == MouseButtons.Middle)
                 {
                     inputHandler.popupShowing = true;
                     TrayContextMenu.Hide();
@@ -418,6 +394,38 @@ namespace tbvolscroll
                     inputHandler.popupShowing = false;
                 }
             }
+        }
+
+        private async void LoadProgramConfiguration(object sender, EventArgs e)
+        {
+            if (Settings.Default.UpdateSettings)
+            {
+                Settings.Default.Upgrade();
+                Settings.Default.UpdateSettings = false;
+                Settings.Default.Save();
+            }
+
+            audioHandler = new AudioHandler();
+            await audioHandler.RefreshPlaybackDevices();
+            audioHandler.UpdateAudioState();
+            SetTrayIcon();
+
+            volumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+            VolumeTextLabel.Font = Settings.Default.FontStyle;
+            VolumeTextLabel.Text = $"{audioHandler.Volume}%";
+            TrayNotifyIcon.Text = $"{Application.ProductName} - {audioHandler.Volume}%";
+
+            SizeF newMinSizes = CalculateBarSize("0%");
+            MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
+            Width = MinimumSize.Width;
+            Height = MinimumSize.Height;
+            inputHandler = new InputHandler(this);
+
+            SystemVolumeMixerMenuItem.Enabled = true;
+            AudioPlaybackDevicesMenuItem.Enabled = true;
+            MoreMenuItem.Enabled = true;
+            isReady = true;
+            Hide();
         }
     }
 }
