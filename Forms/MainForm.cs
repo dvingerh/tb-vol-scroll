@@ -376,10 +376,7 @@ namespace tbvolscroll
         private void PlaySystemSoundTrayMenu(object sender, MouseEventArgs e)
         {
             if (TitleLabelMenuItem.ContentRectangle.Contains(e.Location))
-            {
                 SystemSounds.Exclamation.Play();
-            }
-
         }
 
         private void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)

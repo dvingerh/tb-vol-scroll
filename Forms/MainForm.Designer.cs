@@ -35,8 +35,9 @@
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfigureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +46,6 @@
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,8 +79,8 @@
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
-            this.AudioPlaybackDevicesMenuItem,
             this.SystemVolumeMixerMenuItem,
+            this.AudioPlaybackDevicesMenuItem,
             this.VolumeSliderPopupMenuItem,
             this.SeparatorMenuItem3,
             this.MoreMenuItem,
@@ -107,6 +107,14 @@
             this.SeparatorMenuItem1.Name = "SeparatorMenuItem1";
             this.SeparatorMenuItem1.Size = new System.Drawing.Size(196, 6);
             // 
+            // AudioPlaybackDevicesMenuItem
+            // 
+            this.AudioPlaybackDevicesMenuItem.Enabled = false;
+            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
+            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
+            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
+            // 
             // SystemVolumeMixerMenuItem
             // 
             this.SystemVolumeMixerMenuItem.Enabled = false;
@@ -115,13 +123,13 @@
             this.SystemVolumeMixerMenuItem.Text = "System Volume Mixer";
             this.SystemVolumeMixerMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
             // 
-            // AudioPlaybackDevicesMenuItem
+            // VolumeSliderPopupMenuItem
             // 
-            this.AudioPlaybackDevicesMenuItem.Enabled = false;
-            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
-            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
-            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
+            this.VolumeSliderPopupMenuItem.Enabled = false;
+            this.VolumeSliderPopupMenuItem.Name = "VolumeSliderPopupMenuItem";
+            this.VolumeSliderPopupMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.VolumeSliderPopupMenuItem.Text = "Volume Slider Popup";
+            this.VolumeSliderPopupMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
             // 
             // SeparatorMenuItem3
             // 
@@ -183,14 +191,6 @@
             this.ExitMenuItem.Size = new System.Drawing.Size(199, 22);
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
-            // 
-            // VolumeSliderPopupMenuItem
-            // 
-            this.VolumeSliderPopupMenuItem.Enabled = false;
-            this.VolumeSliderPopupMenuItem.Name = "VolumeSliderPopupMenuItem";
-            this.VolumeSliderPopupMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.VolumeSliderPopupMenuItem.Text = "Volume Slider Popup";
-            this.VolumeSliderPopupMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
             // 
             // MainForm
             // 
