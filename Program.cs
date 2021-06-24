@@ -24,7 +24,7 @@ namespace tbvolscroll
             bool adminArg = args.Any("admin".Contains);
 
             if (updateDoneArg)
-                MessageBox.Show($"Successfully updated to version {Application.ProductVersion}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Successfully updated tb-vol-scroll to version {Application.ProductVersion}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
             if (adminArg)

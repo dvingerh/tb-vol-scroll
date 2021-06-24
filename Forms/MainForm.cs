@@ -424,7 +424,6 @@ namespace tbvolscroll
             MoreMenuItem.Enabled = true;
             isReady = true;
             Hide();
-            CheckForUpdatesMenuItem.PerformClick();
         }
 
         private void VolumeSliderPopupMenuItemClick(object sender, EventArgs e)

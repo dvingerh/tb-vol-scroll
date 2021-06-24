@@ -34,7 +34,7 @@ namespace tbvolscroll.Forms
 
                 float latestVersion = float.Parse(jsonRoot.XPathSelectElement("//tag_name").Value, System.Globalization.CultureInfo.InvariantCulture);
                 float curVersion = float.Parse(Application.ProductVersion, System.Globalization.CultureInfo.InvariantCulture);
-                if (latestVersion < curVersion)
+                if (latestVersion > curVersion)
                 {
                     CheckingForUpdatesLabel.Text = $"Newer version available: {latestVersion.ToString().Replace(",", ".")}";
                     CheckingForUpdatesLabel.Image = Properties.Resources.success;
