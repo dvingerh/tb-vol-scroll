@@ -35,8 +35,8 @@
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +46,7 @@
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -89,7 +90,7 @@
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.TrayContextMenu.ShowCheckMargin = true;
             this.TrayContextMenu.ShowImageMargin = false;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 170);
+            this.TrayContextMenu.Size = new System.Drawing.Size(200, 148);
             this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
@@ -107,14 +108,6 @@
             this.SeparatorMenuItem1.Name = "SeparatorMenuItem1";
             this.SeparatorMenuItem1.Size = new System.Drawing.Size(196, 6);
             // 
-            // AudioPlaybackDevicesMenuItem
-            // 
-            this.AudioPlaybackDevicesMenuItem.Enabled = false;
-            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
-            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
-            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
-            // 
             // SystemVolumeMixerMenuItem
             // 
             this.SystemVolumeMixerMenuItem.Enabled = false;
@@ -122,6 +115,14 @@
             this.SystemVolumeMixerMenuItem.Size = new System.Drawing.Size(199, 22);
             this.SystemVolumeMixerMenuItem.Text = "System Volume Mixer";
             this.SystemVolumeMixerMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
+            // 
+            // AudioPlaybackDevicesMenuItem
+            // 
+            this.AudioPlaybackDevicesMenuItem.Enabled = false;
+            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
+            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
+            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
             // 
             // VolumeSliderPopupMenuItem
             // 
@@ -142,8 +143,9 @@
             this.MoreMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.MoreMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConfigureMenuItem,
-            this.OpenStartupFolderMenuItem,
+            this.CheckForUpdatesMenuItem,
             this.SeparatorMenuItem2,
+            this.OpenStartupFolderMenuItem,
             this.RestartAsAdminMenuItem,
             this.RestartNormalMenuItem});
             this.MoreMenuItem.Enabled = false;
@@ -155,7 +157,7 @@
             // 
             this.ConfigureMenuItem.Name = "ConfigureMenuItem";
             this.ConfigureMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.ConfigureMenuItem.Text = "Configure...";
+            this.ConfigureMenuItem.Text = "Configure";
             this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
             // OpenStartupFolderMenuItem
@@ -191,6 +193,13 @@
             this.ExitMenuItem.Size = new System.Drawing.Size(199, 22);
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
+            // 
+            // CheckForUpdatesMenuItem
+            // 
+            this.CheckForUpdatesMenuItem.Name = "CheckForUpdatesMenuItem";
+            this.CheckForUpdatesMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.CheckForUpdatesMenuItem.Text = "Check For Updates";
+            this.CheckForUpdatesMenuItem.Click += new System.EventHandler(this.CheckForUpdatesMenuItem_Click);
             // 
             // MainForm
             // 
@@ -237,6 +246,7 @@
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem VolumeSliderPopupMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
     }
 }
 

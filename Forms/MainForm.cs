@@ -424,6 +424,7 @@ namespace tbvolscroll
             MoreMenuItem.Enabled = true;
             isReady = true;
             Hide();
+            CheckForUpdatesMenuItem.PerformClick();
         }
 
         private void VolumeSliderPopupMenuItemClick(object sender, EventArgs e)
@@ -431,6 +432,11 @@ namespace tbvolscroll
             inputHandler.popupShowing = true;
             new VolumeSliderPopupForm(this).ShowDialog();
             inputHandler.popupShowing = false;
+        }
+
+        private void CheckForUpdatesMenuItem_Click(object sender, EventArgs e)
+        {
+            new UpdateForm().ShowDialog();
         }
     }
 }

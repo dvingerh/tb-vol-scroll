@@ -79,6 +79,9 @@
     <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -116,6 +119,12 @@
     <Compile Include="Forms\AudioPlaybackDevicesForm.Designer.cs">
       <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UpdateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\VolumeSliderPopupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AudioPlaybackDevicesForm.resx">
       <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VolumeSliderPopupForm.resx">
       <DependentUpon>VolumeSliderPopupForm.cs</DependentUpon>
@@ -160,6 +172,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\success.png" />
+    <None Include="Resources\error.png" />
+    <None Include="Resources\spinner.gif" />
     <None Include="Resources\volmute.ico" />
     <None Include="Resources\vol10.ico" />
     <None Include="Resources\vol20.ico" />
