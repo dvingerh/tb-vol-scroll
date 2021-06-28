@@ -193,6 +193,16 @@ namespace tbvolscroll.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon voldisabled {
+            get {
+                object obj = ResourceManager.GetObject("voldisabled", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon volmute {
             get {
                 object obj = ResourceManager.GetObject("volmute", resourceCulture);

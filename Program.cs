@@ -21,22 +21,25 @@ namespace tbvolscroll
         {
             bool noTrayArg = args.Any("notray".Contains);
             bool updateDoneArg = args.Any("update-done".Contains);
+            bool restartArg = args.Any("restart".Contains);
             bool adminArg = args.Any("admin".Contains);
 
             if (updateDoneArg)
                 MessageBox.Show($"Successfully updated tb-vol-scroll to version {Application.ProductVersion}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
-            if (adminArg)
-                Thread.Sleep(1000);
-            Process[] processes = Process.GetProcesses();
-            Process currentProc = Process.GetCurrentProcess();
-            foreach (Process process in processes)
+            if (adminArg || updateDoneArg || noTrayArg || restartArg)
             {
-                if (currentProc.ProcessName == process.ProcessName && currentProc.Id != process.Id)
+                Thread.Sleep(1000);
+                Process[] processes = Process.GetProcesses();
+                Process currentProc = Process.GetCurrentProcess();
+                foreach (Process process in processes)
                 {
-                    MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Environment.Exit(1);
+                    if (currentProc.ProcessName == process.ProcessName && currentProc.Id != process.Id)
+                    {
+                        MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Environment.Exit(1);
+                    }
                 }
             }
 

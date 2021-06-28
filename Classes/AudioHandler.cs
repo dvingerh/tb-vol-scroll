@@ -17,14 +17,18 @@ namespace tbvolscroll
         private static CoreAudioController coreAudioController;
         private static int volume = 0;
         private static bool muted = false;
+        private static bool audioDisabled = false;
+        private MainForm callback;
 
-        public AudioHandler()
+        public AudioHandler(MainForm callback)
         {
+            this.callback = callback;
             coreAudioController = new CoreAudioController();
             coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
         }
         public async void OnDeviceChanged(DeviceChangedArgs value)
         {
+            Console.WriteLine("Change");
             await RefreshPlaybackDevices();
             UpdateAudioState();
         }
@@ -67,11 +71,21 @@ namespace tbvolscroll
             get => coreAudioController;
             set => coreAudioController = value;
         }
+        public bool AudioDisabled { get => audioDisabled; set => audioDisabled = value; }
 
         public void UpdateAudioState()
         {
-            Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
-            Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
+            if (CoreAudioController.DefaultPlaybackDevice != null)
+            {
+                Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
+                Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
+            }
+            else
+            {
+                Volume = 0;
+                Muted = true;
+                AudioDisabled = true;
+            }
         }
 
         public async Task RefreshPlaybackDevices()

@@ -29,7 +29,7 @@ namespace tbvolscroll
         #region Variables
         public bool isReady = false;
         private int curDeviceIndex = -1;
-        private InputHandler inputHandler;
+        public InputHandler inputHandler;
         public AudioHandler audioHandler;
         private int volumeBarAutoHideTimeout = 1000;
         private bool isDisplayingVolume = false;
@@ -215,7 +215,13 @@ namespace tbvolscroll
             if (inputHandler != null)
                 inputHandler.inputEvents.Dispose();
             TrayNotifyIcon.Dispose();
-            Application.Restart();
+            Process proc = new Process();
+            proc.StartInfo.FileName = Application.ExecutablePath;
+            proc.StartInfo.UseShellExecute = true;
+            proc.StartInfo.Verb = "runas";
+            proc.StartInfo.Arguments = "restart";
+            proc.Start();
+            ExitMenuItem.PerformClick();
         }
 
         private void ShowTrayMenuOnClick(object sender, EventArgs e)
@@ -235,6 +241,7 @@ namespace tbvolscroll
             proc.StartInfo.FileName = Application.ExecutablePath;
             proc.StartInfo.UseShellExecute = true;
             proc.StartInfo.Verb = "runas";
+            proc.StartInfo.Arguments = "restart";
             proc.Start();
             ExitMenuItem.PerformClick();
         }
@@ -277,7 +284,12 @@ namespace tbvolscroll
 
         public void SetTrayIcon()
         {
-            if (audioHandler.Muted)
+            if (audioHandler.AudioDisabled)
+            {
+                TrayNotifyIcon.Text = "Audio disabled";
+                TrayNotifyIcon.Icon = Resources.voldisabled;
+            }
+            else if (audioHandler.Muted)
             {
                 TrayNotifyIcon.Text = "System is muted";
                 TrayNotifyIcon.Icon = Resources.volmute;
@@ -362,7 +374,8 @@ namespace tbvolscroll
                 Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
                 VolumeTextLabel.BackColor = Color.SkyBlue;
                 DoAppearanceUpdate();
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
@@ -401,8 +414,8 @@ namespace tbvolscroll
                 Settings.Default.UpdateSettings = false;
                 Settings.Default.Save();
             }
-
-            audioHandler = new AudioHandler();
+            inputHandler = new InputHandler(this);
+            audioHandler = new AudioHandler(this);
             await audioHandler.RefreshPlaybackDevices();
             audioHandler.UpdateAudioState();
             SetTrayIcon();
@@ -416,7 +429,6 @@ namespace tbvolscroll
             MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
             Width = MinimumSize.Width;
             Height = MinimumSize.Height;
-            inputHandler = new InputHandler(this);
 
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
@@ -436,6 +448,27 @@ namespace tbvolscroll
         private void CheckForUpdatesMenuItem_Click(object sender, EventArgs e)
         {
             new UpdateForm().ShowDialog();
+        }
+
+        private void CheckAudioHealth(object sender, EventArgs e)
+        {
+            Console.WriteLine(audioHandler.AudioDisabled);
+            if (audioHandler.CoreAudioController.DefaultPlaybackDevice != null)
+            {
+                if (audioHandler.AudioDisabled == true)
+                {
+                    RestartAppAsAdministrator(null, null); // For now, just restart app. Properly reinitialize global hooks some other time
+                }
+            }
+            else
+            {
+                audioHandler.AudioDisabled = true;
+                AudioPlaybackDevicesMenuItem.Enabled = false;
+                VolumeSliderPopupMenuItem.Enabled = false;
+                if (inputHandler.IsSubscribed)
+                    inputHandler.UnsubscribeMouse();
+            }
+            SetTrayIcon();
         }
     }
 }

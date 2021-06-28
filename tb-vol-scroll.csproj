@@ -170,6 +170,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\voldisabled.ico" />
     <None Include="Resources\success.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\spinner.gif" />

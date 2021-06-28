@@ -1,4 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
+using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,18 +12,38 @@ namespace tbvolscroll
         public bool isShiftDown;
         public bool isScrolling;
         public bool popupShowing = false;
-        public readonly IKeyboardMouseEvents inputEvents;
+        private bool isSubscribed = false;
+        public IKeyboardMouseEvents inputEvents;
         
         private readonly MainForm callbackForm;
+
+        public bool IsSubscribed { get => isSubscribed; set => isSubscribed = value; }
 
         public InputHandler(MainForm callbackForm)
         {
             this.callbackForm = callbackForm;
+            SubscribeMouse();
+
+        }
+
+        public void SubscribeMouse()
+        {
+            IsSubscribed = true;
             inputEvents = Hook.GlobalEvents();
             inputEvents.MouseWheel += OnMouseScroll;
             inputEvents.MouseMove += UpdateBarPositionMouseMove;
             inputEvents.KeyDown += EnableKeyActions;
             inputEvents.KeyUp += DisableKeyActions;
+        }
+
+        public void UnsubscribeMouse()
+        {
+            IsSubscribed = false;
+            inputEvents.MouseWheel -= OnMouseScroll;
+            inputEvents.MouseMove -= UpdateBarPositionMouseMove;
+            inputEvents.KeyDown -= EnableKeyActions;
+            inputEvents.KeyUp -= DisableKeyActions;
+            inputEvents.Dispose();
         }
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
@@ -52,7 +73,8 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            if (TaskbarHelper.IsValidAction() && !popupShowing && callbackForm.isReady)
+            Console.WriteLine("Scrolled");
+            if (TaskbarHelper.IsValidAction() && !popupShowing && callbackForm.isReady && !callbackForm.audioHandler.AudioDisabled)
             {
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)

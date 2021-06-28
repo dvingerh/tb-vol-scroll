@@ -41,12 +41,13 @@
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfigureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CheckForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AudioHealthTimer = new System.Windows.Forms.Timer(this.components);
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -160,17 +161,24 @@
             this.ConfigureMenuItem.Text = "Configure";
             this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
+            // CheckForUpdatesMenuItem
+            // 
+            this.CheckForUpdatesMenuItem.Name = "CheckForUpdatesMenuItem";
+            this.CheckForUpdatesMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.CheckForUpdatesMenuItem.Text = "Check For Updates";
+            this.CheckForUpdatesMenuItem.Click += new System.EventHandler(this.CheckForUpdatesMenuItem_Click);
+            // 
+            // SeparatorMenuItem2
+            // 
+            this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
+            this.SeparatorMenuItem2.Size = new System.Drawing.Size(191, 6);
+            // 
             // OpenStartupFolderMenuItem
             // 
             this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
             this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(194, 22);
             this.OpenStartupFolderMenuItem.Text = "Open Startup Folder";
             this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
-            // 
-            // SeparatorMenuItem2
-            // 
-            this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
-            this.SeparatorMenuItem2.Size = new System.Drawing.Size(191, 6);
             // 
             // RestartAsAdminMenuItem
             // 
@@ -194,12 +202,11 @@
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
-            // CheckForUpdatesMenuItem
+            // AudioHealthTimer
             // 
-            this.CheckForUpdatesMenuItem.Name = "CheckForUpdatesMenuItem";
-            this.CheckForUpdatesMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.CheckForUpdatesMenuItem.Text = "Check For Updates";
-            this.CheckForUpdatesMenuItem.Click += new System.EventHandler(this.CheckForUpdatesMenuItem_Click);
+            this.AudioHealthTimer.Enabled = true;
+            this.AudioHealthTimer.Interval = 1000;
+            this.AudioHealthTimer.Tick += new System.EventHandler(this.CheckAudioHealth);
             // 
             // MainForm
             // 
@@ -247,6 +254,7 @@
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem VolumeSliderPopupMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
+        private System.Windows.Forms.Timer AudioHealthTimer;
     }
 }
 

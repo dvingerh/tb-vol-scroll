@@ -80,10 +80,12 @@ namespace tbvolscroll.Forms
                 batFile.WriteLine("DEL \"%~f0\" & START /B \"\" \"{0}\" update-done & PAUSE", "tb-vol-scroll.exe");
             }
 
-            ProcessStartInfo startInfo = new ProcessStartInfo(batPath);
-            startInfo.CreateNoWindow = true;
-            startInfo.UseShellExecute = false;
-            startInfo.WorkingDirectory = Path.GetDirectoryName(batPath);
+            ProcessStartInfo startInfo = new ProcessStartInfo(batPath)
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                WorkingDirectory = Path.GetDirectoryName(batPath)
+            };
             Process.Start(startInfo);
         }
     }
