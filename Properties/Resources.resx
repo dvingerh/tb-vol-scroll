@@ -127,6 +127,16 @@
   <data name="success" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\success.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="UpdateCmd" xml:space="preserve">
+    <value>@ECHO OFF
+TIMEOUT /T 1 /NOBREAK
+TASKKILL /F /IM "[SELFEXE]"
+TIMEOUT /T 1 /NOBREAK
+DEL "[SELF]"
+MOVE "[TEMP]" "[SELF]"
+START /B "" "[SELF]" update-done
+DEL "%~f0"</value>
+  </data>
   <data name="vol10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vol10.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

@@ -98,6 +98,7 @@
     <Compile Include="Classes\TrackBarNoFocus.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Classes\UpdateHandler.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -91,6 +91,22 @@ namespace tbvolscroll.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to @ECHO OFF
+        ///TIMEOUT /T 1 /NOBREAK
+        ///TASKKILL /F /IM &quot;[SELFEXE]&quot;
+        ///TIMEOUT /T 1 /NOBREAK
+        ///DEL &quot;[SELF]&quot;
+        ///MOVE &quot;[TEMP]&quot; &quot;[SELF]&quot;
+        ///START /B &quot;&quot; &quot;[SELF]&quot; update-done
+        ///DEL &quot;%~f0&quot;.
+        /// </summary>
+        internal static string UpdateCmd {
+            get {
+                return ResourceManager.GetString("UpdateCmd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon vol10 {
