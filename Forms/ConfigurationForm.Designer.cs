@@ -145,9 +145,9 @@
             this.BarColorLabel.AutoSize = true;
             this.BarColorLabel.Location = new System.Drawing.Point(12, 67);
             this.BarColorLabel.Name = "BarColorLabel";
-            this.BarColorLabel.Size = new System.Drawing.Size(97, 13);
+            this.BarColorLabel.Size = new System.Drawing.Size(104, 13);
             this.BarColorLabel.TabIndex = 7;
-            this.BarColorLabel.Text = "Volume bar color:";
+            this.BarColorLabel.Text = "Volume bar colour:";
             this.BarColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // GradientCheckBox
