@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 2.7
+## tb-vol-scroll 2.8.1
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
 
@@ -21,7 +21,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 ### Configure
 
 - Appearance:
-  - Color
+  - Colour
   - Opacity
   - Text padding (affects volume bar size)
 
