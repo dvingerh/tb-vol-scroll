@@ -25,10 +25,7 @@ namespace tbvolscroll
             bool adminArg = args.Any("admin".Contains);
 
             if (adminArg || updateDoneArg || noTrayArg || restartArg)
-                Thread.Sleep(1000);
-
-            if (updateDoneArg)
-                MessageBox.Show($"Successfully updated tb-vol-scroll to version {Application.ProductVersion}", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Thread.Sleep(250);
 
 
             Process[] processes = Process.GetProcesses();
@@ -45,7 +42,7 @@ namespace tbvolscroll
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg));
+            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg));
         }
     }
 }

@@ -88,6 +88,13 @@ namespace tbvolscroll
             }
         }
 
+        public List<CoreAudioDevice> GetAudioDevicesList()
+        {
+            List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
+            audioDevicesList.AddRange(AudioDevices);
+            return audioDevicesList;
+        }
+
         public async Task RefreshPlaybackDevices()
         {
             if (coreAudioController == null)

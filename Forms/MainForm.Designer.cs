@@ -204,7 +204,6 @@
             // 
             // AudioHealthTimer
             // 
-            this.AudioHealthTimer.Enabled = true;
             this.AudioHealthTimer.Interval = 1000;
             this.AudioHealthTimer.Tick += new System.EventHandler(this.CheckAudioHealth);
             // 

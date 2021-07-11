@@ -73,17 +73,33 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Scrolled");
             if (TaskbarHelper.IsValidAction() && !popupShowing && callbackForm.isReady && !callbackForm.audioHandler.AudioDisabled)
             {
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)
-                    callbackForm.DoVolumeChanges(e.Delta);
+                {
+                    await Task.Run(async () =>
+                    {
+                        await callbackForm.DoVolumeChanges(e.Delta);
+                        await callbackForm.DoAppearanceUpdate(updateType: "volume");
+                    });
+                }
                 else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
+                {
                     callbackForm.SetMuteStatus(e.Delta);
+                    await Task.Run(async () =>
+                    {
+                        await callbackForm.DoAppearanceUpdate(updateType: "mute");
+                    });
+                }
                 else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
+                {
                     await callbackForm.ToggleAudioPlaybackDevice(e.Delta);
-                await Task.Delay(100);
+                    await Task.Run(async () =>
+                    {
+                        await callbackForm.DoAppearanceUpdate(updateType: "device");
+                    });
+                }
                 isScrolling = false;
             }
         }
