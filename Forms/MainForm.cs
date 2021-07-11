@@ -57,6 +57,7 @@ namespace tbvolscroll
 
         private void ShowInactiveTopmost()
         {
+            SetPositionTopmost();
             Invoke((MethodInvoker)delegate
             {
                 ShowWindow(Handle, 4);
