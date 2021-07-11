@@ -75,6 +75,12 @@ namespace tbvolscroll
 
             bool hasAdmin = IsAdministrator();
 
+            if (attemptedAdmin && hasAdmin)
+            {
+                TrayNotifyIcon.Visible = true;
+                TrayNotifyIcon.ShowBalloonTip(10000, "Administartor permissions granted", $"Successfully obtained administrator permissions after restarting.", ToolTipIcon.Info);
+            }
+
             TitleLabelMenuItem.Text = $"{Application.ProductName} v{Application.ProductVersion}" + (hasAdmin ? " (Administrator)" : "");
 
             if (noTray)
