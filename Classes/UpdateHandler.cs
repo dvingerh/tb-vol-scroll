@@ -23,8 +23,8 @@ namespace tbvolscroll.Classes
         private readonly string tmpExePath = Path.Combine(Path.GetTempPath(), "tmp.exe");
         private readonly string selfExe = Assembly.GetExecutingAssembly().Location;
         private string exeUrl;
-        public float curVersion;
-        public float latestVersion;
+        public string curVersion;
+        public string latestVersion;
         private UpdateForm callback;
 
         public UpdateHandler(UpdateForm callback)
@@ -44,9 +44,9 @@ namespace tbvolscroll.Classes
                     var jsonReader = JsonReaderWriterFactory.CreateJsonReader(Encoding.UTF8.GetBytes(json), new System.Xml.XmlDictionaryReaderQuotas());
                     var jsonRoot = XElement.Load(jsonReader);
 
-                    latestVersion = float.Parse(jsonRoot.XPathSelectElement("//tag_name").Value, System.Globalization.CultureInfo.InvariantCulture);
-                    curVersion = float.Parse(Application.ProductVersion, System.Globalization.CultureInfo.InvariantCulture);
-                    if (latestVersion > curVersion)
+                    latestVersion = jsonRoot.XPathSelectElement("//tag_name").Value;
+                    curVersion = Application.ProductVersion;
+                    if (string.Compare(latestVersion, curVersion) == 1)
                     {
                         XElement assetsEle = jsonRoot.XPathSelectElement("//assets[1]");
                         exeUrl = assetsEle.XPathSelectElement("//browser_download_url").Value;
@@ -62,8 +62,9 @@ namespace tbvolscroll.Classes
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 callback.CheckingForUpdatesLabel.Text = "Error checking for updates.";
                 callback.CheckingForUpdatesLabel.Image = Properties.Resources.error;
                 callback.isUpdating = false;
