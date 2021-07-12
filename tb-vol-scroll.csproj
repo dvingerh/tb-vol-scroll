@@ -171,9 +171,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\elevated.png" />
-    <None Include="Resources\mixer2.png" />
-    <None Include="Resources\speaker2.png" />
     <None Include="Resources\mixer.png" />
     <None Include="Resources\speaker.png" />
     <None Include="Resources\trackbar.png" />
