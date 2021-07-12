@@ -313,7 +313,7 @@
             // 
             // ColorPreviewPictureBox
             // 
-            this.ColorPreviewPictureBox.BackColor = System.Drawing.Color.DodgerBlue;
+            this.ColorPreviewPictureBox.BackColor = System.Drawing.Color.SkyBlue;
             this.ColorPreviewPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ColorPreviewPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorPreviewPictureBox.Location = new System.Drawing.Point(293, 63);

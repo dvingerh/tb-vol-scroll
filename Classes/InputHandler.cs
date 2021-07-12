@@ -101,9 +101,9 @@ namespace tbvolscroll
                 }
                 else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
                 {
-                    await callbackForm.ToggleAudioPlaybackDevice(e.Delta);
                     await Task.Run(async () =>
                     {
+                        await callbackForm.ToggleAudioPlaybackDevice(e.Delta);
                         await callbackForm.DoAppearanceUpdate(updateType: "device");
                     });
                 }

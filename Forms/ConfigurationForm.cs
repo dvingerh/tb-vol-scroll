@@ -44,33 +44,33 @@ namespace tbvolscroll
             Control.ControlCollection behaviourControls = BehaviourGroupBox.Controls;
             foreach (Control ctrl in appearanceControls)
             {
-                if (ctrl is CheckBox)
+                if (ctrl is CheckBox box)
                 {
-                    ((CheckBox)ctrl).CheckedChanged += new EventHandler(OnSettingsChanged);
+                    box.CheckedChanged += new EventHandler(OnSettingsChanged);
                 }
-                if (ctrl is NumericUpDown)
+                if (ctrl is NumericUpDown down)
                 {
-                    ((NumericUpDown)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                    down.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
-                if (ctrl is TrackBar)
+                if (ctrl is TrackBar bar)
                 {
-                    ((TrackBar)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                    bar.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
             }
 
             foreach (Control ctrl in behaviourControls)
             {
-                if (ctrl is CheckBox)
+                if (ctrl is CheckBox box)
                 {
-                    ((CheckBox)ctrl).CheckedChanged += new EventHandler(OnSettingsChanged);
+                    box.CheckedChanged += new EventHandler(OnSettingsChanged);
                 }
-                if (ctrl is NumericUpDown)
+                if (ctrl is NumericUpDown down)
                 {
-                    ((NumericUpDown)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                    down.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
-                if (ctrl is TrackBar)
+                if (ctrl is TrackBar bar)
                 {
-                    ((TrackBar)ctrl).ValueChanged += new EventHandler(OnSettingsChanged);
+                    bar.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
             }
         }

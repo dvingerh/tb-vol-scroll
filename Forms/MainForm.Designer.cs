@@ -55,7 +55,7 @@ namespace tbvolscroll
             // 
             // VolumeTextLabel
             // 
-            this.VolumeTextLabel.BackColor = System.Drawing.Color.DodgerBlue;
+            this.VolumeTextLabel.BackColor = System.Drawing.Color.SkyBlue;
             this.VolumeTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);

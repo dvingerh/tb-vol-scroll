@@ -326,7 +326,7 @@ namespace tbvolscroll
                         case "device":
                             VolumeTextLabel.Text = $"({curDeviceIndex + 1}/{audioHandler.GetAudioDevicesList().Count}) {audioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
-                            VolumeTextLabel.BackColor = Color.SkyBlue;
+                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                         case "mute":
                             if (audioHandler.Muted)
@@ -340,7 +340,7 @@ namespace tbvolscroll
                                 TrayNotifyIcon.Text = $"Volume: {audioHandler.Volume}%";
                             }
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
-                            VolumeTextLabel.BackColor = Color.SkyBlue;
+                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                     }
                     ResumeLayout();
@@ -486,7 +486,7 @@ namespace tbvolscroll
                 Settings.Default.Save();
             }
             inputHandler = new InputHandler(this);
-            audioHandler = new AudioHandler(this);
+            audioHandler = new AudioHandler();
             await audioHandler.RefreshPlaybackDevices();
             audioHandler.UpdateAudioState();
             SetTrayIcon();
