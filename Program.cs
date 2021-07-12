@@ -19,6 +19,7 @@ namespace tbvolscroll
         [STAThread]
         static void Main(string[] args)
         {
+            Mutex mutex = null;
             bool noTrayArg = args.Any("notray".Contains);
             bool updateDoneArg = args.Any("update-done".Contains);
             bool restartArg = args.Any("restart".Contains);
@@ -28,15 +29,13 @@ namespace tbvolscroll
                 Thread.Sleep(250);
 
 
-            Process[] processes = Process.GetProcesses();
-            Process currentProc = Process.GetCurrentProcess();
-            foreach (Process process in processes)
+
+            mutex = new Mutex(true, Application.ProductName, out bool createdNew);
+
+            if (!createdNew)
             {
-                if (currentProc.ProcessName == process.ProcessName && currentProc.Id != process.Id)
-                {
-                    MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    Environment.Exit(1);
-                }
+                MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Environment.Exit(1);
             }
 
 

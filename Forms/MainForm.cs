@@ -33,7 +33,7 @@ namespace tbvolscroll
         public InputHandler inputHandler;
         public AudioHandler audioHandler;
         private int volumeBarAutoHideTimeout = 1000;
-        private bool isDisplayingVolume = false;
+        public bool isDisplayingVolume = false;
         #endregion
 
         protected override CreateParams CreateParams
@@ -214,15 +214,20 @@ namespace tbvolscroll
 
             if (!inputHandler.isScrolling)
             {
-                Invoke((MethodInvoker)delegate
-                {
-                    Hide();
-                    volumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
-                    isDisplayingVolume = false;
-                });
+                HideVolumeBar();
             }
             else
                 AutoHideVolume();
+        }
+
+        public void HideVolumeBar()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                volumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+                isDisplayingVolume = false;
+                Hide();
+            });
         }
 
         private void ExitApplication(object sender, EventArgs e)
