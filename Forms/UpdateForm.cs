@@ -50,5 +50,10 @@ namespace tbvolscroll.Forms
             if (isUpdating)
                 e.Cancel = true;
         }
+
+        private void ViewReleasesLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(updateHandler.RepoUrl);
+        }
     }
 }

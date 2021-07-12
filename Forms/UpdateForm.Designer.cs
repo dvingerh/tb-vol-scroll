@@ -32,6 +32,7 @@ namespace tbvolscroll.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateForm));
             this.DownloadButton = new System.Windows.Forms.Button();
             this.CheckingForUpdatesLabel = new System.Windows.Forms.Button();
+            this.ViewReleasesLinkLabel = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // DownloadButton
@@ -47,6 +48,7 @@ namespace tbvolscroll.Forms
             // 
             // CheckingForUpdatesLabel
             // 
+            this.CheckingForUpdatesLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CheckingForUpdatesLabel.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.CheckingForUpdatesLabel.FlatAppearance.BorderSize = 0;
             this.CheckingForUpdatesLabel.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
@@ -63,11 +65,27 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.UseVisualStyleBackColor = true;
             this.CheckingForUpdatesLabel.Click += new System.EventHandler(this.DoUpdateCheck);
             // 
+            // ViewReleasesLinkLabel
+            // 
+            this.ViewReleasesLinkLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
+            this.ViewReleasesLinkLabel.AutoSize = true;
+            this.ViewReleasesLinkLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.ViewReleasesLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.ViewReleasesLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
+            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(146, 74);
+            this.ViewReleasesLinkLabel.Name = "ViewReleasesLinkLabel";
+            this.ViewReleasesLinkLabel.Size = new System.Drawing.Size(76, 13);
+            this.ViewReleasesLinkLabel.TabIndex = 4;
+            this.ViewReleasesLinkLabel.TabStop = true;
+            this.ViewReleasesLinkLabel.Text = "View releases";
+            this.ViewReleasesLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ViewReleasesLinkClicked);
+            // 
             // UpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(234, 80);
+            this.ClientSize = new System.Drawing.Size(234, 96);
+            this.Controls.Add(this.ViewReleasesLinkLabel);
             this.Controls.Add(this.CheckingForUpdatesLabel);
             this.Controls.Add(this.DownloadButton);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -81,11 +99,13 @@ namespace tbvolscroll.Forms
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DontCloseOnUpdate);
             this.Shown += new System.EventHandler(this.DoUpdateCheck);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         public System.Windows.Forms.Button CheckingForUpdatesLabel;
         public System.Windows.Forms.Button DownloadButton;
+        private System.Windows.Forms.LinkLabel ViewReleasesLinkLabel;
     }
 }

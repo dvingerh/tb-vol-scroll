@@ -18,14 +18,17 @@ namespace tbvolscroll.Classes
 {
     public class UpdateHandler
     {
-        private readonly string repoUrl = "https://api.github.com/repos/dvingerh/tb-vol-scroll/releases/latest";
+        private readonly string releasesApiUrl = "https://api.github.com/repos/dvingerh/tb-vol-scroll/releases/latest";
+        private readonly string repoUrl = "https://github.com/dvingerh/tb-vol-scroll/releases";
         private readonly string tmpBatPath = Path.Combine(Path.GetTempPath(), "tmp.bat");
         private readonly string tmpExePath = Path.Combine(Path.GetTempPath(), "tmp.exe");
         private readonly string selfExe = Assembly.GetExecutingAssembly().Location;
         private string exeUrl;
-        public string curVersion;
-        public string latestVersion;
+        private string curVersion;
+        private string latestVersion;
         private UpdateForm callback;
+
+        public string RepoUrl => repoUrl;
 
         public UpdateHandler(UpdateForm callback)
         {
@@ -40,7 +43,7 @@ namespace tbvolscroll.Classes
                 using (WebClient wc = new WebClient())
                 {
                     wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
-                    var json = await wc.DownloadStringTaskAsync(repoUrl);
+                    var json = await wc.DownloadStringTaskAsync(releasesApiUrl);
                     var jsonReader = JsonReaderWriterFactory.CreateJsonReader(Encoding.UTF8.GetBytes(json), new System.Xml.XmlDictionaryReaderQuotas());
                     var jsonRoot = XElement.Load(jsonReader);
 
@@ -62,9 +65,8 @@ namespace tbvolscroll.Classes
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.ToString());
                 callback.CheckingForUpdatesLabel.Text = "Error checking for updates.";
                 callback.CheckingForUpdatesLabel.Image = Properties.Resources.error;
                 callback.isUpdating = false;
