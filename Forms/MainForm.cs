@@ -282,9 +282,9 @@ namespace tbvolscroll
         }
 
 
-        private void VolumeMixerMenuItemClick(object sender, EventArgs e)
+        private async void VolumeMixerMenuItemClick(object sender, EventArgs e)
         {
-            audioHandler.OpenSndVol();
+            await audioHandler.OpenSndVol();
         }
 
         private void AudioDevicesMenuItemClick(object sender, EventArgs e)

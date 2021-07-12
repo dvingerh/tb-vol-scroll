@@ -141,7 +141,7 @@ namespace tbvolscroll
             }
         }
 
-        public void OpenSndVol()
+        public async Task OpenSndVol()
         {
             Process sndvolProc = new Process();
             sndvolProc.StartInfo.FileName = "sndvol.exe";
@@ -162,6 +162,7 @@ namespace tbvolscroll
                         hasWindow = true;
                     }
                 }
+                await Task.Delay(50);
             }
 
             int sndvolWidth = 1000;
