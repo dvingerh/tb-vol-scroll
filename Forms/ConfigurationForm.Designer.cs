@@ -46,6 +46,7 @@
             this.AutoHideTimeOutLabel = new System.Windows.Forms.Label();
             this.AutoHideTimeOutNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.AppearanceGroupBox = new System.Windows.Forms.GroupBox();
+            this.FontPreviewLabel = new System.Windows.Forms.Label();
             this.PixelsLabel = new System.Windows.Forms.Label();
             this.ColorPreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.AutoRetryAdminCheckBox = new System.Windows.Forms.CheckBox();
@@ -77,7 +78,7 @@
             this.ApplyConfigurationButton.Location = new System.Drawing.Point(358, 221);
             this.ApplyConfigurationButton.Name = "ApplyConfigurationButton";
             this.ApplyConfigurationButton.Size = new System.Drawing.Size(340, 24);
-            this.ApplyConfigurationButton.TabIndex = 3;
+            this.ApplyConfigurationButton.TabIndex = 12;
             this.ApplyConfigurationButton.Text = "Apply";
             this.ApplyConfigurationButton.UseVisualStyleBackColor = true;
             this.ApplyConfigurationButton.Click += new System.EventHandler(this.ApplyBarConfiguration);
@@ -103,7 +104,7 @@
             0});
             this.SetBarWidthNumericUpDown.Name = "SetBarWidthNumericUpDown";
             this.SetBarWidthNumericUpDown.Size = new System.Drawing.Size(55, 22);
-            this.SetBarWidthNumericUpDown.TabIndex = 1;
+            this.SetBarWidthNumericUpDown.TabIndex = 6;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetBarWidthNumericUpDown.Value = new decimal(new int[] {
             5,
@@ -114,7 +115,7 @@
             // DimensionXLabel
             // 
             this.DimensionXLabel.AutoSize = true;
-            this.DimensionXLabel.Location = new System.Drawing.Point(209, 25);
+            this.DimensionXLabel.Location = new System.Drawing.Point(207, 25);
             this.DimensionXLabel.Name = "DimensionXLabel";
             this.DimensionXLabel.Size = new System.Drawing.Size(12, 13);
             this.DimensionXLabel.TabIndex = 6;
@@ -132,7 +133,7 @@
             0});
             this.SetBarHeightNumericUpDown.Name = "SetBarHeightNumericUpDown";
             this.SetBarHeightNumericUpDown.Size = new System.Drawing.Size(55, 22);
-            this.SetBarHeightNumericUpDown.TabIndex = 2;
+            this.SetBarHeightNumericUpDown.TabIndex = 7;
             this.SetBarHeightNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetBarHeightNumericUpDown.Value = new decimal(new int[] {
             5,
@@ -192,7 +193,7 @@
             this.BarOpacityTrackBar.Maximum = 100;
             this.BarOpacityTrackBar.Name = "BarOpacityTrackBar";
             this.BarOpacityTrackBar.Size = new System.Drawing.Size(139, 45);
-            this.BarOpacityTrackBar.TabIndex = 12;
+            this.BarOpacityTrackBar.TabIndex = 11;
             this.BarOpacityTrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.BarOpacityTrackBar.Value = 100;
             this.BarOpacityTrackBar.ValueChanged += new System.EventHandler(this.BarOpacityChanged);
@@ -221,8 +222,8 @@
             // 
             this.FontStyleButton.Location = new System.Drawing.Point(148, 109);
             this.FontStyleButton.Name = "FontStyleButton";
-            this.FontStyleButton.Size = new System.Drawing.Size(168, 23);
-            this.FontStyleButton.TabIndex = 15;
+            this.FontStyleButton.Size = new System.Drawing.Size(89, 23);
+            this.FontStyleButton.TabIndex = 10;
             this.FontStyleButton.Text = "Set font style";
             this.FontStyleButton.UseVisualStyleBackColor = true;
             this.FontStyleButton.Click += new System.EventHandler(this.SetFontStyle);
@@ -257,7 +258,7 @@
             0});
             this.AutoHideTimeOutNumericUpDown.Name = "AutoHideTimeOutNumericUpDown";
             this.AutoHideTimeOutNumericUpDown.Size = new System.Drawing.Size(59, 22);
-            this.AutoHideTimeOutNumericUpDown.TabIndex = 17;
+            this.AutoHideTimeOutNumericUpDown.TabIndex = 1;
             this.AutoHideTimeOutNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.AutoHideTimeOutNumericUpDown.Value = new decimal(new int[] {
             1000,
@@ -267,6 +268,7 @@
             // 
             // AppearanceGroupBox
             // 
+            this.AppearanceGroupBox.Controls.Add(this.FontPreviewLabel);
             this.AppearanceGroupBox.Controls.Add(this.PixelsLabel);
             this.AppearanceGroupBox.Controls.Add(this.SetBarDimensionsLabel);
             this.AppearanceGroupBox.Controls.Add(this.FontStyleButton);
@@ -287,6 +289,17 @@
             this.AppearanceGroupBox.TabIndex = 18;
             this.AppearanceGroupBox.TabStop = false;
             this.AppearanceGroupBox.Text = "Appearance";
+            // 
+            // FontPreviewLabel
+            // 
+            this.FontPreviewLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FontPreviewLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
+            this.FontPreviewLabel.Location = new System.Drawing.Point(243, 110);
+            this.FontPreviewLabel.Name = "FontPreviewLabel";
+            this.FontPreviewLabel.Size = new System.Drawing.Size(77, 21);
+            this.FontPreviewLabel.TabIndex = 17;
+            this.FontPreviewLabel.Text = "Aa 5%";
+            this.FontPreviewLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // PixelsLabel
             // 
@@ -316,7 +329,7 @@
             this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(20, 228);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
             this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(300, 17);
-            this.AutoRetryAdminCheckBox.TabIndex = 22;
+            this.AutoRetryAdminCheckBox.TabIndex = 5;
             this.AutoRetryAdminCheckBox.Text = "Request Administrator permissions on start if needed";
             this.AutoRetryAdminCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -347,7 +360,7 @@
             this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(20, 189);
             this.SwitchAudioPlaybackDevicesCheckBox.Name = "SwitchAudioPlaybackDevicesCheckBox";
             this.SwitchAudioPlaybackDevicesCheckBox.Size = new System.Drawing.Size(308, 30);
-            this.SwitchAudioPlaybackDevicesCheckBox.TabIndex = 25;
+            this.SwitchAudioPlaybackDevicesCheckBox.TabIndex = 4;
             this.SwitchAudioPlaybackDevicesCheckBox.Text = "Switch between available audio playback devices while\r\nscrolling and holding the " +
     "SHIFT key";
             this.SwitchAudioPlaybackDevicesCheckBox.UseVisualStyleBackColor = true;
@@ -358,7 +371,7 @@
             this.ToggleMuteCheckBox.Location = new System.Drawing.Point(20, 151);
             this.ToggleMuteCheckBox.Name = "ToggleMuteCheckBox";
             this.ToggleMuteCheckBox.Size = new System.Drawing.Size(297, 30);
-            this.ToggleMuteCheckBox.TabIndex = 23;
+            this.ToggleMuteCheckBox.TabIndex = 3;
             this.ToggleMuteCheckBox.Text = "Mute and unmute system volume while scrolling and\r\nholding the CTRL key";
             this.ToggleMuteCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -413,7 +426,7 @@
             0});
             this.SetVolumeStepNumericUpDown.Name = "SetVolumeStepNumericUpDown";
             this.SetVolumeStepNumericUpDown.Size = new System.Drawing.Size(59, 22);
-            this.SetVolumeStepNumericUpDown.TabIndex = 20;
+            this.SetVolumeStepNumericUpDown.TabIndex = 2;
             this.SetVolumeStepNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetVolumeStepNumericUpDown.Value = new decimal(new int[] {
             5,
@@ -442,7 +455,7 @@
             0});
             this.ThresholdNumericUpDown.Name = "ThresholdNumericUpDown";
             this.ThresholdNumericUpDown.Size = new System.Drawing.Size(59, 22);
-            this.ThresholdNumericUpDown.TabIndex = 18;
+            this.ThresholdNumericUpDown.TabIndex = 3;
             this.ThresholdNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ThresholdNumericUpDown.Value = new decimal(new int[] {
             10,
@@ -455,7 +468,7 @@
             this.RestoreDefaultValuesButton.Location = new System.Drawing.Point(357, 251);
             this.RestoreDefaultValuesButton.Name = "RestoreDefaultValuesButton";
             this.RestoreDefaultValuesButton.Size = new System.Drawing.Size(340, 23);
-            this.RestoreDefaultValuesButton.TabIndex = 20;
+            this.RestoreDefaultValuesButton.TabIndex = 13;
             this.RestoreDefaultValuesButton.Text = "Restore default values";
             this.RestoreDefaultValuesButton.UseVisualStyleBackColor = true;
             this.RestoreDefaultValuesButton.Click += new System.EventHandler(this.RestoreDefaultValues);
@@ -528,5 +541,6 @@
         private System.Windows.Forms.Label Percent1Label;
         private System.Windows.Forms.CheckBox ToggleMuteCheckBox;
         private System.Windows.Forms.CheckBox SwitchAudioPlaybackDevicesCheckBox;
+        private System.Windows.Forms.Label FontPreviewLabel;
     }
 }

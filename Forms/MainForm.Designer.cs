@@ -1,4 +1,4 @@
-﻿namespace tbvolscroll
+namespace tbvolscroll
 {
     partial class MainForm
     {
@@ -40,7 +40,7 @@
             this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ConfigureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ConfigurationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CheckForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -143,7 +143,7 @@
             // 
             this.MoreMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.MoreMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ConfigureMenuItem,
+            this.ConfigurationMenuItem,
             this.CheckForUpdatesMenuItem,
             this.SeparatorMenuItem2,
             this.OpenStartupFolderMenuItem,
@@ -154,12 +154,12 @@
             this.MoreMenuItem.Size = new System.Drawing.Size(199, 22);
             this.MoreMenuItem.Text = "More";
             // 
-            // ConfigureMenuItem
+            // ConfigurationMenuItem
             // 
-            this.ConfigureMenuItem.Name = "ConfigureMenuItem";
-            this.ConfigureMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.ConfigureMenuItem.Text = "Configure";
-            this.ConfigureMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
+            this.ConfigurationMenuItem.Name = "ConfigurationMenuItem";
+            this.ConfigurationMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.ConfigurationMenuItem.Text = "Configuration";
+            this.ConfigurationMenuItem.Click += new System.EventHandler(this.OpenConfigureDialog);
             // 
             // CheckForUpdatesMenuItem
             // 
@@ -242,7 +242,7 @@
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MoreMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem ConfigureMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ConfigurationMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
         private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
