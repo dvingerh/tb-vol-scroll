@@ -124,7 +124,7 @@ namespace tbvolscroll
 
                         if (delta < 0)
                         {
-                            if (inputHandler.isAltDown || audioHandler.Volume < Settings.Default.PreciseScrollThreshold)
+                            if (inputHandler.isAltDown || audioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
                                 newVolume -= 1;
                             else
                                 newVolume -= Settings.Default.VolumeStep;
