@@ -48,7 +48,14 @@ namespace tbvolscroll
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
-            callbackForm.SetVolumeBarPosition();
+            if (callbackForm.isDisplayingVolume)
+            {
+                if (TaskbarHelper.IsCursorInTaskbar())
+                   callbackForm.SetVolumeBarPosition();
+                else
+                    callbackForm.HideVolumeBar();
+
+            }
         }
 
         private void DisableKeyActions(object sender, KeyEventArgs e)
