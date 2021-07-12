@@ -471,7 +471,7 @@ namespace tbvolscroll
                 {
                     inputHandler.popupShowing = true;
                     TrayContextMenu.Hide();
-                    new VolumeSliderPopupForm(this).ShowDialog();
+                    new VolumeSliderControlForm(this).ShowDialog();
                     inputHandler.popupShowing = false;
                 }
             }
@@ -503,7 +503,7 @@ namespace tbvolscroll
 
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
-            VolumeSliderPopupMenuItem.Enabled = true;
+            VolumeSliderControlMenuItem.Enabled = true;
             MoreOptionsMenuItem.Enabled = true;
             AudioHealthTimer.Start();
             isReady = true;
@@ -513,7 +513,7 @@ namespace tbvolscroll
         private void VolumeSliderPopupMenuItemClick(object sender, EventArgs e)
         {
             inputHandler.popupShowing = true;
-            new VolumeSliderPopupForm(this).ShowDialog();
+            new VolumeSliderControlForm(this).ShowDialog();
             inputHandler.popupShowing = false;
         }
 
@@ -535,7 +535,7 @@ namespace tbvolscroll
             {
                 audioHandler.AudioDisabled = true;
                 AudioPlaybackDevicesMenuItem.Enabled = false;
-                VolumeSliderPopupMenuItem.Enabled = false;
+                VolumeSliderControlMenuItem.Enabled = false;
                 if (inputHandler.IsSubscribed)
                     inputHandler.UnsubscribeMouse();
             }

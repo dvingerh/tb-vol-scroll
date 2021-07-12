@@ -124,11 +124,11 @@
     <Compile Include="Forms\CheckForUpdatesForm.Designer.cs">
       <DependentUpon>CheckForUpdatesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\VolumeSliderPopupForm.cs">
+    <Compile Include="Forms\VolumeSliderControlForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\VolumeSliderPopupForm.Designer.cs">
-      <DependentUpon>VolumeSliderPopupForm.cs</DependentUpon>
+    <Compile Include="Forms\VolumeSliderControlForm.Designer.cs">
+      <DependentUpon>VolumeSliderControlForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,8 +144,8 @@
     <EmbeddedResource Include="Forms\CheckForUpdatesForm.resx">
       <DependentUpon>CheckForUpdatesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\VolumeSliderPopupForm.resx">
-      <DependentUpon>VolumeSliderPopupForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\VolumeSliderControlForm.resx">
+      <DependentUpon>VolumeSliderControlForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

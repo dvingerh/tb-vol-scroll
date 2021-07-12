@@ -36,7 +36,7 @@ namespace tbvolscroll
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.VolumeSliderPopupMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VolumeSliderControlMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@ namespace tbvolscroll
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
             this.SystemVolumeMixerMenuItem,
-            this.VolumeSliderPopupMenuItem,
+            this.VolumeSliderControlMenuItem,
             this.AudioPlaybackDevicesMenuItem,
             this.SeparatorMenuItem3,
             this.MoreOptionsMenuItem,
@@ -122,17 +122,17 @@ namespace tbvolscroll
             this.SystemVolumeMixerMenuItem.Text = "System Volume Mixer";
             this.SystemVolumeMixerMenuItem.Click += new System.EventHandler(this.VolumeMixerMenuItemClick);
             // 
-            // VolumeSliderPopupMenuItem
+            // VolumeSliderControlMenuItem
             // 
-            this.VolumeSliderPopupMenuItem.BackColor = System.Drawing.SystemColors.Menu;
-            this.VolumeSliderPopupMenuItem.Enabled = false;
-            this.VolumeSliderPopupMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("VolumeSliderPopupMenuItem.Image")));
-            this.VolumeSliderPopupMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.VolumeSliderPopupMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.VolumeSliderPopupMenuItem.Name = "VolumeSliderPopupMenuItem";
-            this.VolumeSliderPopupMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.VolumeSliderPopupMenuItem.Text = "Volume Slider Control";
-            this.VolumeSliderPopupMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
+            this.VolumeSliderControlMenuItem.BackColor = System.Drawing.SystemColors.Menu;
+            this.VolumeSliderControlMenuItem.Enabled = false;
+            this.VolumeSliderControlMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("VolumeSliderControlMenuItem.Image")));
+            this.VolumeSliderControlMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VolumeSliderControlMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.VolumeSliderControlMenuItem.Name = "VolumeSliderControlMenuItem";
+            this.VolumeSliderControlMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.VolumeSliderControlMenuItem.Text = "Volume Slider Control";
+            this.VolumeSliderControlMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
             // 
             // AudioPlaybackDevicesMenuItem
             // 
@@ -289,7 +289,7 @@ namespace tbvolscroll
         private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
-        private System.Windows.Forms.ToolStripMenuItem VolumeSliderPopupMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
         private System.Windows.Forms.Timer AudioHealthTimer;
         private System.Windows.Forms.ToolStripSeparator SeperatorMenuItem4;

@@ -1,20 +1,22 @@
-﻿using System;
+﻿using AudioSwitcher.AudioApi;
+using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Observables;
+using AudioSwitcher.AudioApi.Session;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace tbvolscroll.Forms
 {
-    public partial class VolumeSliderPopupForm : Form
+    public partial class VolumeSliderControlForm : Form
     {
         readonly MainForm callback;
-        public VolumeSliderPopupForm(MainForm callback)
+        public VolumeSliderControlForm(MainForm callback)
         {
             InitializeComponent();
             this.callback = callback;
@@ -45,8 +47,23 @@ namespace tbvolscroll.Forms
                     break;
 
             }
+            StartPeakVolumeMeter();
+        }
 
-            Size = new Size(250, 50);
+        public void StartPeakVolumeMeter()
+        {
+            var device = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice;
+            device.PeakValueChanged.Subscribe(x =>
+            {
+
+                int value = (int)Math.Round((x.PeakValue / 100) * callback.audioHandler.Volume);
+                Invoke((MethodInvoker)delegate
+                {
+                    PeakMeterProgressBar.Value = value;
+                    PeakMeterProgressBar.Value = value - 1;
+                    PeakMeterProgressBar.Value = value;
+                });
+            });
         }
 
         private void UpdateVolume(object sender, EventArgs e)
