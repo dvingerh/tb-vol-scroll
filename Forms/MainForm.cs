@@ -12,6 +12,7 @@ using tbvolscroll.Properties;
 using tbvolscroll.Forms;
 using System.Media;
 using System.Threading;
+using System.IO;
 
 namespace tbvolscroll
 {
@@ -47,6 +48,7 @@ namespace tbvolscroll
             }
         }
 
+
         private void SetPositionTopmost()
         {
             Invoke((MethodInvoker)delegate
@@ -79,7 +81,7 @@ namespace tbvolscroll
             if (attemptedAdmin && hasAdmin)
             {
                 TrayNotifyIcon.Visible = true;
-                TrayNotifyIcon.ShowBalloonTip(10000, "Administartor permissions granted", $"Successfully obtained administrator permissions after restarting.", ToolTipIcon.Info);
+                TrayNotifyIcon.ShowBalloonTip(10000, "Administrator permissions granted", $"Successfully obtained administrator permissions after restarting.", ToolTipIcon.Info);
             }
 
             TitleLabelMenuItem.Text = $"{Application.ProductName} v{Application.ProductVersion}" + (hasAdmin ? " (Administrator)" : "");
@@ -147,8 +149,7 @@ namespace tbvolscroll
                                 audioHandler.SetMasterVolumeMute(isMuted: false);
                             if (newVolume > 100)
                                 newVolume = 100;
-                            else
-                                audioHandler.SetMasterVolume(newVolume);
+                            audioHandler.SetMasterVolume(newVolume);
 
                         }
                         audioHandler.UpdateAudioState();
@@ -503,7 +504,7 @@ namespace tbvolscroll
             SystemVolumeMixerMenuItem.Enabled = true;
             AudioPlaybackDevicesMenuItem.Enabled = true;
             VolumeSliderPopupMenuItem.Enabled = true;
-            MoreMenuItem.Enabled = true;
+            MoreOptionsMenuItem.Enabled = true;
             AudioHealthTimer.Start();
             isReady = true;
             Hide();
@@ -516,14 +517,13 @@ namespace tbvolscroll
             inputHandler.popupShowing = false;
         }
 
-        private void CheckForUpdatesMenuItem_Click(object sender, EventArgs e)
+        private void OpenCheckForUpdatesForm(object sender, EventArgs e)
         {
             new CheckForUpdatesForm().ShowDialog();
         }
 
         private void CheckAudioHealth(object sender, EventArgs e)
         {
-            Console.WriteLine(audioHandler.AudioDisabled);
             if (audioHandler.CoreAudioController.DefaultPlaybackDevice != null)
             {
                 if (audioHandler.AudioDisabled == true)
@@ -540,6 +540,11 @@ namespace tbvolscroll
                     inputHandler.UnsubscribeMouse();
             }
             SetTrayIcon();
+        }
+
+        private void OpenCurrentLocation(object sender, EventArgs e)
+        {
+            Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
     }
 }

@@ -75,7 +75,6 @@ namespace tbvolscroll.Forms
                 deviceItem.Tag = d;
                 DevicesListView.Items.Add(deviceItem);
             }
-            DevicesListView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.ColumnContent);
 
             RefreshButton.Enabled = true;
         }
@@ -126,7 +125,7 @@ namespace tbvolscroll.Forms
 
         private void CloseFormOnDeactivate(object sender, EventArgs e)
         {
-            Close();
+            //Close();
         }
     }
 }
