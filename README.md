@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 2.9
+## tb-vol-scroll 3.0
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
 
@@ -15,7 +15,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 ###### Available Menus
 - System Volume Mixer: Opens the built-in volume mixer for per-application audio volume control.
 - Audio Playback Devices: Switch default audio playback device from a list of available devices.
-- Volume Slider Popup: Open a popup with a volume slider. (Also accessible via <kbd>Middle Mouse Button</kbd> on the tray icon.)
+- Volume Slider Control: Open a popup with a volume slider. (Also accessible via <kbd>Middle Mouse Button</kbd> on the tray icon.)
 - Check For Updates: Check for a new version of tb-vol-scroll and automatically update the executable when one is found.
 
 ### Configure
@@ -53,7 +53,7 @@ The volume bar will follow the cursor when it's moved around and display the cur
 #### Audio Playback Devices
 ![Audio Playback Devices](Images/audioplaybackdevices.png?raw=true)
 
-#### Volume Slider Popup
+#### Volume Slider Control
 
 ![Tray menu](Images/volumesliderpopup.png?raw=true)
 
