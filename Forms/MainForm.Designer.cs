@@ -1,4 +1,4 @@
-namespace tbvolscroll
+﻿namespace tbvolscroll
 {
     partial class MainForm
     {

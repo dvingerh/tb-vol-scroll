@@ -342,11 +342,10 @@ namespace tbvolscroll
                             VolumeTextLabel.BackColor = Color.SkyBlue;
                             break;
                     }
-                    SetTrayIcon();
-                    SetVolumeBarPosition();
                     ResumeLayout();
                     Refresh();
-                    Application.DoEvents();
+                    SetTrayIcon();
+                    SetVolumeBarPosition();
                     if (isDisplayingVolume)
                         return;
                     AutoHideVolume();
@@ -519,7 +518,7 @@ namespace tbvolscroll
 
         private void CheckForUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            new UpdateForm().ShowDialog();
+            new CheckForUpdatesForm().ShowDialog();
         }
 
         private void CheckAudioHealth(object sender, EventArgs e)

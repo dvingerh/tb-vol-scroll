@@ -26,11 +26,11 @@ namespace tbvolscroll.Classes
         private string exeUrl;
         private string curVersion;
         private string latestVersion;
-        private UpdateForm callback;
+        private readonly CheckForUpdatesForm callback;
 
         public string RepoUrl => repoUrl;
 
-        public UpdateHandler(UpdateForm callback)
+        public UpdateHandler(CheckForUpdatesForm callback)
         {
             this.callback = callback;
         }

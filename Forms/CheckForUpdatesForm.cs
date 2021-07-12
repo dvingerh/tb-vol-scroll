@@ -13,10 +13,10 @@ using tbvolscroll.Classes;
 
 namespace tbvolscroll.Forms
 {
-    public partial class UpdateForm : Form
+    public partial class CheckForUpdatesForm : Form
     {
-        private UpdateHandler updateHandler;
-        public UpdateForm()
+        private readonly UpdateHandler updateHandler;
+        public CheckForUpdatesForm()
         {
             InitializeComponent();
             updateHandler = new UpdateHandler(this);
@@ -54,6 +54,12 @@ namespace tbvolscroll.Forms
         private void ViewReleasesLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start(updateHandler.RepoUrl);
+        }
+
+        private void CloseFormOnDeacivate(object sender, EventArgs e)
+        {
+            if (!isUpdating)
+                Close();
         }
     }
 }

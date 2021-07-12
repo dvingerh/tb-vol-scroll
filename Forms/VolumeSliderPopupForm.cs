@@ -13,7 +13,7 @@ namespace tbvolscroll.Forms
 {
     public partial class VolumeSliderPopupForm : Form
     {
-        MainForm callback;
+        readonly MainForm callback;
         public VolumeSliderPopupForm(MainForm callback)
         {
             InitializeComponent();

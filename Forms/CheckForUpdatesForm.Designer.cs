@@ -1,7 +1,7 @@
 ﻿
 namespace tbvolscroll.Forms
 {
-    partial class UpdateForm
+    partial class CheckForUpdatesForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpdateForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckForUpdatesForm));
             this.DownloadButton = new System.Windows.Forms.Button();
             this.CheckingForUpdatesLabel = new System.Windows.Forms.Button();
             this.ViewReleasesLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -80,7 +80,7 @@ namespace tbvolscroll.Forms
             this.ViewReleasesLinkLabel.Text = "View releases";
             this.ViewReleasesLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.ViewReleasesLinkClicked);
             // 
-            // UpdateForm
+            // CheckForUpdatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -93,9 +93,10 @@ namespace tbvolscroll.Forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "UpdateForm";
+            this.Name = "CheckForUpdatesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Update";
+            this.Text = "Check For Updates";
+            this.Deactivate += new System.EventHandler(this.CloseFormOnDeacivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DontCloseOnUpdate);
             this.Shown += new System.EventHandler(this.DoUpdateCheck);
             this.ResumeLayout(false);
