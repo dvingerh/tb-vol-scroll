@@ -16,10 +16,13 @@ namespace tbvolscroll
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
+        /// 
+
+        private static Mutex _mutex;
+
         [STAThread]
         static void Main(string[] args)
         {
-            Mutex mutex = null;
             bool noTrayArg = args.Any("notray".Contains);
             bool updateDoneArg = args.Any("update-done".Contains);
             bool restartArg = args.Any("restart".Contains);
@@ -29,15 +32,14 @@ namespace tbvolscroll
                 Thread.Sleep(250);
 
 
+            _mutex = new Mutex(true, @"Global\" + Application.ProductName, out bool isNewInstance);
+            GC.KeepAlive(_mutex);
 
-            mutex = new Mutex(true, Application.ProductName, out bool createdNew);
-
-            if (!createdNew)
+            if (!isNewInstance)
             {
                 MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Environment.Exit(1);
             }
-
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
