@@ -15,10 +15,10 @@ The volume bar will follow the cursor when it's moved around and display the cur
 ###### Available Menus
 - System Volume Mixer: Opens the built-in volume mixer for per-application audio volume control.
 - Audio Playback Devices: Switch default audio playback device from a list of available devices.
-- Volume Slider Control: Open a popup with a volume slider. (Also accessible via <kbd>Middle Mouse Button</kbd> on the tray icon.)
+- Volume Slider Control: Open a popup with a volume slider and peak volume meter. (Also accessible via <kbd>Middle Mouse Button</kbd> on the tray icon.)
 - Check For Updates: Check for a new version of tb-vol-scroll and automatically update the executable when one is found.
 
-### Configure
+### Configuration
 
 - Appearance:
   - Colour
@@ -55,10 +55,10 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 #### Volume Slider Control
 
-![Tray menu](Images/volumesliderpopup.png?raw=true)
+![Tray menu](Images/volumeslidercontrol.png?raw=true)
 
-#### Configure
-![Configure](Images/configure.png?raw=true)
+#### Configuration
+![Configuration](Images/configuration.png?raw=true)
 
 #### Tray menu
 
