@@ -26,7 +26,6 @@ namespace tbvolscroll
         }
         public async void OnDeviceChanged(DeviceChangedArgs value)
         {
-            Console.WriteLine("Change");
             await RefreshPlaybackDevices();
             UpdateAudioState();
         }
@@ -97,7 +96,7 @@ namespace tbvolscroll
         {
             if (coreAudioController == null)
                 coreAudioController = new CoreAudioController();
-            IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync((DeviceState)1);
+            IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync(DeviceState.Active);
             audioDevices = coreAudioDevices;
         }
 

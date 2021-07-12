@@ -25,7 +25,7 @@ namespace tbvolscroll.Forms
             AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
         }
 
-        private void OnFormShown(object sender, EventArgs e)
+        private async void OnFormShown(object sender, EventArgs e)
         {
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
@@ -47,12 +47,23 @@ namespace tbvolscroll.Forms
                     break;
 
             }
-            StartPeakVolumeMeter();
+
+            callback.audioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(async x => {
+                await Task.Run(async () =>
+                {
+                    await StartPeakVolumeMeter();
+                });
+            });
+
+            await Task.Run(async () =>
+            {
+                await StartPeakVolumeMeter();
+            });
         }
 
-        public void StartPeakVolumeMeter()
+        public async Task StartPeakVolumeMeter()
         {
-            var device = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice;
+            var device = await callback.audioHandler.CoreAudioController.GetDefaultDeviceAsync(DeviceType.Playback, Role.Multimedia);
             device.PeakValueChanged.Subscribe(x =>
             {
 
@@ -60,8 +71,14 @@ namespace tbvolscroll.Forms
                 Invoke((MethodInvoker)delegate
                 {
                     PeakMeterProgressBar.Value = value;
-                    PeakMeterProgressBar.Value = value - 1;
-                    PeakMeterProgressBar.Value = value;
+                    if (value != 0)
+                    {
+                        PeakMeterProgressBar.Value = value - 1;
+                        PeakMeterProgressBar.Value = value;
+                    }
+                    VolumeTrackBar.Value = callback.audioHandler.Volume;
+                    VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
+                    AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
                 });
             });
         }
