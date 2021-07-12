@@ -1,4 +1,4 @@
-﻿using AudioSwitcher.AudioApi;
+using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
 using System;
@@ -18,11 +18,9 @@ namespace tbvolscroll
         private static int volume = 0;
         private static bool muted = false;
         private static bool audioDisabled = false;
-        private MainForm callback;
 
-        public AudioHandler(MainForm callback)
+        public AudioHandler()
         {
-            this.callback = callback;
             coreAudioController = new CoreAudioController();
             coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
         }
