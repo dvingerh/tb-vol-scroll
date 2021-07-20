@@ -22,8 +22,9 @@ The volume bar will follow the cursor when it's moved around and display the cur
 
 - Appearance:
   - Colour
+  - Font
   - Opacity
-  - Text padding (affects volume bar size)
+  - Padding (affects volume bar size)
 
 - Behaviour:
   - Volume bar autohide time-out
