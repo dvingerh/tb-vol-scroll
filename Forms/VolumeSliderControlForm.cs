@@ -1,32 +1,33 @@
 ﻿using AudioSwitcher.AudioApi;
-using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
-using AudioSwitcher.AudioApi.Session;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Media;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tbvolscroll.Classes;
 
 namespace tbvolscroll.Forms
 {
     public partial class VolumeSliderControlForm : Form
     {
+        IDisposable deviceObserver;
+        IDisposable deviceVolumeObserver;
         readonly MainForm callback;
         public VolumeSliderControlForm(MainForm callback)
         {
             InitializeComponent();
             this.callback = callback;
-            VolumeTrackBar.Value = callback.audioHandler.Volume;
-            VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
-            AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
         }
 
         private async void OnFormShown(object sender, EventArgs e)
         {
+            VolumeTrackBar.Value = Globals.AudioHandler.Volume;
+            VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
+            AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+            PeakMeterPictureBox.BackColor = Properties.Settings.Default.BarColor;
+
+
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
@@ -34,21 +35,21 @@ namespace tbvolscroll.Forms
             switch (TaskbarHelper.Position)
             {
                 case TaskbarPosition.Bottom:
-                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Right:
-                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Left:
-                    Location = new Point(workingArea.Left, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Top:
-                    Location = new Point(workingArea.Right - Width, workingArea.Top);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
 
             }
 
-            callback.audioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(async x => {
+            deviceObserver = Globals.AudioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(async x => {
                 await Task.Run(async () =>
                 {
                     await StartPeakVolumeMeter();
@@ -63,43 +64,42 @@ namespace tbvolscroll.Forms
 
         public async Task StartPeakVolumeMeter()
         {
-            var device = await callback.audioHandler.CoreAudioController.GetDefaultDeviceAsync(DeviceType.Playback, Role.Multimedia);
-            device.PeakValueChanged.Subscribe(x =>
+            var device = await Globals.AudioHandler.CoreAudioController.GetDefaultDeviceAsync(DeviceType.Playback, Role.Multimedia);
+            deviceVolumeObserver = device.PeakValueChanged.Subscribe(x =>
             {
 
-                int value = (int)Math.Round((x.PeakValue / 100) * callback.audioHandler.Volume);
+                int value = (int)Math.Round((x.PeakValue / 100) * Globals.AudioHandler.Volume);
                 Invoke((MethodInvoker)delegate
                 {
-                    PeakMeterProgressBar.Value = value;
-                    if (value != 0)
-                    {
-                        PeakMeterProgressBar.Value = value - 1;
-                        PeakMeterProgressBar.Value = value;
-                    }
-                    VolumeTrackBar.Value = callback.audioHandler.Volume;
-                    VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
-                    AudioDeviceLabel.Text = callback.audioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+                    if (Properties.Settings.Default.UseBarGradient)
+                        PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
+                    PeakMeterPictureBox.Width = value * (PeakMeterPanel.Width / 100);
+                    VolumeTrackBar.Value = Globals.AudioHandler.Volume;
+                    VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
+                    AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
                 });
             });
         }
 
         private void UpdateVolume(object sender, EventArgs e)
         {
-            callback.audioHandler.SetMasterVolume(VolumeTrackBar.Value);
-            callback.audioHandler.UpdateAudioState();
-            if (callback.audioHandler.Volume == 0 && callback.audioHandler.Muted == false)
-                callback.audioHandler.SetMasterVolumeMute(isMuted: true);
-            else if (callback.audioHandler.Volume > 0 && callback.audioHandler.Muted == true)
-                callback.audioHandler.SetMasterVolumeMute(isMuted: false);
-            callback.audioHandler.UpdateAudioState();
-            VolumeLabel.Text = $"{callback.audioHandler.Volume}%";
-            callback.TrayNotifyIcon.Text = $"{Application.ProductName} - {callback.audioHandler.Volume}%";
+            Globals.AudioHandler.SetMasterVolume(VolumeTrackBar.Value);
+            Globals.AudioHandler.UpdateAudioState();
+            if (Globals.AudioHandler.Volume == 0 && Globals.AudioHandler.Muted == false)
+                Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
+            else if (Globals.AudioHandler.Volume > 0 && Globals.AudioHandler.Muted == true)
+                Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
+            Globals.AudioHandler.UpdateAudioState();
+            VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
+            callback.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
             callback.SetTrayIcon();
             SystemSounds.Exclamation.Play();
         }
 
         private void CloseFormOnDeacivate(object sender, EventArgs e)
         {
+            deviceObserver.Dispose();
+            deviceVolumeObserver.Dispose();
             Close();
         }
     }

@@ -2,22 +2,27 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tbvolscroll.Classes;
 
 namespace tbvolscroll
 {
     public sealed class InputHandler
     {
-        public bool isAltDown;
-        public bool isCtrlDown;
-        public bool isShiftDown;
-        public bool isScrolling;
-        public bool popupShowing = false;
+        private bool isAltDown;
+        private bool isCtrlDown;
+        private bool isShiftDown;
+        private bool isScrolling;
         private bool isSubscribed = false;
-        public IKeyboardMouseEvents inputEvents;
+        private IKeyboardMouseEvents inputEvents;
         
         private readonly MainForm callbackForm;
 
         public bool IsSubscribed { get => isSubscribed; set => isSubscribed = value; }
+        public bool IsScrolling { get => isScrolling; set => isScrolling = value; }
+        public bool IsAltDown { get => isAltDown; set => isAltDown = value; }
+        public bool IsCtrlDown { get => isCtrlDown; set => isCtrlDown = value; }
+        public bool IsShiftDown { get => isShiftDown; set => isShiftDown = value; }
+        public IKeyboardMouseEvents InputEvents { get => inputEvents; set => inputEvents = value; }
 
         public InputHandler(MainForm callbackForm)
         {
@@ -28,7 +33,7 @@ namespace tbvolscroll
 
         public void SubscribeMouse()
         {
-            IsSubscribed = true;
+            isSubscribed = true;
             inputEvents = Hook.GlobalEvents();
             inputEvents.MouseWheel += OnMouseScroll;
             inputEvents.MouseMove += UpdateBarPositionMouseMove;
@@ -38,7 +43,7 @@ namespace tbvolscroll
 
         public void UnsubscribeMouse()
         {
-            IsSubscribed = false;
+            isSubscribed = false;
             inputEvents.MouseWheel -= OnMouseScroll;
             inputEvents.MouseMove -= UpdateBarPositionMouseMove;
             inputEvents.KeyDown -= EnableKeyActions;
@@ -48,7 +53,7 @@ namespace tbvolscroll
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
-            if (callbackForm.isDisplayingVolume)
+            if (Globals.IsDisplayingVolumeBar)
             {
                 if (TaskbarHelper.IsCursorInTaskbar())
                    callbackForm.SetVolumeBarPosition();
@@ -80,14 +85,14 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
-            if (TaskbarHelper.IsValidAction() && !popupShowing && callbackForm.isReady && !callbackForm.audioHandler.AudioDisabled)
+            if (TaskbarHelper.IsValidAction() && !Globals.IsDisplayingVolumeSliderControl && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)
                 {
                     await Task.Run(async () =>
                     {
-                        await callbackForm.DoVolumeChanges(e.Delta);
+                        await Globals.AudioHandler.DoVolumeChanges(e.Delta);
                         await callbackForm.DoAppearanceUpdate(updateType: "volume");
                     });
                 }
@@ -103,7 +108,7 @@ namespace tbvolscroll
                 {
                     await Task.Run(async () =>
                     {
-                        await callbackForm.ToggleAudioPlaybackDevice(e.Delta);
+                        await Globals.AudioHandler.ToggleAudioPlaybackDevice(e.Delta);
                         await callbackForm.DoAppearanceUpdate(updateType: "device");
                     });
                 }

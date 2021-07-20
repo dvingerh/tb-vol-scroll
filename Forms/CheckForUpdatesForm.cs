@@ -1,14 +1,6 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Serialization.Json;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using System.Xml.XPath;
 using tbvolscroll.Classes;
 
 namespace tbvolscroll.Forms

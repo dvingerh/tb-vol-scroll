@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization.Json;
@@ -60,7 +58,7 @@ namespace tbvolscroll.Classes
                     }
                     else
                     {
-                        callback.CheckingForUpdatesLabel.Text = $"No new updates available.";
+                        callback.CheckingForUpdatesLabel.Text = $"No new version available.";
                         callback.CheckingForUpdatesLabel.Image = Properties.Resources.success;
                     }
                 }
@@ -78,8 +76,14 @@ namespace tbvolscroll.Classes
             {
                 wc.DownloadFileCompleted += new AsyncCompletedEventHandler(OnUpdateDownloaded);
                 wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
+                wc.DownloadProgressChanged += UpdateDownloadProgress;
                 await wc.DownloadFileTaskAsync(new Uri(exeUrl), tmpExePath);
             }
+        }
+
+        private void UpdateDownloadProgress(object sender, DownloadProgressChangedEventArgs e)
+        {
+            callback.CheckingForUpdatesLabel.Text = $"Retrieving file... {e.ProgressPercentage}%";
         }
 
         private void OnUpdateDownloaded(object sender, AsyncCompletedEventArgs e)

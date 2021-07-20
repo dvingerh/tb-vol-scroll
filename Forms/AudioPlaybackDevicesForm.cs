@@ -5,14 +5,16 @@ using System.Windows.Forms;
 using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
 using AudioSwitcher.AudioApi.Observables;
+using tbvolscroll.Classes;
 
 namespace tbvolscroll.Forms
 {
     public partial class AudioPlaybackDevicesForm : Form
     {
-        private readonly MainForm callbackForm;
         private bool didApplyDevice = false;
-        public AudioPlaybackDevicesForm(MainForm callbackForm)
+        private bool isRefreshing = false;
+        readonly IDisposable deviceObserver;
+        public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
             ImageList listViewHeightFix = new ImageList
@@ -20,17 +22,19 @@ namespace tbvolscroll.Forms
                 ImageSize = new Size(1, 30)
             };
             DevicesListView.SmallImageList = listViewHeightFix;
-            this.callbackForm = callbackForm;
-            callbackForm.audioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+            deviceObserver = Globals.AudioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(RefeshOnDeviceActivity);
         }
-        public void OnDeviceChanged(DeviceChangedArgs value)
+        public async void RefeshOnDeviceActivity(DeviceChangedArgs value)
         {
-            if (!didApplyDevice)
+            if (!didApplyDevice && !isRefreshing)
             {
+                isRefreshing = true;
                 Invoke((MethodInvoker)delegate
                 {
                     RefreshButton.PerformClick();
                 });
+                await Task.Delay(100);
+                isRefreshing = false;
             }
         }
 
@@ -43,26 +47,27 @@ namespace tbvolscroll.Forms
             switch (TaskbarHelper.Position)
             {
                 case TaskbarPosition.Bottom:
-                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Right:
-                    Location = new Point(workingArea.Right - Width, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Left:
-                    Location = new Point(workingArea.Left, workingArea.Bottom - Height);
+                    Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
                 case TaskbarPosition.Top:
-                    Location = new Point(workingArea.Right - Width, workingArea.Top);
+                    Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
-
             }
             await LoadAudioPlaybackDevicesList();
+            DevicesListView.Columns[0].Width = DevicesListView.Width - 250;
         }
 
         private async Task LoadAudioPlaybackDevicesList()
         {
-            await callbackForm.audioHandler.RefreshPlaybackDevices();
-            foreach (CoreAudioDevice d in callbackForm.audioHandler.AudioDevices)
+            SuspendLayout();
+            await Globals.AudioHandler.RefreshPlaybackDevices();
+            foreach (CoreAudioDevice d in Globals.AudioHandler.AudioDevices)
             {
                 ListViewItem deviceItem = new ListViewItem()
                 {
@@ -75,8 +80,9 @@ namespace tbvolscroll.Forms
                 deviceItem.Tag = d;
                 DevicesListView.Items.Add(deviceItem);
             }
-
             RefreshButton.Enabled = true;
+            ResumeLayout();
+            Refresh();
         }
 
         private async void ApplyButtonClick(object sender, EventArgs e)
@@ -101,6 +107,7 @@ namespace tbvolscroll.Forms
                 didApplyDevice = true;
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
+                deviceObserver.Dispose();
                 Close();
             }
         }
@@ -125,7 +132,8 @@ namespace tbvolscroll.Forms
 
         private void CloseFormOnDeactivate(object sender, EventArgs e)
         {
-            //Close();
+            deviceObserver.Dispose();
+            Close();
         }
     }
 }

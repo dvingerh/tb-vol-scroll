@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using tbvolscroll.Classes;
+using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
@@ -187,6 +189,90 @@ namespace tbvolscroll
             MoveWindow(windowHandle, location.X, location.Y, sndvolWidth, sndvolHeight, true);
 
         }
+
+        public async Task DoVolumeChanges(int delta)
+        {
+
+            await Task.Run(() =>
+            {
+                if ((delta < 0 && Globals.AudioHandler.Volume != 0) || (delta > 0 && Globals.AudioHandler.Volume != 100))
+                {
+                    try
+                    {
+
+                        Globals.AudioHandler.UpdateAudioState();
+                        int newVolume = Globals.AudioHandler.Volume;
+
+                        if (delta < 0)
+                        {
+                            if (Globals.InputHandler.IsAltDown || Globals.AudioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
+                                newVolume -= 1;
+                            else
+                                newVolume -= Settings.Default.VolumeStep;
+                            if (newVolume <= 0 && Globals.AudioHandler.Muted == false)
+                            {
+                                newVolume = 0;
+                                Globals.AudioHandler.SetMasterVolume(newVolume);
+                                Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
+                            }
+                            else
+                                Globals.AudioHandler.SetMasterVolume(newVolume);
+                        }
+                        else
+                        {
+                            if (Globals.InputHandler.IsAltDown || Globals.AudioHandler.Volume < Settings.Default.PreciseScrollThreshold)
+                                newVolume += 1;
+                            else
+                                newVolume += Settings.Default.VolumeStep;
+                            if (newVolume > 0 && Globals.AudioHandler.Muted == true)
+                                Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
+                            if (newVolume > 100)
+                                newVolume = 100;
+                            Globals.AudioHandler.SetMasterVolume(newVolume);
+
+                        }
+                        Globals.AudioHandler.UpdateAudioState();
+                    }
+                    catch { }
+                }
+            });
+        }
+
+        public async Task ToggleAudioPlaybackDevice(int delta)
+        {
+            try
+            {
+                List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
+                audioDevicesList.AddRange(Globals.AudioHandler.AudioDevices);
+                CoreAudioDevice curDevice = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice;
+                if (Globals.CurrentAudioDeviceIndex == -1)
+                    Globals.CurrentAudioDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
+                int newDeviceIndex = Globals.CurrentAudioDeviceIndex;
+
+                if (delta < 0)
+                {
+                    if (Globals.CurrentAudioDeviceIndex > 0)
+                        --Globals.CurrentAudioDeviceIndex;
+                    else
+                        Globals.CurrentAudioDeviceIndex = 0;
+                }
+                else
+                {
+                    if (Globals.CurrentAudioDeviceIndex < audioDevicesList.Count - 1)
+                        ++Globals.CurrentAudioDeviceIndex;
+                    else
+                        Globals.CurrentAudioDeviceIndex = audioDevicesList.Count - 1;
+                }
+
+                if (newDeviceIndex != Globals.CurrentAudioDeviceIndex)
+                {
+                    CoreAudioDevice newPlaybackDevice = audioDevicesList[Globals.CurrentAudioDeviceIndex];
+                    await newPlaybackDevice.SetAsDefaultAsync();
+                }
+            }
+            catch { }
+        }
+
 
         public static Rectangle GetWindowClientRectangle(IntPtr handle)
         {

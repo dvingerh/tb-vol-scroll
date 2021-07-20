@@ -80,7 +80,10 @@
       <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,11 +97,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\AudioHandler.cs" />
+    <Compile Include="Classes\Globals.cs" />
     <Compile Include="Classes\TaskbarHelper.cs" />
     <Compile Include="Classes\TrackBarNoFocus.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\UpdateHandler.cs" />
+    <Compile Include="Classes\Utils.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +179,8 @@
     <None Include="Resources\mixer.png" />
     <None Include="Resources\speaker.png" />
     <None Include="Resources\trackbar.png" />
+    <None Include="Resources\configuration.png" />
+    <None Include="Resources\update.png" />
     <Content Include="Resources\voldisabled.ico" />
     <None Include="Resources\success.png" />
     <None Include="Resources\error.png" />

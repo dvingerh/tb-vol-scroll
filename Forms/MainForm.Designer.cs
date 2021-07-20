@@ -79,6 +79,7 @@ namespace tbvolscroll
             // TrayContextMenu
             // 
             this.TrayContextMenu.BackColor = System.Drawing.SystemColors.Control;
+            this.TrayContextMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
@@ -174,6 +175,7 @@ namespace tbvolscroll
             // 
             // ConfigurationMenuItem
             // 
+            this.ConfigurationMenuItem.Image = global::tbvolscroll.Properties.Resources.configuration;
             this.ConfigurationMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.ConfigurationMenuItem.Name = "ConfigurationMenuItem";
             this.ConfigurationMenuItem.Size = new System.Drawing.Size(195, 22);
@@ -182,6 +184,7 @@ namespace tbvolscroll
             // 
             // CheckForUpdatesMenuItem
             // 
+            this.CheckForUpdatesMenuItem.Image = global::tbvolscroll.Properties.Resources.update;
             this.CheckForUpdatesMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.CheckForUpdatesMenuItem.Name = "CheckForUpdatesMenuItem";
             this.CheckForUpdatesMenuItem.Size = new System.Drawing.Size(195, 22);
