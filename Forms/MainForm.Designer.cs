@@ -35,9 +35,9 @@ namespace tbvolscroll
             this.TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TitleLabelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VolumeSliderControlMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AudioPlaybackDevicesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.MoreOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfigurationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +49,6 @@ namespace tbvolscroll
             this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AudioHealthTimer = new System.Windows.Forms.Timer(this.components);
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,9 +82,9 @@ namespace tbvolscroll
             this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TitleLabelMenuItem,
             this.SeparatorMenuItem1,
+            this.AudioPlaybackDevicesMenuItem,
             this.SystemVolumeMixerMenuItem,
             this.VolumeSliderControlMenuItem,
-            this.AudioPlaybackDevicesMenuItem,
             this.SeparatorMenuItem3,
             this.MoreOptionsMenuItem,
             this.ExitMenuItem});
@@ -111,6 +110,18 @@ namespace tbvolscroll
             this.SeparatorMenuItem1.Name = "SeparatorMenuItem1";
             this.SeparatorMenuItem1.Size = new System.Drawing.Size(196, 6);
             // 
+            // AudioPlaybackDevicesMenuItem
+            // 
+            this.AudioPlaybackDevicesMenuItem.BackColor = System.Drawing.SystemColors.Menu;
+            this.AudioPlaybackDevicesMenuItem.Enabled = false;
+            this.AudioPlaybackDevicesMenuItem.Image = global::tbvolscroll.Properties.Resources.speaker;
+            this.AudioPlaybackDevicesMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.AudioPlaybackDevicesMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
+            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
+            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
+            // 
             // SystemVolumeMixerMenuItem
             // 
             this.SystemVolumeMixerMenuItem.BackColor = System.Drawing.SystemColors.Menu;
@@ -134,18 +145,6 @@ namespace tbvolscroll
             this.VolumeSliderControlMenuItem.Size = new System.Drawing.Size(199, 22);
             this.VolumeSliderControlMenuItem.Text = "Volume Slider Control";
             this.VolumeSliderControlMenuItem.Click += new System.EventHandler(this.VolumeSliderPopupMenuItemClick);
-            // 
-            // AudioPlaybackDevicesMenuItem
-            // 
-            this.AudioPlaybackDevicesMenuItem.BackColor = System.Drawing.SystemColors.Menu;
-            this.AudioPlaybackDevicesMenuItem.Enabled = false;
-            this.AudioPlaybackDevicesMenuItem.Image = global::tbvolscroll.Properties.Resources.speaker;
-            this.AudioPlaybackDevicesMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.AudioPlaybackDevicesMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.AudioPlaybackDevicesMenuItem.Name = "AudioPlaybackDevicesMenuItem";
-            this.AudioPlaybackDevicesMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.AudioPlaybackDevicesMenuItem.Text = "Audio Playback Devices";
-            this.AudioPlaybackDevicesMenuItem.Click += new System.EventHandler(this.AudioDevicesMenuItemClick);
             // 
             // SeparatorMenuItem3
             // 
@@ -242,11 +241,6 @@ namespace tbvolscroll
             this.ExitMenuItem.Text = "Exit";
             this.ExitMenuItem.Click += new System.EventHandler(this.ExitApplication);
             // 
-            // AudioHealthTimer
-            // 
-            this.AudioHealthTimer.Interval = 1000;
-            this.AudioHealthTimer.Tick += new System.EventHandler(this.CheckAudioHealth);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -294,7 +288,6 @@ namespace tbvolscroll
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
-        private System.Windows.Forms.Timer AudioHealthTimer;
         private System.Windows.Forms.ToolStripSeparator SeperatorMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }

@@ -86,7 +86,7 @@
             // SetBarDimensionsLabel
             // 
             this.SetBarDimensionsLabel.AutoSize = true;
-            this.SetBarDimensionsLabel.Location = new System.Drawing.Point(12, 23);
+            this.SetBarDimensionsLabel.Location = new System.Drawing.Point(15, 28);
             this.SetBarDimensionsLabel.Name = "SetBarDimensionsLabel";
             this.SetBarDimensionsLabel.Size = new System.Drawing.Size(115, 13);
             this.SetBarDimensionsLabel.TabIndex = 4;
@@ -96,7 +96,7 @@
             // SetBarWidthNumericUpDown
             // 
             this.SetBarWidthNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetBarWidthNumericUpDown.Location = new System.Drawing.Point(148, 21);
+            this.SetBarWidthNumericUpDown.Location = new System.Drawing.Point(151, 26);
             this.SetBarWidthNumericUpDown.Maximum = new decimal(new int[] {
             500,
             0,
@@ -115,7 +115,7 @@
             // DimensionXLabel
             // 
             this.DimensionXLabel.AutoSize = true;
-            this.DimensionXLabel.Location = new System.Drawing.Point(207, 25);
+            this.DimensionXLabel.Location = new System.Drawing.Point(210, 30);
             this.DimensionXLabel.Name = "DimensionXLabel";
             this.DimensionXLabel.Size = new System.Drawing.Size(12, 13);
             this.DimensionXLabel.TabIndex = 6;
@@ -125,7 +125,7 @@
             // SetBarHeightNumericUpDown
             // 
             this.SetBarHeightNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetBarHeightNumericUpDown.Location = new System.Drawing.Point(224, 21);
+            this.SetBarHeightNumericUpDown.Location = new System.Drawing.Point(227, 26);
             this.SetBarHeightNumericUpDown.Maximum = new decimal(new int[] {
             250,
             0,
@@ -144,7 +144,7 @@
             // BarColorLabel
             // 
             this.BarColorLabel.AutoSize = true;
-            this.BarColorLabel.Location = new System.Drawing.Point(12, 67);
+            this.BarColorLabel.Location = new System.Drawing.Point(15, 72);
             this.BarColorLabel.Name = "BarColorLabel";
             this.BarColorLabel.Size = new System.Drawing.Size(104, 13);
             this.BarColorLabel.TabIndex = 7;
@@ -157,7 +157,7 @@
             this.GradientCheckBox.AutoSize = true;
             this.GradientCheckBox.Checked = true;
             this.GradientCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.GradientCheckBox.Location = new System.Drawing.Point(148, 62);
+            this.GradientCheckBox.Location = new System.Drawing.Point(151, 67);
             this.GradientCheckBox.Name = "GradientCheckBox";
             this.GradientCheckBox.Size = new System.Drawing.Size(62, 23);
             this.GradientCheckBox.TabIndex = 8;
@@ -169,7 +169,7 @@
             // 
             this.CustomColorCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.CustomColorCheckBox.AutoSize = true;
-            this.CustomColorCheckBox.Location = new System.Drawing.Point(216, 62);
+            this.CustomColorCheckBox.Location = new System.Drawing.Point(219, 67);
             this.CustomColorCheckBox.Name = "CustomColorCheckBox";
             this.CustomColorCheckBox.Size = new System.Drawing.Size(71, 23);
             this.CustomColorCheckBox.TabIndex = 9;
@@ -180,7 +180,7 @@
             // BarOpacityLabel
             // 
             this.BarOpacityLabel.AutoSize = true;
-            this.BarOpacityLabel.Location = new System.Drawing.Point(12, 159);
+            this.BarOpacityLabel.Location = new System.Drawing.Point(15, 164);
             this.BarOpacityLabel.Name = "BarOpacityLabel";
             this.BarOpacityLabel.Size = new System.Drawing.Size(108, 13);
             this.BarOpacityLabel.TabIndex = 11;
@@ -189,7 +189,7 @@
             // 
             // BarOpacityTrackBar
             // 
-            this.BarOpacityTrackBar.Location = new System.Drawing.Point(141, 156);
+            this.BarOpacityTrackBar.Location = new System.Drawing.Point(144, 156);
             this.BarOpacityTrackBar.Maximum = 100;
             this.BarOpacityTrackBar.Name = "BarOpacityTrackBar";
             this.BarOpacityTrackBar.Size = new System.Drawing.Size(139, 45);
@@ -201,7 +201,7 @@
             // OpacityValueLabel
             // 
             this.OpacityValueLabel.AutoSize = true;
-            this.OpacityValueLabel.Location = new System.Drawing.Point(286, 159);
+            this.OpacityValueLabel.Location = new System.Drawing.Point(289, 164);
             this.OpacityValueLabel.Name = "OpacityValueLabel";
             this.OpacityValueLabel.Size = new System.Drawing.Size(34, 13);
             this.OpacityValueLabel.TabIndex = 13;
@@ -211,7 +211,7 @@
             // FontStyleLabel
             // 
             this.FontStyleLabel.AutoSize = true;
-            this.FontStyleLabel.Location = new System.Drawing.Point(12, 114);
+            this.FontStyleLabel.Location = new System.Drawing.Point(15, 119);
             this.FontStyleLabel.Name = "FontStyleLabel";
             this.FontStyleLabel.Size = new System.Drawing.Size(115, 13);
             this.FontStyleLabel.TabIndex = 14;
@@ -220,7 +220,7 @@
             // 
             // FontStyleButton
             // 
-            this.FontStyleButton.Location = new System.Drawing.Point(148, 109);
+            this.FontStyleButton.Location = new System.Drawing.Point(151, 114);
             this.FontStyleButton.Name = "FontStyleButton";
             this.FontStyleButton.Size = new System.Drawing.Size(89, 23);
             this.FontStyleButton.TabIndex = 10;
@@ -235,7 +235,7 @@
             // AutoHideTimeOutLabel
             // 
             this.AutoHideTimeOutLabel.AutoSize = true;
-            this.AutoHideTimeOutLabel.Location = new System.Drawing.Point(17, 23);
+            this.AutoHideTimeOutLabel.Location = new System.Drawing.Point(15, 21);
             this.AutoHideTimeOutLabel.Name = "AutoHideTimeOutLabel";
             this.AutoHideTimeOutLabel.Size = new System.Drawing.Size(165, 13);
             this.AutoHideTimeOutLabel.TabIndex = 16;
@@ -245,7 +245,7 @@
             // AutoHideTimeOutNumericUpDown
             // 
             this.AutoHideTimeOutNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(188, 21);
+            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(186, 19);
             this.AutoHideTimeOutNumericUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -294,7 +294,7 @@
             // 
             this.FontPreviewLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FontPreviewLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
-            this.FontPreviewLabel.Location = new System.Drawing.Point(243, 110);
+            this.FontPreviewLabel.Location = new System.Drawing.Point(246, 115);
             this.FontPreviewLabel.Name = "FontPreviewLabel";
             this.FontPreviewLabel.Size = new System.Drawing.Size(77, 21);
             this.FontPreviewLabel.TabIndex = 17;
@@ -304,7 +304,7 @@
             // PixelsLabel
             // 
             this.PixelsLabel.AutoSize = true;
-            this.PixelsLabel.Location = new System.Drawing.Point(286, 25);
+            this.PixelsLabel.Location = new System.Drawing.Point(289, 30);
             this.PixelsLabel.Name = "PixelsLabel";
             this.PixelsLabel.Size = new System.Drawing.Size(36, 13);
             this.PixelsLabel.TabIndex = 16;
@@ -316,7 +316,7 @@
             this.ColorPreviewPictureBox.BackColor = System.Drawing.Color.SkyBlue;
             this.ColorPreviewPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ColorPreviewPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ColorPreviewPictureBox.Location = new System.Drawing.Point(293, 63);
+            this.ColorPreviewPictureBox.Location = new System.Drawing.Point(296, 68);
             this.ColorPreviewPictureBox.Name = "ColorPreviewPictureBox";
             this.ColorPreviewPictureBox.Size = new System.Drawing.Size(21, 21);
             this.ColorPreviewPictureBox.TabIndex = 10;
@@ -326,7 +326,7 @@
             // AutoRetryAdminCheckBox
             // 
             this.AutoRetryAdminCheckBox.AutoSize = true;
-            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(20, 228);
+            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 226);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
             this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(300, 17);
             this.AutoRetryAdminCheckBox.TabIndex = 5;
@@ -357,7 +357,7 @@
             // SwitchAudioPlaybackDevicesCheckBox
             // 
             this.SwitchAudioPlaybackDevicesCheckBox.AutoSize = true;
-            this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(20, 189);
+            this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(18, 187);
             this.SwitchAudioPlaybackDevicesCheckBox.Name = "SwitchAudioPlaybackDevicesCheckBox";
             this.SwitchAudioPlaybackDevicesCheckBox.Size = new System.Drawing.Size(308, 30);
             this.SwitchAudioPlaybackDevicesCheckBox.TabIndex = 4;
@@ -368,7 +368,7 @@
             // ToggleMuteCheckBox
             // 
             this.ToggleMuteCheckBox.AutoSize = true;
-            this.ToggleMuteCheckBox.Location = new System.Drawing.Point(20, 151);
+            this.ToggleMuteCheckBox.Location = new System.Drawing.Point(18, 149);
             this.ToggleMuteCheckBox.Name = "ToggleMuteCheckBox";
             this.ToggleMuteCheckBox.Size = new System.Drawing.Size(297, 30);
             this.ToggleMuteCheckBox.TabIndex = 3;
@@ -378,7 +378,7 @@
             // Percent2Label
             // 
             this.Percent2Label.AutoSize = true;
-            this.Percent2Label.Location = new System.Drawing.Point(253, 114);
+            this.Percent2Label.Location = new System.Drawing.Point(251, 112);
             this.Percent2Label.Name = "Percent2Label";
             this.Percent2Label.Size = new System.Drawing.Size(46, 13);
             this.Percent2Label.TabIndex = 24;
@@ -388,7 +388,7 @@
             // Percent1Label
             // 
             this.Percent1Label.AutoSize = true;
-            this.Percent1Label.Location = new System.Drawing.Point(253, 67);
+            this.Percent1Label.Location = new System.Drawing.Point(251, 65);
             this.Percent1Label.Name = "Percent1Label";
             this.Percent1Label.Size = new System.Drawing.Size(46, 13);
             this.Percent1Label.TabIndex = 23;
@@ -398,7 +398,7 @@
             // MillisecondsLabel
             // 
             this.MillisecondsLabel.AutoSize = true;
-            this.MillisecondsLabel.Location = new System.Drawing.Point(253, 25);
+            this.MillisecondsLabel.Location = new System.Drawing.Point(251, 23);
             this.MillisecondsLabel.Name = "MillisecondsLabel";
             this.MillisecondsLabel.Size = new System.Drawing.Size(70, 13);
             this.MillisecondsLabel.TabIndex = 17;
@@ -408,7 +408,7 @@
             // SetVolumeStepLabel
             // 
             this.SetVolumeStepLabel.AutoSize = true;
-            this.SetVolumeStepLabel.Location = new System.Drawing.Point(17, 67);
+            this.SetVolumeStepLabel.Location = new System.Drawing.Point(15, 65);
             this.SetVolumeStepLabel.Name = "SetVolumeStepLabel";
             this.SetVolumeStepLabel.Size = new System.Drawing.Size(142, 13);
             this.SetVolumeStepLabel.TabIndex = 21;
@@ -418,7 +418,7 @@
             // SetVolumeStepNumericUpDown
             // 
             this.SetVolumeStepNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(188, 65);
+            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(186, 63);
             this.SetVolumeStepNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -437,7 +437,7 @@
             // ThresholdLabel
             // 
             this.ThresholdLabel.AutoSize = true;
-            this.ThresholdLabel.Location = new System.Drawing.Point(17, 114);
+            this.ThresholdLabel.Location = new System.Drawing.Point(15, 112);
             this.ThresholdLabel.Name = "ThresholdLabel";
             this.ThresholdLabel.Size = new System.Drawing.Size(168, 13);
             this.ThresholdLabel.TabIndex = 19;
@@ -447,7 +447,7 @@
             // ThresholdNumericUpDown
             // 
             this.ThresholdNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(188, 112);
+            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(186, 110);
             this.ThresholdNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,

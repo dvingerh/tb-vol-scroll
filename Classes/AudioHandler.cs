@@ -24,12 +24,15 @@ namespace tbvolscroll
         public AudioHandler()
         {
             coreAudioController = new CoreAudioController();
-            coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceChanged);
+            coreAudioController.AudioDeviceChanged.Subscribe(OnAudioDeviceActivity);
+            coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnAudioDeviceActivity);
+            coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnAudioDeviceActivity);
         }
-        public async void OnDeviceChanged(DeviceChangedArgs value)
+        public async void OnAudioDeviceActivity(DeviceChangedArgs value)
         {
-            await RefreshPlaybackDevices();
-            UpdateAudioState();
+            if (value.ChangedType != DeviceChangedType.VolumeChanged && value.ChangedType != DeviceChangedType.MuteChanged)
+                await RefreshPlaybackDevices();
+            await UpdateAudioState();
         }
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -72,12 +75,14 @@ namespace tbvolscroll
         }
         public bool AudioDisabled { get => audioDisabled; set => audioDisabled = value; }
 
-        public void UpdateAudioState()
+        public async Task UpdateAudioState()
         {
+
             if (CoreAudioController.DefaultPlaybackDevice != null)
             {
                 Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
                 Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
+                AudioDisabled = false;
             }
             else
             {
@@ -85,6 +90,14 @@ namespace tbvolscroll
                 Muted = true;
                 AudioDisabled = true;
             }
+            await Task.Run(() =>
+            {
+                Globals.MainForm.Invoke((MethodInvoker)delegate
+                {
+                    Globals.MainForm.SetTrayIcon();
+                    Globals.MainForm.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
+                });
+            });
         }
 
         public List<CoreAudioDevice> GetAudioDevicesList()
@@ -96,8 +109,6 @@ namespace tbvolscroll
 
         public async Task RefreshPlaybackDevices()
         {
-            if (coreAudioController == null)
-                coreAudioController = new CoreAudioController();
             IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync(DeviceState.Active);
             audioDevices = coreAudioDevices;
         }
@@ -120,6 +131,7 @@ namespace tbvolscroll
             {
                 if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
                     return;
+                Volume = volume;
                 coreAudioController.DefaultPlaybackDevice.Volume = volume;
             }
             catch
@@ -193,14 +205,14 @@ namespace tbvolscroll
         public async Task DoVolumeChanges(int delta)
         {
 
-            await Task.Run(() =>
+            await Task.Run(async() =>
             {
                 if ((delta < 0 && Globals.AudioHandler.Volume != 0) || (delta > 0 && Globals.AudioHandler.Volume != 100))
                 {
                     try
                     {
 
-                        Globals.AudioHandler.UpdateAudioState();
+                        await Globals.AudioHandler.UpdateAudioState();
                         int newVolume = Globals.AudioHandler.Volume;
 
                         if (delta < 0)
@@ -231,7 +243,7 @@ namespace tbvolscroll
                             Globals.AudioHandler.SetMasterVolume(newVolume);
 
                         }
-                        Globals.AudioHandler.UpdateAudioState();
+                        await Globals.AudioHandler.UpdateAudioState();
                     }
                     catch { }
                 }

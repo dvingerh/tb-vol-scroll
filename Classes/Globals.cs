@@ -1,4 +1,4 @@
-﻿namespace tbvolscroll.Classes
+namespace tbvolscroll.Classes
 {
     public static class Globals
     {
@@ -9,6 +9,7 @@
         private static bool programIsReady = false;
         private static bool isDisplayingVolumeBar = false;
         private static bool isDisplayingVolumeSliderControl = false;
+        private static MainForm mainForm;
 
         public static int CurrentAudioDeviceIndex { get => currentAudioDeviceIndex; set => currentAudioDeviceIndex = value; }
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
@@ -17,5 +18,6 @@
         public static bool ProgramIsReady { get => programIsReady; set => programIsReady = value; }
         public static bool IsDisplayingVolumeBar { get => isDisplayingVolumeBar; set => isDisplayingVolumeBar = value; }
         public static bool IsDisplayingVolumeSliderControl { get => isDisplayingVolumeSliderControl; set => isDisplayingVolumeSliderControl = value; }
+        public static MainForm MainForm { get => mainForm; set => mainForm = value; }
     }
 }

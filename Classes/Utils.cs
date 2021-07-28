@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -27,6 +27,8 @@ namespace tbvolscroll.Classes
 
         public static Color CalculateColor(double percentage)
         {
+            if (percentage > 100)
+                percentage = 100;
             double num = ((percentage > 50.0) ? (1.0 - 2.0 * (percentage - 50.0) / 100.0) : 1.0) * 255.0;
             double num2 = ((percentage > 50.0) ? 1.0 : (2.0 * percentage / 100.0)) * 255.0;
             double num3 = 0.0;

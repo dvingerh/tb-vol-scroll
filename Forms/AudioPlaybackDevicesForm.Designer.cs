@@ -37,7 +37,7 @@ namespace tbvolscroll.Forms
             this.VolumeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MutedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.RefreshButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.DescriptionLabel = new System.Windows.Forms.Label();
             this.BorderPanel = new System.Windows.Forms.Panel();
             this.CloseButton = new System.Windows.Forms.Button();
             this.BorderPanel.SuspendLayout();
@@ -104,18 +104,18 @@ namespace tbvolscroll.Forms
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButtonClick);
             // 
-            // label1
+            // DescriptionLabel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.DescriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(533, 25);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Currently active device is marked Green. Double-click to apply selected device an" +
-    "d close this window.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.DescriptionLabel.Location = new System.Drawing.Point(12, 9);
+            this.DescriptionLabel.Name = "DescriptionLabel";
+            this.DescriptionLabel.Size = new System.Drawing.Size(533, 25);
+            this.DescriptionLabel.TabIndex = 3;
+            this.DescriptionLabel.Text = "The active device is marked green. Double-click to apply selected device and clos" +
+    "e this window.";
+            this.DescriptionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // BorderPanel
             // 
@@ -147,7 +147,7 @@ namespace tbvolscroll.Forms
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DevicesListView);
             this.Controls.Add(this.ApplyButton);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DescriptionLabel);
             this.Controls.Add(this.BorderPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -173,7 +173,7 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.ColumnHeader MutedColumn;
         private System.Windows.Forms.ColumnHeader VolumeColumn;
         private System.Windows.Forms.Button RefreshButton;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.Panel BorderPanel;
         private System.Windows.Forms.Button CloseButton;
     }

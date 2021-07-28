@@ -1,4 +1,4 @@
-﻿using Gma.System.MouseKeyHook;
+using Gma.System.MouseKeyHook;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,8 +15,6 @@ namespace tbvolscroll
         private bool isSubscribed = false;
         private IKeyboardMouseEvents inputEvents;
         
-        private readonly MainForm callbackForm;
-
         public bool IsSubscribed { get => isSubscribed; set => isSubscribed = value; }
         public bool IsScrolling { get => isScrolling; set => isScrolling = value; }
         public bool IsAltDown { get => isAltDown; set => isAltDown = value; }
@@ -24,11 +22,9 @@ namespace tbvolscroll
         public bool IsShiftDown { get => isShiftDown; set => isShiftDown = value; }
         public IKeyboardMouseEvents InputEvents { get => inputEvents; set => inputEvents = value; }
 
-        public InputHandler(MainForm callbackForm)
+        public InputHandler()
         {
-            this.callbackForm = callbackForm;
             SubscribeMouse();
-
         }
 
         public void SubscribeMouse()
@@ -56,9 +52,9 @@ namespace tbvolscroll
             if (Globals.IsDisplayingVolumeBar)
             {
                 if (TaskbarHelper.IsCursorInTaskbar())
-                   callbackForm.SetVolumeBarPosition();
+                   Globals.MainForm.SetVolumeBarPosition();
                 else
-                    callbackForm.HideVolumeBar();
+                    Globals.MainForm.HideVolumeBar();
 
             }
         }
@@ -93,15 +89,15 @@ namespace tbvolscroll
                     await Task.Run(async () =>
                     {
                         await Globals.AudioHandler.DoVolumeChanges(e.Delta);
-                        await callbackForm.DoAppearanceUpdate(updateType: "volume");
+                        await Globals.MainForm.DoAppearanceUpdate(updateType: "volume");
                     });
                 }
                 else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
                 {
-                    callbackForm.SetMuteStatus(e.Delta);
+                    await Globals.MainForm.SetMuteStatus(e.Delta);
                     await Task.Run(async () =>
                     {
-                        await callbackForm.DoAppearanceUpdate(updateType: "mute");
+                        await Globals.MainForm.DoAppearanceUpdate(updateType: "mute");
                     });
                 }
                 else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
@@ -109,7 +105,7 @@ namespace tbvolscroll
                     await Task.Run(async () =>
                     {
                         await Globals.AudioHandler.ToggleAudioPlaybackDevice(e.Delta);
-                        await callbackForm.DoAppearanceUpdate(updateType: "device");
+                        await Globals.MainForm.DoAppearanceUpdate(updateType: "device");
                     });
                 }
                 isScrolling = false;
