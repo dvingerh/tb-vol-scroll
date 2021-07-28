@@ -76,8 +76,7 @@ namespace tbvolscroll.Forms
             double value = Math.Round(peakValue.PeakValue / 100 * Globals.AudioHandler.Volume, 2);
             Invoke((MethodInvoker)delegate
             {
-                if (Properties.Settings.Default.UseBarGradient)
-                    PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
+                PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
                 double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                 PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
                 VolumeTrackBar.Value = Globals.AudioHandler.Volume;
