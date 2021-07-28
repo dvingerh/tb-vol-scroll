@@ -1,4 +1,4 @@
-﻿using AudioSwitcher.AudioApi;
+using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.Observables;
 using System;
 using System.Drawing;
@@ -13,11 +13,10 @@ namespace tbvolscroll.Forms
     {
         IDisposable deviceObserver;
         IDisposable deviceVolumeObserver;
-        readonly MainForm callback;
-        public VolumeSliderControlForm(MainForm callback)
+        private double currentPeakValue = 100;
+        public VolumeSliderControlForm()
         {
             InitializeComponent();
-            this.callback = callback;
         }
 
         private async void OnFormShown(object sender, EventArgs e)
@@ -65,34 +64,36 @@ namespace tbvolscroll.Forms
         public async Task StartPeakVolumeMeter()
         {
             var device = await Globals.AudioHandler.CoreAudioController.GetDefaultDeviceAsync(DeviceType.Playback, Role.Multimedia);
-            deviceVolumeObserver = device.PeakValueChanged.Subscribe(x =>
-            {
+            deviceVolumeObserver = device.PeakValueChanged.Subscribe(UpdatePeakValue);
+            await Task.Delay(100);
+            if (currentPeakValue == 100)
+                UpdatePeakValue(new DevicePeakValueChangedArgs(null, 100));
+        }
 
-                int value = (int)Math.Round((x.PeakValue / 100) * Globals.AudioHandler.Volume);
-                Invoke((MethodInvoker)delegate
-                {
-                    if (Properties.Settings.Default.UseBarGradient)
-                        PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
-                    PeakMeterPictureBox.Width = value * (PeakMeterPanel.Width / 100);
-                    VolumeTrackBar.Value = Globals.AudioHandler.Volume;
-                    VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                    AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
-                });
+        private void UpdatePeakValue(DevicePeakValueChangedArgs peakValue)
+        {
+            currentPeakValue = Math.Round(peakValue.PeakValue);
+            double value = Math.Round(peakValue.PeakValue / 100 * Globals.AudioHandler.Volume, 2);
+            Invoke((MethodInvoker)delegate
+            {
+                if (Properties.Settings.Default.UseBarGradient)
+                    PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
+                double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
+                PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
+                VolumeTrackBar.Value = Globals.AudioHandler.Volume;
+                VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
+                AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
             });
         }
 
         private void UpdateVolume(object sender, EventArgs e)
         {
             Globals.AudioHandler.SetMasterVolume(VolumeTrackBar.Value);
-            Globals.AudioHandler.UpdateAudioState();
             if (Globals.AudioHandler.Volume == 0 && Globals.AudioHandler.Muted == false)
                 Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
             else if (Globals.AudioHandler.Volume > 0 && Globals.AudioHandler.Muted == true)
                 Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
-            Globals.AudioHandler.UpdateAudioState();
             VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-            callback.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
-            callback.SetTrayIcon();
             SystemSounds.Exclamation.Play();
         }
 

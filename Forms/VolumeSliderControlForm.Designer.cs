@@ -73,9 +73,10 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.PeakMeterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PeakMeterPanel.Controls.Add(this.PeakMeterPictureBox);
-            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 73);
+            this.PeakMeterPanel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 71);
             this.PeakMeterPanel.Name = "PeakMeterPanel";
-            this.PeakMeterPanel.Size = new System.Drawing.Size(284, 8);
+            this.PeakMeterPanel.Size = new System.Drawing.Size(284, 10);
             this.PeakMeterPanel.TabIndex = 6;
             // 
             // PeakMeterPictureBox
@@ -84,7 +85,7 @@ namespace tbvolscroll.Forms
             this.PeakMeterPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.PeakMeterPictureBox.Location = new System.Drawing.Point(0, 0);
             this.PeakMeterPictureBox.Name = "PeakMeterPictureBox";
-            this.PeakMeterPictureBox.Size = new System.Drawing.Size(0, 6);
+            this.PeakMeterPictureBox.Size = new System.Drawing.Size(0, 8);
             this.PeakMeterPictureBox.TabIndex = 7;
             this.PeakMeterPictureBox.TabStop = false;
             // 
