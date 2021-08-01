@@ -95,7 +95,6 @@ namespace tbvolscroll
                 Globals.MainForm.Invoke((MethodInvoker)delegate
                 {
                     Globals.MainForm.SetTrayIcon();
-                    Globals.MainForm.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
                 });
             });
         }

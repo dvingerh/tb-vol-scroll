@@ -272,6 +272,7 @@ namespace tbvolscroll
             }
             else
             {
+                Globals.MainForm.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
                 if (Globals.AudioHandler.Volume >= 90)
                     TrayNotifyIcon.Icon = Resources.vol100;
                 if (Globals.AudioHandler.Volume >= 80 && Globals.AudioHandler.Volume < 90)
