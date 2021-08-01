@@ -40,19 +40,11 @@ namespace tbvolscroll.Classes
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        public static void SetPositionTopmost(MainForm mainForm)
+        public static void ShowInactiveTopmost(MainForm mainForm)
         {
             mainForm.Invoke((MethodInvoker)delegate
             {
                 SetWindowPos(mainForm.Handle.ToInt32(), -1, mainForm.Left, mainForm.Top, mainForm.Width, mainForm.Height, 16u);
-            });
-        }
-
-        public static void ShowInactiveTopmost(MainForm mainForm)
-        {
-            SetPositionTopmost(mainForm);
-            mainForm.Invoke((MethodInvoker)delegate
-            {
                 ShowWindow(mainForm.Handle, 4);
             });
         }
