@@ -3,6 +3,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
+using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
@@ -83,29 +84,36 @@ namespace tbvolscroll
         {
             if (TaskbarHelper.IsValidAction() && !Globals.IsDisplayingVolumeSliderControl && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
+                int delta = e.Delta;
+                if (Settings.Default.ReverseScrollingDirection)
+                    if (delta < 0)
+                        delta = 1;
+                    else
+                        delta = -1;
+
                 isScrolling = true;
                 if (!isShiftDown && !isCtrlDown)
                 {
                     await Task.Run(async () =>
                     {
-                        await Globals.AudioHandler.DoVolumeChanges(e.Delta);
-                        await Globals.MainForm.DoAppearanceUpdate(updateType: "volume");
+                        await Globals.AudioHandler.DoVolumeChanges(delta);
+                        await Globals.MainForm.DoScrollUpdate(updateType: "volume");
                     });
                 }
                 else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
                 {
-                    await Globals.MainForm.SetMuteStatus(e.Delta);
+                    await Globals.MainForm.SetMuteStatus(delta);
                     await Task.Run(async () =>
                     {
-                        await Globals.MainForm.DoAppearanceUpdate(updateType: "mute");
+                        await Globals.MainForm.DoScrollUpdate(updateType: "mute");
                     });
                 }
                 else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
                 {
                     await Task.Run(async () =>
                     {
-                        await Globals.AudioHandler.ToggleAudioPlaybackDevice(e.Delta);
-                        await Globals.MainForm.DoAppearanceUpdate(updateType: "device");
+                        await Globals.AudioHandler.ToggleAudioPlaybackDevice(delta);
+                        await Globals.MainForm.DoScrollUpdate(updateType: "device");
                     });
                 }
                 isScrolling = false;

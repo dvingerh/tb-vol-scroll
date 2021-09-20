@@ -51,6 +51,7 @@
             this.ColorPreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.AutoRetryAdminCheckBox = new System.Windows.Forms.CheckBox();
             this.BehaviourGroupBox = new System.Windows.Forms.GroupBox();
+            this.ReverseScrollingDirectionCheckBox = new System.Windows.Forms.CheckBox();
             this.SwitchAudioPlaybackDevicesCheckBox = new System.Windows.Forms.CheckBox();
             this.ToggleMuteCheckBox = new System.Windows.Forms.CheckBox();
             this.Percent2Label = new System.Windows.Forms.Label();
@@ -107,7 +108,7 @@
             this.SetBarWidthNumericUpDown.TabIndex = 6;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetBarWidthNumericUpDown.Value = new decimal(new int[] {
-            5,
+            10,
             0,
             0,
             0});
@@ -326,7 +327,7 @@
             // AutoRetryAdminCheckBox
             // 
             this.AutoRetryAdminCheckBox.AutoSize = true;
-            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 226);
+            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 196);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
             this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(300, 17);
             this.AutoRetryAdminCheckBox.TabIndex = 5;
@@ -335,6 +336,7 @@
             // 
             // BehaviourGroupBox
             // 
+            this.BehaviourGroupBox.Controls.Add(this.ReverseScrollingDirectionCheckBox);
             this.BehaviourGroupBox.Controls.Add(this.SwitchAudioPlaybackDevicesCheckBox);
             this.BehaviourGroupBox.Controls.Add(this.ToggleMuteCheckBox);
             this.BehaviourGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
@@ -354,10 +356,20 @@
             this.BehaviourGroupBox.TabStop = false;
             this.BehaviourGroupBox.Text = "Behaviour";
             // 
+            // ReverseScrollingDirectionCheckBox
+            // 
+            this.ReverseScrollingDirectionCheckBox.AutoSize = true;
+            this.ReverseScrollingDirectionCheckBox.Location = new System.Drawing.Point(18, 228);
+            this.ReverseScrollingDirectionCheckBox.Name = "ReverseScrollingDirectionCheckBox";
+            this.ReverseScrollingDirectionCheckBox.Size = new System.Drawing.Size(249, 17);
+            this.ReverseScrollingDirectionCheckBox.TabIndex = 25;
+            this.ReverseScrollingDirectionCheckBox.Text = "Reverse scrolling direction for scroll actions";
+            this.ReverseScrollingDirectionCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SwitchAudioPlaybackDevicesCheckBox
             // 
             this.SwitchAudioPlaybackDevicesCheckBox.AutoSize = true;
-            this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(18, 187);
+            this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(18, 156);
             this.SwitchAudioPlaybackDevicesCheckBox.Name = "SwitchAudioPlaybackDevicesCheckBox";
             this.SwitchAudioPlaybackDevicesCheckBox.Size = new System.Drawing.Size(308, 30);
             this.SwitchAudioPlaybackDevicesCheckBox.TabIndex = 4;
@@ -368,7 +380,7 @@
             // ToggleMuteCheckBox
             // 
             this.ToggleMuteCheckBox.AutoSize = true;
-            this.ToggleMuteCheckBox.Location = new System.Drawing.Point(18, 149);
+            this.ToggleMuteCheckBox.Location = new System.Drawing.Point(18, 119);
             this.ToggleMuteCheckBox.Name = "ToggleMuteCheckBox";
             this.ToggleMuteCheckBox.Size = new System.Drawing.Size(297, 30);
             this.ToggleMuteCheckBox.TabIndex = 3;
@@ -378,7 +390,7 @@
             // Percent2Label
             // 
             this.Percent2Label.AutoSize = true;
-            this.Percent2Label.Location = new System.Drawing.Point(251, 112);
+            this.Percent2Label.Location = new System.Drawing.Point(251, 87);
             this.Percent2Label.Name = "Percent2Label";
             this.Percent2Label.Size = new System.Drawing.Size(46, 13);
             this.Percent2Label.TabIndex = 24;
@@ -388,7 +400,7 @@
             // Percent1Label
             // 
             this.Percent1Label.AutoSize = true;
-            this.Percent1Label.Location = new System.Drawing.Point(251, 65);
+            this.Percent1Label.Location = new System.Drawing.Point(251, 54);
             this.Percent1Label.Name = "Percent1Label";
             this.Percent1Label.Size = new System.Drawing.Size(46, 13);
             this.Percent1Label.TabIndex = 23;
@@ -408,7 +420,7 @@
             // SetVolumeStepLabel
             // 
             this.SetVolumeStepLabel.AutoSize = true;
-            this.SetVolumeStepLabel.Location = new System.Drawing.Point(15, 65);
+            this.SetVolumeStepLabel.Location = new System.Drawing.Point(15, 54);
             this.SetVolumeStepLabel.Name = "SetVolumeStepLabel";
             this.SetVolumeStepLabel.Size = new System.Drawing.Size(142, 13);
             this.SetVolumeStepLabel.TabIndex = 21;
@@ -418,7 +430,7 @@
             // SetVolumeStepNumericUpDown
             // 
             this.SetVolumeStepNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(186, 63);
+            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(186, 52);
             this.SetVolumeStepNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -437,7 +449,7 @@
             // ThresholdLabel
             // 
             this.ThresholdLabel.AutoSize = true;
-            this.ThresholdLabel.Location = new System.Drawing.Point(15, 112);
+            this.ThresholdLabel.Location = new System.Drawing.Point(15, 87);
             this.ThresholdLabel.Name = "ThresholdLabel";
             this.ThresholdLabel.Size = new System.Drawing.Size(168, 13);
             this.ThresholdLabel.TabIndex = 19;
@@ -447,7 +459,7 @@
             // ThresholdNumericUpDown
             // 
             this.ThresholdNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(186, 110);
+            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(186, 85);
             this.ThresholdNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -491,6 +503,7 @@
             this.Name = "ConfigurationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
+            this.Deactivate += new System.EventHandler(this.CloseFormOnDeactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfirmCloseWithoutSaving);
             this.Load += new System.EventHandler(this.LoadBarConfiguration);
             ((System.ComponentModel.ISupportInitialize)(this.SetBarWidthNumericUpDown)).EndInit();
@@ -542,5 +555,6 @@
         private System.Windows.Forms.CheckBox ToggleMuteCheckBox;
         private System.Windows.Forms.CheckBox SwitchAudioPlaybackDevicesCheckBox;
         private System.Windows.Forms.Label FontPreviewLabel;
+        private System.Windows.Forms.CheckBox ReverseScrollingDirectionCheckBox;
     }
 }

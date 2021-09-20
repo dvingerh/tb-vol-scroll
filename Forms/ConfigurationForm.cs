@@ -18,6 +18,7 @@ namespace tbvolscroll
         private void LoadBarConfiguration(object sender, EventArgs e)
         {
             SwitchAudioPlaybackDevicesCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
+            ReverseScrollingDirectionCheckBox.Checked = Settings.Default.ReverseScrollingDirection;
             ToggleMuteCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
             AutoRetryAdminCheckBox.Checked = Settings.Default.AutoRetryAdmin;
             SetVolumeStepNumericUpDown.Value = Settings.Default.VolumeStep;
@@ -90,7 +91,7 @@ namespace tbvolscroll
 
             Settings.Default.SwitchDefaultPlaybackDeviceShortcut = SwitchAudioPlaybackDevicesCheckBox.Checked;
             Settings.Default.ToggleMuteShortcut = ToggleMuteCheckBox.Checked;
-
+            Settings.Default.ReverseScrollingDirection = ReverseScrollingDirectionCheckBox.Checked;
 
             Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
 
@@ -149,12 +150,15 @@ namespace tbvolscroll
         {
             RestoreDefaultValuesButton.Enabled = false;
             AutoRetryAdminCheckBox.Checked = false;
+            ToggleMuteCheckBox.Checked = false;
+            SwitchAudioPlaybackDevicesCheckBox.Checked = false;
+            ReverseScrollingDirectionCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
-            SetBarWidthNumericUpDown.Value = 30;
-            SetBarHeightNumericUpDown.Value = 20;
+            SetBarWidthNumericUpDown.Value = 10;
+            SetBarHeightNumericUpDown.Value = 5;
             AutoHideTimeOutNumericUpDown.Value = 1000;
-            ColorPreviewPictureBox.BackColor = Color.DodgerBlue;
+            ColorPreviewPictureBox.BackColor = Color.SkyBlue;
             BarOpacityTrackBar.Value = 100;
             GradientCheckBox.Checked = true;
             CustomColorCheckBox.Checked = false;
@@ -190,6 +194,11 @@ namespace tbvolscroll
                     return;
                 }
             }
+        }
+
+        private void CloseFormOnDeactivate(object sender, EventArgs e)
+        {
+            //Close();
         }
     }
 }
