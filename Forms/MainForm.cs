@@ -25,9 +25,12 @@ namespace tbvolscroll
             }
         }
 
+        Timer hideVolumeBarTimer = new Timer();
+
         public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false)
         {
             InitializeComponent();
+            hideVolumeBarTimer.Tick += HideVolumeBarTick;
 
             if (updateDoneArg)
             {
@@ -68,6 +71,14 @@ namespace tbvolscroll
             }
         }
 
+        private void HideVolumeBarTick(object sender, EventArgs e)
+        {
+            if (!Globals.InputHandler.IsScrolling)
+                HideVolumeBar();
+            else
+                AutoHideVolume();
+        }
+
         public void SetVolumeBarPosition()
         {
             Point cursorPosition = Cursor.Position;
@@ -104,22 +115,12 @@ namespace tbvolscroll
 
 
 
-        private async void AutoHideVolume()
+        private void AutoHideVolume()
         {
-            Globals.IsDisplayingVolumeBar = true;
             Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
             Utils.ShowInactiveTopmost(this);
-
-            while (Globals.VolumeBarAutoHideTimeout >= 10)
-            {
-                await Task.Delay(10);
-                Globals.VolumeBarAutoHideTimeout -= 10;
-            }
-
-            if (!Globals.InputHandler.IsScrolling)
-                HideVolumeBar();
-            else
-                AutoHideVolume();
+            hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout); // 1 mins
+            hideVolumeBarTimer.Start();
         }
 
         public void HideVolumeBar()
@@ -250,9 +251,9 @@ namespace tbvolscroll
                     if (updateType != "barfix")
                         Opacity = Settings.Default.BarOpacity;
                     Refresh();
+                    Globals.IsDisplayingVolumeBar = true;
+                    hideVolumeBarTimer.Stop();
                     SetVolumeBarPosition();
-                    if (Globals.IsDisplayingVolumeBar)
-                        return;
                     AutoHideVolume();
                 });
             });
