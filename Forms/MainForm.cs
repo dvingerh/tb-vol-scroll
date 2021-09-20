@@ -199,7 +199,7 @@ namespace tbvolscroll
             await Globals.AudioHandler.UpdateAudioState();
         }
 
-        public async Task DoAppearanceUpdate(string updateType)
+        public async Task DoScrollUpdate(string updateType)
         {
             await Task.Run(async() =>
             {
@@ -222,10 +222,7 @@ namespace tbvolscroll
                         case "device":
                             VolumeTextLabel.Text = $"({Globals.CurrentAudioDeviceIndex + 1}/{Globals.AudioHandler.GetAudioDevicesList().Count}) {Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
-                            if (Settings.Default.UseBarGradient)
-                                VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
-                            else
-                                VolumeTextLabel.BackColor = Settings.Default.BarColor;
+                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                         case "mute":
                             if (Globals.AudioHandler.Muted)
@@ -239,10 +236,7 @@ namespace tbvolscroll
                                 TrayNotifyIcon.Text = $"Volume: {Globals.AudioHandler.Volume}%";
                             }
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
-                            if (Settings.Default.UseBarGradient)
-                                VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
-                            else
-                                VolumeTextLabel.BackColor = Settings.Default.BarColor;
+                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                         case "barfix":
                             Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
@@ -389,7 +383,7 @@ namespace tbvolscroll
                     AudioPlaybackDevicesMenuItem.Enabled = true;
                     VolumeSliderControlMenuItem.Enabled = true;
                     MoreOptionsMenuItem.Enabled = true;
-                    await DoAppearanceUpdate("barfix"); // Call appearance update once so next update will be properly positioned (bug?)
+                    await DoScrollUpdate("barfix"); // Call appearance update once so next update will be properly positioned (bug?)
                     Hide();
                     Globals.ProgramIsReady = true;
                 });
