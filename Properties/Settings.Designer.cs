@@ -49,7 +49,7 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int BarWidthPadding {
             get {
                 return ((int)(this["BarWidthPadding"]));
@@ -176,6 +176,18 @@ namespace tbvolscroll.Properties {
             }
             set {
                 this["SwitchDefaultPlaybackDeviceShortcut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ReverseScrollingDirection {
+            get {
+                return ((bool)(this["ReverseScrollingDirection"]));
+            }
+            set {
+                this["ReverseScrollingDirection"] = value;
             }
         }
     }

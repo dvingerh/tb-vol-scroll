@@ -9,7 +9,7 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="BarWidthPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="BarHeightPadding" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
@@ -39,6 +39,9 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SwitchDefaultPlaybackDeviceShortcut" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ReverseScrollingDirection" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
