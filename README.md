@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 3.2
+## tb-vol-scroll 3.3
 
 Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
 
@@ -33,13 +33,14 @@ The volume bar will follow the cursor when it's moved around and display the cur
   - Enable/disable <kbd>CTRL</kbd> to toggle system audio mute
   - Enable/disable <kbd>SHIFT</kbd> to cycle through available audio playback devices
   - Enable/disable requesting of Administrator permissions on start
+  - Enable/disable reverse scrolling direction for scroll actions
 
 ## Known problems
 
 - The auto-hide taskbar feature is **not** supported. 
 - Windows prevents scroll event detection while certain windows are focused (i.e. Task Manager) when the program does not have Administrator privileges.
 
-## Preview
+## Preview (not always up-to-date)
 
 
 #### Volume bar
