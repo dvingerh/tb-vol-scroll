@@ -98,7 +98,7 @@ namespace tbvolscroll.Forms
             this.MinimizeBox = false;
             this.Name = "CheckForUpdatesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Check for Updates";
+            this.Text = "Check For Updates";
             this.Deactivate += new System.EventHandler(this.CloseFormOnDeacivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DontCloseOnUpdate);
             this.Shown += new System.EventHandler(this.DoUpdateCheck);

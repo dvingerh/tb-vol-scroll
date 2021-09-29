@@ -52,8 +52,8 @@
             this.AutoRetryAdminCheckBox = new System.Windows.Forms.CheckBox();
             this.BehaviourGroupBox = new System.Windows.Forms.GroupBox();
             this.ReverseScrollingDirectionCheckBox = new System.Windows.Forms.CheckBox();
-            this.SwitchAudioPlaybackDevicesCheckBox = new System.Windows.Forms.CheckBox();
-            this.ToggleMuteCheckBox = new System.Windows.Forms.CheckBox();
+            this.EnableSwitchPlaybackDeviceOption = new System.Windows.Forms.CheckBox();
+            this.EnableMuteUnmuteOption = new System.Windows.Forms.CheckBox();
             this.Percent2Label = new System.Windows.Forms.Label();
             this.Percent1Label = new System.Windows.Forms.Label();
             this.MillisecondsLabel = new System.Windows.Forms.Label();
@@ -107,11 +107,6 @@
             this.SetBarWidthNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.SetBarWidthNumericUpDown.TabIndex = 6;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.SetBarWidthNumericUpDown.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // DimensionXLabel
             // 
@@ -136,11 +131,6 @@
             this.SetBarHeightNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.SetBarHeightNumericUpDown.TabIndex = 7;
             this.SetBarHeightNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.SetBarHeightNumericUpDown.Value = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
             // 
             // BarColorLabel
             // 
@@ -319,7 +309,7 @@
             this.ColorPreviewPictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ColorPreviewPictureBox.Location = new System.Drawing.Point(296, 68);
             this.ColorPreviewPictureBox.Name = "ColorPreviewPictureBox";
-            this.ColorPreviewPictureBox.Size = new System.Drawing.Size(21, 21);
+            this.ColorPreviewPictureBox.Size = new System.Drawing.Size(27, 21);
             this.ColorPreviewPictureBox.TabIndex = 10;
             this.ColorPreviewPictureBox.TabStop = false;
             this.ColorPreviewPictureBox.Click += new System.EventHandler(this.PickBarColor);
@@ -329,16 +319,16 @@
             this.AutoRetryAdminCheckBox.AutoSize = true;
             this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 196);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
-            this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(300, 17);
+            this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(262, 17);
             this.AutoRetryAdminCheckBox.TabIndex = 5;
-            this.AutoRetryAdminCheckBox.Text = "Request Administrator permissions on start if needed";
+            this.AutoRetryAdminCheckBox.Text = "Request Administrator permissions on startup";
             this.AutoRetryAdminCheckBox.UseVisualStyleBackColor = true;
             // 
             // BehaviourGroupBox
             // 
             this.BehaviourGroupBox.Controls.Add(this.ReverseScrollingDirectionCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.SwitchAudioPlaybackDevicesCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.ToggleMuteCheckBox);
+            this.BehaviourGroupBox.Controls.Add(this.EnableSwitchPlaybackDeviceOption);
+            this.BehaviourGroupBox.Controls.Add(this.EnableMuteUnmuteOption);
             this.BehaviourGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
             this.BehaviourGroupBox.Controls.Add(this.Percent2Label);
             this.BehaviourGroupBox.Controls.Add(this.Percent1Label);
@@ -368,24 +358,23 @@
             // 
             // SwitchAudioPlaybackDevicesCheckBox
             // 
-            this.SwitchAudioPlaybackDevicesCheckBox.AutoSize = true;
-            this.SwitchAudioPlaybackDevicesCheckBox.Location = new System.Drawing.Point(18, 156);
-            this.SwitchAudioPlaybackDevicesCheckBox.Name = "SwitchAudioPlaybackDevicesCheckBox";
-            this.SwitchAudioPlaybackDevicesCheckBox.Size = new System.Drawing.Size(308, 30);
-            this.SwitchAudioPlaybackDevicesCheckBox.TabIndex = 4;
-            this.SwitchAudioPlaybackDevicesCheckBox.Text = "Switch between available audio playback devices while\r\nscrolling and holding the " +
-    "SHIFT key";
-            this.SwitchAudioPlaybackDevicesCheckBox.UseVisualStyleBackColor = true;
+            this.EnableSwitchPlaybackDeviceOption.AutoSize = true;
+            this.EnableSwitchPlaybackDeviceOption.Location = new System.Drawing.Point(18, 156);
+            this.EnableSwitchPlaybackDeviceOption.Name = "SwitchAudioPlaybackDevicesCheckBox";
+            this.EnableSwitchPlaybackDeviceOption.Size = new System.Drawing.Size(277, 30);
+            this.EnableSwitchPlaybackDeviceOption.TabIndex = 4;
+            this.EnableSwitchPlaybackDeviceOption.Text = "Switch between available audio playback devices\r\nwhen holding down the SHIFT key";
+            this.EnableSwitchPlaybackDeviceOption.UseVisualStyleBackColor = true;
             // 
             // ToggleMuteCheckBox
             // 
-            this.ToggleMuteCheckBox.AutoSize = true;
-            this.ToggleMuteCheckBox.Location = new System.Drawing.Point(18, 119);
-            this.ToggleMuteCheckBox.Name = "ToggleMuteCheckBox";
-            this.ToggleMuteCheckBox.Size = new System.Drawing.Size(297, 30);
-            this.ToggleMuteCheckBox.TabIndex = 3;
-            this.ToggleMuteCheckBox.Text = "Mute and unmute system volume while scrolling and\r\nholding the CTRL key";
-            this.ToggleMuteCheckBox.UseVisualStyleBackColor = true;
+            this.EnableMuteUnmuteOption.AutoSize = true;
+            this.EnableMuteUnmuteOption.Location = new System.Drawing.Point(18, 119);
+            this.EnableMuteUnmuteOption.Name = "ToggleMuteCheckBox";
+            this.EnableMuteUnmuteOption.Size = new System.Drawing.Size(287, 30);
+            this.EnableMuteUnmuteOption.TabIndex = 3;
+            this.EnableMuteUnmuteOption.Text = "Mute and unmute the active audio playback device\r\nwhen holding down the CTRL key";
+            this.EnableMuteUnmuteOption.UseVisualStyleBackColor = true;
             // 
             // Percent2Label
             // 
@@ -552,8 +541,8 @@
         private System.Windows.Forms.Label MillisecondsLabel;
         private System.Windows.Forms.Label Percent2Label;
         private System.Windows.Forms.Label Percent1Label;
-        private System.Windows.Forms.CheckBox ToggleMuteCheckBox;
-        private System.Windows.Forms.CheckBox SwitchAudioPlaybackDevicesCheckBox;
+        private System.Windows.Forms.CheckBox EnableMuteUnmuteOption;
+        private System.Windows.Forms.CheckBox EnableSwitchPlaybackDeviceOption;
         private System.Windows.Forms.Label FontPreviewLabel;
         private System.Windows.Forms.CheckBox ReverseScrollingDirectionCheckBox;
     }

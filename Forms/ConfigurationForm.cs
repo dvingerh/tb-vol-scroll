@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using tbvolscroll.Properties;
@@ -9,6 +9,8 @@ namespace tbvolscroll
     {
         private readonly MainForm mainForm;
         private bool doSetFont = false;
+        private bool isApplyingConfiguration = false;
+        private bool isClosing = false;
         public ConfigurationForm(MainForm mainForm)
         {
             this.mainForm = mainForm;
@@ -17,9 +19,9 @@ namespace tbvolscroll
 
         private void LoadBarConfiguration(object sender, EventArgs e)
         {
-            SwitchAudioPlaybackDevicesCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
+            EnableSwitchPlaybackDeviceOption.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
             ReverseScrollingDirectionCheckBox.Checked = Settings.Default.ReverseScrollingDirection;
-            ToggleMuteCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
+            EnableMuteUnmuteOption.Checked = Settings.Default.ToggleMuteShortcut;
             AutoRetryAdminCheckBox.Checked = Settings.Default.AutoRetryAdmin;
             SetVolumeStepNumericUpDown.Value = Settings.Default.VolumeStep;
             ThresholdNumericUpDown.Value = Settings.Default.PreciseScrollThreshold;
@@ -74,6 +76,7 @@ namespace tbvolscroll
                     bar.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
             }
+            BehaviourGroupBox.Focus();
         }
 
         private void OnSettingsChanged(object sender, EventArgs e)
@@ -84,13 +87,14 @@ namespace tbvolscroll
 
         private void ApplyBarConfiguration(object sender, EventArgs e)
         {
+            isApplyingConfiguration = true;
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
             Settings.Default.BarWidthPadding = (int)SetBarWidthNumericUpDown.Value;
             Settings.Default.BarHeightPadding = (int)SetBarHeightNumericUpDown.Value;
 
-            Settings.Default.SwitchDefaultPlaybackDeviceShortcut = SwitchAudioPlaybackDevicesCheckBox.Checked;
-            Settings.Default.ToggleMuteShortcut = ToggleMuteCheckBox.Checked;
+            Settings.Default.SwitchDefaultPlaybackDeviceShortcut = EnableSwitchPlaybackDeviceOption.Checked;
+            Settings.Default.ToggleMuteShortcut = EnableMuteUnmuteOption.Checked;
             Settings.Default.ReverseScrollingDirection = ReverseScrollingDirectionCheckBox.Checked;
 
             Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
@@ -114,8 +118,9 @@ namespace tbvolscroll
             mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
             mainForm.Width = mainForm.MinimumSize.Width;
             mainForm.Height = mainForm.MinimumSize.Height;
-
+            BehaviourGroupBox.Focus();
             ApplyConfigurationButton.Enabled = false;
+            isApplyingConfiguration = false;
         }
 
         private void SetCustomColor(object sender, EventArgs e)
@@ -150,8 +155,8 @@ namespace tbvolscroll
         {
             RestoreDefaultValuesButton.Enabled = false;
             AutoRetryAdminCheckBox.Checked = false;
-            ToggleMuteCheckBox.Checked = false;
-            SwitchAudioPlaybackDevicesCheckBox.Checked = false;
+            EnableMuteUnmuteOption.Checked = false;
+            EnableSwitchPlaybackDeviceOption.Checked = false;
             ReverseScrollingDirectionCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
@@ -187,18 +192,22 @@ namespace tbvolscroll
         {
             if (ApplyConfigurationButton.Enabled == true)
             {
+                isClosing = true;
                 DialogResult confirmLeave = MessageBox.Show("You have unsaved changes. Leave anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirmLeave == DialogResult.No)
                 {
+                    isClosing = false;
                     e.Cancel = true;
-                    return;
                 }
             }
         }
 
         private void CloseFormOnDeactivate(object sender, EventArgs e)
         {
-            //Close();
+            TopMost = true;
+            if (!isClosing && !isApplyingConfiguration)
+                Close();
+            TopMost = false;
         }
     }
 }
