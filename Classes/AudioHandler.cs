@@ -138,17 +138,20 @@ namespace tbvolscroll
             }
         }
 
-        public void SetMasterVolumeMute(bool isMuted = false)
+        public async Task SetMasterVolumeMute(bool isMuted = false)
         {
-            try
+            await Task.Run(async () =>
             {
-                if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
-                    return;
-                coreAudioController.DefaultPlaybackDevice.Mute(isMuted);
-            }
-            catch
-            {
-            }
+                try
+                {
+                    if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
+                        return;
+                    await coreAudioController.DefaultPlaybackDevice.MuteAsync(isMuted);
+                }
+                catch
+                {
+                }
+            });
         }
 
         public async Task OpenSndVol()
@@ -224,7 +227,7 @@ namespace tbvolscroll
                             {
                                 newVolume = 0;
                                 Globals.AudioHandler.SetMasterVolume(newVolume);
-                                Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
+                                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
                             }
                             else
                                 Globals.AudioHandler.SetMasterVolume(newVolume);
@@ -236,7 +239,7 @@ namespace tbvolscroll
                             else
                                 newVolume += Settings.Default.VolumeStep;
                             if (newVolume > 0 && Globals.AudioHandler.Muted == true)
-                                Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
+                                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
                             if (newVolume > 100)
                                 newVolume = 100;
                             Globals.AudioHandler.SetMasterVolume(newVolume);

@@ -85,13 +85,13 @@ namespace tbvolscroll.Forms
             });
         }
 
-        private void UpdateVolume(object sender, EventArgs e)
+        private async void UpdateVolume(object sender, EventArgs e)
         {
             Globals.AudioHandler.SetMasterVolume(VolumeTrackBar.Value);
             if (Globals.AudioHandler.Volume == 0 && Globals.AudioHandler.Muted == false)
-                Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
+                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
             else if (Globals.AudioHandler.Volume > 0 && Globals.AudioHandler.Muted == true)
-                Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
+                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
             VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
             SystemSounds.Exclamation.Play();
         }

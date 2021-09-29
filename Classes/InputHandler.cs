@@ -1,5 +1,6 @@
 using Gma.System.MouseKeyHook;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
@@ -13,39 +14,28 @@ namespace tbvolscroll
         private bool isCtrlDown;
         private bool isShiftDown;
         private bool isScrolling;
-        private bool isSubscribed = false;
         private IKeyboardMouseEvents inputEvents;
         
-        public bool IsSubscribed { get => isSubscribed; set => isSubscribed = value; }
-        public bool IsScrolling { get => isScrolling; set => isScrolling = value; }
         public bool IsAltDown { get => isAltDown; set => isAltDown = value; }
         public bool IsCtrlDown { get => isCtrlDown; set => isCtrlDown = value; }
         public bool IsShiftDown { get => isShiftDown; set => isShiftDown = value; }
         public IKeyboardMouseEvents InputEvents { get => inputEvents; set => inputEvents = value; }
+        
+        private readonly Queue<MouseEventArgs> mouseScrollQueue = new Queue<MouseEventArgs>();
+        private Task currentMouseTask = null;
+
+        public InputHandler(Task currentMouseTask)
+        {
+            this.currentMouseTask = currentMouseTask;
+        }
 
         public InputHandler()
         {
-            SubscribeMouse();
-        }
-
-        public void SubscribeMouse()
-        {
-            isSubscribed = true;
             inputEvents = Hook.GlobalEvents();
             inputEvents.MouseWheel += OnMouseScroll;
             inputEvents.MouseMove += UpdateBarPositionMouseMove;
             inputEvents.KeyDown += EnableKeyActions;
             inputEvents.KeyUp += DisableKeyActions;
-        }
-
-        public void UnsubscribeMouse()
-        {
-            isSubscribed = false;
-            inputEvents.MouseWheel -= OnMouseScroll;
-            inputEvents.MouseMove -= UpdateBarPositionMouseMove;
-            inputEvents.KeyDown -= EnableKeyActions;
-            inputEvents.KeyUp -= DisableKeyActions;
-            inputEvents.Dispose();
         }
 
         private void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
@@ -56,7 +46,6 @@ namespace tbvolscroll
                    Globals.MainForm.SetVolumeBarPosition();
                 else
                     Globals.MainForm.HideVolumeBar();
-
             }
         }
 
@@ -82,6 +71,30 @@ namespace tbvolscroll
 
         private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
+            mouseScrollQueue.Enqueue(e);
+            await ProcessMouseScrollActionQueue();
+        }
+
+
+        private async Task ProcessMouseScrollActionQueue()
+        {
+            if ((currentMouseTask == null) || (currentMouseTask.IsCompleted))
+            {
+                if (mouseScrollQueue.Count > 0)
+                {
+                    var refreshArgs = mouseScrollQueue.Dequeue();
+
+                    currentMouseTask = HandleMouseScrollAction(refreshArgs);
+                    await currentMouseTask;
+
+                    await ProcessMouseScrollActionQueue();
+                }
+            }
+        }
+
+
+        private async Task HandleMouseScrollAction(MouseEventArgs e)
+        {
             if (TaskbarHelper.IsValidAction() && !Globals.IsDisplayingVolumeSliderControl && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
                 int delta = e.Delta;
@@ -91,24 +104,26 @@ namespace tbvolscroll
                     else
                         delta = -1;
 
-                isScrolling = true;
-                if (!isShiftDown && !isCtrlDown)
+
+                if (!isShiftDown && !isCtrlDown && !isScrolling)
                 {
+                    isScrolling = true;
                     await Task.Run(async () =>
                     {
                         await Globals.AudioHandler.DoVolumeChanges(delta);
                         await Globals.MainForm.DoScrollUpdate(updateType: "volume");
                     });
                 }
-                else if (isCtrlDown && Properties.Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
+                else if (isCtrlDown && Settings.Default.ToggleMuteShortcut && !isShiftDown && !isAltDown)
                 {
-                    await Globals.MainForm.SetMuteStatus(delta);
                     await Task.Run(async () =>
                     {
+                        bool isMuted = delta < 0;
+                        await Globals.AudioHandler.SetMasterVolumeMute(isMuted);
                         await Globals.MainForm.DoScrollUpdate(updateType: "mute");
                     });
                 }
-                else if (isShiftDown && Properties.Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
+                else if (isShiftDown && Settings.Default.SwitchDefaultPlaybackDeviceShortcut && !isCtrlDown && !isAltDown)
                 {
                     await Task.Run(async () =>
                     {
