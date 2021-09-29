@@ -9,10 +9,10 @@
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="BarWidthPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="BarHeightPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="UseBarGradient" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

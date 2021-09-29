@@ -114,8 +114,8 @@ namespace tbvolscroll
             if (doSetFont)
                 mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
 
-            SizeF newMinSizes = mainForm.CalculateBarSize("0%");
-            mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
+            SizeF newMinSizes = mainForm.CalculateBarSize("100%");
+            mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
             mainForm.Width = mainForm.MinimumSize.Width;
             mainForm.Height = mainForm.MinimumSize.Height;
             BehaviourGroupBox.Focus();
@@ -160,8 +160,8 @@ namespace tbvolscroll
             ReverseScrollingDirectionCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
-            SetBarWidthNumericUpDown.Value = 10;
-            SetBarHeightNumericUpDown.Value = 5;
+            SetBarWidthNumericUpDown.Value = 0;
+            SetBarHeightNumericUpDown.Value = 0;
             AutoHideTimeOutNumericUpDown.Value = 1000;
             ColorPreviewPictureBox.BackColor = Color.SkyBlue;
             BarOpacityTrackBar.Value = 100;

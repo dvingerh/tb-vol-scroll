@@ -49,7 +49,7 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int BarWidthPadding {
             get {
                 return ((int)(this["BarWidthPadding"]));
@@ -61,7 +61,7 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int BarHeightPadding {
             get {
                 return ((int)(this["BarHeightPadding"]));

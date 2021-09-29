@@ -25,7 +25,7 @@ namespace tbvolscroll
             }
         }
 
-        Timer hideVolumeBarTimer = new Timer();
+        private readonly Timer hideVolumeBarTimer = new Timer();
 
         public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false)
         {
@@ -73,10 +73,7 @@ namespace tbvolscroll
 
         private void HideVolumeBarTick(object sender, EventArgs e)
         {
-            if (!Globals.InputHandler.IsScrolling)
-                HideVolumeBar();
-            else
-                AutoHideVolume();
+            HideVolumeBar();
         }
 
         public void SetVolumeBarPosition()
@@ -128,8 +125,8 @@ namespace tbvolscroll
             Invoke((MethodInvoker)delegate
             {
                 Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
-                Globals.IsDisplayingVolumeBar = false;
                 Hide();
+                hideVolumeBarTimer.Stop();
             });
         }
 
@@ -203,6 +200,7 @@ namespace tbvolscroll
         {
             await Task.Run(async() =>
             {
+                hideVolumeBarTimer.Stop();
                 await Globals.AudioHandler.UpdateAudioState();
                 Invoke((MethodInvoker)delegate
                 {
@@ -213,7 +211,7 @@ namespace tbvolscroll
                             VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
                             TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
 
-                            Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
+                            Width = (int)CalculateBarSize("100%").Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
                             if (Settings.Default.UseBarGradient)
                                 VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
                             else
@@ -221,7 +219,7 @@ namespace tbvolscroll
                             break;
                         case "device":
                             VolumeTextLabel.Text = $"({Globals.CurrentAudioDeviceIndex + 1}/{Globals.AudioHandler.GetAudioDevicesList().Count}) {Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
-                            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
+                            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 15;
                             VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                         case "mute":
@@ -235,18 +233,16 @@ namespace tbvolscroll
                                 VolumeTextLabel.Text = "Device Unmuted";
                                 TrayNotifyIcon.Text = $"Volume: {Globals.AudioHandler.Volume}%";
                             }
-                            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
+                            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 15;
                             VolumeTextLabel.BackColor = Settings.Default.BarColor;
                             break;
                         case "barfix":
-                            Width = (int)CalculateBarSize(VolumeTextLabel.Text).Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
-                            break;
+                            SetVolumeBarPosition();
+                         break;
                     }
                     if (updateType != "barfix")
                         Opacity = Settings.Default.BarOpacity;
-                    Refresh();
                     Globals.IsDisplayingVolumeBar = true;
-                    hideVolumeBarTimer.Stop();
                     SetVolumeBarPosition();
                     AutoHideVolume();
                 });
@@ -291,26 +287,6 @@ namespace tbvolscroll
             }
             Icon = TrayNotifyIcon.Icon;
         }
-
-        public async Task SetMuteStatus(int delta)
-        {
-            bool isMuted = delta < 0;
-            Globals.AudioHandler.SetMasterVolumeMute(isMuted);
-            if (isMuted)
-            {
-                VolumeTextLabel.Text = "Device Muted";
-                TrayNotifyIcon.Text = "Device is muted";
-            }
-            else
-            {
-                VolumeTextLabel.Text = "Device Unmuted";
-                TrayNotifyIcon.Text = $"Volume: {Globals.AudioHandler.Volume}%";
-            }
-            Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 10;
-            VolumeTextLabel.BackColor = Color.SkyBlue;
-            await Globals.AudioHandler.UpdateAudioState();
-        }
-
 
         public SizeF CalculateBarSize(string text)
         {
@@ -375,8 +351,8 @@ namespace tbvolscroll
                     VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
                     TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
 
-                    SizeF newMinSizes = CalculateBarSize(VolumeTextLabel.Text);
-                    MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height);
+                    SizeF newMinSizes = CalculateBarSize("100%");
+                    MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
                     Width = MinimumSize.Width;
                     Height = MinimumSize.Height;
                     SystemVolumeMixerMenuItem.Enabled = true;
