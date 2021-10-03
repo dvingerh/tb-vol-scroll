@@ -492,7 +492,6 @@
             this.Name = "ConfigurationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
-            this.Deactivate += new System.EventHandler(this.CloseFormOnDeactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfirmCloseWithoutSaving);
             this.Load += new System.EventHandler(this.LoadBarConfiguration);
             ((System.ComponentModel.ISupportInitialize)(this.SetBarWidthNumericUpDown)).EndInit();

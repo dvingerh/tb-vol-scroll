@@ -9,8 +9,6 @@ namespace tbvolscroll
     {
         private readonly MainForm mainForm;
         private bool doSetFont = false;
-        private bool isApplyingConfiguration = false;
-        private bool isClosing = false;
         public ConfigurationForm(MainForm mainForm)
         {
             this.mainForm = mainForm;
@@ -87,7 +85,6 @@ namespace tbvolscroll
 
         private void ApplyBarConfiguration(object sender, EventArgs e)
         {
-            isApplyingConfiguration = true;
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
             Settings.Default.BarWidthPadding = (int)SetBarWidthNumericUpDown.Value;
@@ -120,7 +117,6 @@ namespace tbvolscroll
             mainForm.Height = mainForm.MinimumSize.Height;
             BehaviourGroupBox.Focus();
             ApplyConfigurationButton.Enabled = false;
-            isApplyingConfiguration = false;
         }
 
         private void SetCustomColor(object sender, EventArgs e)
@@ -192,22 +188,10 @@ namespace tbvolscroll
         {
             if (ApplyConfigurationButton.Enabled == true)
             {
-                isClosing = true;
                 DialogResult confirmLeave = MessageBox.Show("You have unsaved changes. Leave anyway?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirmLeave == DialogResult.No)
-                {
-                    isClosing = false;
                     e.Cancel = true;
-                }
             }
-        }
-
-        private void CloseFormOnDeactivate(object sender, EventArgs e)
-        {
-            TopMost = true;
-            if (!isClosing && !isApplyingConfiguration)
-                Close();
-            TopMost = false;
         }
     }
 }
