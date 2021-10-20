@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using tbvolscroll.Properties;
 
@@ -20,6 +21,7 @@ namespace tbvolscroll
             EnableSwitchPlaybackDeviceOption.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
             ReverseScrollingDirectionCheckBox.Checked = Settings.Default.ReverseScrollingDirection;
             EnableMuteUnmuteOption.Checked = Settings.Default.ToggleMuteShortcut;
+            ManualPreciseVolumeCheckBox.Checked = Settings.Default.ManualPreciseVolumeShortcut;
             AutoRetryAdminCheckBox.Checked = Settings.Default.AutoRetryAdmin;
             SetVolumeStepNumericUpDown.Value = Settings.Default.VolumeStep;
             ThresholdNumericUpDown.Value = Settings.Default.PreciseScrollThreshold;
@@ -32,13 +34,13 @@ namespace tbvolscroll
             FontPreviewLabel.Font = Settings.Default.FontStyle;
             if (Settings.Default.UseBarGradient)
             {
-                GradientCheckBox.Checked = true;
-                CustomColorCheckBox.Checked = false;
+                GradientColorCheckBox.Checked = true;
+                SolidColorCheckBox.Checked = false;
             }
             else
             {
-                GradientCheckBox.Checked = false;
-                CustomColorCheckBox.Checked = true;
+                GradientColorCheckBox.Checked = false;
+                SolidColorCheckBox.Checked = true;
             }
 
             Control.ControlCollection appearanceControls = AppearanceGroupBox.Controls;
@@ -93,6 +95,7 @@ namespace tbvolscroll
             Settings.Default.SwitchDefaultPlaybackDeviceShortcut = EnableSwitchPlaybackDeviceOption.Checked;
             Settings.Default.ToggleMuteShortcut = EnableMuteUnmuteOption.Checked;
             Settings.Default.ReverseScrollingDirection = ReverseScrollingDirectionCheckBox.Checked;
+            Settings.Default.ManualPreciseVolumeShortcut = ManualPreciseVolumeCheckBox.Checked;
 
             Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
 
@@ -100,7 +103,7 @@ namespace tbvolscroll
             if (doSetFont)
                 Settings.Default.FontStyle = CustomFontDialog.Font;
 
-            Settings.Default.UseBarGradient = GradientCheckBox.Checked;
+            Settings.Default.UseBarGradient = GradientColorCheckBox.Checked;
             Settings.Default.BarColor = ColorPreviewPictureBox.BackColor;
             Settings.Default.BarOpacity = BarOpacityTrackBar.Value / 100.0;
 
@@ -110,7 +113,7 @@ namespace tbvolscroll
 
             if (doSetFont)
                 mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
-
+           
             SizeF newMinSizes = mainForm.CalculateBarSize("100%");
             mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
             mainForm.Width = mainForm.MinimumSize.Width;
@@ -119,16 +122,17 @@ namespace tbvolscroll
             ApplyConfigurationButton.Enabled = false;
         }
 
-        private void SetCustomColor(object sender, EventArgs e)
+        private void SetSolidColor(object sender, EventArgs e)
         {
-            CustomColorCheckBox.Checked = true;
-            GradientCheckBox.Checked = false;
+            SolidColorCheckBox.Checked = true;
+            GradientColorCheckBox.Checked = false;
+            ColorPreviewPictureBox.Image = null;
         }
 
-        private void SetGradient(object sender, EventArgs e)
+        private void SetGradientColor(object sender, EventArgs e)
         {
-            GradientCheckBox.Checked = true;
-            CustomColorCheckBox.Checked = false;
+            GradientColorCheckBox.Checked = true;
+            SolidColorCheckBox.Checked = false;
         }
 
         private void BarOpacityChanged(object sender, EventArgs e)
@@ -154,6 +158,7 @@ namespace tbvolscroll
             EnableMuteUnmuteOption.Checked = false;
             EnableSwitchPlaybackDeviceOption.Checked = false;
             ReverseScrollingDirectionCheckBox.Checked = false;
+            ManualPreciseVolumeCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
             SetBarWidthNumericUpDown.Value = 0;
@@ -161,8 +166,8 @@ namespace tbvolscroll
             AutoHideTimeOutNumericUpDown.Value = 1000;
             ColorPreviewPictureBox.BackColor = Color.SkyBlue;
             BarOpacityTrackBar.Value = 100;
-            GradientCheckBox.Checked = true;
-            CustomColorCheckBox.Checked = false;
+            GradientColorCheckBox.Checked = true;
+            SolidColorCheckBox.Checked = false;
             OpacityValueLabel.Text = $"{BarOpacityTrackBar.Value}%";
             Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
             CustomFontDialog.Font = Settings.Default.FontStyle;

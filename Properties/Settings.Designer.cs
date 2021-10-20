@@ -190,5 +190,17 @@ namespace tbvolscroll.Properties {
                 this["ReverseScrollingDirection"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ManualPreciseVolumeShortcut {
+            get {
+                return ((bool)(this["ManualPreciseVolumeShortcut"]));
+            }
+            set {
+                this["ManualPreciseVolumeShortcut"] = value;
+            }
+        }
     }
 }

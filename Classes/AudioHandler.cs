@@ -219,7 +219,7 @@ namespace tbvolscroll
 
                         if (delta < 0)
                         {
-                            if (Globals.InputHandler.IsAltDown || Globals.AudioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
+                            if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
                                 newVolume -= 1;
                             else
                                 newVolume -= Settings.Default.VolumeStep;
@@ -234,7 +234,7 @@ namespace tbvolscroll
                         }
                         else
                         {
-                            if (Globals.InputHandler.IsAltDown || Globals.AudioHandler.Volume < Settings.Default.PreciseScrollThreshold)
+                            if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume < Settings.Default.PreciseScrollThreshold)
                                 newVolume += 1;
                             else
                                 newVolume += Settings.Default.VolumeStep;
