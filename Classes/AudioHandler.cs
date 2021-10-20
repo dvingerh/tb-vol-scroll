@@ -25,8 +25,11 @@ namespace tbvolscroll
         {
             coreAudioController = new CoreAudioController();
             coreAudioController.AudioDeviceChanged.Subscribe(OnAudioDeviceActivity);
-            coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnAudioDeviceActivity);
-            coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnAudioDeviceActivity);
+            if (coreAudioController.DefaultPlaybackDevice != null)
+            {
+                coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnAudioDeviceActivity);
+                coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnAudioDeviceActivity);
+            }
         }
         public async void OnAudioDeviceActivity(DeviceChangedArgs value)
         {
@@ -80,9 +83,17 @@ namespace tbvolscroll
 
             if (CoreAudioController.DefaultPlaybackDevice != null)
             {
-                Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
-                Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
-                AudioDisabled = false;
+                if (CoreAudioController.DefaultPlaybackDevice.State == DeviceState.Active)
+                {
+                    Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
+                    Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
+                    AudioDisabled = false;
+                }
+                if (CoreAudioController.DefaultPlaybackDevice.State == DeviceState.NotPresent)
+                {
+                    await RefreshPlaybackDevices();
+                    await UpdateAudioState();
+                }
             }
             else
             {
