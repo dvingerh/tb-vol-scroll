@@ -29,9 +29,22 @@ namespace tbvolscroll.Classes
         {
             if (percentage > 100)
                 percentage = 100;
+            if (percentage < 0)
+                percentage = 0;
+
             double num = ((percentage > 50.0) ? (1.0 - 2.0 * (percentage - 50.0) / 100.0) : 1.0) * 255.0;
             double num2 = ((percentage > 50.0) ? 1.0 : (2.0 * percentage / 100.0)) * 255.0;
             double num3 = 0.0;
+
+            if (num < 0)
+                num = 0;
+            if (num2 < 0)
+                num2 = 0;
+            if (num > 255)
+                num = 255;
+            if (num2 > 255)
+                num2 = 255;
+
             return Color.FromArgb((int)num, (int)num2, (int)num3);
         }
 
