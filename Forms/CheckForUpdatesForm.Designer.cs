@@ -79,7 +79,7 @@ namespace tbvolscroll.Forms
             this.DownloadButton.Name = "DownloadButton";
             this.DownloadButton.Size = new System.Drawing.Size(175, 25);
             this.DownloadButton.TabIndex = 8;
-            this.DownloadButton.Text = "Download and Install";
+            this.DownloadButton.Text = "Download && Install";
             this.DownloadButton.UseVisualStyleBackColor = true;
             this.DownloadButton.Click += new System.EventHandler(this.StartUpdateDownload);
             // 

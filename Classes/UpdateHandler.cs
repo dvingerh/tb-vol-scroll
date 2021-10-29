@@ -40,7 +40,7 @@ namespace tbvolscroll.Classes
             {
                 using (WebClient wc = new WebClient())
                 {
-                    wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
+                    wc.Headers.Add("user-agent", "okhttp");
                     var json = await wc.DownloadStringTaskAsync(releasesApiUrl);
                     var jsonReader = JsonReaderWriterFactory.CreateJsonReader(Encoding.UTF8.GetBytes(json), new System.Xml.XmlDictionaryReaderQuotas());
                     var jsonRoot = XElement.Load(jsonReader);
@@ -75,7 +75,7 @@ namespace tbvolscroll.Classes
             using (WebClient wc = new WebClient())
             {
                 wc.DownloadFileCompleted += new AsyncCompletedEventHandler(OnUpdateDownloaded);
-                wc.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Safari/537.36");
+                wc.Headers.Add("user-agent", "okhttp");
                 wc.DownloadProgressChanged += UpdateDownloadProgress;
                 await wc.DownloadFileTaskAsync(new Uri(exeUrl), tmpExePath);
             }
@@ -109,7 +109,9 @@ namespace tbvolscroll.Classes
                     UseShellExecute = false,
                     WorkingDirectory = Path.GetDirectoryName(tmpBatPath)
                 };
+                Globals.MainForm.TrayNotifyIcon.Dispose();
                 Process.Start(startInfo);
+                
             }
         }
 

@@ -107,6 +107,7 @@
             this.SetBarWidthNumericUpDown.Size = new System.Drawing.Size(70, 22);
             this.SetBarWidthNumericUpDown.TabIndex = 6;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SetBarWidthNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // SetBarHeightNumericUpDown
             // 
@@ -121,6 +122,7 @@
             this.SetBarHeightNumericUpDown.Size = new System.Drawing.Size(63, 22);
             this.SetBarHeightNumericUpDown.TabIndex = 7;
             this.SetBarHeightNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SetBarHeightNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // BarColorLabel
             // 
@@ -401,6 +403,7 @@
             0,
             0,
             0});
+            this.SetVolumeStepNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // ThresholdLabel
             // 
@@ -416,11 +419,6 @@
             // 
             this.ThresholdNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ThresholdNumericUpDown.Location = new System.Drawing.Point(186, 58);
-            this.ThresholdNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             this.ThresholdNumericUpDown.Name = "ThresholdNumericUpDown";
             this.ThresholdNumericUpDown.Size = new System.Drawing.Size(59, 22);
             this.ThresholdNumericUpDown.TabIndex = 3;
@@ -430,6 +428,7 @@
             0,
             0,
             0});
+            this.ThresholdNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // AutoHideTimeOutNumericUpDown
             // 
@@ -454,6 +453,7 @@
             0,
             0,
             0});
+            this.AutoHideTimeOutNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // AutoHideTimeOutLabel
             // 

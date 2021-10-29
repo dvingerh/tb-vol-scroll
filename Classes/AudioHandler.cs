@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.ServiceProcess;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,7 @@ namespace tbvolscroll
 {
     public class AudioHandler
     {
-        private static IEnumerable<CoreAudioDevice> audioDevices = null;
+        private static IEnumerable<CoreAudioDevice> audioDevices;
         private static CoreAudioController coreAudioController;
         private static int volume = 0;
         private static bool muted = false;
@@ -44,12 +45,19 @@ namespace tbvolscroll
             {
                 if (deviceEventQueue.Count > 0)
                 {
-                    var refreshArgs = deviceEventQueue.Dequeue();
+                    if (Utils.IsAudioServiceRunning())
+                    {
+                        var refreshArgs = deviceEventQueue.Dequeue();
+                        curentDeviceEventTask = HandleDeviceEvent(refreshArgs);
+                        await curentDeviceEventTask;
 
-                    curentDeviceEventTask = HandleDeviceEvent(refreshArgs);
-                    await curentDeviceEventTask;
-
-                    await ProcessDeviceEventQueue();
+                        await ProcessDeviceEventQueue();
+                    }
+                    else
+                    {
+                        deviceEventQueue.Clear();
+                        await UpdateAudioState();
+                    }
                 }
             }
         }
@@ -67,26 +75,38 @@ namespace tbvolscroll
             switch (value.ChangedType)
             {
                 case DeviceChangedType.DefaultChanged:
-                    await RefreshPlaybackDevices();
-                    await UpdateAudioState();
-                    if (Globals.AudioPlaybackDevicesForm != null)
-                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
-                    break;
-                case DeviceChangedType.StateChanged:
-                    await RefreshPlaybackDevices();
-                    await UpdateAudioState();
-                    if (Globals.AudioPlaybackDevicesForm != null)
-                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
-                    break;
-                case DeviceChangedType.VolumeChanged:
-                    await UpdateAudioState();
-                    if (Globals.AudioPlaybackDevicesForm != null)
-                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
-                    break;
-                case DeviceChangedType.MuteChanged:
-                    await UpdateAudioState();
-                    break;
-                default:
+                        await RefreshPlaybackDevices();
+                        await UpdateAudioState();
+                        if (Globals.AudioPlaybackDevicesForm != null)
+                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                        break;
+                    case DeviceChangedType.StateChanged:
+                        await RefreshPlaybackDevices();
+                        await UpdateAudioState();
+                        if (Globals.AudioPlaybackDevicesForm != null)
+                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                        break;
+                    case DeviceChangedType.DeviceAdded:
+                        await RefreshPlaybackDevices();
+                        await UpdateAudioState();
+                        if (Globals.AudioPlaybackDevicesForm != null)
+                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                        break;
+                    case DeviceChangedType.DeviceRemoved:
+                        await RefreshPlaybackDevices();
+                        await UpdateAudioState();
+                        if (Globals.AudioPlaybackDevicesForm != null)
+                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                        break;
+                    case DeviceChangedType.VolumeChanged:
+                        await UpdateAudioState();
+                        if (Globals.AudioPlaybackDevicesForm != null)
+                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                        break;
+                    case DeviceChangedType.MuteChanged:
+                        await UpdateAudioState();
+                        break;
+                    default:
                     break;
             }
         }
@@ -107,11 +127,6 @@ namespace tbvolscroll
           int nHeight,
           bool bRepaint);
 
-        [DllImport("User32.dll")]
-        internal static extern bool ClientToScreen(IntPtr hWnd, out Point point);
-
-        [DllImport("User32.dll")]
-        internal static extern bool GetClientRect(IntPtr hWnd, out WindowRect lpRect);
 
         public int Volume
         {
@@ -145,25 +160,27 @@ namespace tbvolscroll
             {
                 if (CoreAudioController.DefaultPlaybackDevice.State == DeviceState.Active)
                 {
-                    Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
-                    Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
-                    AudioDisabled = false;
+                        Volume = (int)CoreAudioController.DefaultPlaybackDevice.Volume;
+                        Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
+                        AudioDisabled = false;
+                    }
                 }
-            }
-            else
-            {
-                Volume = 0;
-                Muted = true;
-                AudioDisabled = true;
-            }
-            await Task.Run(() =>
-            {
-                Globals.MainForm.Invoke((MethodInvoker)delegate
+                else
                 {
-                    Globals.MainForm.SetTrayIcon();
+                    Volume = 0;
+                    Muted = true;
+                    AudioDisabled = true;
+                }
+                await Task.Run(() =>
+                {
+                    Globals.MainForm.Invoke((MethodInvoker)delegate
+                    {
+                        Globals.MainForm.VolumeSliderControlMenuItem.Enabled = !AudioDisabled;
+                        Globals.MainForm.AudioPlaybackDevicesMenuItem.Enabled = !AudioDisabled;
+                        Globals.MainForm.SetTrayIcon();
+                    });
                 });
-            });
-        }
+            }
 
         public List<CoreAudioDevice> GetAudioDevicesList()
         {
@@ -174,8 +191,12 @@ namespace tbvolscroll
 
         public async Task RefreshPlaybackDevices()
         {
-            IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync(DeviceState.Active);
-            audioDevices = coreAudioDevices;
+            if (Utils.IsAudioServiceRunning())
+            {
+                IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync(DeviceState.Active);
+                audioDevices = coreAudioDevices;
+            }
+            
         }
 
         public double GetMasterVolume()
@@ -310,9 +331,7 @@ namespace tbvolscroll
                                 newVolume = 100;
                             Globals.AudioHandler.SetMasterVolume(newVolume);
 
-                        }
-                        await Globals.AudioHandler.UpdateAudioState();
-                    }
+                        }                    }
                     catch { }
                 }
             });
@@ -353,22 +372,5 @@ namespace tbvolscroll
             catch { }
         }
 
-
-        public static Rectangle GetWindowClientRectangle(IntPtr handle)
-        {
-            GetClientRect(handle, out WindowRect lpRect);
-            ClientToScreen(handle, out Point point);
-            return lpRect.ToRectangleOffset(point);
-        }
-
-        public struct WindowRect
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-
-            public Rectangle ToRectangleOffset(Point p) => Rectangle.FromLTRB(p.X, p.Y, Right + p.X, Bottom + p.Y);
-        }
     }
 }

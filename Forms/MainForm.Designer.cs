@@ -90,7 +90,7 @@ namespace tbvolscroll
             this.ExitMenuItem});
             this.TrayContextMenu.Name = "trayContextMenu";
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 190);
+            this.TrayContextMenu.Size = new System.Drawing.Size(200, 168);
             this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
@@ -271,7 +271,6 @@ namespace tbvolscroll
         }
 
         #endregion
-        private System.Windows.Forms.ContextMenuStrip TrayContextMenu;
         private System.Windows.Forms.ToolStripMenuItem TitleLabelMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
@@ -282,14 +281,15 @@ namespace tbvolscroll
         private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
-        private System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeperatorMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem OpenCurrentDirectoryMenuItem;
+        public System.Windows.Forms.ContextMenuStrip TrayContextMenu;
+        public System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
     }
 }
 

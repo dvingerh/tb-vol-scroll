@@ -142,6 +142,7 @@ namespace tbvolscroll
 
         private void SetFontStyle(object sender, EventArgs e)
         {
+            CustomFontDialog.Font = Settings.Default.FontStyle;
             DialogResult dialogResult = CustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {

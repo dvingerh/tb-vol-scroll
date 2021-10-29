@@ -9,6 +9,7 @@ using tbvolscroll.Forms;
 using System.Media;
 using System.IO;
 using tbvolscroll.Classes;
+using System.ServiceProcess;
 
 namespace tbvolscroll
 {
@@ -69,6 +70,7 @@ namespace tbvolscroll
                     ExitMenuItem.PerformClick();
                 }).Start();
             }
+
         }
 
         private void HideVolumeBarTick(object sender, EventArgs e)
@@ -225,12 +227,12 @@ namespace tbvolscroll
                         case "mute":
                             if (Globals.AudioHandler.Muted)
                             {
-                                VolumeTextLabel.Text = "Device Muted";
+                                VolumeTextLabel.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - Muted";
                                 TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - Muted";
                             }
                             else
                             {
-                                VolumeTextLabel.Text = "Device Unmuted";
+                                VolumeTextLabel.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - Unmuted";
                                 TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - {Globals.AudioHandler.Volume}%";
                             }
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 15;
@@ -253,7 +255,10 @@ namespace tbvolscroll
         {
             if (Globals.AudioHandler.AudioDisabled)
             {
-                TrayNotifyIcon.Text = "Audio disabled";
+                if (Utils.IsAudioServiceRunning())
+                    TrayNotifyIcon.Text = "No playback device available";
+                else
+                    TrayNotifyIcon.Text = "Windows Audio service not running";
                 TrayNotifyIcon.Icon = Resources.voldisabled;
             }
             else if (Globals.AudioHandler.Muted)
@@ -332,7 +337,7 @@ namespace tbvolscroll
         private async void LoadProgramSettings(object sender, EventArgs e)
         {
             Globals.InputHandler = new InputHandler();
-            await Task.Run(async () =>
+            await Task.Run(async() =>
             {
                 if (Settings.Default.UpdateSettings)
                 {
@@ -349,7 +354,6 @@ namespace tbvolscroll
                 {
                     VolumeTextLabel.Font = Settings.Default.FontStyle;
                     VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                    TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
 
                     SizeF newMinSizes = CalculateBarSize("100%");
                     MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);

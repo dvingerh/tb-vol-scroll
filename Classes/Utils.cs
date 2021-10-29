@@ -14,6 +14,7 @@ using System.Media;
 using System.Threading;
 using System.IO;
 using tbvolscroll.Classes;
+using System.ServiceProcess;
 
 namespace tbvolscroll.Classes
 {
@@ -60,6 +61,13 @@ namespace tbvolscroll.Classes
                 SetWindowPos(mainForm.Handle.ToInt32(), -1, mainForm.Left, mainForm.Top, mainForm.Width, mainForm.Height, 16u);
                 ShowWindow(mainForm.Handle, 4);
             });
+        }
+
+
+        public static bool IsAudioServiceRunning()
+        {
+            Globals.ServiceController.Refresh();
+            return Globals.ServiceController.Status == ServiceControllerStatus.Running;
         }
 
     }
