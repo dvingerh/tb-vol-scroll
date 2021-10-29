@@ -209,7 +209,7 @@ namespace tbvolscroll
                     {
                         case "volume":
                             VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                            TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
+                            TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - {Globals.AudioHandler.Volume}%";
 
                             Width = (int)CalculateBarSize("100%").Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
                             if (Settings.Default.UseBarGradient)
@@ -226,12 +226,12 @@ namespace tbvolscroll
                             if (Globals.AudioHandler.Muted)
                             {
                                 VolumeTextLabel.Text = "Device Muted";
-                                TrayNotifyIcon.Text = "Device is muted";
+                                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - Muted";
                             }
                             else
                             {
                                 VolumeTextLabel.Text = "Device Unmuted";
-                                TrayNotifyIcon.Text = $"Volume: {Globals.AudioHandler.Volume}%";
+                                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - {Globals.AudioHandler.Volume}%";
                             }
                             Width = Settings.Default.BarWidthPadding + (int)CalculateBarSize(VolumeTextLabel.Text).Width + 15;
                             VolumeTextLabel.BackColor = Settings.Default.BarColor;
@@ -258,12 +258,12 @@ namespace tbvolscroll
             }
             else if (Globals.AudioHandler.Muted)
             {
-                TrayNotifyIcon.Text = "Device is muted";
+                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - Muted";
                 TrayNotifyIcon.Icon = Resources.volmute;
             }
             else
             {
-                Globals.MainForm.TrayNotifyIcon.Text = $"{Application.ProductName} - {Globals.AudioHandler.Volume}%";
+                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name} - {Globals.AudioHandler.Volume}%";
                 if (Globals.AudioHandler.Volume >= 90)
                     TrayNotifyIcon.Icon = Resources.vol100;
                 if (Globals.AudioHandler.Volume >= 80 && Globals.AudioHandler.Volume < 90)

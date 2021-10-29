@@ -149,11 +149,6 @@ namespace tbvolscroll
                     Muted = CoreAudioController.DefaultPlaybackDevice.IsMuted;
                     AudioDisabled = false;
                 }
-                if (CoreAudioController.DefaultPlaybackDevice.State == DeviceState.NotPresent)
-                {
-                    await RefreshPlaybackDevices();
-                    await UpdateAudioState();
-                }
             }
             else
             {
