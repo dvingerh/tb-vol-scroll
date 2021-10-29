@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
@@ -21,21 +22,80 @@ namespace tbvolscroll
         private static bool muted = false;
         private static bool audioDisabled = false;
 
+        private bool isSubScribed = false;
+        private readonly Queue<DeviceChangedArgs> deviceEventQueue = new Queue<DeviceChangedArgs>();
+        private Task curentDeviceEventTask = null;
+
         public AudioHandler()
         {
             coreAudioController = new CoreAudioController();
-            coreAudioController.AudioDeviceChanged.Subscribe(OnAudioDeviceActivity);
-            if (coreAudioController.DefaultPlaybackDevice != null)
+            coreAudioController.AudioDeviceChanged.Subscribe(OnDeviceEvent);
+            if (coreAudioController.DefaultPlaybackDevice != null && !isSubScribed)
             {
-                coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnAudioDeviceActivity);
-                coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnAudioDeviceActivity);
+                isSubScribed = true;
+                coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnDeviceEvent);
+                coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnDeviceEvent);
             }
         }
-        public async void OnAudioDeviceActivity(DeviceChangedArgs value)
+
+        private async Task ProcessDeviceEventQueue()
         {
-            if (value.ChangedType != DeviceChangedType.VolumeChanged && value.ChangedType != DeviceChangedType.MuteChanged)
-                await RefreshPlaybackDevices();
-            await UpdateAudioState();
+            if ((curentDeviceEventTask == null) || (curentDeviceEventTask.IsCompleted))
+            {
+                if (deviceEventQueue.Count > 0)
+                {
+                    var refreshArgs = deviceEventQueue.Dequeue();
+
+                    curentDeviceEventTask = HandleDeviceEvent(refreshArgs);
+                    await curentDeviceEventTask;
+
+                    await ProcessDeviceEventQueue();
+                }
+            }
+        }
+
+        public async Task HandleDeviceEvent(DeviceChangedArgs value)
+        {
+            if (coreAudioController.DefaultPlaybackDevice != null && !isSubScribed)
+            {
+                isSubScribed = true;
+                coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(OnDeviceEvent);
+                coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(OnDeviceEvent);
+            }
+
+
+            switch (value.ChangedType)
+            {
+                case DeviceChangedType.DefaultChanged:
+                    await RefreshPlaybackDevices();
+                    await UpdateAudioState();
+                    if (Globals.AudioPlaybackDevicesForm != null)
+                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                    break;
+                case DeviceChangedType.StateChanged:
+                    await RefreshPlaybackDevices();
+                    await UpdateAudioState();
+                    if (Globals.AudioPlaybackDevicesForm != null)
+                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                    break;
+                case DeviceChangedType.VolumeChanged:
+                    await UpdateAudioState();
+                    if (Globals.AudioPlaybackDevicesForm != null)
+                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                    break;
+                case DeviceChangedType.MuteChanged:
+                    await UpdateAudioState();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        public async void OnDeviceEvent(DeviceChangedArgs value)
+        {
+            deviceEventQueue.Enqueue(value);
+            await ProcessDeviceEventQueue();
         }
 
         [DllImport("user32.dll", SetLastError = true)]

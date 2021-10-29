@@ -13,7 +13,6 @@ namespace tbvolscroll.Forms
     {
         private bool didApplyDevice = false;
         private bool isRefreshing = false;
-        readonly IDisposable deviceObserver;
         public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
@@ -22,9 +21,9 @@ namespace tbvolscroll.Forms
                 ImageSize = new Size(1, 30)
             };
             DevicesListView.SmallImageList = listViewHeightFix;
-            deviceObserver = Globals.AudioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(RefeshOnDeviceActivity);
+            Globals.AudioPlaybackDevicesForm = this;
         }
-        public async void RefeshOnDeviceActivity(DeviceChangedArgs value)
+        public async Task RefeshOnDeviceActivity()
         {
             if (!didApplyDevice && !isRefreshing)
             {
@@ -107,7 +106,7 @@ namespace tbvolscroll.Forms
                 didApplyDevice = true;
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
-                deviceObserver.Dispose();
+                Globals.AudioPlaybackDevicesForm = null;
                 Close();
             }
         }
@@ -124,6 +123,7 @@ namespace tbvolscroll.Forms
         {
             if (ModifierKeys == Keys.None && keyData == Keys.Escape)
             {
+                Globals.AudioPlaybackDevicesForm = null;
                 Close();
                 return true;
             }
@@ -132,7 +132,7 @@ namespace tbvolscroll.Forms
 
         private void CloseFormOnDeactivate(object sender, EventArgs e)
         {
-            deviceObserver.Dispose();
+            Globals.AudioPlaybackDevicesForm = null;
             Close();
         }
     }

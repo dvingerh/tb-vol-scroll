@@ -24,11 +24,6 @@ namespace tbvolscroll
         private readonly Queue<MouseEventArgs> mouseScrollQueue = new Queue<MouseEventArgs>();
         private Task currentMouseTask = null;
 
-        public InputHandler(Task currentMouseTask)
-        {
-            this.currentMouseTask = currentMouseTask;
-        }
-
         public InputHandler()
         {
             inputEvents = Hook.GlobalEvents();

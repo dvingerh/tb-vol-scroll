@@ -100,6 +100,7 @@ namespace tbvolscroll.Forms
         {
             deviceObserver.Dispose();
             deviceVolumeObserver.Dispose();
+            Globals.VolumeSliderControlForm = null;
             Close();
         }
     }

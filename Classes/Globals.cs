@@ -1,3 +1,5 @@
+using tbvolscroll.Forms;
+
 namespace tbvolscroll.Classes
 {
     public static class Globals
@@ -10,6 +12,8 @@ namespace tbvolscroll.Classes
         private static bool isDisplayingVolumeBar = false;
         private static bool isDisplayingVolumeSliderControl = false;
         private static MainForm mainForm;
+        private static AudioPlaybackDevicesForm audioPlaybackDevicesForm;
+        private static VolumeSliderControlForm volumeSliderControlForm;
 
         public static int CurrentAudioDeviceIndex { get => currentAudioDeviceIndex; set => currentAudioDeviceIndex = value; }
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
@@ -19,5 +23,7 @@ namespace tbvolscroll.Classes
         public static bool IsDisplayingVolumeBar { get => isDisplayingVolumeBar; set => isDisplayingVolumeBar = value; }
         public static bool IsDisplayingVolumeSliderControl { get => isDisplayingVolumeSliderControl; set => isDisplayingVolumeSliderControl = value; }
         public static MainForm MainForm { get => mainForm; set => mainForm = value; }
+        public static AudioPlaybackDevicesForm AudioPlaybackDevicesForm { get => audioPlaybackDevicesForm; set => audioPlaybackDevicesForm = value; }
+        public static VolumeSliderControlForm VolumeSliderControlForm { get => volumeSliderControlForm; set => volumeSliderControlForm = value; }
     }
 }
