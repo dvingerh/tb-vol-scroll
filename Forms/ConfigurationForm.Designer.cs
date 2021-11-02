@@ -107,7 +107,6 @@
             this.SetBarWidthNumericUpDown.Size = new System.Drawing.Size(70, 22);
             this.SetBarWidthNumericUpDown.TabIndex = 6;
             this.SetBarWidthNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.SetBarWidthNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // SetBarHeightNumericUpDown
             // 
@@ -122,7 +121,6 @@
             this.SetBarHeightNumericUpDown.Size = new System.Drawing.Size(63, 22);
             this.SetBarHeightNumericUpDown.TabIndex = 7;
             this.SetBarHeightNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.SetBarHeightNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // BarColorLabel
             // 
@@ -195,7 +193,7 @@
             // FontStyleLabel
             // 
             this.FontStyleLabel.AutoSize = true;
-            this.FontStyleLabel.Location = new System.Drawing.Point(15, 133);
+            this.FontStyleLabel.Location = new System.Drawing.Point(15, 137);
             this.FontStyleLabel.Name = "FontStyleLabel";
             this.FontStyleLabel.Size = new System.Drawing.Size(115, 13);
             this.FontStyleLabel.TabIndex = 14;
@@ -403,7 +401,6 @@
             0,
             0,
             0});
-            this.SetVolumeStepNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // ThresholdLabel
             // 
@@ -428,7 +425,6 @@
             0,
             0,
             0});
-            this.ThresholdNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // AutoHideTimeOutNumericUpDown
             // 
@@ -453,7 +449,6 @@
             0,
             0,
             0});
-            this.AutoHideTimeOutNumericUpDown.ValueChanged += new System.EventHandler(this.OnSettingsChanged);
             // 
             // AutoHideTimeOutLabel
             // 

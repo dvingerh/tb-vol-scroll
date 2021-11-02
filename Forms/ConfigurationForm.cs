@@ -2,17 +2,16 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using tbvolscroll.Classes;
 using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
     public partial class ConfigurationForm : Form
     {
-        private readonly MainForm mainForm;
         private bool doSetFont = false;
-        public ConfigurationForm(MainForm mainForm)
+        public ConfigurationForm()
         {
-            this.mainForm = mainForm;
             InitializeComponent();
         }
 
@@ -112,14 +111,14 @@ namespace tbvolscroll
             Settings.Default.Save();
 
             if (doSetFont)
-                mainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
+                Globals.MainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
            
-            SizeF newMinSizes = mainForm.CalculateBarSize("100%");
-            mainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
-            mainForm.Width = mainForm.MinimumSize.Width;
-            mainForm.Height = mainForm.MinimumSize.Height;
-            BehaviourGroupBox.Focus();
+            SizeF newMinSizes = Utils.CalculateBarSize(Globals.MainForm.VolumeTextLabel, "100%");
+            Globals.MainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
+            Globals.MainForm.Width = Globals.MainForm.MinimumSize.Width;
+            Globals.MainForm.Height = Globals.MainForm.MinimumSize.Height;
             ApplyConfigurationButton.Enabled = false;
+            BehaviourGroupBox.Focus();
         }
 
         private void SetSolidColor(object sender, EventArgs e)

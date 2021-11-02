@@ -70,7 +70,7 @@ namespace tbvolscroll
             this.TrayNotifyIcon.ContextMenuStrip = this.TrayContextMenu;
             this.TrayNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayNotifyIcon.Icon")));
             this.TrayNotifyIcon.Tag = "tb-vol-scroll";
-            this.TrayNotifyIcon.Text = "tb-vol-scroll - Loading";
+            this.TrayNotifyIcon.Text = "Initialising...";
             this.TrayNotifyIcon.Visible = true;
             this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
             this.TrayNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShowVolumeSliderPopupForm);
@@ -250,6 +250,7 @@ namespace tbvolscroll
             this.ClientSize = new System.Drawing.Size(125, 23);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -261,10 +262,8 @@ namespace tbvolscroll
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Shown += new System.EventHandler(this.LoadProgramSettings);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -274,14 +273,11 @@ namespace tbvolscroll
         private System.Windows.Forms.ToolStripMenuItem TitleLabelMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem MoreOptionsMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ConfigurationMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
         private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
         private System.Windows.Forms.ToolStripMenuItem CheckForUpdatesMenuItem;
@@ -290,6 +286,9 @@ namespace tbvolscroll
         public System.Windows.Forms.ContextMenuStrip TrayContextMenu;
         public System.Windows.Forms.ToolStripMenuItem AudioPlaybackDevicesMenuItem;
         public System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem MoreOptionsMenuItem;
     }
 }
 

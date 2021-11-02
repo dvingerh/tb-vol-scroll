@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using tbvolscroll.Classes;
 
 namespace tbvolscroll
 {
@@ -18,7 +19,7 @@ namespace tbvolscroll
         /// </summary>
         /// 
 
-        private static Mutex _mutex;
+        
 
         [STAThread]
         static void Main(string[] args)
@@ -32,8 +33,8 @@ namespace tbvolscroll
                 Thread.Sleep(250);
 
 
-            _mutex = new Mutex(true, @"Global\" + Application.ProductName, out bool isNewInstance);
-            GC.KeepAlive(_mutex);
+            Globals.AppMutex = new Mutex(true, @"Global\" + Application.ProductName, out bool isNewInstance);
+            GC.KeepAlive(Globals.AppMutex);
 
             if (!isNewInstance)
             {

@@ -1,31 +1,39 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 using System.Security.Principal;
-using System.Reflection;
-using AudioSwitcher.AudioApi.CoreAudio;
-using System.Collections.Generic;
-using tbvolscroll.Properties;
-using tbvolscroll.Forms;
-using System.Media;
-using System.Threading;
-using System.IO;
-using tbvolscroll.Classes;
-using System.ServiceProcess;
+using System.Management;
+using System.Threading.Tasks;
 
 namespace tbvolscroll.Classes
 {
     public static class Utils
     {
         [DllImport("user32.dll")]
-        private static extern bool SetWindowPos(int hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        public static extern bool SetWindowPos(int hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool MoveWindow(
+        IntPtr hWnd,
+        int X,
+        int Y,
+        int nWidth,
+        int nHeight,
+        bool bRepaint);
 
+        [StructLayout(LayoutKind.Sequential)]
+        public struct RECT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+        }
         public static Color CalculateColor(double percentage)
         {
             if (percentage > 100)
@@ -63,12 +71,50 @@ namespace tbvolscroll.Classes
             });
         }
 
-
-        public static bool IsAudioServiceRunning()
+        public static async Task<bool> IsAudioServiceRunning()
         {
-            Globals.ServiceController.Refresh();
-            return Globals.ServiceController.Status == ServiceControllerStatus.Running;
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    bool isRunning = false;
+                    ManagementScope scope = new ManagementScope();
+                    scope.Connect();
+                    ManagementPath path = new ManagementPath("Win32_Service");
+                    ManagementClass services = new ManagementClass(scope, path, null);
+                    foreach (ManagementObject service in services.GetInstances())
+                    {
+                        if (service.GetPropertyValue("Name").ToString().ToLower().Equals("audiosrv"))
+                        {
+                            string state = service.GetPropertyValue("State").ToString();
+                            if (state.Equals("Running"))
+                                isRunning = true;
+                            else
+                                isRunning = false;
+                        }
+                    }
+                    Globals.IsAudioServiceRunning = isRunning;
+                    return isRunning;
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); Globals.IsAudioServiceRunning = false; return false; }
+            });
+
+
+        }
+        public static Size GetSndVolSize(IntPtr hWnd)
+        {
+            Size cSize = new Size();
+            GetWindowRect(hWnd, out RECT pRect);
+
+            cSize.Width = pRect.Right - pRect.Left;
+            cSize.Height = pRect.Bottom - pRect.Top;
+
+            return cSize;
         }
 
+        public static SizeF CalculateBarSize(Label label, string text)
+        {
+            return label.CreateGraphics().MeasureString(text, label.Font);
+        }
     }
 }

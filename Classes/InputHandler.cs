@@ -44,7 +44,7 @@ namespace tbvolscroll
                 if (TaskbarHelper.IsCursorInTaskbar())
                    Globals.MainForm.SetVolumeBarPosition();
                 else
-                    Globals.MainForm.HideVolumeBar();
+                    Globals.MainForm.HideVolumeBar(null, null);
             }
         }
 
@@ -94,7 +94,7 @@ namespace tbvolscroll
 
         private async Task HandleMouseScrollAction(GlobalMouseEventArgs e)
         {
-            if (TaskbarHelper.IsValidAction() && !Globals.IsDisplayingVolumeSliderControl && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
+            if (TaskbarHelper.IsValidAction() && Globals.VolumeSliderControlForm == null && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
                 int delta = int.Parse(e.wheelRotation.ToString());
                 if (Settings.Default.ReverseScrollingDirection)
