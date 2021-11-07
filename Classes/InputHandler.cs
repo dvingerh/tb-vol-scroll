@@ -1,4 +1,5 @@
 using Indieteur.GlobalHooks;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using tbvolscroll.Classes;
@@ -96,14 +97,14 @@ namespace tbvolscroll
         {
             if (TaskbarHelper.IsValidAction() && Globals.VolumeSliderControlForm == null && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
-                int delta = int.Parse(e.wheelRotation.ToString());
+                int delta = (int)e.wheelRotation;
                 if (Settings.Default.ReverseScrollingDirection)
                     if (delta < 0)
                         delta = 1;
                     else
                         delta = -1;
 
-
+                
                 if (!isShiftDown && !isCtrlDown && !isScrolling)
                 {
                     isScrolling = true;
