@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -28,15 +28,14 @@ namespace tbvolscroll
             bool updateDoneArg = args.Any("update-done".Contains);
             bool restartArg = args.Any("restart".Contains);
             bool adminArg = args.Any("admin".Contains);
+            bool audioSrvArg = args.Any("audiosrv".Contains);
 
-            if (adminArg || updateDoneArg || noTrayArg || restartArg)
-                Thread.Sleep(250);
+            Globals.AppMutex = new Mutex(true, @"Global\" + Application.ProductName);
 
 
-            Globals.AppMutex = new Mutex(true, @"Global\" + Application.ProductName, out bool isNewInstance);
             GC.KeepAlive(Globals.AppMutex);
 
-            if (!isNewInstance)
+            if (!Globals.AppMutex.WaitOne(1000, false))
             {
                 MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Environment.Exit(1);
@@ -44,7 +43,7 @@ namespace tbvolscroll
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg));
+            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg, audioSrvArg));
         }
     }
 }

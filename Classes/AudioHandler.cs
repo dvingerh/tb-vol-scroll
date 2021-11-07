@@ -41,31 +41,45 @@ namespace tbvolscroll
             audioSrvStatusController.StatusChanged += AudioServiceStatusChanged;
             if (audioSrvStatusController.Status == ServiceControllerStatus.Running)
                 coreAudioController.AudioDeviceChanged.Subscribe(DeviceStateChanged);
-
+            else
+            {
+                Globals.MainForm.TrayNotifyIcon.Visible = true;
+                Globals.MainForm.TrayNotifyIcon.ShowBalloonTip(2500, "Windows Audio service inactive", $"{Application.ProductName} will restart automatically when the service becomes available.", ToolTipIcon.Warning);
+            }
             if (coreAudioController.DefaultPlaybackDevice != null && !isSubScribed)
             {
                 isSubScribed = true;
                 coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(DeviceStateChanged);
                 coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(DeviceStateChanged);
             }
+
+            audioSrvStatusController.Refresh();
         }
 
         private async void AudioServiceStatusChanged(object sender, ServiceStatusEventArgs e)
         {
-            Globals.IsAudioServiceRunning = e.Status == ServiceControllerStatus.Running;
-            if (e.Status != ServiceControllerStatus.Running)
+
+            if (Globals.IsAudioServiceRunning && e.Status != ServiceControllerStatus.Running)
             {
+                Globals.IsAudioServiceRunning = false;
+                Globals.MainForm.TrayNotifyIcon.Visible = true;
+                Globals.MainForm.TrayNotifyIcon.ShowBalloonTip(2500, "Windows Audio service inactive", $"{Application.ProductName} will restart automatically when the service becomes available.", ToolTipIcon.Warning);
                 deviceStateEventQueue.Clear();
                 await UpdateAudioState();
-                Globals.MainForm.TrayNotifyIcon.Visible = true;
-                Globals.MainForm.TrayNotifyIcon.ShowBalloonTip(10000, "Windows Audio service unavailable", "All functionality is disabled. Restarting automatically when the service is available again.", ToolTipIcon.Warning);
                 Globals.InputHandler.GlobalKeyHook.Dispose();
                 Globals.InputHandler.GlobalMouseHook.Dispose();
-
             }
             else
             {
-                Globals.MainForm.RestartNormalMenuItem.PerformClick();
+                if (e.Status == ServiceControllerStatus.Running)
+                {
+                    Process proc = new Process();
+                    proc.StartInfo.FileName = Application.ExecutablePath;
+                    proc.StartInfo.UseShellExecute = true;
+                    proc.StartInfo.Verb = "runas";
+                    proc.StartInfo.Arguments = "audiosrv";
+                    Globals.MainForm.HandleApplicationExit(proc, 0);
+                }
             }
         }
 
@@ -138,14 +152,12 @@ namespace tbvolscroll
 
                     if (Volume < 0 || Volume > 100)
                     {
-                        await Task.Delay(250);
                         await UpdateAudioState();
                         return;
                     }
                 }
                 else
                 {
-                    await Task.Delay(250);
                     await UpdateAudioState();
                     return;
                 }
@@ -181,16 +193,6 @@ namespace tbvolscroll
         {
             IEnumerable<CoreAudioDevice> coreAudioDevices = await coreAudioController.GetPlaybackDevicesAsync(DeviceState.Active);
             audioDevices = coreAudioDevices;
-        }
-
-        public double GetMasterVolume()
-        {
-            try
-            {
-                return coreAudioController != null && coreAudioController.DefaultPlaybackDevice != null ? coreAudioController.DefaultPlaybackDevice.Volume : 0.0;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); return 0.0;
-            }
         }
 
         public void SetMasterVolume(int volume)
@@ -253,16 +255,16 @@ namespace tbvolscroll
 
             switch (TaskbarHelper.Position)
             {
-                case TaskbarPosition.Bottom:
+                case TaskbarHelper.TaskbarPosition.Bottom:
                     location = new Point(workingArea.Right - sndWidth, workingArea.Bottom - sndVolDimensions.Height);
                     break;
-                case TaskbarPosition.Right:
+                case TaskbarHelper.TaskbarPosition.Right:
                     location = new Point(workingArea.Right - sndWidth, workingArea.Bottom - sndVolDimensions.Height);
                     break;
-                case TaskbarPosition.Left:
+                case TaskbarHelper.TaskbarPosition.Left:
                     location = new Point(workingArea.Left, workingArea.Bottom - sndVolDimensions.Height);
                     break;
-                case TaskbarPosition.Top:
+                case TaskbarHelper.TaskbarPosition.Top:
                     location = new Point(workingArea.Right - sndWidth, workingArea.Top);
                     break;
             }

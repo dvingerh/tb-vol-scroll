@@ -18,19 +18,16 @@ using System.Windows.Forms;
 
 namespace tbvolscroll
 {
-
-    public enum TaskbarPosition
-    {
-        Unknown = -1,
-        Left,
-        Top,
-        Right,
-        Bottom,
-    }
-
     public static class TaskbarHelper
     {
-
+        public enum TaskbarPosition
+        {
+            Unknown = -1,
+            Left,
+            Top,
+            Right,
+            Bottom,
+        }
         ////private enum ABE : uint
         private enum AppBarEdge : uint
         {

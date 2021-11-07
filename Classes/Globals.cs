@@ -15,8 +15,10 @@ namespace tbvolscroll.Classes
         private static MainForm mainForm;
         private static AudioPlaybackDevicesForm audioPlaybackDevicesForm;
         private static VolumeSliderControlForm volumeSliderControlForm;
-        private static bool isAudioServiceRunning = false;
+        private static bool isAudioServiceRunning = true;
         private static Mutex appMutex;
+        private static bool displayTrayIcon = true;
+
         public static int CurrentAudioDeviceIndex { get => currentAudioDeviceIndex; set => currentAudioDeviceIndex = value; }
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
         public static InputHandler InputHandler { get => inputHandler; set => inputHandler = value; }
@@ -28,5 +30,6 @@ namespace tbvolscroll.Classes
         public static VolumeSliderControlForm VolumeSliderControlForm { get => volumeSliderControlForm; set => volumeSliderControlForm = value; }
         public static bool IsAudioServiceRunning { get => isAudioServiceRunning; set => isAudioServiceRunning = value; }
         public static Mutex AppMutex { get => appMutex; set => appMutex = value; }
+        public static bool DisplayTrayIcon { get => displayTrayIcon; set => displayTrayIcon = value; }
     }
 }

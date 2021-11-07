@@ -45,16 +45,16 @@ namespace tbvolscroll.Forms
 
             switch (TaskbarHelper.Position)
             {
-                case TaskbarPosition.Bottom:
+                case TaskbarHelper.TaskbarPosition.Bottom:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarPosition.Right:
+                case TaskbarHelper.TaskbarPosition.Right:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarPosition.Left:
+                case TaskbarHelper.TaskbarPosition.Left:
                     Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarPosition.Top:
+                case TaskbarHelper.TaskbarPosition.Top:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
             }
@@ -115,6 +115,7 @@ namespace tbvolscroll.Forms
         {
 
             DevicesListView.Items.Clear();
+            ApplyButton.Enabled = false;
             RefreshButton.Enabled = false;
             await LoadAudioPlaybackDevicesList();
         }

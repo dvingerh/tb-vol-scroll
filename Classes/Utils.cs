@@ -62,12 +62,12 @@ namespace tbvolscroll.Classes
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        public static void ShowInactiveTopmost(MainForm mainForm)
+        public static void ShowInactiveTopmost()
         {
-            mainForm.Invoke((MethodInvoker)delegate
+            Globals.MainForm.Invoke((MethodInvoker)delegate
             {
-                SetWindowPos(mainForm.Handle.ToInt32(), -1, mainForm.Left, mainForm.Top, mainForm.Width, mainForm.Height, 16u);
-                ShowWindow(mainForm.Handle, 4);
+                SetWindowPos(Globals.MainForm.Handle.ToInt32(), -1, Globals.MainForm.Left, Globals.MainForm.Top, Globals.MainForm.Width, Globals.MainForm.Height, 16u);
+                ShowWindow(Globals.MainForm.Handle, 4);
             });
         }
 
@@ -101,6 +101,7 @@ namespace tbvolscroll.Classes
 
 
         }
+
         public static Size GetSndVolSize(IntPtr hWnd)
         {
             Size cSize = new Size();

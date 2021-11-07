@@ -28,15 +28,28 @@ namespace tbvolscroll
 
         private readonly Timer hideVolumeBarTimer = new Timer();
 
-        public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false)
+        public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false, bool audioSrvArg = false)
         {
             InitializeComponent();
             hideVolumeBarTimer.Tick += HideVolumeBar;
 
+            if (noTray)
+            {
+                Globals.DisplayTrayIcon = false;
+                TrayNotifyIcon.Visible = false;
+            }
+
+
+            if (audioSrvArg)
+            {
+                TrayNotifyIcon.Visible = true;
+                TrayNotifyIcon.ShowBalloonTip(2500, "Windows Audio service active", $"{Application.ProductName} has been restarted.", ToolTipIcon.Info);
+            }
+
             if (updateDoneArg)
             {
                 TrayNotifyIcon.Visible = true;
-                TrayNotifyIcon.ShowBalloonTip(10000, "Update complete", $"Successfully updated {Application.ProductName} to version {Application.ProductVersion}.", ToolTipIcon.Info);
+                TrayNotifyIcon.ShowBalloonTip(2500, "Update complete", $"Successfully updated {Application.ProductName} to version {Application.ProductVersion}.", ToolTipIcon.Info);
             }
 
             bool hasAdmin = Utils.IsAdministrator();
@@ -44,34 +57,25 @@ namespace tbvolscroll
             if (attemptedAdmin && hasAdmin)
             {
                 TrayNotifyIcon.Visible = true;
-                TrayNotifyIcon.ShowBalloonTip(10000, "Administrator permissions granted", $"Successfully obtained administrator permissions after restarting.", ToolTipIcon.Info);
+                TrayNotifyIcon.ShowBalloonTip(2500, "Administrator permissions available", $"{Application.ProductName} has restarted with administrator permissions.", ToolTipIcon.Info);
             }
 
             TitleLabelMenuItem.Text = $"{Application.ProductName} v{Application.ProductVersion}" + (hasAdmin ? " (Administrator)" : "");
 
-            if (noTray)
-                TrayNotifyIcon.Visible = false;
 
             if (!attemptedAdmin && !hasAdmin && Settings.Default.AutoRetryAdmin)
             {
                 new Task(async () =>
                 {
-                    if (updateDoneArg)
-                        await Task.Delay(5000);
                     TrayNotifyIcon.Visible = true;
-                    TrayNotifyIcon.ShowBalloonTip(10000, "Administrator permissions unavailable", "Trying to request permissions on restart in a few moments.", ToolTipIcon.Warning);
-                    await Task.Delay(5000);
+                    TrayNotifyIcon.ShowBalloonTip(2500, "Administrator permissions unavailable", $"{Application.ProductName} will restart requesting administrator permissions.", ToolTipIcon.Warning);
+                    await Task.Delay(2500);
                     Process proc = new Process();
                     proc.StartInfo.FileName = Application.ExecutablePath;
                     proc.StartInfo.UseShellExecute = true;
                     proc.StartInfo.Verb = "runas";
                     proc.StartInfo.Arguments = "admin";
-                    Invoke((MethodInvoker)delegate
-                    {
-                        Globals.AppMutex.ReleaseMutex();
-                    });
-                    proc.Start();
-                    ExitMenuItem.PerformClick();
+                    HandleApplicationExit(proc, 0);
                 }).Start();
             }
             else
@@ -111,7 +115,7 @@ namespace tbvolscroll
                        VolumeTextLabel.BackColor = Settings.Default.BarColor;
 
                    SetVolumeBarPosition();
-                   Utils.ShowInactiveTopmost(this);
+                   Utils.ShowInactiveTopmost();
                    Hide();
 
                    SystemVolumeMixerMenuItem.Enabled = true;
@@ -130,23 +134,23 @@ namespace tbvolscroll
             Point cursorPosition = Cursor.Position;
             switch (TaskbarHelper.Position)
             {
-                case TaskbarPosition.Bottom:
+                case TaskbarHelper.TaskbarPosition.Bottom:
                     Left = cursorPosition.X - Width / 2;
                     Top = cursorPosition.Y - Height - 5;
                     break;
-                case TaskbarPosition.Left:
+                case TaskbarHelper.TaskbarPosition.Left:
                     Left = cursorPosition.X + 25;
                     Top = cursorPosition.Y - 5;
                     break;
-                case TaskbarPosition.Top:
+                case TaskbarHelper.TaskbarPosition.Top:
                     Left = cursorPosition.X - Width / 2;
                     Top = cursorPosition.Y + 25;
                     break;
-                case TaskbarPosition.Right:
+                case TaskbarHelper.TaskbarPosition.Right:
                     Left = cursorPosition.X - Width - 25;
                     Top = cursorPosition.Y - 5;
                     break;
-                case TaskbarPosition.Unknown:
+                case TaskbarHelper.TaskbarPosition.Unknown:
                     Left = cursorPosition.X - Width / 2;
                     Top = cursorPosition.Y - Height - 5;
                     break;
@@ -164,7 +168,7 @@ namespace tbvolscroll
         private void AutoHideVolume()
         {
             Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
-            Utils.ShowInactiveTopmost(this);
+            Utils.ShowInactiveTopmost();
             hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout); 
             hideVolumeBarTimer.Start();
         }
@@ -179,7 +183,7 @@ namespace tbvolscroll
             });
         }
 
-        private void ExitApplication(object sender, EventArgs e)
+        public void HandleApplicationExit(Process process, int code = 0)
         {
             if (Globals.InputHandler != null)
             {
@@ -188,37 +192,32 @@ namespace tbvolscroll
             }
             if (Globals.AudioHandler != null)
                 Globals.AudioHandler.CoreAudioController.Dispose();
+            TrayNotifyIcon.Visible = false;
+            TrayNotifyIcon.Icon = null;
             TrayNotifyIcon.Dispose();
             Invoke((MethodInvoker)delegate
             {
                 Globals.AppMutex.ReleaseMutex();
+                Globals.AppMutex.Dispose();
             });
-            Environment.Exit(0);
+
+            if (process != null)
+                process.Start();
+
+            Environment.Exit(code);
+        }
+        public void ExitApplication(object sender, EventArgs e)
+        {
+            HandleApplicationExit(null, 0);
         }
 
         private void RestartAppNormal(object sender, EventArgs e)
         {
-            if (Globals.InputHandler != null)
-            {
-                Globals.InputHandler.GlobalKeyHook.Dispose();
-                Globals.InputHandler.GlobalMouseHook.Dispose();
-            }
-            if (Globals.AudioHandler != null)
-                Globals.AudioHandler.CoreAudioController.Dispose();
-            TrayNotifyIcon.Dispose();
             Process proc = new Process();
             proc.StartInfo.FileName = Application.ExecutablePath;
             proc.StartInfo.UseShellExecute = true;
-            proc.StartInfo.Verb = "runas";
-            proc.StartInfo.Arguments = "restart";
-
-            Invoke((MethodInvoker)delegate
-            {
-                Globals.AppMutex.ReleaseMutex();
-            });
-
-            proc.Start();
-            Environment.Exit(0);
+            proc.StartInfo.Arguments = "admin";
+            HandleApplicationExit(proc, 0);
         }
 
         private void ShowTrayMenuOnClick(object sender, EventArgs e)
@@ -234,26 +233,12 @@ namespace tbvolscroll
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)
         {
-            if (Globals.InputHandler != null)
-            {
-                Globals.InputHandler.GlobalKeyHook.Dispose();
-                Globals.InputHandler.GlobalMouseHook.Dispose();
-            }
-            if (Globals.AudioHandler != null)
-                Globals.AudioHandler.CoreAudioController.Dispose();
-            TrayNotifyIcon.Dispose();
             Process proc = new Process();
             proc.StartInfo.FileName = Application.ExecutablePath;
             proc.StartInfo.UseShellExecute = true;
             proc.StartInfo.Verb = "runas";
             proc.StartInfo.Arguments = "restart";
-
-            Invoke((MethodInvoker)delegate
-            {
-                Globals.AppMutex.ReleaseMutex();
-            });
-            proc.Start();
-            Environment.Exit(0);
+            HandleApplicationExit(proc, 0);
         }
 
         private void DrawVolumeBarBorder(object sender, PaintEventArgs e)
@@ -406,5 +391,10 @@ namespace tbvolscroll
             Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
         }
 
+        private void HandleBalloonTipHide(object sender, EventArgs e)
+        {
+            if (!Globals.DisplayTrayIcon)
+                TrayNotifyIcon.Visible = false;
+        }
     }
 }

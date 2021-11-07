@@ -67,11 +67,14 @@ namespace tbvolscroll
             // 
             // TrayNotifyIcon
             // 
+            this.TrayNotifyIcon.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.TrayNotifyIcon.ContextMenuStrip = this.TrayContextMenu;
             this.TrayNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayNotifyIcon.Icon")));
             this.TrayNotifyIcon.Tag = "tb-vol-scroll";
             this.TrayNotifyIcon.Text = "Initialising...";
             this.TrayNotifyIcon.Visible = true;
+            this.TrayNotifyIcon.BalloonTipClicked += new System.EventHandler(this.HandleBalloonTipHide);
+            this.TrayNotifyIcon.BalloonTipClosed += new System.EventHandler(this.HandleBalloonTipHide);
             this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
             this.TrayNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShowVolumeSliderPopupForm);
             // 
@@ -272,7 +275,6 @@ namespace tbvolscroll
         #endregion
         private System.Windows.Forms.ToolStripMenuItem TitleLabelMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ConfigurationMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
@@ -289,6 +291,7 @@ namespace tbvolscroll
         public System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         public System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
         public System.Windows.Forms.ToolStripMenuItem MoreOptionsMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     }
 }
 
