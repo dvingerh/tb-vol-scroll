@@ -187,8 +187,7 @@ namespace tbvolscroll
         {
             if (Globals.InputHandler != null)
             {
-                Globals.InputHandler.GlobalKeyHook.Dispose();
-                Globals.InputHandler.GlobalMouseHook.Dispose();
+                Globals.InputHandler.InputEvents.Dispose();
             }
             if (Globals.AudioHandler != null)
                 Globals.AudioHandler.CoreAudioController.Dispose();

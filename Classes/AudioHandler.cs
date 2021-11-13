@@ -66,8 +66,7 @@ namespace tbvolscroll
                 Globals.MainForm.TrayNotifyIcon.ShowBalloonTip(2500, "Windows Audio service inactive", $"{Application.ProductName} will restart automatically when the service becomes available.", ToolTipIcon.Warning);
                 deviceStateEventQueue.Clear();
                 await UpdateAudioState();
-                Globals.InputHandler.GlobalKeyHook.Dispose();
-                Globals.InputHandler.GlobalMouseHook.Dispose();
+                Globals.InputHandler.InputEvents.Dispose();
             }
             else
             {

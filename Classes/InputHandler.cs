@@ -1,10 +1,9 @@
-using Indieteur.GlobalHooks;
-using System;
+using Gma.System.MouseKeyHook;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using tbvolscroll.Classes;
 using tbvolscroll.Properties;
-
 namespace tbvolscroll
 {
     public sealed class InputHandler
@@ -14,31 +13,28 @@ namespace tbvolscroll
         private bool isShiftDown;
         private bool isScrolling;
 
-        private GlobalKeyHook globalKeyHook;
-        private GlobalMouseHook globalMouseHook;
+        private IKeyboardMouseEvents inputEvents;
 
         public bool IsAltDown { get => isAltDown; set => isAltDown = value; }
         public bool IsCtrlDown { get => isCtrlDown; set => isCtrlDown = value; }
         public bool IsShiftDown { get => isShiftDown; set => isShiftDown = value; }
-        public GlobalKeyHook GlobalKeyHook { get => globalKeyHook; set => globalKeyHook = value; }
-        public GlobalMouseHook GlobalMouseHook { get => globalMouseHook; set => globalMouseHook = value; }
+        public IKeyboardMouseEvents InputEvents { get => inputEvents; set => inputEvents = value; }
 
-        private readonly Queue<GlobalMouseEventArgs> mouseScrollQueue = new Queue<GlobalMouseEventArgs>();
+        private readonly Queue<MouseEventArgs> mouseScrollQueue = new Queue<MouseEventArgs>();
         private Task currentMouseTask = null;
 
         public InputHandler()
         {
-            globalKeyHook = new GlobalKeyHook();
-            globalMouseHook = new GlobalMouseHook();
-
-            globalKeyHook.OnKeyDown += EnableKeyActions;
-            globalKeyHook.OnKeyUp += DisableKeyActions;
-
-            globalMouseHook.OnMouseMove += UpdateBarPositionMouseMove;
-            globalMouseHook.OnMouseWheelScroll += OnMouseScroll;
+            inputEvents = Hook.GlobalEvents();
+            inputEvents.MouseWheel += OnMouseScroll;
+            inputEvents.MouseMove += UpdateBarPositionMouseMove;
+            inputEvents.KeyDown += EnableKeyActions;
+            inputEvents.KeyUp += DisableKeyActions;
         }
 
-        public void UpdateBarPositionMouseMove(object sender, GlobalMouseEventArgs e)
+
+
+        public void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)
         {
             if (Globals.IsDisplayingVolumeBar)
             {
@@ -49,27 +45,27 @@ namespace tbvolscroll
             }
         }
 
-        private void DisableKeyActions(object sender, GlobalKeyEventArgs e)
+        private void DisableKeyActions(object sender, KeyEventArgs e)
         {
-            if (e.Alt == ModifierKeySide.None)
+            if (e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu)
                 isAltDown = false;
-            if (e.Control == ModifierKeySide.None)
+            if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
                 isCtrlDown = false;
-            if (e.Shift == ModifierKeySide.None)
+            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
                 isShiftDown = false;
         }
 
-        private void EnableKeyActions(object sender, GlobalKeyEventArgs e)
+        private void EnableKeyActions(object sender, KeyEventArgs e)
         {
-            if (e.Alt != ModifierKeySide.None)
+            if (e.KeyCode == Keys.LMenu || e.KeyCode == Keys.RMenu)
                 isAltDown = true;
-            if (e.Control != ModifierKeySide.None)
+            if (e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
                 isCtrlDown = true;
-            if (e.Shift != ModifierKeySide.None)
+            if (e.KeyCode == Keys.LShiftKey || e.KeyCode == Keys.RShiftKey)
                 isShiftDown = true;
         }
 
-        private async void OnMouseScroll(object sender, GlobalMouseEventArgs e)
+        private async void OnMouseScroll(object sender, MouseEventArgs e)
         {
             mouseScrollQueue.Enqueue(e);
             await ProcessMouseScrollActionQueue();
@@ -93,18 +89,18 @@ namespace tbvolscroll
         }
 
 
-        private async Task HandleMouseScrollAction(GlobalMouseEventArgs e)
+        private async Task HandleMouseScrollAction(MouseEventArgs e)
         {
             if (TaskbarHelper.IsValidAction() && Globals.VolumeSliderControlForm == null && Globals.ProgramIsReady && !Globals.AudioHandler.AudioDisabled)
             {
-                int delta = (int)e.wheelRotation;
+                int delta = e.Delta;
                 if (Settings.Default.ReverseScrollingDirection)
                     if (delta < 0)
                         delta = 1;
                     else
                         delta = -1;
 
-                
+
                 if (!isShiftDown && !isCtrlDown && !isScrolling)
                 {
                     isScrolling = true;
