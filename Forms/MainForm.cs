@@ -93,22 +93,26 @@ namespace tbvolscroll
                     Settings.Default.UpdateSettings = false;
                     Settings.Default.Save();
                 }
+
                 Globals.MainForm = this;
+                Globals.SysPowerHandler = new SysPowerHandler();
                 Globals.AudioHandler = new AudioHandler();
+                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+
                 await Globals.AudioHandler.RefreshPlaybackDevices();
                 await Globals.AudioHandler.UpdateAudioState();
-                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+
                 Invoke((MethodInvoker)delegate
                {
                    VolumeTextLabel.Font = Settings.Default.FontStyle;
                    VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
+                   TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
 
                    SizeF newMinSizes = Utils.CalculateBarSize(VolumeTextLabel, "100%");
                    Size minSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
                    Height = minSize.Height;
-                   VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                   TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
                    Width = (int)Utils.CalculateBarSize(VolumeTextLabel, "100%").Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
+
                    if (Settings.Default.UseBarGradient)
                        VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
                    else
@@ -169,7 +173,7 @@ namespace tbvolscroll
         {
             Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
             Utils.ShowInactiveTopmost();
-            hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout); 
+            hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout);
             hideVolumeBarTimer.Start();
         }
 
@@ -210,7 +214,7 @@ namespace tbvolscroll
             HandleApplicationExit(null, 0);
         }
 
-        private void RestartAppNormal(object sender, EventArgs e)
+        public void RestartAppNormal(object sender, EventArgs e)
         {
             Process proc = new Process();
             proc.StartInfo.FileName = Application.ExecutablePath;

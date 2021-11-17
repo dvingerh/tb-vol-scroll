@@ -120,15 +120,19 @@ namespace tbvolscroll.Forms
             double value = Math.Round(peakValue.PeakValue / 100 * Globals.AudioHandler.Volume, 2);
             await Task.Run(() =>
             {
-                Invoke((MethodInvoker)delegate
+                try
                 {
-                    PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
-                    double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
-                    PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
-                    VolumeTrackBar.Value = Globals.AudioHandler.Volume;
-                    VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                    AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
-                });
+                    Invoke((MethodInvoker)delegate
+                    {
+                        PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
+                        double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
+                        PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
+                        VolumeTrackBar.Value = Globals.AudioHandler.Volume;
+                        VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
+                        AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+                    });
+                }
+                catch { }
             });
         }
 
@@ -147,6 +151,8 @@ namespace tbvolscroll.Forms
         {
             deviceObserver.Dispose();
             deviceVolumeObserver.Dispose();
+            updatePeakValueQueue.Clear();
+            currentPeakValueTask = null;
             Globals.VolumeSliderControlForm = null;
             Close();
         }

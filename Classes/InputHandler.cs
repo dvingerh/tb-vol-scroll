@@ -32,6 +32,15 @@ namespace tbvolscroll
             inputEvents.KeyUp += DisableKeyActions;
         }
 
+        public void DisableInput()
+        {
+            inputEvents.MouseWheel -= OnMouseScroll;
+            inputEvents.MouseMove -= UpdateBarPositionMouseMove;
+            inputEvents.KeyDown -= EnableKeyActions;
+            inputEvents.KeyUp -= DisableKeyActions;
+            inputEvents.Dispose();
+        }
+
 
 
         public void UpdateBarPositionMouseMove(object sender, MouseEventArgs e)

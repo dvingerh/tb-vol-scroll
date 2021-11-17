@@ -18,6 +18,7 @@ namespace tbvolscroll.Classes
         private static bool isAudioServiceRunning = true;
         private static Mutex appMutex;
         private static bool displayTrayIcon = true;
+        private static SysPowerHandler sysPowerHandler;
 
         public static int CurrentAudioDeviceIndex { get => currentAudioDeviceIndex; set => currentAudioDeviceIndex = value; }
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
@@ -31,5 +32,6 @@ namespace tbvolscroll.Classes
         public static bool IsAudioServiceRunning { get => isAudioServiceRunning; set => isAudioServiceRunning = value; }
         public static Mutex AppMutex { get => appMutex; set => appMutex = value; }
         public static bool DisplayTrayIcon { get => displayTrayIcon; set => displayTrayIcon = value; }
+        public static SysPowerHandler SysPowerHandler { get => sysPowerHandler; set => sysPowerHandler = value; }
     }
 }
