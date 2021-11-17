@@ -58,7 +58,6 @@ namespace tbvolscroll
 
         private async void AudioServiceStatusChanged(object sender, ServiceStatusEventArgs e)
         {
-
             if (Globals.IsAudioServiceRunning && e.Status != ServiceControllerStatus.Running)
             {
                 Globals.IsAudioServiceRunning = false;
@@ -99,36 +98,31 @@ namespace tbvolscroll
 
         public async Task HandleDeviceEvent(DeviceChangedArgs value)
         {
-            try
+            if (coreAudioController.DefaultPlaybackDevice != null && !isSubScribed)
             {
-                if (coreAudioController.DefaultPlaybackDevice != null && !isSubScribed)
-                {
-                    isSubScribed = true;
-                    coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(DeviceStateChanged);
-                    coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(DeviceStateChanged);
-                }
-
-
-                switch (value.ChangedType)
-                {
-                    case DeviceChangedType.VolumeChanged:
-                        await UpdateAudioState();
-                        if (Globals.AudioPlaybackDevicesForm != null)
-                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
-                        break;
-                    case DeviceChangedType.MuteChanged:
-                        await UpdateAudioState();
-                        break;
-                    default:
-                        await RefreshPlaybackDevices();
-                        await UpdateAudioState();
-                        if (Globals.AudioPlaybackDevicesForm != null)
-                            await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
-                        break;
-                }
+                isSubScribed = true;
+                coreAudioController.DefaultPlaybackDevice.VolumeChanged.Subscribe(DeviceStateChanged);
+                coreAudioController.DefaultPlaybackDevice.MuteChanged.Subscribe(DeviceStateChanged);
             }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
+
+            switch (value.ChangedType)
+            {
+                case DeviceChangedType.VolumeChanged:
+                    await UpdateAudioState();
+                    if (Globals.AudioPlaybackDevicesForm != null)
+                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                    break;
+                case DeviceChangedType.MuteChanged:
+                    await UpdateAudioState();
+                    break;
+                default:
+                    await RefreshPlaybackDevices();
+                    await UpdateAudioState();
+                    if (Globals.AudioPlaybackDevicesForm != null)
+                        await Globals.AudioPlaybackDevicesForm.RefeshOnDeviceActivity();
+                    break;
+            }
         }
 
 
@@ -196,30 +190,19 @@ namespace tbvolscroll
 
         public void SetMasterVolume(int volume)
         {
-            try
-            {
-                if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
-                    return;
-                Volume = volume;
-                coreAudioController.DefaultPlaybackDevice.Volume = volume;
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
+            if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
+                return;
+            Volume = volume;
+            coreAudioController.DefaultPlaybackDevice.Volume = volume;
         }
 
         public async Task SetMasterVolumeMute(bool isMuted = false)
         {
-            await Task.Run(async () =>
-            {
-                try
-                {
-                    if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
-                        return;
-                    await coreAudioController.DefaultPlaybackDevice.MuteAsync(isMuted);
-                }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
 
-            });
+            if (coreAudioController == null || coreAudioController.DefaultPlaybackDevice == null)
+                return;
+            await coreAudioController.DefaultPlaybackDevice.MuteAsync(isMuted);
         }
 
         public async Task OpenSndVol()
@@ -277,79 +260,69 @@ namespace tbvolscroll
             {
                 if ((delta < 0 && Globals.AudioHandler.Volume != 0) || (delta > 0 && Globals.AudioHandler.Volume != 100))
                 {
-                    try
+                    int newVolume = Globals.AudioHandler.Volume;
+
+                    if (delta < 0)
                     {
-
-                        int newVolume = Globals.AudioHandler.Volume;
-
-                        if (delta < 0)
+                        if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
+                            newVolume -= 1;
+                        else
+                            newVolume -= Settings.Default.VolumeStep;
+                        if (newVolume <= 0 && Globals.AudioHandler.Muted == false)
                         {
-                            if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume <= Settings.Default.PreciseScrollThreshold)
-                                newVolume -= 1;
-                            else
-                                newVolume -= Settings.Default.VolumeStep;
-                            if (newVolume <= 0 && Globals.AudioHandler.Muted == false)
-                            {
-                                newVolume = 0;
-                                Globals.AudioHandler.SetMasterVolume(newVolume);
-                                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
-                            }
-                            else
-                                Globals.AudioHandler.SetMasterVolume(newVolume);
+                            newVolume = 0;
+                            Globals.AudioHandler.SetMasterVolume(newVolume);
+                            await Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
                         }
                         else
-                        {
-                            if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume < Settings.Default.PreciseScrollThreshold)
-                                newVolume += 1;
-                            else
-                                newVolume += Settings.Default.VolumeStep;
-                            if (newVolume > 0 && Globals.AudioHandler.Muted == true)
-                                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
-                            if (newVolume > 100)
-                                newVolume = 100;
                             Globals.AudioHandler.SetMasterVolume(newVolume);
-
-                        }
                     }
-                    catch (Exception ex) { Console.WriteLine(ex.ToString());  }
+                    else
+                    {
+                        if (Globals.InputHandler.IsAltDown && Settings.Default.ManualPreciseVolumeShortcut || Globals.AudioHandler.Volume < Settings.Default.PreciseScrollThreshold)
+                            newVolume += 1;
+                        else
+                            newVolume += Settings.Default.VolumeStep;
+                        if (newVolume > 0 && Globals.AudioHandler.Muted == true)
+                            await Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
+                        if (newVolume > 100)
+                            newVolume = 100;
+                        Globals.AudioHandler.SetMasterVolume(newVolume);
+
+                    }
                 }
             });
         }
 
         public async Task ToggleAudioPlaybackDevice(int delta)
         {
-            try
+            List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
+            audioDevicesList.AddRange(Globals.AudioHandler.AudioDevices);
+            CoreAudioDevice curDevice = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice;
+            if (Globals.CurrentAudioDeviceIndex == -1)
+                Globals.CurrentAudioDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
+            int newDeviceIndex = Globals.CurrentAudioDeviceIndex;
+
+            if (delta < 0)
             {
-                List<CoreAudioDevice> audioDevicesList = new List<CoreAudioDevice>();
-                audioDevicesList.AddRange(Globals.AudioHandler.AudioDevices);
-                CoreAudioDevice curDevice = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice;
-                if (Globals.CurrentAudioDeviceIndex == -1)
-                    Globals.CurrentAudioDeviceIndex = audioDevicesList.FindIndex(x => x.Id == curDevice.Id);
-                int newDeviceIndex = Globals.CurrentAudioDeviceIndex;
-
-                if (delta < 0)
-                {
-                    if (Globals.CurrentAudioDeviceIndex > 0)
-                        --Globals.CurrentAudioDeviceIndex;
-                    else
-                        Globals.CurrentAudioDeviceIndex = 0;
-                }
+                if (Globals.CurrentAudioDeviceIndex > 0)
+                    --Globals.CurrentAudioDeviceIndex;
                 else
-                {
-                    if (Globals.CurrentAudioDeviceIndex < audioDevicesList.Count - 1)
-                        ++Globals.CurrentAudioDeviceIndex;
-                    else
-                        Globals.CurrentAudioDeviceIndex = audioDevicesList.Count - 1;
-                }
-
-                if (newDeviceIndex != Globals.CurrentAudioDeviceIndex)
-                {
-                    CoreAudioDevice newPlaybackDevice = audioDevicesList[Globals.CurrentAudioDeviceIndex];
-                    await newPlaybackDevice.SetAsDefaultAsync();
-                }
+                    Globals.CurrentAudioDeviceIndex = 0;
             }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-        }
+            else
+            {
+                if (Globals.CurrentAudioDeviceIndex < audioDevicesList.Count - 1)
+                    ++Globals.CurrentAudioDeviceIndex;
+                else
+                    Globals.CurrentAudioDeviceIndex = audioDevicesList.Count - 1;
+            }
 
+            if (newDeviceIndex != Globals.CurrentAudioDeviceIndex)
+            {
+                CoreAudioDevice newPlaybackDevice = audioDevicesList[Globals.CurrentAudioDeviceIndex];
+                await newPlaybackDevice.SetAsDefaultAsync();
+            }
+        }
     }
 }
