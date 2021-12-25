@@ -14,13 +14,13 @@
     <Setting Name="BarHeightPadding" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="UseBarGradient" Type="System.Boolean" Scope="User">
+    <Setting Name="VolumeBarUseGradientColor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="BarColor" Type="System.Drawing.Color" Scope="User">
+    <Setting Name="VolumeBarSolidColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">SkyBlue</Value>
     </Setting>
-    <Setting Name="BarOpacity" Type="System.Double" Scope="User">
+    <Setting Name="VolumeBarOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="FontStyle" Type="System.Drawing.Font" Scope="User">
@@ -46,6 +46,18 @@
     </Setting>
     <Setting Name="ManualPreciseVolumeShortcut" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DisplayTrayIconAsText" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TrayIconTextUseGradientColor" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TrayIconTextSolidColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">SkyBlue</Value>
+    </Setting>
+    <Setting Name="DisplayVolumeBarScrolling" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

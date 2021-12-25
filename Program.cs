@@ -26,7 +26,6 @@ namespace tbvolscroll
         {
             bool noTrayArg = args.Any("notray".Contains);
             bool updateDoneArg = args.Any("update-done".Contains);
-            bool restartArg = args.Any("restart".Contains);
             bool adminArg = args.Any("admin".Contains);
             bool audioSrvArg = args.Any("audiosrv".Contains);
 
@@ -43,7 +42,7 @@ namespace tbvolscroll
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg, audioSrvArg));
+            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg: updateDoneArg));
         }
     }
 }

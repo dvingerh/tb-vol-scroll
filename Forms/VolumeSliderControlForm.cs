@@ -1,6 +1,3 @@
-using AudioSwitcher.AudioApi;
-using AudioSwitcher.AudioApi.CoreAudio;
-using AudioSwitcher.AudioApi.Observables;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,24 +10,25 @@ namespace tbvolscroll.Forms
 {
     public partial class VolumeSliderControlForm : Form
     {
-        IDisposable deviceObserver;
-        IDisposable deviceVolumeObserver;
-        private double currentPeakValue = 0;
-
-        private readonly Queue<DevicePeakValueChangedArgs> updatePeakValueQueue = new Queue<DevicePeakValueChangedArgs>();
+        private readonly Queue<int> updateVolumeQueue = new Queue<int>();
+        private Task currentUpdateVolumeTask = null;
+        private readonly Queue<double> updatePeakValueQueue = new Queue<double>();
         private Task currentPeakValueTask = null;
+        private int lastTrackBarValue = 0;
 
         public VolumeSliderControlForm()
         {
             InitializeComponent();
+            Globals.VolumeSliderControlForm = this;
         }
 
-        private async void OnFormShown(object sender, EventArgs e)
+        private void OnFormShown(object sender, EventArgs e)
         {
-            VolumeTrackBar.Value = Globals.AudioHandler.Volume;
-            VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-            AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
-            PeakMeterPictureBox.BackColor = Properties.Settings.Default.BarColor;
+            lastTrackBarValue = (int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume;
+            VolumeTrackBar.Value = (int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume;
+            VolumeLabel.Text = $"{(int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume}%";
+            AudioDeviceLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
+            PeakMeterPictureBox.BackColor = Properties.Settings.Default.VolumeBarSolidColor;
 
 
             Point position = Cursor.Position;
@@ -53,37 +51,8 @@ namespace tbvolscroll.Forms
                     break;
 
             }
-
-            deviceObserver = Globals.AudioHandler.CoreAudioController.AudioDeviceChanged.Subscribe(async x =>
-            {
-                await Task.Run(async () =>
-                {
-                    await StartPeakVolumeMeter();
-                });
-            });
-
-            await Task.Run(async () =>
-            {
-                await StartPeakVolumeMeter();
-            });
         }
 
-        public async Task StartPeakVolumeMeter()
-        {
-            try
-            {
-                var device = await Globals.AudioHandler.CoreAudioController.GetDefaultDeviceAsync(DeviceType.Playback, Role.Multimedia);
-                if (device != null)
-                {
-                    deviceVolumeObserver = device.PeakValueChanged.Subscribe(UpdatePeakValue);
-                    if (currentPeakValue == 0)
-                        UpdatePeakValue(new DevicePeakValueChangedArgs(null, 0));
-                }
-                else
-                    CloseFormOnDeacivate(null, null);
-            }
-            catch (Exception ex) { Console.WriteLine(ex.ToString()); }
-        }
 
         private async Task ProcessPeakValueEventQueue()
         {
@@ -100,61 +69,96 @@ namespace tbvolscroll.Forms
             }
         }
 
+        private async Task ProcessVolumeQueue()
+        {
+            if ((currentUpdateVolumeTask == null) || currentUpdateVolumeTask.IsCompleted)
+            {
+                if (updateVolumeQueue.Count > 0)
+                {
+                    var volumeArgs = updateVolumeQueue.Dequeue();
+                    currentUpdateVolumeTask = HandleVolumeUpdate(volumeArgs);
+                    await currentUpdateVolumeTask;
 
-        private async void UpdatePeakValue(DevicePeakValueChangedArgs peakValue)
+                    await ProcessVolumeQueue();
+                }
+            }
+        }
+
+
+
+        public async void UpdatePeakValue(double peakValue)
         {
             updatePeakValueQueue.Enqueue(peakValue);
             await ProcessPeakValueEventQueue();
         }
 
-        private async Task HandlePeakValueUpdate(DevicePeakValueChangedArgs peakValue)
+        private async Task HandleVolumeUpdate(int volume)
         {
-            currentPeakValue = Math.Round(peakValue.PeakValue);
-            if (currentPeakValue < 0)
-                currentPeakValue = 0;
-            if (currentPeakValue > 100)
-                currentPeakValue = 100;
+            if (AudioState.Volume != volume)
+            {
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        Invoke((MethodInvoker)async delegate
+                        {
+                            if (AudioState.Volume == 0)
+                                await Globals.AudioHandler.SetDeviceVolume(10);
+                            await Globals.AudioHandler.SetDeviceVolume(volume);
+                            if (AudioState.CoreAudioController.DefaultPlaybackDevice.Volume == 0 && AudioState.Muted == false)
+                                await Globals.AudioHandler.SetDeviceMute(isMuted: true);
+                            else if (AudioState.CoreAudioController.DefaultPlaybackDevice.Volume > 0 && AudioState.Muted == true)
+                                await Globals.AudioHandler.SetDeviceMute(isMuted: false);
 
-            await Globals.AudioHandler.UpdateAudioState();
+                            VolumeLabel.Text = $"{VolumeTrackBar.Value}%";
+                            SystemSounds.Exclamation.Play();
+                        });
+                    }
+                    catch { }
+                });
+            }
+        }
 
-            double value = Math.Round(peakValue.PeakValue / 100 * Globals.AudioHandler.Volume, 2);
+        private async Task HandlePeakValueUpdate(double peakValue)
+        {
             await Task.Run(() =>
             {
                 try
                 {
                     Invoke((MethodInvoker)delegate
                     {
+                        double value = Math.Round(peakValue / 100 * AudioState.Volume, 2);
                         PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
                         double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                         PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
-                        VolumeTrackBar.Value = Globals.AudioHandler.Volume;
-                        VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                        AudioDeviceLabel.Text = Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name;
+                        AudioDeviceLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
                     });
                 }
-                catch { }
+                catch (Exception ex){
+                    Console.WriteLine(ex.ToString());
+                }
             });
         }
 
-        private async void UpdateVolume(object sender, EventArgs e)
-        {
-            Globals.AudioHandler.SetMasterVolume(VolumeTrackBar.Value);
-            if (Globals.AudioHandler.Volume == 0 && Globals.AudioHandler.Muted == false)
-                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: true);
-            else if (Globals.AudioHandler.Volume > 0 && Globals.AudioHandler.Muted == true)
-                await Globals.AudioHandler.SetMasterVolumeMute(isMuted: false);
-            VolumeLabel.Text = $"{Globals.AudioHandler.Volume}%";
-            SystemSounds.Exclamation.Play();
-        }
 
-        private void CloseFormOnDeacivate(object sender, EventArgs e)
+        private void CloseFormOnDeactivate(object sender, EventArgs e)
         {
-            deviceObserver.Dispose();
-            deviceVolumeObserver.Dispose();
             updatePeakValueQueue.Clear();
+            updateVolumeQueue.Clear();
             currentPeakValueTask = null;
+            currentUpdateVolumeTask = null;
             Globals.VolumeSliderControlForm = null;
             Close();
+        }
+
+        private async void UpdateVolumeFromTrackBar(object sender, EventArgs e)
+        {
+            if (lastTrackBarValue != VolumeTrackBar.Value)
+            {
+                lastTrackBarValue = VolumeTrackBar.Value;
+                updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
+                await ProcessVolumeQueue();
+            }
         }
     }
 }

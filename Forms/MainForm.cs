@@ -26,9 +26,11 @@ namespace tbvolscroll
             }
         }
 
+
         private readonly Timer hideVolumeBarTimer = new Timer();
 
-        public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false, bool audioSrvArg = false)
+
+        public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false)
         {
             InitializeComponent();
             hideVolumeBarTimer.Tick += HideVolumeBar;
@@ -39,13 +41,6 @@ namespace tbvolscroll
                 TrayNotifyIcon.Visible = false;
             }
 
-
-            if (audioSrvArg)
-            {
-                TrayNotifyIcon.Visible = true;
-                TrayNotifyIcon.ShowBalloonTip(2500, "Windows Audio service active", $"{Application.ProductName} has been restarted.", ToolTipIcon.Info);
-            }
-
             if (updateDoneArg)
             {
                 TrayNotifyIcon.Visible = true;
@@ -53,12 +48,6 @@ namespace tbvolscroll
             }
 
             bool hasAdmin = Utils.IsAdministrator();
-
-            if (attemptedAdmin && hasAdmin)
-            {
-                TrayNotifyIcon.Visible = true;
-                TrayNotifyIcon.ShowBalloonTip(2500, "Administrator permissions available", $"{Application.ProductName} has restarted with administrator permissions.", ToolTipIcon.Info);
-            }
 
             TitleLabelMenuItem.Text = $"{Application.ProductName} v{Application.ProductVersion}" + (hasAdmin ? " (Administrator)" : "");
 
@@ -95,43 +84,26 @@ namespace tbvolscroll
                 }
 
                 Globals.MainForm = this;
-                Globals.SysPowerHandler = new SysPowerHandler();
                 Globals.AudioHandler = new AudioHandler();
-                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
 
-                await Globals.AudioHandler.RefreshPlaybackDevices();
-                await Globals.AudioHandler.UpdateAudioState();
+                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
 
                 Invoke((MethodInvoker)delegate
                {
                    VolumeTextLabel.Font = Settings.Default.FontStyle;
-                   VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                   TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
-
-                   SizeF newMinSizes = Utils.CalculateBarSize(VolumeTextLabel, "100%");
-                   Size minSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
+                   SizeF newMinSizes = Utils.CalculateVolumeBarSize(VolumeTextLabel, "100%");
+                   Size minSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + (int)newMinSizes.Height + 5);
+                   MinimumSize = minSize;
                    Height = minSize.Height;
-                   Width = (int)Utils.CalculateBarSize(VolumeTextLabel, "100%").Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
-
-                   if (Settings.Default.UseBarGradient)
-                       VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
-                   else
-                       VolumeTextLabel.BackColor = Settings.Default.BarColor;
-
+                   Width = minSize.Width;
                    SetVolumeBarPosition();
                    Utils.ShowInactiveTopmost();
                    Hide();
-
-                   SystemVolumeMixerMenuItem.Enabled = true;
-                   AudioPlaybackDevicesMenuItem.Enabled = true;
-                   VolumeSliderControlMenuItem.Enabled = true;
-                   MoreOptionsMenuItem.Enabled = true;
-
-
-                   Globals.ProgramIsReady = true;
                });
+                await Globals.AudioHandler.UpdateAudioState();
             });
         }
+
 
         public void SetVolumeBarPosition()
         {
@@ -169,9 +141,8 @@ namespace tbvolscroll
 
 
 
-        private void AutoHideVolume()
+        private void ShowVolumeBar()
         {
-            Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
             Utils.ShowInactiveTopmost();
             hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout);
             hideVolumeBarTimer.Start();
@@ -181,20 +152,19 @@ namespace tbvolscroll
         {
             Invoke((MethodInvoker)delegate
             {
-                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
                 Hide();
                 hideVolumeBarTimer.Stop();
+                Globals.IsDisplayingVolumeBar = false;
             });
         }
 
         public void HandleApplicationExit(Process process, int code = 0)
         {
             if (Globals.InputHandler != null)
-            {
                 Globals.InputHandler.InputEvents.Dispose();
-            }
-            if (Globals.AudioHandler != null)
-                Globals.AudioHandler.CoreAudioController.Dispose();
+            if (AudioState.CoreAudioController != null)
+                AudioState.CoreAudioController.Dispose();
+
             TrayNotifyIcon.Visible = false;
             TrayNotifyIcon.Icon = null;
             TrayNotifyIcon.Dispose();
@@ -219,7 +189,6 @@ namespace tbvolscroll
             Process proc = new Process();
             proc.StartInfo.FileName = Application.ExecutablePath;
             proc.StartInfo.UseShellExecute = true;
-            proc.StartInfo.Arguments = "admin";
             HandleApplicationExit(proc, 0);
         }
 
@@ -240,7 +209,7 @@ namespace tbvolscroll
             proc.StartInfo.FileName = Application.ExecutablePath;
             proc.StartInfo.UseShellExecute = true;
             proc.StartInfo.Verb = "runas";
-            proc.StartInfo.Arguments = "restart";
+            proc.StartInfo.Arguments = "admin";
             HandleApplicationExit(proc, 0);
         }
 
@@ -257,106 +226,121 @@ namespace tbvolscroll
 
         private async void VolumeMixerMenuItemClick(object sender, EventArgs e)
         {
-            await Globals.AudioHandler.OpenSndVol();
+            await Utils.OpenSndVol();
         }
 
-        private async void AudioDevicesMenuItemClick(object sender, EventArgs e)
+        private void AudioDevicesMenuItemClick(object sender, EventArgs e)
         {
             new AudioPlaybackDevicesForm().ShowDialog();
-            await Globals.AudioHandler.UpdateAudioState();
         }
 
         public async Task DoScrollUpdate(string updateType)
         {
-            await Task.Run(async() =>
+            await Task.Run(() =>
             {
-                hideVolumeBarTimer.Stop();
-                await Globals.AudioHandler.UpdateAudioState();
                 Invoke((MethodInvoker)delegate
                 {
-
+                    hideVolumeBarTimer.Stop();
                     switch (updateType)
                     {
                         case "volume":
-                            VolumeTextLabel.Text = $"{Globals.AudioHandler.Volume}%";
-                            TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
-
-                            Width = (int)Utils.CalculateBarSize(VolumeTextLabel, "100%").Width + Globals.AudioHandler.Volume + Settings.Default.BarWidthPadding;
-                            if (Settings.Default.UseBarGradient)
-                                VolumeTextLabel.BackColor = Utils.CalculateColor(Globals.AudioHandler.Volume);
+                            VolumeTextLabel.Text = $"{AudioState.Volume}%";
+                            TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: {AudioState.Volume}%";
+                            Width = (int)Utils.CalculateVolumeBarSize(VolumeTextLabel, "100%").Width + AudioState.Volume + Settings.Default.BarWidthPadding;
+                            if (Settings.Default.VolumeBarUseGradientColor)
+                                VolumeTextLabel.BackColor = Utils.CalculateColor(AudioState.Volume);
                             else
-                                VolumeTextLabel.BackColor = Settings.Default.BarColor;
+                                VolumeTextLabel.BackColor = Settings.Default.VolumeBarSolidColor;
                             break;
                         case "device":
-                            VolumeTextLabel.Text = $"({Globals.CurrentAudioDeviceIndex + 1}/{Globals.AudioHandler.GetAudioDevicesList().Count}) {Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}";
-                            Width = Settings.Default.BarWidthPadding + (int)Utils.CalculateBarSize(VolumeTextLabel, VolumeTextLabel.Text).Width + 15;
-                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
+                            VolumeTextLabel.Text = $"({AudioState.CurrentAudioDeviceIndex + 1}/{Globals.AudioHandler.GetPlaybackDevices().Result.Count}) {AudioState.CoreAudioController.DefaultPlaybackDevice.Name}";
+                            Width = Settings.Default.BarWidthPadding + (int)Utils.CalculateVolumeBarSize(VolumeTextLabel, VolumeTextLabel.Text).Width + (MinimumSize.Width / 2);
+                            VolumeTextLabel.BackColor = Settings.Default.VolumeBarSolidColor;
                             break;
                         case "mute":
-                            if (Globals.AudioHandler.Muted)
+                            if (AudioState.Muted)
                             {
-                                VolumeTextLabel.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
-                                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
+                                VolumeTextLabel.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
+                                TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
                             }
                             else
                             {
-                                VolumeTextLabel.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: Unmuted";
-                                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
+                                VolumeTextLabel.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: Unmuted";
+                                TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: {AudioState.Volume}%";
                             }
-                            Width = Settings.Default.BarWidthPadding + (int)Utils.CalculateBarSize(VolumeTextLabel, VolumeTextLabel.Text).Width + 15;
-                            VolumeTextLabel.BackColor = Settings.Default.BarColor;
+                            Width = Settings.Default.BarWidthPadding + (int)Utils.CalculateVolumeBarSize(VolumeTextLabel, VolumeTextLabel.Text).Width + (MinimumSize.Width / 2);
+                            VolumeTextLabel.BackColor = Settings.Default.VolumeBarSolidColor;
                             break;
                     }
-                    Opacity = Settings.Default.BarOpacity;
-                    Globals.IsDisplayingVolumeBar = true;
                     SetVolumeBarPosition();
-                    AutoHideVolume();
+                    if (!Settings.Default.DisplayVolumeBarScrolling && updateType == "volume")
+                        return;
+                    Opacity = Settings.Default.VolumeBarOpacity;
+                    Globals.IsDisplayingVolumeBar = true;
+                    ShowVolumeBar();
                 });
             });
         }
 
         public void SetTrayIcon()
         {
-            if (Globals.AudioHandler.AudioDisabled)
+            if (!AudioState.AudioAvailable)
             {
-                Globals.AudioHandler.AudioSrvStatusController.Refresh();
-                if (Globals.AudioHandler.AudioSrvStatusController.Status == ServiceControllerStatus.Running)
-                    TrayNotifyIcon.Text = "No playback devices available";
+                Globals.AudioHandler.AudioSrvPoller.Refresh();
+                if (Globals.AudioHandler.AudioSrvPoller.Status == ServiceControllerStatus.Running)
+                    TrayNotifyIcon.Text = "No playback device available";
                 else
-                    TrayNotifyIcon.Text = "Windows Audio service not running";
-                TrayNotifyIcon.Icon = Resources.voldisabled;
+                    TrayNotifyIcon.Text = "Windows Audio service inactive";
+                if (!Settings.Default.DisplayTrayIconAsText)
+                    TrayNotifyIcon.Icon = Resources.voldisabled;
+                else
+                    TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("X");
             }
-            else if (Globals.AudioHandler.Muted)
+            else if (AudioState.Muted)
             {
-                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
-                TrayNotifyIcon.Icon = Resources.volmute;
+                TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: Muted";
+                if (!Settings.Default.DisplayTrayIconAsText)
+                    TrayNotifyIcon.Icon = Resources.volmute;
+                else
+                    TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("M");
             }
             else
             {
-                TrayNotifyIcon.Text = $"{Globals.AudioHandler.CoreAudioController.DefaultPlaybackDevice.Name}: {Globals.AudioHandler.Volume}%";
-                if (Globals.AudioHandler.Volume >= 90)
-                    TrayNotifyIcon.Icon = Resources.vol100;
-                if (Globals.AudioHandler.Volume >= 80 && Globals.AudioHandler.Volume < 90)
-                    TrayNotifyIcon.Icon = Resources.vol90;
-                if (Globals.AudioHandler.Volume >= 70 && Globals.AudioHandler.Volume < 80)
-                    TrayNotifyIcon.Icon = Resources.vol80;
-                if (Globals.AudioHandler.Volume >= 60 && Globals.AudioHandler.Volume < 70)
-                    TrayNotifyIcon.Icon = Resources.vol70;
-                if (Globals.AudioHandler.Volume >= 50 && Globals.AudioHandler.Volume < 60)
-                    TrayNotifyIcon.Icon = Resources.vol60;
-                if (Globals.AudioHandler.Volume >= 40 && Globals.AudioHandler.Volume < 50)
-                    TrayNotifyIcon.Icon = Resources.vol50;
-                if (Globals.AudioHandler.Volume >= 30 && Globals.AudioHandler.Volume < 40)
-                    TrayNotifyIcon.Icon = Resources.vol40;
-                if (Globals.AudioHandler.Volume >= 20 && Globals.AudioHandler.Volume < 30)
-                    TrayNotifyIcon.Icon = Resources.vol30;
-                if (Globals.AudioHandler.Volume >= 10 && Globals.AudioHandler.Volume < 20)
-                    TrayNotifyIcon.Icon = Resources.vol20;
-                if (Globals.AudioHandler.Volume > 0 && Globals.AudioHandler.Volume < 10)
-                    TrayNotifyIcon.Icon = Resources.vol10;
+                TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: {AudioState.Volume}%";
+                if (!Settings.Default.DisplayTrayIconAsText)
+                {
+                    if (Settings.Default.VolumeBarUseGradientColor)
+                    {
+                        if (AudioState.Volume >= 90)
+                            TrayNotifyIcon.Icon = Resources.vol100;
+                        if (AudioState.Volume >= 80 && AudioState.Volume < 90)
+                            TrayNotifyIcon.Icon = Resources.vol90;
+                        if (AudioState.Volume >= 70 && AudioState.Volume < 80)
+                            TrayNotifyIcon.Icon = Resources.vol80;
+                        if (AudioState.Volume >= 60 && AudioState.Volume < 70)
+                            TrayNotifyIcon.Icon = Resources.vol70;
+                        if (AudioState.Volume >= 50 && AudioState.Volume < 60)
+                            TrayNotifyIcon.Icon = Resources.vol60;
+                        if (AudioState.Volume >= 40 && AudioState.Volume < 50)
+                            TrayNotifyIcon.Icon = Resources.vol50;
+                        if (AudioState.Volume >= 30 && AudioState.Volume < 40)
+                            TrayNotifyIcon.Icon = Resources.vol40;
+                        if (AudioState.Volume >= 20 && AudioState.Volume < 30)
+                            TrayNotifyIcon.Icon = Resources.vol30;
+                        if (AudioState.Volume >= 10 && AudioState.Volume < 20)
+                            TrayNotifyIcon.Icon = Resources.vol20;
+                        if (AudioState.Volume > 0 && AudioState.Volume < 10)
+                            TrayNotifyIcon.Icon = Resources.vol10;
+                    }
+                    else
+                        TrayNotifyIcon.Icon = Resources.voltray;
+                }
+                else
+                    TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(AudioState.Volume.ToString());
             }
-            Icon = TrayNotifyIcon.Icon;
         }
+
+
 
 
 
@@ -368,7 +352,7 @@ namespace tbvolscroll
 
         private void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
         {
-            if (Globals.ProgramIsReady)
+            if (AudioState.AudioAvailable)
             {
                 if (e.Button == MouseButtons.Middle)
                 {

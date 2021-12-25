@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace tbvolscroll.Classes
 {
@@ -30,14 +32,17 @@ namespace tbvolscroll.Classes
                 switch (pd.Value.ToString())
                 {
                     case "4":
-                        Globals.InputHandler.DisableInput();
                         Globals.InputHandler.InputEvents.Dispose();
-                        Globals.AudioHandler.CoreAudioController.Dispose();
+                        AudioState.CoreAudioController.Dispose();
                         Globals.MainForm.TrayNotifyIcon.Visible = false;
                         break;
                     case "7":
                         managementEventWatcher.Stop();
-                        Globals.MainForm.RestartAppNormal(null, null);
+                        Process proc = new Process();
+                        proc.StartInfo.FileName = Application.ExecutablePath;
+                        proc.StartInfo.UseShellExecute = true;
+                        proc.StartInfo.Arguments = "audiosrv";
+                        Globals.MainForm.HandleApplicationExit(proc, 0);
                         break;
                 }
             }

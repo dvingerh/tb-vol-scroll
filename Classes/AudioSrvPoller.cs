@@ -11,7 +11,7 @@ namespace tbvolscroll.Classes
     using System.Threading.Tasks;
     using System.ServiceProcess; // not referenced by default
 
-    public class ExtendedServiceController : ServiceController
+    public class AudioSrvPoller : ServiceController
     {
         public event EventHandler<ServiceStatusEventArgs> StatusChanged;
         private readonly Dictionary<ServiceControllerStatus, Task> _tasks = new Dictionary<ServiceControllerStatus, Task>();
@@ -25,7 +25,7 @@ namespace tbvolscroll.Classes
             }
         }
 
-        public ExtendedServiceController(string ServiceName) : base(ServiceName)
+        public AudioSrvPoller(string ServiceName) : base(ServiceName)
         {
             foreach (ServiceControllerStatus status in Enum.GetValues(typeof(ServiceControllerStatus)))
             {

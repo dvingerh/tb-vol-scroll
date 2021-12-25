@@ -13,6 +13,8 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
 
@@ -80,16 +82,57 @@ namespace tbvolscroll
             }
 
             GetWindowRect(new HandleRef(null, windowHandle), ref rect);
-            bool isHidden = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top).Contains(screen.Bounds);
-            return isHidden;
+
+            IntPtr hWnd = FindWindowByClassName(IntPtr.Zero, "Shell_TrayWnd");
+            Rectangle shellTrayArea = GetWindowRectangle(hWnd);
+            return shellTrayArea.Contains(screen.Bounds);
         }
+
+        public struct RECTT
+        {
+            public int Left;
+            public int Top;
+            public int Right;
+            public int Bottom;
+
+            public Rectangle ToRectangle() => Rectangle.FromLTRB(Left, Top, Right, Bottom);
+        }
+
+        [SuppressUnmanagedCodeSecurity, SecurityCritical]
+        internal static class SafeNativeMethods
+        {
+            [DllImport("User32.dll", SetLastError = true)]
+            internal static extern bool GetWindowRect(IntPtr hwnd, out RECTT lpRect);
+
+            [DllImport("User32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            internal static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        }
+
+        //Helper methods
+        [SecuritySafeCritical]
+        public static IntPtr FindWindowByClassName(IntPtr hwndParent, string className)
+        {
+            return SafeNativeMethods.FindWindowEx(hwndParent, IntPtr.Zero, className, null);
+        }
+
+        [SecuritySafeCritical]
+        public static Rectangle GetWindowRectangle(IntPtr windowHandle)
+        {
+            RECTT rect;
+            new UIPermission(UIPermissionWindow.AllWindows).Demand();
+            SafeNativeMethods.GetWindowRect(windowHandle, out rect);
+            return rect.ToRectangle();
+        }
+
 
         public static bool IsCursorInTaskbar()
         {
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
-            return !workingArea.Contains(position);
+            IntPtr hWnd = FindWindowByClassName(IntPtr.Zero, "Shell_TrayWnd");
+            Rectangle shellTrayArea = GetWindowRectangle(hWnd);
+            return shellTrayArea.Contains(position);
         }
 
         /// <summary>Gets the taskbar's position on the screen.</summary>

@@ -60,7 +60,7 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.FlatAppearance.BorderSize = 0;
             this.CheckingForUpdatesLabel.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.Control;
             this.CheckingForUpdatesLabel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight;
-            this.CheckingForUpdatesLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CheckingForUpdatesLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CheckingForUpdatesLabel.Image = global::tbvolscroll.Properties.Resources.spinner;
             this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(38, 14);
             this.CheckingForUpdatesLabel.Name = "CheckingForUpdatesLabel";

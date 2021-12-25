@@ -66,7 +66,7 @@ namespace tbvolscroll.Forms
             this.CloseButton.TabIndex = 7;
             this.CloseButton.Text = "X";
             this.CloseButton.UseVisualStyleBackColor = true;
-            this.CloseButton.Click += new System.EventHandler(this.CloseFormOnDeacivate);
+            this.CloseButton.Click += new System.EventHandler(this.CloseFormOnDeactivate);
             // 
             // PeakMeterPanel
             // 
@@ -117,7 +117,7 @@ namespace tbvolscroll.Forms
             this.VolumeTrackBar.TabIndex = 3;
             this.VolumeTrackBar.TickFrequency = 4;
             this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.VolumeTrackBar.ValueChanged += new System.EventHandler(this.UpdateVolume);
+            this.VolumeTrackBar.Scroll += new System.EventHandler(this.UpdateVolumeFromTrackBar);
             // 
             // VolumeSliderControlForm
             // 
@@ -133,7 +133,7 @@ namespace tbvolscroll.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.TopMost = true;
-            this.Deactivate += new System.EventHandler(this.CloseFormOnDeacivate);
+            this.Deactivate += new System.EventHandler(this.CloseFormOnDeactivate);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.BorderPanel.ResumeLayout(false);
             this.BorderPanel.PerformLayout();

@@ -74,36 +74,36 @@ namespace tbvolscroll.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UseBarGradient {
+        public bool VolumeBarUseGradientColor {
             get {
-                return ((bool)(this["UseBarGradient"]));
+                return ((bool)(this["VolumeBarUseGradientColor"]));
             }
             set {
-                this["UseBarGradient"] = value;
+                this["VolumeBarUseGradientColor"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
-        public global::System.Drawing.Color BarColor {
+        public global::System.Drawing.Color VolumeBarSolidColor {
             get {
-                return ((global::System.Drawing.Color)(this["BarColor"]));
+                return ((global::System.Drawing.Color)(this["VolumeBarSolidColor"]));
             }
             set {
-                this["BarColor"] = value;
+                this["VolumeBarSolidColor"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double BarOpacity {
+        public double VolumeBarOpacity {
             get {
-                return ((double)(this["BarOpacity"]));
+                return ((double)(this["VolumeBarOpacity"]));
             }
             set {
-                this["BarOpacity"] = value;
+                this["VolumeBarOpacity"] = value;
             }
         }
         
@@ -200,6 +200,54 @@ namespace tbvolscroll.Properties {
             }
             set {
                 this["ManualPreciseVolumeShortcut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DisplayTrayIconAsText {
+            get {
+                return ((bool)(this["DisplayTrayIconAsText"]));
+            }
+            set {
+                this["DisplayTrayIconAsText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TrayIconTextUseGradientColor {
+            get {
+                return ((bool)(this["TrayIconTextUseGradientColor"]));
+            }
+            set {
+                this["TrayIconTextUseGradientColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
+        public global::System.Drawing.Color TrayIconTextSolidColor {
+            get {
+                return ((global::System.Drawing.Color)(this["TrayIconTextSolidColor"]));
+            }
+            set {
+                this["TrayIconTextSolidColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DisplayVolumeBarScrolling {
+            get {
+                return ((bool)(this["DisplayVolumeBarScrolling"]));
+            }
+            set {
+                this["DisplayVolumeBarScrolling"] = value;
             }
         }
     }

@@ -46,7 +46,7 @@ namespace tbvolscroll.Forms
             // ApplyButton
             // 
             this.ApplyButton.Enabled = false;
-            this.ApplyButton.Location = new System.Drawing.Point(214, 201);
+            this.ApplyButton.Location = new System.Drawing.Point(222, 201);
             this.ApplyButton.Name = "ApplyButton";
             this.ApplyButton.Size = new System.Drawing.Size(75, 23);
             this.ApplyButton.TabIndex = 0;
@@ -76,27 +76,24 @@ namespace tbvolscroll.Forms
             // NameColumn
             // 
             this.NameColumn.Text = "Name";
-            this.NameColumn.Width = 300;
+            this.NameColumn.Width = 370;
             // 
             // IsDefaultColumn
             // 
             this.IsDefaultColumn.Text = "Default";
-            this.IsDefaultColumn.Width = 75;
             // 
             // VolumeColumn
             // 
             this.VolumeColumn.Text = "Volume";
-            this.VolumeColumn.Width = 75;
             // 
             // MutedColumn
             // 
             this.MutedColumn.Text = "Muted";
-            this.MutedColumn.Width = 75;
             // 
             // RefreshButton
             // 
             this.RefreshButton.Enabled = false;
-            this.RefreshButton.Location = new System.Drawing.Point(295, 201);
+            this.RefreshButton.Location = new System.Drawing.Point(303, 201);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(75, 23);
             this.RefreshButton.TabIndex = 2;
@@ -109,9 +106,9 @@ namespace tbvolscroll.Forms
             this.DescriptionLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DescriptionLabel.Location = new System.Drawing.Point(12, 9);
+            this.DescriptionLabel.Location = new System.Drawing.Point(12, 4);
             this.DescriptionLabel.Name = "DescriptionLabel";
-            this.DescriptionLabel.Size = new System.Drawing.Size(533, 25);
+            this.DescriptionLabel.Size = new System.Drawing.Size(533, 30);
             this.DescriptionLabel.TabIndex = 3;
             this.DescriptionLabel.Text = "The active device is marked green. Double-click to apply selected device and clos" +
     "e this window.";
@@ -136,7 +133,7 @@ namespace tbvolscroll.Forms
             this.CloseButton.TabIndex = 8;
             this.CloseButton.Text = "X";
             this.CloseButton.UseVisualStyleBackColor = true;
-            this.CloseButton.Click += new System.EventHandler(this.CloseFormOnDeactivate);
+            this.CloseButton.Click += new System.EventHandler(this.CloseForm);
             // 
             // AudioPlaybackDevicesForm
             // 
@@ -157,7 +154,7 @@ namespace tbvolscroll.Forms
             this.Name = "AudioPlaybackDevicesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Playback Devices";
-            this.Deactivate += new System.EventHandler(this.CloseFormOnDeactivate);
+            this.Deactivate += new System.EventHandler(this.CloseForm);
             this.Shown += new System.EventHandler(this.OnFormShown);
             this.BorderPanel.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -172,9 +169,9 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.ColumnHeader IsDefaultColumn;
         private System.Windows.Forms.ColumnHeader MutedColumn;
         private System.Windows.Forms.ColumnHeader VolumeColumn;
-        private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.Panel BorderPanel;
         private System.Windows.Forms.Button CloseButton;
+        public System.Windows.Forms.Button RefreshButton;
     }
 }
