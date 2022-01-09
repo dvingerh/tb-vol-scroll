@@ -41,6 +41,9 @@ namespace tbvolscroll
             VolumeBarOpacityTrackBar.Value = Convert.ToInt32(Settings.Default.VolumeBarOpacity * 100);
             CustomFontDialog.Font = Settings.Default.FontStyle;
             FontPreviewLabel.Font = Settings.Default.FontStyle;
+
+            TextRenderingHintComboBox.SelectedIndex = Settings.Default.TextRenderingHintType;
+
             if (Settings.Default.VolumeBarUseGradientColor)
             {
                 VolumeBarGradientColorCheckBox.Checked = true;
@@ -80,6 +83,10 @@ namespace tbvolscroll
                 {
                     bar.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
+                if (ctrl is ComboBox cBox)
+                {
+                    cBox.SelectedIndexChanged += new EventHandler(OnSettingsChanged);
+                }
             }
 
             foreach (Control ctrl in behaviourControls)
@@ -107,6 +114,7 @@ namespace tbvolscroll
             TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TextRenderingHintComboBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
 
         }
 
@@ -139,13 +147,16 @@ namespace tbvolscroll
 
             Settings.Default.AutoHideTimeOut = (int)AutoHideTimeOutNumericUpDown.Value;
 
+            Settings.Default.TextRenderingHintType = TextRenderingHintComboBox.SelectedIndex;
+            Globals.TextRenderingHintType = TextRenderingHintComboBox.SelectedIndex;
+
             Settings.Default.Save();
 
             if (doSetFont)
                 Globals.MainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
            
-            SizeF newMinSizes = Utils.CalculateVolumeBarSize(Globals.MainForm.VolumeTextLabel, "100%");
-            Globals.MainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + (int)newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + (int)newMinSizes.Height);
+            Size newMinSizes = Utils.CalculateLabelSize(Globals.MainForm.VolumeTextLabel, "100%");
+            Globals.MainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + newMinSizes.Height);
             Globals.MainForm.Width = Globals.MainForm.MinimumSize.Width;
             Globals.MainForm.Height = Globals.MainForm.MinimumSize.Height;
             Globals.MainForm.SetTrayIcon();
@@ -212,6 +223,7 @@ namespace tbvolscroll
             Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
             CustomFontDialog.Font = Settings.Default.FontStyle;
             FontPreviewLabel.Font = CustomFontDialog.Font;
+            TextRenderingHintComboBox.SelectedIndex = 1;
             RestoreDefaultValuesButton.Enabled = false;
         }
 
@@ -272,7 +284,7 @@ namespace tbvolscroll
                 ApplyConfigurationButton.Enabled = false;
         }
 
-        private void ConfigurationForm_Deactivate(object sender, EventArgs e)
+        private void CloseOnDeactivate(object sender, EventArgs e)
         {
             if (!ApplyConfigurationButton.Enabled)
                 Close();

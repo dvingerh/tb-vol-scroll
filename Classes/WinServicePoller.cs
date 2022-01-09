@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.ServiceProcess;
 
 namespace tbvolscroll.Classes
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.ServiceProcess; // not referenced by default
+    // By https://stackoverflow.com/a/68154774
 
-    public class AudioSrvPoller : ServiceController
+    public class WinServicePoller : ServiceController
     {
         public event EventHandler<ServiceStatusEventArgs> StatusChanged;
         private readonly Dictionary<ServiceControllerStatus, Task> _tasks = new Dictionary<ServiceControllerStatus, Task>();
@@ -25,7 +21,7 @@ namespace tbvolscroll.Classes
             }
         }
 
-        public AudioSrvPoller(string ServiceName) : base(ServiceName)
+        public WinServicePoller(string ServiceName) : base(ServiceName)
         {
             foreach (ServiceControllerStatus status in Enum.GetValues(typeof(ServiceControllerStatus)))
             {
@@ -48,10 +44,7 @@ namespace tbvolscroll.Classes
                             OnStatusChanged(new ServiceStatusEventArgs(status));
                             StartListening();
                         }
-                        catch
-                        {
-                            // You can either raise another event here with the exception or ignore it since it most likely means the service was uninstalled/lost communication
-                        }
+                        catch { }
                     });
                 }
             }

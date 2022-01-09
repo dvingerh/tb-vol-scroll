@@ -43,6 +43,8 @@
             this.FontStyleButton = new System.Windows.Forms.Button();
             this.CustomFontDialog = new System.Windows.Forms.FontDialog();
             this.AppearanceGroupBox = new System.Windows.Forms.GroupBox();
+            this.TextRenderingHintComboBox = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.DisplayVolumeBarScrollingCheckBox = new System.Windows.Forms.CheckBox();
             this.TrayIconTextColorLabel = new System.Windows.Forms.Label();
             this.TrayIconTextColorPreviewPictureBox = new System.Windows.Forms.PictureBox();
@@ -83,10 +85,10 @@
             // ApplyConfigurationButton
             // 
             this.ApplyConfigurationButton.Enabled = false;
-            this.ApplyConfigurationButton.Location = new System.Drawing.Point(328, 280);
+            this.ApplyConfigurationButton.Location = new System.Drawing.Point(328, 312);
             this.ApplyConfigurationButton.Name = "ApplyConfigurationButton";
             this.ApplyConfigurationButton.Size = new System.Drawing.Size(341, 25);
-            this.ApplyConfigurationButton.TabIndex = 18;
+            this.ApplyConfigurationButton.TabIndex = 19;
             this.ApplyConfigurationButton.Text = "Apply changes";
             this.ApplyConfigurationButton.UseVisualStyleBackColor = true;
             this.ApplyConfigurationButton.Click += new System.EventHandler(this.ApplyBarConfiguration);
@@ -223,6 +225,8 @@
             // 
             // AppearanceGroupBox
             // 
+            this.AppearanceGroupBox.Controls.Add(this.TextRenderingHintComboBox);
+            this.AppearanceGroupBox.Controls.Add(this.label1);
             this.AppearanceGroupBox.Controls.Add(this.DisplayVolumeBarScrollingCheckBox);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconTextColorLabel);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconTextColorPreviewPictureBox);
@@ -245,10 +249,34 @@
             this.AppearanceGroupBox.Controls.Add(this.SetVolumeBarWidthNumericUpDown);
             this.AppearanceGroupBox.Location = new System.Drawing.Point(329, 9);
             this.AppearanceGroupBox.Name = "AppearanceGroupBox";
-            this.AppearanceGroupBox.Size = new System.Drawing.Size(340, 265);
+            this.AppearanceGroupBox.Size = new System.Drawing.Size(340, 297);
             this.AppearanceGroupBox.TabIndex = 18;
             this.AppearanceGroupBox.TabStop = false;
             this.AppearanceGroupBox.Text = "Appearance";
+            // 
+            // TextRenderingHintComboBox
+            // 
+            this.TextRenderingHintComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.TextRenderingHintComboBox.FormattingEnabled = true;
+            this.TextRenderingHintComboBox.ItemHeight = 13;
+            this.TextRenderingHintComboBox.Items.AddRange(new object[] {
+            "System Default",
+            "ClearType",
+            "Anti-Alias",
+            "Single Bit Per Pixel"});
+            this.TextRenderingHintComboBox.Location = new System.Drawing.Point(151, 262);
+            this.TextRenderingHintComboBox.Name = "TextRenderingHintComboBox";
+            this.TextRenderingHintComboBox.Size = new System.Drawing.Size(172, 21);
+            this.TextRenderingHintComboBox.TabIndex = 27;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 265);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Text rendering hint:";
             // 
             // DisplayVolumeBarScrollingCheckBox
             // 
@@ -359,7 +387,7 @@
             // AutoRetryAdminCheckBox
             // 
             this.AutoRetryAdminCheckBox.AutoSize = true;
-            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 253);
+            this.AutoRetryAdminCheckBox.Location = new System.Drawing.Point(18, 285);
             this.AutoRetryAdminCheckBox.Name = "AutoRetryAdminCheckBox";
             this.AutoRetryAdminCheckBox.Size = new System.Drawing.Size(262, 17);
             this.AutoRetryAdminCheckBox.TabIndex = 6;
@@ -384,7 +412,7 @@
             this.BehaviourGroupBox.Controls.Add(this.AutoHideTimeOutLabel);
             this.BehaviourGroupBox.Location = new System.Drawing.Point(12, 9);
             this.BehaviourGroupBox.Name = "BehaviourGroupBox";
-            this.BehaviourGroupBox.Size = new System.Drawing.Size(310, 323);
+            this.BehaviourGroupBox.Size = new System.Drawing.Size(310, 355);
             this.BehaviourGroupBox.TabIndex = 19;
             this.BehaviourGroupBox.TabStop = false;
             this.BehaviourGroupBox.Text = "Behaviour";
@@ -392,7 +420,7 @@
             // ManualPreciseVolumeCheckBox
             // 
             this.ManualPreciseVolumeCheckBox.AutoSize = true;
-            this.ManualPreciseVolumeCheckBox.Location = new System.Drawing.Point(18, 210);
+            this.ManualPreciseVolumeCheckBox.Location = new System.Drawing.Point(18, 238);
             this.ManualPreciseVolumeCheckBox.Name = "ManualPreciseVolumeCheckBox";
             this.ManualPreciseVolumeCheckBox.Size = new System.Drawing.Size(256, 30);
             this.ManualPreciseVolumeCheckBox.TabIndex = 5;
@@ -402,7 +430,7 @@
             // ReverseScrollingDirectionCheckBox
             // 
             this.ReverseScrollingDirectionCheckBox.AutoSize = true;
-            this.ReverseScrollingDirectionCheckBox.Location = new System.Drawing.Point(18, 288);
+            this.ReverseScrollingDirectionCheckBox.Location = new System.Drawing.Point(18, 319);
             this.ReverseScrollingDirectionCheckBox.Name = "ReverseScrollingDirectionCheckBox";
             this.ReverseScrollingDirectionCheckBox.Size = new System.Drawing.Size(249, 17);
             this.ReverseScrollingDirectionCheckBox.TabIndex = 7;
@@ -412,7 +440,7 @@
             // EnableSwitchPlaybackDeviceOptionCheckBox
             // 
             this.EnableSwitchPlaybackDeviceOptionCheckBox.AutoSize = true;
-            this.EnableSwitchPlaybackDeviceOptionCheckBox.Location = new System.Drawing.Point(18, 172);
+            this.EnableSwitchPlaybackDeviceOptionCheckBox.Location = new System.Drawing.Point(18, 194);
             this.EnableSwitchPlaybackDeviceOptionCheckBox.Name = "EnableSwitchPlaybackDeviceOptionCheckBox";
             this.EnableSwitchPlaybackDeviceOptionCheckBox.Size = new System.Drawing.Size(277, 30);
             this.EnableSwitchPlaybackDeviceOptionCheckBox.TabIndex = 4;
@@ -422,7 +450,7 @@
             // EnableMuteUnmuteOptionCheckBox
             // 
             this.EnableMuteUnmuteOptionCheckBox.AutoSize = true;
-            this.EnableMuteUnmuteOptionCheckBox.Location = new System.Drawing.Point(18, 132);
+            this.EnableMuteUnmuteOptionCheckBox.Location = new System.Drawing.Point(18, 148);
             this.EnableMuteUnmuteOptionCheckBox.Name = "EnableMuteUnmuteOptionCheckBox";
             this.EnableMuteUnmuteOptionCheckBox.Size = new System.Drawing.Size(267, 30);
             this.EnableMuteUnmuteOptionCheckBox.TabIndex = 3;
@@ -548,10 +576,10 @@
             // 
             // RestoreDefaultValuesButton
             // 
-            this.RestoreDefaultValuesButton.Location = new System.Drawing.Point(328, 307);
+            this.RestoreDefaultValuesButton.Location = new System.Drawing.Point(328, 339);
             this.RestoreDefaultValuesButton.Name = "RestoreDefaultValuesButton";
             this.RestoreDefaultValuesButton.Size = new System.Drawing.Size(341, 25);
-            this.RestoreDefaultValuesButton.TabIndex = 19;
+            this.RestoreDefaultValuesButton.TabIndex = 20;
             this.RestoreDefaultValuesButton.Text = "Restore default values";
             this.RestoreDefaultValuesButton.UseVisualStyleBackColor = true;
             this.RestoreDefaultValuesButton.Click += new System.EventHandler(this.RestoreDefaultValues);
@@ -561,7 +589,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(684, 346);
+            this.ClientSize = new System.Drawing.Size(684, 376);
             this.Controls.Add(this.RestoreDefaultValuesButton);
             this.Controls.Add(this.ApplyConfigurationButton);
             this.Controls.Add(this.AppearanceGroupBox);
@@ -574,7 +602,7 @@
             this.Name = "ConfigurationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
-            this.Deactivate += new System.EventHandler(this.ConfigurationForm_Deactivate);
+            this.Deactivate += new System.EventHandler(this.CloseOnDeactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConfirmCloseWithoutSaving);
             this.Load += new System.EventHandler(this.LoadBarConfiguration);
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeBarWidthNumericUpDown)).EndInit();
@@ -634,5 +662,7 @@
         private System.Windows.Forms.CheckBox TrayIconTextGradientColorCheckBox;
         private System.Windows.Forms.CheckBox TrayIconTextSolidColorCheckBox;
         private System.Windows.Forms.CheckBox DisplayVolumeBarScrollingCheckBox;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox TextRenderingHintComboBox;
     }
 }

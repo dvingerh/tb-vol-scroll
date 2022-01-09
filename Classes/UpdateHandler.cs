@@ -33,7 +33,6 @@ namespace tbvolscroll.Classes
             this.callback = callback;
         }
 
-
         public async Task CheckForUpdates()
         {
             try
@@ -70,6 +69,7 @@ namespace tbvolscroll.Classes
                 callback.isUpdating = false;
             }
         }
+
         public async Task DownloadUpdate()
         {
             using (WebClient wc = new WebClient())
@@ -109,6 +109,7 @@ namespace tbvolscroll.Classes
                     UseShellExecute = false,
                     WorkingDirectory = Path.GetDirectoryName(tmpBatPath)
                 };
+                Globals.MainForm.TrayNotifyIcon.Visible = false;
                 Globals.MainForm.TrayNotifyIcon.Dispose();
                 Process.Start(startInfo);
                 

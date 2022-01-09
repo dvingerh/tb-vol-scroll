@@ -28,18 +28,18 @@ namespace tbvolscroll.Forms
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
 
-            switch (TaskbarHelper.Position)
+            switch (TaskbarHandler.Position)
             {
-                case TaskbarHelper.TaskbarPosition.Bottom:
+                case TaskbarHandler.TaskbarPosition.Bottom:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Right:
+                case TaskbarHandler.TaskbarPosition.Right:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Left:
+                case TaskbarHandler.TaskbarPosition.Left:
                     Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Top:
+                case TaskbarHandler.TaskbarPosition.Top:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
             }
@@ -51,8 +51,8 @@ namespace tbvolscroll.Forms
         {
             Invoke((MethodInvoker)delegate
             {
-                DevicesListView.Items.Clear();
                 SuspendLayout();
+                DevicesListView.Items.Clear();
                 ApplyButton.Enabled = false;
                 RefreshButton.Enabled = false;
             });
@@ -68,7 +68,7 @@ namespace tbvolscroll.Forms
                         Text = d.FullName
                     };
                     deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
-                    deviceItem.SubItems.Add($"{(int)d.Volume}%");
+                    deviceItem.SubItems.Add($"{(int)Math.Round(d.Volume)}%");
                     deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");
                     deviceItem.BackColor = d.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
                     deviceItem.Tag = d;
@@ -80,7 +80,6 @@ namespace tbvolscroll.Forms
                 DevicesListView.Items.AddRange(deviceListViewItem.ToArray());
                 RefreshButton.Enabled = true;
                 ResumeLayout();
-                Refresh();
             });
         }
 
@@ -106,7 +105,8 @@ namespace tbvolscroll.Forms
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await Globals.AudioHandler.SetDefaultDevice(newPlaybackDevice);
-                CloseForm(null, null);
+                if (!isRefreshing)
+                    Close();
             }
         }
 
@@ -116,7 +116,6 @@ namespace tbvolscroll.Forms
             {
                 isRefreshing = true;
                 await LoadAudioPlaybackDevicesList();
-                await Task.Delay(100);
                 isRefreshing = false;
             }
         }
@@ -130,10 +129,7 @@ namespace tbvolscroll.Forms
         private void CloseForm(object sender, EventArgs e)
         {
             if (!isRefreshing)
-            {
-                Globals.AudioPlaybackDevicesForm = null;
                 Close();
-            }
         }
     }
 }

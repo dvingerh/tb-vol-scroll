@@ -1,4 +1,6 @@
 ﻿
+using tbvolscroll.Classes;
+
 namespace tbvolscroll.Forms
 {
     partial class AudioPlaybackDevicesForm
@@ -31,7 +33,7 @@ namespace tbvolscroll.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlaybackDevicesForm));
             this.ApplyButton = new System.Windows.Forms.Button();
-            this.DevicesListView = new System.Windows.Forms.ListView();
+            this.DevicesListView = new tbvolscroll.Classes.DoubleBufferedListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IsDefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.VolumeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -164,7 +166,6 @@ namespace tbvolscroll.Forms
         #endregion
 
         private System.Windows.Forms.Button ApplyButton;
-        private System.Windows.Forms.ListView DevicesListView;
         private System.Windows.Forms.ColumnHeader NameColumn;
         private System.Windows.Forms.ColumnHeader IsDefaultColumn;
         private System.Windows.Forms.ColumnHeader MutedColumn;
@@ -173,5 +174,6 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.Panel BorderPanel;
         private System.Windows.Forms.Button CloseButton;
         public System.Windows.Forms.Button RefreshButton;
+        private DoubleBufferedListView DevicesListView;
     }
 }

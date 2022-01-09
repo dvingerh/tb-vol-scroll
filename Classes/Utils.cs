@@ -3,12 +3,12 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Security.Principal;
-using System.Management;
 using System.Threading.Tasks;
 using tbvolscroll.Properties;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 
 namespace tbvolscroll.Classes
 {
@@ -16,12 +16,16 @@ namespace tbvolscroll.Classes
     {
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(int hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
+        [DllImport("User32.dll")]
+        private static extern IntPtr MonitorFromPoint([In] Point pt, [In] uint dwFlags);
+        [DllImport("Shcore.dll")]
+        private static extern IntPtr GetDpiForMonitor([In] IntPtr hmonitor, [In] int dpiType, [Out] out uint dpiX, [Out] out uint dpiY);
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-        [DllImport("user32.dll", SetLastError = true)]
+
+        [DllImport("user32.dll")]
         internal static extern bool MoveWindow(
         IntPtr hWnd,
         int X,
@@ -30,14 +34,14 @@ namespace tbvolscroll.Classes
         int nHeight,
         bool bRepaint);
 
-        [StructLayout(LayoutKind.Sequential)]
         public struct RECT
         {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
+            public int Left; 
+            public int Top; 
+            public int Right; 
+            public int Bottom; 
         }
+
         public static Color CalculateColor(double percentage)
         {
             if (percentage > 100)
@@ -63,16 +67,13 @@ namespace tbvolscroll.Classes
 
         public static bool IsAdministrator()
         {
-            return (new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator);
+            return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
         }
 
-        public static void ShowInactiveTopmost()
+        public static void ShowInactiveTopmost(Form form)
         {
-            Globals.MainForm.Invoke((MethodInvoker)delegate
-            {
-                SetWindowPos(Globals.MainForm.Handle.ToInt32(), -1, Globals.MainForm.Left, Globals.MainForm.Top, Globals.MainForm.Width, Globals.MainForm.Height, 16u);
-                ShowWindow(Globals.MainForm.Handle, 4);
-            });
+            SetWindowPos(form.Handle.ToInt32(), -1, form.Left, form.Top, form.Width, form.Height, 16u);
+            ShowWindow(form.Handle, 4);
         }
 
         public static Size GetWindowSize(IntPtr hWnd)
@@ -82,18 +83,16 @@ namespace tbvolscroll.Classes
 
             cSize.Width = pRect.Right - pRect.Left;
             cSize.Height = pRect.Bottom - pRect.Top;
-
             return cSize;
         }
 
-        public static SizeF CalculateVolumeBarSize(Label label, string text)
+        public static Size CalculateLabelSize(Label label, string text)
         {
-            return label.CreateGraphics().MeasureString(text, label.Font);
+            return label.CreateGraphics().MeasureString(text, label.Font).ToSize();
         }
 
-        public static Font FindBestFitFont(Graphics g, string text, Font font, Size proposedSize)
+        private static Font FindBestFitFont(Graphics g, string text, Font font, Size proposedSize, float expandAmount)
         {
-            int expandAmount = 16;
             while (true)
             {
                 SizeF size = g.MeasureString(text, font);
@@ -101,29 +100,81 @@ namespace tbvolscroll.Classes
                 if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount) { return font; }
 
                 Font oldFont = font;
-                font = new Font(font.Name, font.Size - 1, font.Style, GraphicsUnit.Pixel);
+                font = new Font(font.Name, font.Size - 1, font.Style);
                 oldFont.Dispose();
             }
         }
+
+        public static float GetDpiScale()
+        {
+            try
+            {
+                Screen screen = Screen.PrimaryScreen;
+                var pnt = new Point(screen.Bounds.Left + 1, screen.Bounds.Top + 1);
+                var mon = MonitorFromPoint(pnt, 2);
+                GetDpiForMonitor(mon, 0, out uint dpiX, out uint dpiY);
+                switch (dpiX)
+                {
+                    case 96:
+                        return 1.0F;
+                    case 120:
+                        return 1.25F;
+                    case 144:
+                        return 1.5F;
+                    case 168:
+                        return 1.75F;
+                    case 192:
+                        return 2.0F;
+                    default:
+                        return (float)Math.Round(dpiX * 1.0147F);
+                }
+            }
+            catch { return 1.0F; }
+        }
+
         public static Icon GenerateTrayIcon(string text)
         {
             try
             {
-                int iconWidth = 64;
-                int iconHeight = 64;
-                int fontSize = 64;
-                using (Bitmap bitmap = new Bitmap(iconWidth, iconHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+                float iconWidth = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+                float iconHeight = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+                float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+                float expandAmount = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+
+                TextRenderingHint hinting;
+
+                switch (Globals.TextRenderingHintType)
                 {
-                    Font font = new Font("Segoe UI Semibold", fontSize, FontStyle.Regular, GraphicsUnit.Pixel);
+                    case 0:
+                        hinting = TextRenderingHint.SystemDefault;
+                        break;
+                    case 1:
+                        hinting = TextRenderingHint.ClearTypeGridFit;
+                        break;
+                    case 2:
+                        hinting = TextRenderingHint.AntiAliasGridFit;
+                        break;
+                    case 3:
+                        hinting = TextRenderingHint.SingleBitPerPixelGridFit;
+                        break;
+                    default:
+                        hinting = Globals.DpiScale < 1.25 ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.AntiAliasGridFit;
+                        break;
+                }
+
+                using (Bitmap bitmap = new Bitmap((int)iconWidth, (int)iconHeight, PixelFormat.Format32bppArgb))
+                {
+                    Font font = new Font("Segoe UI Semibold", fontSize, FontStyle.Regular);
                     Color textColor = Settings.Default.TrayIconTextSolidColor;
 
                     switch (text)
                     {
                         case "M":
+                        case "X":
                             textColor = CalculateColor(0);
                             break;
-                        case "X":
-                            textColor = CalculateColor(20);
+                        case "T":
+                            textColor = Globals.DefaultColor;
                             break;
                         default:
                             textColor = Settings.Default.TrayIconTextUseGradientColor ? CalculateColor(AudioState.Volume) : Settings.Default.TrayIconTextSolidColor;
@@ -135,9 +186,9 @@ namespace tbvolscroll.Classes
                     {
                         graphics.Clear(Color.Transparent);
                         graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                        graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-                        font = FindBestFitFont(graphics, text, font, bitmap.Size);
-                        SizeF size = graphics.MeasureString(text, font);
+                        graphics.TextRenderingHint = hinting;
+                        font = FindBestFitFont(graphics, text, font, bitmap.Size, expandAmount); 
+                        SizeF size = graphics.MeasureString(text, font).ToSize();
                         graphics.DrawString(text, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
                     }
                     return Icon.FromHandle(bitmap.GetHicon());
@@ -145,55 +196,55 @@ namespace tbvolscroll.Classes
             }
             catch
             {
-                return Globals.MainForm.TrayNotifyIcon.Icon;
+                return Resources.voltray;
             }
         }
+
         public static async Task OpenSndVol()
         {
-            Process sndvolProc = new Process();
-            sndvolProc.StartInfo.FileName = "sndvol.exe";
-            sndvolProc.Start();
-
-            bool hasWindow = false;
-            IntPtr windowHandle = new IntPtr();
-            while (!hasWindow)
+            await Task.Run(() =>
             {
-                Process[] processes = Process.GetProcessesByName("sndvol");
 
-                foreach (Process p in processes)
+                Process sndvolProc = new Process();
+                sndvolProc.StartInfo.FileName = "sndvol.exe";
+                sndvolProc.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                sndvolProc.Start();
+
+                bool hasWindow = false;
+                IntPtr windowHandle = new IntPtr();
+                while (!hasWindow)
                 {
-                    IntPtr tempHandle = p.MainWindowHandle;
+                    IntPtr tempHandle = sndvolProc.MainWindowHandle;
                     if (tempHandle.ToInt32() != 0)
                     {
                         windowHandle = tempHandle;
                         hasWindow = true;
                     }
                 }
-                await Task.Delay(1);
-            }
 
-            Screen screen = Screen.FromPoint(Cursor.Position);
-            Point location = new Point();
-            Rectangle workingArea = screen.WorkingArea;
-            int sndWidth = Convert.ToInt32(Math.Round(0.75 * workingArea.Width));
-            Size sndVolDimensions = GetWindowSize(windowHandle);
+                Screen screen = Screen.FromPoint(Cursor.Position);
+                Point location = new Point();
+                Rectangle workingArea = screen.WorkingArea;
 
-            switch (TaskbarHelper.Position)
-            {
-                case TaskbarHelper.TaskbarPosition.Bottom:
-                    location = new Point(workingArea.Right - sndWidth, workingArea.Bottom - sndVolDimensions.Height);
-                    break;
-                case TaskbarHelper.TaskbarPosition.Right:
-                    location = new Point(workingArea.Right - sndWidth, workingArea.Bottom - sndVolDimensions.Height);
-                    break;
-                case TaskbarHelper.TaskbarPosition.Left:
-                    location = new Point(workingArea.Left, workingArea.Bottom - sndVolDimensions.Height);
-                    break;
-                case TaskbarHelper.TaskbarPosition.Top:
-                    location = new Point(workingArea.Right - sndWidth, workingArea.Top);
-                    break;
-            }
-            MoveWindow(windowHandle, location.X, location.Y, sndWidth, sndVolDimensions.Height, true);
+                Size sndVolDimensions = GetWindowSize(windowHandle);
+                sndVolDimensions.Width = Convert.ToInt32(Math.Round(0.75 * workingArea.Width));
+                switch (TaskbarHandler.Position)
+                {
+                    case TaskbarHandler.TaskbarPosition.Bottom:
+                        location = new Point(workingArea.Right - sndVolDimensions.Width, workingArea.Bottom - sndVolDimensions.Height);
+                        break;
+                    case TaskbarHandler.TaskbarPosition.Right:
+                        location = new Point(workingArea.Right - sndVolDimensions.Width, workingArea.Bottom - sndVolDimensions.Height);
+                        break;
+                    case TaskbarHandler.TaskbarPosition.Left:
+                        location = new Point(workingArea.Left, workingArea.Bottom - sndVolDimensions.Height);
+                        break;
+                    case TaskbarHandler.TaskbarPosition.Top:
+                        location = new Point(workingArea.Right - sndVolDimensions.Width, workingArea.Top);
+                        break;
+                }
+                MoveWindow(windowHandle, location.X, location.Y, sndVolDimensions.Width, sndVolDimensions.Height, true);
+            });
         }
     }
 }

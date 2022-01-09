@@ -1,4 +1,4 @@
-using System.ServiceProcess;
+using System.Drawing;
 using System.Threading;
 using tbvolscroll.Forms;
 
@@ -6,7 +6,9 @@ namespace tbvolscroll.Classes
 {
     public static class Globals
     {
+        private static Color defaultColor = Color.FromArgb(31, 143, 255);
         private static int volumeBarAutoHideTimeout;
+        private static float dpiScale = Utils.GetDpiScale();
         private static InputHandler inputHandler;
         private static AudioHandler audioHandler;
         private static bool isDisplayingVolumeBar = false;
@@ -15,7 +17,7 @@ namespace tbvolscroll.Classes
         private static AudioPlaybackDevicesForm audioPlaybackDevicesForm;
         private static VolumeSliderControlForm volumeSliderControlForm;
         private static Mutex appMutex;
-        private static SysPowerHandler sysPowerHandler;
+        private static int textRenderingHintType;
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
         public static InputHandler InputHandler { get => inputHandler; set => inputHandler = value; }
         public static AudioHandler AudioHandler { get => audioHandler; set => audioHandler = value; }
@@ -25,6 +27,8 @@ namespace tbvolscroll.Classes
         public static VolumeSliderControlForm VolumeSliderControlForm { get => volumeSliderControlForm; set => volumeSliderControlForm = value; }
         public static Mutex AppMutex { get => appMutex; set => appMutex = value; }
         public static bool DisplayTrayIcon { get => displayTrayIcon; set => displayTrayIcon = value; }
-        public static SysPowerHandler SysPowerHandler { get => sysPowerHandler; set => sysPowerHandler = value; }
+        public static float DpiScale { get => dpiScale; set => dpiScale = value; }
+        public static int TextRenderingHintType { get => textRenderingHintType; set => textRenderingHintType = value; }
+        public static Color DefaultColor { get => defaultColor; set => defaultColor = value; }
     }
 }

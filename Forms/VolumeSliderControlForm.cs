@@ -24,29 +24,29 @@ namespace tbvolscroll.Forms
 
         private void OnFormShown(object sender, EventArgs e)
         {
-            lastTrackBarValue = (int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume;
-            VolumeTrackBar.Value = (int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume;
-            VolumeLabel.Text = $"{(int)AudioState.CoreAudioController.DefaultPlaybackDevice.Volume}%";
+            lastTrackBarValue = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
+            VolumeTrackBar.Value = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
+            VolumeLabel.Text = $"{(int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume)}%";
             AudioDeviceLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
-            PeakMeterPictureBox.BackColor = Properties.Settings.Default.VolumeBarSolidColor;
+            PeakMeterPictureBox.BackColor = Globals.DefaultColor;
 
 
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
 
-            switch (TaskbarHelper.Position)
+            switch (TaskbarHandler.Position)
             {
-                case TaskbarHelper.TaskbarPosition.Bottom:
+                case TaskbarHandler.TaskbarPosition.Bottom:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Right:
+                case TaskbarHandler.TaskbarPosition.Right:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Left:
+                case TaskbarHandler.TaskbarPosition.Left:
                     Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHelper.TaskbarPosition.Top:
+                case TaskbarHandler.TaskbarPosition.Top:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
 
@@ -88,30 +88,36 @@ namespace tbvolscroll.Forms
 
         public async void UpdatePeakValue(double peakValue)
         {
-            updatePeakValueQueue.Enqueue(peakValue);
-            await ProcessPeakValueEventQueue();
+            if (updateVolumeQueue.Count < 100)
+            {
+                updatePeakValueQueue.Enqueue(peakValue);
+                await ProcessPeakValueEventQueue();
+            }
         }
 
         private async Task HandleVolumeUpdate(int volume)
         {
             if (AudioState.Volume != volume)
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     try
                     {
-                        Invoke((MethodInvoker)async delegate
+                        if (AudioState.Volume == 0)
+                            await Globals.AudioHandler.SetDeviceVolume(10);
+                        await Globals.AudioHandler.SetDeviceVolume(volume);
+                        if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) == 0 && AudioState.Muted == false)
                         {
-                            if (AudioState.Volume == 0)
-                                await Globals.AudioHandler.SetDeviceVolume(10);
-                            await Globals.AudioHandler.SetDeviceVolume(volume);
-                            if (AudioState.CoreAudioController.DefaultPlaybackDevice.Volume == 0 && AudioState.Muted == false)
-                                await Globals.AudioHandler.SetDeviceMute(isMuted: true);
-                            else if (AudioState.CoreAudioController.DefaultPlaybackDevice.Volume > 0 && AudioState.Muted == true)
-                                await Globals.AudioHandler.SetDeviceMute(isMuted: false);
+                            await Globals.AudioHandler.SetDeviceMute(isMuted: true);
+                            PeakMeterPictureBox.BackColor = SystemColors.ControlLight;
+                        }
+                        else if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) > 0 && AudioState.Muted == true)
+                            await Globals.AudioHandler.SetDeviceMute(isMuted: false);
 
+
+                        Invoke((MethodInvoker) delegate
+                        {
                             VolumeLabel.Text = $"{VolumeTrackBar.Value}%";
-                            SystemSounds.Exclamation.Play();
                         });
                     }
                     catch { }
@@ -147,7 +153,6 @@ namespace tbvolscroll.Forms
             updateVolumeQueue.Clear();
             currentPeakValueTask = null;
             currentUpdateVolumeTask = null;
-            Globals.VolumeSliderControlForm = null;
             Close();
         }
 
@@ -156,8 +161,12 @@ namespace tbvolscroll.Forms
             if (lastTrackBarValue != VolumeTrackBar.Value)
             {
                 lastTrackBarValue = VolumeTrackBar.Value;
-                updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
-                await ProcessVolumeQueue();
+                if (updateVolumeQueue.Count < 100)
+                {
+                    updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
+                    await ProcessVolumeQueue();
+                }
+                SystemSounds.Exclamation.Play();
             }
         }
     }

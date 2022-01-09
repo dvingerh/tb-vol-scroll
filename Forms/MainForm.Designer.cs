@@ -39,15 +39,15 @@ namespace tbvolscroll
             this.SystemVolumeMixerMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VolumeSliderControlMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.MoreOptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OptionsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ConfigurationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CheckForUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeperatorMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.OpenCurrentDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenStartupFolderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenStartupDirectoryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SeparatorMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-            this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RestartNormalMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.RestartAsAdminMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -89,11 +89,11 @@ namespace tbvolscroll
             this.SystemVolumeMixerMenuItem,
             this.VolumeSliderControlMenuItem,
             this.SeparatorMenuItem3,
-            this.MoreOptionsMenuItem,
+            this.OptionsMenuItem,
             this.ExitMenuItem});
             this.TrayContextMenu.Name = "trayContextMenu";
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 168);
+            this.TrayContextMenu.Size = new System.Drawing.Size(200, 190);
             this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
@@ -157,23 +157,23 @@ namespace tbvolscroll
             this.SeparatorMenuItem3.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
             this.SeparatorMenuItem3.Size = new System.Drawing.Size(196, 6);
             // 
-            // MoreOptionsMenuItem
+            // OptionsMenuItem
             // 
-            this.MoreOptionsMenuItem.BackColor = System.Drawing.SystemColors.Menu;
-            this.MoreOptionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.OptionsMenuItem.BackColor = System.Drawing.SystemColors.Menu;
+            this.OptionsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ConfigurationMenuItem,
             this.CheckForUpdatesMenuItem,
             this.SeperatorMenuItem4,
             this.OpenCurrentDirectoryMenuItem,
-            this.OpenStartupFolderMenuItem,
+            this.OpenStartupDirectoryMenuItem,
             this.SeparatorMenuItem2,
-            this.RestartAsAdminMenuItem,
-            this.RestartNormalMenuItem});
-            this.MoreOptionsMenuItem.Enabled = false;
-            this.MoreOptionsMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.MoreOptionsMenuItem.Name = "MoreOptionsMenuItem";
-            this.MoreOptionsMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.MoreOptionsMenuItem.Text = "Options";
+            this.RestartNormalMenuItem,
+            this.RestartAsAdminMenuItem});
+            this.OptionsMenuItem.Enabled = false;
+            this.OptionsMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.OptionsMenuItem.Name = "OptionsMenuItem";
+            this.OptionsMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.OptionsMenuItem.Text = "Options";
             // 
             // ConfigurationMenuItem
             // 
@@ -206,18 +206,26 @@ namespace tbvolscroll
             this.OpenCurrentDirectoryMenuItem.Text = "Open Current Directory";
             this.OpenCurrentDirectoryMenuItem.Click += new System.EventHandler(this.OpenCurrentLocation);
             // 
-            // OpenStartupFolderMenuItem
+            // OpenStartupDirectoryMenuItem
             // 
-            this.OpenStartupFolderMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.OpenStartupFolderMenuItem.Name = "OpenStartupFolderMenuItem";
-            this.OpenStartupFolderMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.OpenStartupFolderMenuItem.Text = "Open Startup Directory";
-            this.OpenStartupFolderMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
+            this.OpenStartupDirectoryMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.OpenStartupDirectoryMenuItem.Name = "OpenStartupDirectoryMenuItem";
+            this.OpenStartupDirectoryMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.OpenStartupDirectoryMenuItem.Text = "Open Startup Directory";
+            this.OpenStartupDirectoryMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // SeparatorMenuItem2
             // 
             this.SeparatorMenuItem2.Name = "SeparatorMenuItem2";
             this.SeparatorMenuItem2.Size = new System.Drawing.Size(194, 6);
+            // 
+            // RestartNormalMenuItem
+            // 
+            this.RestartNormalMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
+            this.RestartNormalMenuItem.Name = "RestartNormalMenuItem";
+            this.RestartNormalMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.RestartNormalMenuItem.Text = "Restart";
+            this.RestartNormalMenuItem.Click += new System.EventHandler(this.RestartAppNormal);
             // 
             // RestartAsAdminMenuItem
             // 
@@ -226,14 +234,6 @@ namespace tbvolscroll
             this.RestartAsAdminMenuItem.Size = new System.Drawing.Size(197, 22);
             this.RestartAsAdminMenuItem.Text = "Restart (Administrator)";
             this.RestartAsAdminMenuItem.Click += new System.EventHandler(this.RestartAppAsAdministrator);
-            // 
-            // RestartNormalMenuItem
-            // 
-            this.RestartNormalMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
-            this.RestartNormalMenuItem.Name = "RestartNormalMenuItem";
-            this.RestartNormalMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.RestartNormalMenuItem.Text = "Restart (Normal)";
-            this.RestartNormalMenuItem.Click += new System.EventHandler(this.RestartAppNormal);
             // 
             // ExitMenuItem
             // 
@@ -278,7 +278,7 @@ namespace tbvolscroll
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ConfigurationMenuItem;
         public System.Windows.Forms.Label VolumeTextLabel;
-        private System.Windows.Forms.ToolStripMenuItem OpenStartupFolderMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenStartupDirectoryMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RestartAsAdminMenuItem;
         private System.Windows.Forms.ToolStripSeparator SeparatorMenuItem3;
         public System.Windows.Forms.NotifyIcon TrayNotifyIcon;
@@ -290,7 +290,7 @@ namespace tbvolscroll
         public System.Windows.Forms.ToolStripMenuItem VolumeSliderControlMenuItem;
         public System.Windows.Forms.ToolStripMenuItem RestartNormalMenuItem;
         public System.Windows.Forms.ToolStripMenuItem SystemVolumeMixerMenuItem;
-        public System.Windows.Forms.ToolStripMenuItem MoreOptionsMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
         public System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
     }
 }
