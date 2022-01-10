@@ -34,7 +34,7 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel = new System.Windows.Forms.Panel();
             this.PeakMeterPictureBox = new System.Windows.Forms.PictureBox();
             this.VolumeLabel = new System.Windows.Forms.Label();
-            this.AudioDeviceLabel = new System.Windows.Forms.Label();
+            this.AudioDeviceNameLabel = new System.Windows.Forms.Label();
             this.VolumeTrackBar = new tbvolscroll.Classes.TrackBarNoFocus();
             this.BorderPanel.SuspendLayout();
             this.PeakMeterPanel.SuspendLayout();
@@ -49,12 +49,12 @@ namespace tbvolscroll.Forms
             this.BorderPanel.Controls.Add(this.CloseButton);
             this.BorderPanel.Controls.Add(this.PeakMeterPanel);
             this.BorderPanel.Controls.Add(this.VolumeLabel);
-            this.BorderPanel.Controls.Add(this.AudioDeviceLabel);
+            this.BorderPanel.Controls.Add(this.AudioDeviceNameLabel);
             this.BorderPanel.Controls.Add(this.VolumeTrackBar);
             this.BorderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.BorderPanel.Location = new System.Drawing.Point(0, 0);
             this.BorderPanel.Name = "BorderPanel";
-            this.BorderPanel.Size = new System.Drawing.Size(350, 90);
+            this.BorderPanel.Size = new System.Drawing.Size(350, 78);
             this.BorderPanel.TabIndex = 0;
             // 
             // CloseButton
@@ -74,9 +74,9 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PeakMeterPanel.Controls.Add(this.PeakMeterPictureBox);
             this.PeakMeterPanel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 71);
+            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 57);
             this.PeakMeterPanel.Name = "PeakMeterPanel";
-            this.PeakMeterPanel.Size = new System.Drawing.Size(284, 10);
+            this.PeakMeterPanel.Size = new System.Drawing.Size(285, 10);
             this.PeakMeterPanel.TabIndex = 6;
             // 
             // PeakMeterPictureBox
@@ -91,8 +91,7 @@ namespace tbvolscroll.Forms
             // 
             // VolumeLabel
             // 
-            this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.VolumeLabel.Location = new System.Drawing.Point(304, 28);
             this.VolumeLabel.Name = "VolumeLabel";
             this.VolumeLabel.Size = new System.Drawing.Size(41, 28);
@@ -100,13 +99,13 @@ namespace tbvolscroll.Forms
             this.VolumeLabel.Text = "0%";
             this.VolumeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // AudioDeviceLabel
+            // AudioDeviceNameLabel
             // 
-            this.AudioDeviceLabel.Location = new System.Drawing.Point(3, 3);
-            this.AudioDeviceLabel.Name = "AudioDeviceLabel";
-            this.AudioDeviceLabel.Size = new System.Drawing.Size(295, 16);
-            this.AudioDeviceLabel.TabIndex = 4;
-            this.AudioDeviceLabel.Text = "Audio Device";
+            this.AudioDeviceNameLabel.Location = new System.Drawing.Point(3, 3);
+            this.AudioDeviceNameLabel.Name = "AudioDeviceNameLabel";
+            this.AudioDeviceNameLabel.Size = new System.Drawing.Size(292, 16);
+            this.AudioDeviceNameLabel.TabIndex = 4;
+            this.AudioDeviceNameLabel.Text = "Audio Device";
             // 
             // VolumeTrackBar
             // 
@@ -116,14 +115,14 @@ namespace tbvolscroll.Forms
             this.VolumeTrackBar.Size = new System.Drawing.Size(300, 45);
             this.VolumeTrackBar.TabIndex = 3;
             this.VolumeTrackBar.TickFrequency = 4;
-            this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.VolumeTrackBar.Scroll += new System.EventHandler(this.UpdateVolumeFromTrackBar);
             // 
             // VolumeSliderControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(350, 90);
+            this.ClientSize = new System.Drawing.Size(350, 78);
             this.Controls.Add(this.BorderPanel);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -149,7 +148,7 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.Panel BorderPanel;
         private System.Windows.Forms.Label VolumeLabel;
         private Classes.TrackBarNoFocus VolumeTrackBar;
-        private System.Windows.Forms.Label AudioDeviceLabel;
+        private System.Windows.Forms.Label AudioDeviceNameLabel;
         private System.Windows.Forms.Panel PeakMeterPanel;
         private System.Windows.Forms.PictureBox PeakMeterPictureBox;
         private System.Windows.Forms.Button CloseButton;

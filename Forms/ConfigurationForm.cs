@@ -1,6 +1,5 @@
 using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
 using tbvolscroll.Properties;
@@ -9,7 +8,8 @@ namespace tbvolscroll
 {
     public partial class ConfigurationForm : Form
     {
-        private bool doSetFont = false;
+        private bool doSetVolumeBarFont = false;
+        private bool doSetTrayIconFont = false;
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -18,31 +18,39 @@ namespace tbvolscroll
         private void LoadBarConfiguration(object sender, EventArgs e)
         {
             EnableSwitchPlaybackDeviceOptionCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
-            ReverseScrollingDirectionCheckBox.Checked = Settings.Default.ReverseScrollingDirection;
+            InvertScrollingDirectionCheckBox.Checked = Settings.Default.InvertScrollingDirection;
             EnableMuteUnmuteOptionCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
             ManualPreciseVolumeCheckBox.Checked = Settings.Default.ManualPreciseVolumeShortcut;
             AutoRetryAdminCheckBox.Checked = Settings.Default.AutoRetryAdmin;
             DisplayTrayIconAsTextCheckBox.Checked = Settings.Default.DisplayTrayIconAsText;
             DisplayVolumeBarScrollingCheckBox.Checked = Settings.Default.DisplayVolumeBarScrolling;
+            IgnoreTaskbarVisibilityCheckBox.Checked = Settings.Default.IgnoreTaskbarVisibility;
 
 
             TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
+            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+            TrayIconDisplayModeAutomaticCheckBox.Checked = Settings.Default.TrayIconIsDisplayModeAutomatic;
+            TrayIconDisplayModeUserDefinedCheckBox.Checked = !Settings.Default.TrayIconIsDisplayModeAutomatic;
+            TrayIconWidthNumericUpDown.Value = Settings.Default.TrayIconWidth;
+            TrayIconHeightNumericUpDown.Value = Settings.Default.TrayIconHeight;
+            TrayIconPaddingNumericUpDown.Value = Settings.Default.TrayIconPadding;
 
 
             SetVolumeStepNumericUpDown.Value = Settings.Default.VolumeStep;
             ThresholdNumericUpDown.Value = Settings.Default.PreciseScrollThreshold;
-            SetVolumeBarWidthNumericUpDown.Value = Settings.Default.BarWidthPadding;
-            SetVolumeBarHeightNumericUpDown.Value = Settings.Default.BarHeightPadding;
+            VolumeBarPaddingWidthNumericUpDown.Value = Settings.Default.BarWidthPadding;
+            VolumeBarPaddingHeightNumericUpDown.Value = Settings.Default.BarHeightPadding;
             AutoHideTimeOutNumericUpDown.Value = Settings.Default.AutoHideTimeOut;
             VolumeBarColorPreviewPictureBox.BackColor = Settings.Default.VolumeBarSolidColor;
             TrayIconTextColorPreviewPictureBox.BackColor = Settings.Default.TrayIconTextSolidColor;
             VolumeBarOpacityTrackBar.Value = Convert.ToInt32(Settings.Default.VolumeBarOpacity * 100);
-            CustomFontDialog.Font = Settings.Default.FontStyle;
-            FontPreviewLabel.Font = Settings.Default.FontStyle;
+            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
+            VolumeBarFontPreviewLabel.Font = Settings.Default.VolumeBarFontStyle;
 
-            TextRenderingHintComboBox.SelectedIndex = Settings.Default.TextRenderingHintType;
+            TrayIconTextRenderingHintComboBox.SelectedIndex = Settings.Default.TextRenderingHintType;
 
             if (Settings.Default.VolumeBarUseGradientColor)
             {
@@ -64,8 +72,29 @@ namespace tbvolscroll
             {
                 TrayIconTextGradientColorCheckBox.Checked = false;
                 TrayIconTextSolidColorCheckBox.Checked = true;
-
             }
+            if (Settings.Default.TrayIconIsDisplayModeAutomatic)
+            {
+                TrayIconDisplayModeAutomaticCheckBox.Checked = true;
+                TrayIconDisplayModeUserDefinedCheckBox.Checked = false;
+            }
+            else
+            {
+                TrayIconDisplayModeAutomaticCheckBox.Checked = false;
+                TrayIconDisplayModeUserDefinedCheckBox.Checked = true;
+            }
+
+            TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconDisplayModeAutomaticCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconDisplayModeUserDefinedCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconWidthNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconHeightNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconPaddingNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconFontStyleButton.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconTextRenderingHintComboBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+
 
             Control.ControlCollection appearanceControls = AppearanceGroupBox.Controls;
             Control.ControlCollection behaviourControls = BehaviourGroupBox.Controls;
@@ -104,7 +133,7 @@ namespace tbvolscroll
                     bar.ValueChanged += new EventHandler(OnSettingsChanged);
                 }
             }
-            BehaviourGroupBox.Focus();
+            AppearanceGroupBox.Focus();
         }
 
         private void OnSettingsChanged(object sender, EventArgs e)
@@ -114,7 +143,13 @@ namespace tbvolscroll
             TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
-            TextRenderingHintComboBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconDisplayModeAutomaticCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconDisplayModeUserDefinedCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconWidthNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconHeightNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconPaddingNumericUpDown.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconFontStyleButton.Enabled = TrayIconDisplayModeUserDefinedCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
+            TrayIconTextRenderingHintComboBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked && DisplayTrayIconAsTextCheckBox.Checked;
 
         }
 
@@ -122,20 +157,23 @@ namespace tbvolscroll
         {
             Settings.Default.AutoRetryAdmin = AutoRetryAdminCheckBox.Checked;
             Settings.Default.VolumeStep = (int)SetVolumeStepNumericUpDown.Value;
-            Settings.Default.BarWidthPadding = (int)SetVolumeBarWidthNumericUpDown.Value;
-            Settings.Default.BarHeightPadding = (int)SetVolumeBarHeightNumericUpDown.Value;
+            Settings.Default.BarWidthPadding = (int)VolumeBarPaddingWidthNumericUpDown.Value;
+            Settings.Default.BarHeightPadding = (int)VolumeBarPaddingHeightNumericUpDown.Value;
 
             Settings.Default.SwitchDefaultPlaybackDeviceShortcut = EnableSwitchPlaybackDeviceOptionCheckBox.Checked;
             Settings.Default.ToggleMuteShortcut = EnableMuteUnmuteOptionCheckBox.Checked;
-            Settings.Default.ReverseScrollingDirection = ReverseScrollingDirectionCheckBox.Checked;
+            Settings.Default.InvertScrollingDirection = InvertScrollingDirectionCheckBox.Checked;
             Settings.Default.ManualPreciseVolumeShortcut = ManualPreciseVolumeCheckBox.Checked;
             Settings.Default.DisplayVolumeBarScrolling = DisplayVolumeBarScrollingCheckBox.Checked;
+            Settings.Default.IgnoreTaskbarVisibility = IgnoreTaskbarVisibilityCheckBox.Checked;
 
             Settings.Default.PreciseScrollThreshold = (int)ThresholdNumericUpDown.Value;
 
 
-            if (doSetFont)
-                Settings.Default.FontStyle = CustomFontDialog.Font;
+            if (doSetVolumeBarFont)
+                Settings.Default.VolumeBarFontStyle = VolumeBarCustomFontDialog.Font;
+            if (doSetTrayIconFont)
+                Settings.Default.TrayIconFontStyle = TrayIconCustomFontDialog.Font;
 
             Settings.Default.VolumeBarUseGradientColor = VolumeBarGradientColorCheckBox.Checked;
             Settings.Default.VolumeBarSolidColor = VolumeBarColorPreviewPictureBox.BackColor;
@@ -144,16 +182,20 @@ namespace tbvolscroll
             Settings.Default.DisplayTrayIconAsText = DisplayTrayIconAsTextCheckBox.Checked;
             Settings.Default.TrayIconTextUseGradientColor = TrayIconTextGradientColorCheckBox.Checked;
             Settings.Default.TrayIconTextSolidColor = TrayIconTextColorPreviewPictureBox.BackColor;
+            Settings.Default.TrayIconIsDisplayModeAutomatic = TrayIconDisplayModeAutomaticCheckBox.Checked;
+            Settings.Default.TrayIconWidth = (int)TrayIconWidthNumericUpDown.Value;
+            Settings.Default.TrayIconHeight = (int)TrayIconHeightNumericUpDown.Value;
+            Settings.Default.TrayIconPadding = (int)TrayIconPaddingNumericUpDown.Value;
 
             Settings.Default.AutoHideTimeOut = (int)AutoHideTimeOutNumericUpDown.Value;
 
-            Settings.Default.TextRenderingHintType = TextRenderingHintComboBox.SelectedIndex;
-            Globals.TextRenderingHintType = TextRenderingHintComboBox.SelectedIndex;
+            Settings.Default.TextRenderingHintType = TrayIconTextRenderingHintComboBox.SelectedIndex;
+            Globals.TextRenderingHintType = TrayIconTextRenderingHintComboBox.SelectedIndex;
 
             Settings.Default.Save();
 
-            if (doSetFont)
-                Globals.MainForm.VolumeTextLabel.Font = CustomFontDialog.Font;
+            if (doSetVolumeBarFont)
+                Globals.MainForm.VolumeTextLabel.Font = VolumeBarCustomFontDialog.Font;
            
             Size newMinSizes = Utils.CalculateLabelSize(Globals.MainForm.VolumeTextLabel, "100%");
             Globals.MainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + newMinSizes.Height);
@@ -182,15 +224,15 @@ namespace tbvolscroll
             VolumeBarOpacityValueLabel.Text = $"{VolumeBarOpacityTrackBar.Value}%";
         }
 
-        private void SetFontStyle(object sender, EventArgs e)
+        private void SetVolumeBarFontStyle(object sender, EventArgs e)
         {
             ApplyConfigurationButton.Enabled = true;
-            CustomFontDialog.Font = Settings.Default.FontStyle;
-            DialogResult dialogResult = CustomFontDialog.ShowDialog();
+            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
+            DialogResult dialogResult = VolumeBarCustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                doSetFont = true;
-                FontPreviewLabel.Font = CustomFontDialog.Font;
+                doSetVolumeBarFont = true;
+                VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.Font;
                 OnSettingsChanged(null, null);
             }
             else
@@ -203,12 +245,12 @@ namespace tbvolscroll
             AutoRetryAdminCheckBox.Checked = false;
             EnableMuteUnmuteOptionCheckBox.Checked = false;
             EnableSwitchPlaybackDeviceOptionCheckBox.Checked = false;
-            ReverseScrollingDirectionCheckBox.Checked = false;
+            InvertScrollingDirectionCheckBox.Checked = false;
             ManualPreciseVolumeCheckBox.Checked = false;
             SetVolumeStepNumericUpDown.Value = 5;
             ThresholdNumericUpDown.Value = 10;
-            SetVolumeBarWidthNumericUpDown.Value = 0;
-            SetVolumeBarHeightNumericUpDown.Value = 0;
+            VolumeBarPaddingWidthNumericUpDown.Value = 0;
+            VolumeBarPaddingHeightNumericUpDown.Value = 0;
             AutoHideTimeOutNumericUpDown.Value = 1000;
             TrayIconTextGradientColorCheckBox.Checked = true;
             TrayIconTextSolidColorCheckBox.Checked = false;
@@ -220,10 +262,18 @@ namespace tbvolscroll
             VolumeBarGradientColorCheckBox.Checked = true;
             VolumeBarSolidColorCheckBox.Checked = false;
             VolumeBarOpacityValueLabel.Text = $"{VolumeBarOpacityTrackBar.Value}%";
-            Settings.Default.FontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
-            CustomFontDialog.Font = Settings.Default.FontStyle;
-            FontPreviewLabel.Font = CustomFontDialog.Font;
-            TextRenderingHintComboBox.SelectedIndex = 1;
+            Settings.Default.VolumeBarFontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
+            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
+            VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.Font;
+            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
+            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+            TrayIconWidthNumericUpDown.Enabled = TrayIconDisplayModeAutomaticCheckBox.Checked;
+            TrayIconHeightNumericUpDown.Enabled = TrayIconDisplayModeAutomaticCheckBox.Checked;
+            TrayIconWidthNumericUpDown.Value = 32;
+            TrayIconHeightNumericUpDown.Value = 32;
+            TrayIconPaddingNumericUpDown.Value = 1;
+            TrayIconFontStyleButton.Enabled = TrayIconDisplayModeAutomaticCheckBox.Checked;
+            TrayIconTextRenderingHintComboBox.SelectedIndex = 1;
             RestoreDefaultValuesButton.Enabled = false;
         }
 
@@ -288,6 +338,42 @@ namespace tbvolscroll
         {
             if (!ApplyConfigurationButton.Enabled)
                 Close();
+        }
+
+        private void SetTrayIconDisplayModeAutomatic(object sender, EventArgs e)
+        {
+            TrayIconDisplayModeAutomaticCheckBox.Checked = true;
+            TrayIconDisplayModeUserDefinedCheckBox.Checked = false;
+            TrayIconWidthNumericUpDown.Enabled = false;
+            TrayIconHeightNumericUpDown.Enabled = false;
+            TrayIconPaddingNumericUpDown.Enabled = false;
+            TrayIconFontStyleButton.Enabled = false;
+        }
+
+        private void SetTrayIconDisplayModeUserDefinedCheckBox(object sender, EventArgs e)
+        {
+            TrayIconDisplayModeAutomaticCheckBox.Checked = false;
+            TrayIconDisplayModeUserDefinedCheckBox.Checked = true;
+            TrayIconWidthNumericUpDown.Enabled = true;
+            TrayIconHeightNumericUpDown.Enabled = true;
+            TrayIconPaddingNumericUpDown.Enabled = true;
+            TrayIconFontStyleButton.Enabled = true;
+
+        }
+
+        private void SetTrayIconFontStyle(object sender, EventArgs e)
+        {
+            ApplyConfigurationButton.Enabled = true;
+            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
+            DialogResult dialogResult = TrayIconCustomFontDialog.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                doSetTrayIconFont = true;
+                TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+                OnSettingsChanged(null, null);
+            }
+            else
+                ApplyConfigurationButton.Enabled = false;
         }
     }
 }

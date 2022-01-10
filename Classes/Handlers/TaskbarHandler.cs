@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using tbvolscroll.Properties;
 
 namespace tbvolscroll
 {
@@ -80,6 +81,7 @@ namespace tbvolscroll
 
         public static bool IsCursorInTaskbar()
         {
+
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             IntPtr window = WindowFromPoint(Cursor.Position);
@@ -94,9 +96,21 @@ namespace tbvolscroll
                 hWnd = FindWindowByClassName("Shell_SecondaryTrayWnd", IntPtr.Zero);
             GetWindowRect(hWnd, out Rectangle shellTrayArea);
 
-            bool cursorIsInTaskbar = shellTrayArea.Contains(position);
             bool taskbarIsVisible = (className == "Shell_TrayWnd" || className == "Shell_SecondaryTrayWnd");
-                return cursorIsInTaskbar && taskbarIsVisible;
+            bool cursorIsInTaskbarArea = false;
+            if (Settings.Default.IgnoreTaskbarVisibility)
+            {
+                int taskbarHeight = shellTrayArea.Height - shellTrayArea.Y;
+                Rectangle workingArea = screen.Bounds;
+                workingArea.Height -= taskbarHeight;
+                if (!workingArea.Contains(position))
+                    cursorIsInTaskbarArea = true;
+            }
+            else
+                cursorIsInTaskbarArea = shellTrayArea.Contains(position);
+            if (Settings.Default.IgnoreTaskbarVisibility)
+                return cursorIsInTaskbarArea;
+            return cursorIsInTaskbarArea && taskbarIsVisible;
         }
 
         public static TaskbarPosition Position

@@ -110,12 +110,12 @@ namespace tbvolscroll.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 8.25pt, style=Bold")]
-        public global::System.Drawing.Font FontStyle {
+        public global::System.Drawing.Font VolumeBarFontStyle {
             get {
-                return ((global::System.Drawing.Font)(this["FontStyle"]));
+                return ((global::System.Drawing.Font)(this["VolumeBarFontStyle"]));
             }
             set {
-                this["FontStyle"] = value;
+                this["VolumeBarFontStyle"] = value;
             }
         }
         
@@ -182,12 +182,12 @@ namespace tbvolscroll.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ReverseScrollingDirection {
+        public bool InvertScrollingDirection {
             get {
-                return ((bool)(this["ReverseScrollingDirection"]));
+                return ((bool)(this["InvertScrollingDirection"]));
             }
             set {
-                this["ReverseScrollingDirection"] = value;
+                this["InvertScrollingDirection"] = value;
             }
         }
         
@@ -265,13 +265,73 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IgnoreTaskbarVisibility {
             get {
-                return ((string)(this["Setting"]));
+                return ((bool)(this["IgnoreTaskbarVisibility"]));
             }
             set {
-                this["Setting"] = value;
+                this["IgnoreTaskbarVisibility"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 8.25pt, style=Bold")]
+        public global::System.Drawing.Font TrayIconFontStyle {
+            get {
+                return ((global::System.Drawing.Font)(this["TrayIconFontStyle"]));
+            }
+            set {
+                this["TrayIconFontStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TrayIconIsDisplayModeAutomatic {
+            get {
+                return ((bool)(this["TrayIconIsDisplayModeAutomatic"]));
+            }
+            set {
+                this["TrayIconIsDisplayModeAutomatic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("32")]
+        public int TrayIconWidth {
+            get {
+                return ((int)(this["TrayIconWidth"]));
+            }
+            set {
+                this["TrayIconWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("32")]
+        public int TrayIconHeight {
+            get {
+                return ((int)(this["TrayIconHeight"]));
+            }
+            set {
+                this["TrayIconHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public int TrayIconPadding {
+            get {
+                return ((int)(this["TrayIconPadding"]));
+            }
+            set {
+                this["TrayIconPadding"] = value;
             }
         }
     }

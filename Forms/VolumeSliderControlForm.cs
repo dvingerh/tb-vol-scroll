@@ -1,7 +1,13 @@
+using AudioSwitcher.AudioApi.Session;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Management;
 using System.Media;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
@@ -27,7 +33,7 @@ namespace tbvolscroll.Forms
             lastTrackBarValue = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
             VolumeTrackBar.Value = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
             VolumeLabel.Text = $"{(int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume)}%";
-            AudioDeviceLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
+            AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
             PeakMeterPictureBox.BackColor = Globals.DefaultColor;
 
 
@@ -52,6 +58,8 @@ namespace tbvolscroll.Forms
 
             }
         }
+       
+
 
 
         private async Task ProcessPeakValueEventQueue()
@@ -137,7 +145,7 @@ namespace tbvolscroll.Forms
                         PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
                         double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                         PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
-                        AudioDeviceLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
+                        AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
                     });
                 }
                 catch (Exception ex){

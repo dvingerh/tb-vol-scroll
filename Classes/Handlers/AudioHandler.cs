@@ -142,7 +142,7 @@ namespace tbvolscroll
                         await ProcessDeviceEventQueue();
                         break;
                 }
-                if (Globals.AudioPlaybackDevicesForm != null)
+                if (Globals.AudioPlaybackDevicesForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
                     await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
             }
         }

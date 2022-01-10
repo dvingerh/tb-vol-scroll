@@ -88,7 +88,7 @@ namespace tbvolscroll
 
                 Invoke((MethodInvoker)delegate
                {
-                   VolumeTextLabel.Font = Settings.Default.FontStyle;
+                   VolumeTextLabel.Font = Settings.Default.VolumeBarFontStyle;
                    Size labelSize = Utils.CalculateLabelSize(VolumeTextLabel, "100%");
                    Size volumeBarMinSize = new Size(Settings.Default.BarWidthPadding + labelSize.Width, Settings.Default.BarHeightPadding + labelSize.Height + 5);
                    if (Settings.Default.DisplayTrayIconAsText)

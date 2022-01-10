@@ -1,4 +1,5 @@
 ﻿using AudioSwitcher.AudioApi.CoreAudio;
+using AudioSwitcher.AudioApi.Session;
 
 namespace tbvolscroll.Classes
 {
@@ -9,7 +10,6 @@ namespace tbvolscroll.Classes
         private static bool muted = true;
         private static bool audioAvailable = false;
         private static CoreAudioController coreAudioController;
-
         public static int Volume { get => volume; set => volume = value; }
         public static bool Muted { get => muted; set => muted = value; }
         public static bool AudioAvailable { get => audioAvailable; set => audioAvailable = value; }

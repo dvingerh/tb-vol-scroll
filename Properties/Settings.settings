@@ -23,7 +23,7 @@
     <Setting Name="VolumeBarOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="FontStyle" Type="System.Drawing.Font" Scope="User">
+    <Setting Name="VolumeBarFontStyle" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
     </Setting>
     <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
@@ -41,7 +41,7 @@
     <Setting Name="SwitchDefaultPlaybackDeviceShortcut" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ReverseScrollingDirection" Type="System.Boolean" Scope="User">
+    <Setting Name="InvertScrollingDirection" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ManualPreciseVolumeShortcut" Type="System.Boolean" Scope="User">
@@ -62,8 +62,23 @@
     <Setting Name="TextRenderingHintType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="IgnoreTaskbarVisibility" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TrayIconFontStyle" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
+    </Setting>
+    <Setting Name="TrayIconIsDisplayModeAutomatic" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TrayIconWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
+    </Setting>
+    <Setting Name="TrayIconHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">32</Value>
+    </Setting>
+    <Setting Name="TrayIconPadding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">16</Value>
     </Setting>
   </Settings>
 </SettingsFile>

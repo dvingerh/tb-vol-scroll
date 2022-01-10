@@ -29,10 +29,12 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CheckForUpdatesForm));
             this.ViewReleasesLinkLabel = new System.Windows.Forms.LinkLabel();
             this.CheckingForUpdatesLabel = new System.Windows.Forms.Button();
             this.DownloadButton = new System.Windows.Forms.Button();
+            this.RefreshUpdateToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // ViewReleasesLinkLabel
@@ -42,7 +44,7 @@ namespace tbvolscroll.Forms
             this.ViewReleasesLinkLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ViewReleasesLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.ViewReleasesLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
-            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(162, 93);
+            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(196, 89);
             this.ViewReleasesLinkLabel.Name = "ViewReleasesLinkLabel";
             this.ViewReleasesLinkLabel.Size = new System.Drawing.Size(76, 13);
             this.ViewReleasesLinkLabel.TabIndex = 10;
@@ -62,13 +64,15 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight;
             this.CheckingForUpdatesLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CheckingForUpdatesLabel.Image = global::tbvolscroll.Properties.Resources.spinner;
+            this.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.TopRight;
             this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(38, 14);
             this.CheckingForUpdatesLabel.Name = "CheckingForUpdatesLabel";
-            this.CheckingForUpdatesLabel.Size = new System.Drawing.Size(175, 30);
+            this.CheckingForUpdatesLabel.Size = new System.Drawing.Size(209, 26);
             this.CheckingForUpdatesLabel.TabIndex = 9;
-            this.CheckingForUpdatesLabel.Text = "Checking for updates...";
-            this.CheckingForUpdatesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.CheckingForUpdatesLabel.Text = "  Checking for updates...";
+            this.CheckingForUpdatesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CheckingForUpdatesLabel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.RefreshUpdateToolTip.SetToolTip(this.CheckingForUpdatesLabel, "Click to check for updates.");
             this.CheckingForUpdatesLabel.UseVisualStyleBackColor = true;
             this.CheckingForUpdatesLabel.Click += new System.EventHandler(this.DoUpdateCheck);
             // 
@@ -77,17 +81,22 @@ namespace tbvolscroll.Forms
             this.DownloadButton.Enabled = false;
             this.DownloadButton.Location = new System.Drawing.Point(38, 50);
             this.DownloadButton.Name = "DownloadButton";
-            this.DownloadButton.Size = new System.Drawing.Size(175, 25);
+            this.DownloadButton.Size = new System.Drawing.Size(209, 25);
             this.DownloadButton.TabIndex = 8;
             this.DownloadButton.Text = "Download && Install";
             this.DownloadButton.UseVisualStyleBackColor = true;
             this.DownloadButton.Click += new System.EventHandler(this.StartUpdateDownload);
             // 
+            // RefreshUpdateToolTip
+            // 
+            this.RefreshUpdateToolTip.AutomaticDelay = 100;
+            this.RefreshUpdateToolTip.BackColor = System.Drawing.Color.White;
+            // 
             // CheckForUpdatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(250, 115);
+            this.ClientSize = new System.Drawing.Size(284, 111);
             this.Controls.Add(this.ViewReleasesLinkLabel);
             this.Controls.Add(this.CheckingForUpdatesLabel);
             this.Controls.Add(this.DownloadButton);
@@ -112,5 +121,6 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.LinkLabel ViewReleasesLinkLabel;
         public System.Windows.Forms.Button CheckingForUpdatesLabel;
         public System.Windows.Forms.Button DownloadButton;
+        private System.Windows.Forms.ToolTip RefreshUpdateToolTip;
     }
 }

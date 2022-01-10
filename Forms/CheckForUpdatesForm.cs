@@ -14,14 +14,16 @@ namespace tbvolscroll.Forms
             updateHandler = new UpdateHandler(this);
         }
 
-        public bool isUpdating = false;
+        private bool isUpdating = false;
+
+        public bool IsUpdating { get => isUpdating; set => isUpdating = value; }
 
         private async void DoUpdateCheck(object sender, EventArgs e)
         {
             Application.DoEvents();
             if (!isUpdating)
             {
-                CheckingForUpdatesLabel.Text = $"Checking for updates...";
+                CheckingForUpdatesLabel.Text = $"  Checking for updates...";
                 CheckingForUpdatesLabel.Image = Properties.Resources.spinner;
                 await updateHandler.CheckForUpdates();
             }
@@ -29,11 +31,9 @@ namespace tbvolscroll.Forms
 
         private async void StartUpdateDownload(object sender, EventArgs e)
         {
-            DownloadButton.Enabled = false;
-            CheckingForUpdatesLabel.Text = $"Retrieving file...";
-            CheckingForUpdatesLabel.Image = Properties.Resources.spinner;
             isUpdating = true;
             await updateHandler.DownloadUpdate();
+            isUpdating = false;
 
         }
 

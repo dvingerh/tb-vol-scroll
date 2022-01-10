@@ -117,20 +117,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\AudioHandler.cs" />
+    <Compile Include="Classes\Handlers\AudioHandler.cs" />
     <Compile Include="Classes\AudioState.cs" />
-    <Compile Include="Classes\DoubleBufferedListView.cs">
+    <Compile Include="Classes\ExControls\DoubleBufferedListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\WinServicePoller.cs">
+    <Compile Include="Classes\ExControls\WinServicePoller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Globals.cs" />
-    <Compile Include="Classes\TaskbarHandler.cs" />
-    <Compile Include="Classes\TrackBarNoFocus.cs">
+    <Compile Include="Classes\Handlers\TaskbarHandler.cs" />
+    <Compile Include="Classes\ExControls\TrackBarNoFocus.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Classes\UpdateHandler.cs" />
+    <Compile Include="Classes\Handlers\UpdateHandler.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -144,7 +144,7 @@
     <Compile Include="Forms\ConfigurationForm.Designer.cs">
       <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\InputHandler.cs" />
+    <Compile Include="Classes\Handlers\InputHandler.cs" />
     <Compile Include="Forms\AudioPlaybackDevicesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -205,6 +205,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\exlamation.png" />
     <Content Include="voltray.ico" />
     <None Include="Resources\mixer.png" />
     <None Include="Resources\speaker.png" />

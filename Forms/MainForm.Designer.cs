@@ -59,7 +59,7 @@ namespace tbvolscroll
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(5);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 25);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 20);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -93,7 +93,7 @@ namespace tbvolscroll
             this.ExitMenuItem});
             this.TrayContextMenu.Name = "trayContextMenu";
             this.TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.TrayContextMenu.Size = new System.Drawing.Size(200, 190);
+            this.TrayContextMenu.Size = new System.Drawing.Size(200, 168);
             this.TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);
             // 
             // TitleLabelMenuItem
@@ -250,7 +250,7 @@ namespace tbvolscroll
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(125, 25);
+            this.ClientSize = new System.Drawing.Size(125, 20);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.DoubleBuffered = true;

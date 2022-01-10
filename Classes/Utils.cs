@@ -17,7 +17,7 @@ namespace tbvolscroll.Classes
         [DllImport("user32.dll")]
         public static extern bool SetWindowPos(int hWnd, int hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
         [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
         [DllImport("User32.dll")]
         private static extern IntPtr MonitorFromPoint([In] Point pt, [In] uint dwFlags);
         [DllImport("Shcore.dll")]
@@ -34,7 +34,7 @@ namespace tbvolscroll.Classes
         int nHeight,
         bool bRepaint);
 
-        public struct RECT
+        private struct RECT
         {
             public int Left; 
             public int Top; 
@@ -49,20 +49,20 @@ namespace tbvolscroll.Classes
             if (percentage < 0)
                 percentage = 0;
 
-            double num = ((percentage > 50.0) ? (1.0 - 2.0 * (percentage - 50.0) / 100.0) : 1.0) * 255.0;
-            double num2 = ((percentage > 50.0) ? 1.0 : (2.0 * percentage / 100.0)) * 255.0;
-            double num3 = 0.0;
+            double redVal = ((percentage > 50.0) ? (1.0 - 2.0 * (percentage - 50.0) / 100.0) : 1.0) * 255.0;
+            double greenVal = ((percentage > 50.0) ? 1.0 : (2.0 * percentage / 100.0)) * 255.0;
+            double blueVal = 0.0;
 
-            if (num < 0)
-                num = 0;
-            if (num2 < 0)
-                num2 = 0;
-            if (num > 255)
-                num = 255;
-            if (num2 > 255)
-                num2 = 255;
+            if (redVal < 0)
+                redVal = 0;
+            if (greenVal < 0)
+                greenVal = 0;
+            if (redVal > 255)
+                redVal = 255;
+            if (greenVal > 255)
+                greenVal = 255;
 
-            return Color.FromArgb((int)num, (int)num2, (int)num3);
+            return Color.FromArgb((int)redVal, (int)greenVal, (int)blueVal);
         }
 
         public static bool IsAdministrator()
@@ -76,7 +76,7 @@ namespace tbvolscroll.Classes
             ShowWindow(form.Handle, 4);
         }
 
-        public static Size GetWindowSize(IntPtr hWnd)
+        private static Size GetWindowSize(IntPtr hWnd)
         {
             Size cSize = new Size();
             GetWindowRect(hWnd, out RECT pRect);
@@ -95,13 +95,16 @@ namespace tbvolscroll.Classes
         {
             while (true)
             {
-                SizeF size = g.MeasureString(text, font);
+                try
+                {
+                    SizeF size = g.MeasureString(text, font);
+                    if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount)
+                    { return font; }
 
-                if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount) { return font; }
-
-                Font oldFont = font;
-                font = new Font(font.Name, font.Size - 1, font.Style);
-                oldFont.Dispose();
+                    Font oldFont = font;
+                    font = new Font(font.Name, font.Size - 1, font.Style);
+                }
+                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             }
         }
 
@@ -141,6 +144,14 @@ namespace tbvolscroll.Classes
                 float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
                 float expandAmount = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
 
+                if (!Settings.Default.TrayIconIsDisplayModeAutomatic)
+                {
+                    iconWidth = Settings.Default.TrayIconWidth;
+                    iconHeight = Settings.Default.TrayIconHeight;
+                    fontSize = Settings.Default.TrayIconFontStyle.Size;
+                    expandAmount = Settings.Default.TrayIconPadding;
+                }
+
                 TextRenderingHint hinting;
 
                 switch (Globals.TextRenderingHintType)
@@ -164,7 +175,7 @@ namespace tbvolscroll.Classes
 
                 using (Bitmap bitmap = new Bitmap((int)iconWidth, (int)iconHeight, PixelFormat.Format32bppArgb))
                 {
-                    Font font = new Font("Segoe UI Semibold", fontSize, FontStyle.Regular);
+                    Font font = Settings.Default.TrayIconIsDisplayModeAutomatic ? new Font("Segoe UI Semibold", fontSize, FontStyle.Regular) : Settings.Default.TrayIconFontStyle;
                     Color textColor = Settings.Default.TrayIconTextSolidColor;
 
                     switch (text)
