@@ -274,9 +274,9 @@ namespace tbvolscroll
                             break;
                     }
                     SetVolumeBarPosition();
+                    ResumeLayout();
                     if (!Settings.Default.DisplayVolumeBarScrolling && updateType == "volume")
                         return;
-                    ResumeLayout();
                     ShowVolumeBar();
                 });
             });

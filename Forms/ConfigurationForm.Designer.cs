@@ -624,7 +624,7 @@
             this.IgnoreTaskbarVisibilityCheckBox.Name = "IgnoreTaskbarVisibilityCheckBox";
             this.IgnoreTaskbarVisibilityCheckBox.Size = new System.Drawing.Size(260, 30);
             this.IgnoreTaskbarVisibilityCheckBox.TabIndex = 23;
-            this.IgnoreTaskbarVisibilityCheckBox.Text = "Always handle scroll actions regardless of the\r\ntaskbar being visible on screen";
+            this.IgnoreTaskbarVisibilityCheckBox.Text = "Always handle scroll actions regardless of the\r\ntaskbar being visible or not";
             this.IgnoreTaskbarVisibilityCheckBox.UseVisualStyleBackColor = true;
             // 
             // ManualPreciseVolumeCheckBox
