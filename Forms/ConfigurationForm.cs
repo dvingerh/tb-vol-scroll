@@ -26,7 +26,6 @@ namespace tbvolscroll
             DisplayVolumeBarScrollingCheckBox.Checked = Settings.Default.DisplayVolumeBarScrolling;
             IgnoreTaskbarVisibilityCheckBox.Checked = Settings.Default.IgnoreTaskbarVisibility;
 
-
             TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;

@@ -59,7 +59,7 @@ namespace tbvolscroll
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
             this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(5);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
-            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 20);
+            this.VolumeTextLabel.Size = new System.Drawing.Size(125, 23);
             this.VolumeTextLabel.TabIndex = 0;
             this.VolumeTextLabel.Text = "tb-vol-scroll";
             this.VolumeTextLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -190,7 +190,7 @@ namespace tbvolscroll
             this.CheckForUpdatesMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.CheckForUpdatesMenuItem.Name = "CheckForUpdatesMenuItem";
             this.CheckForUpdatesMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.CheckForUpdatesMenuItem.Text = "Check For Updates";
+            this.CheckForUpdatesMenuItem.Text = "Check for Updates";
             this.CheckForUpdatesMenuItem.Click += new System.EventHandler(this.OpenCheckForUpdatesForm);
             // 
             // SeperatorMenuItem4
@@ -202,16 +202,16 @@ namespace tbvolscroll
             // 
             this.OpenCurrentDirectoryMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.OpenCurrentDirectoryMenuItem.Name = "OpenCurrentDirectoryMenuItem";
-            this.OpenCurrentDirectoryMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.OpenCurrentDirectoryMenuItem.Text = "Open Current Directory";
+            this.OpenCurrentDirectoryMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.OpenCurrentDirectoryMenuItem.Text = "Open current Directory";
             this.OpenCurrentDirectoryMenuItem.Click += new System.EventHandler(this.OpenCurrentLocation);
             // 
             // OpenStartupDirectoryMenuItem
             // 
             this.OpenStartupDirectoryMenuItem.Margin = new System.Windows.Forms.Padding(0, 2, 0, 2);
             this.OpenStartupDirectoryMenuItem.Name = "OpenStartupDirectoryMenuItem";
-            this.OpenStartupDirectoryMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.OpenStartupDirectoryMenuItem.Text = "Open Startup Directory";
+            this.OpenStartupDirectoryMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.OpenStartupDirectoryMenuItem.Text = "Open startup Directory";
             this.OpenStartupDirectoryMenuItem.Click += new System.EventHandler(this.OpenStartupFolder);
             // 
             // SeparatorMenuItem2
@@ -250,7 +250,7 @@ namespace tbvolscroll
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(125, 20);
+            this.ClientSize = new System.Drawing.Size(125, 23);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeTextLabel);
             this.DoubleBuffered = true;

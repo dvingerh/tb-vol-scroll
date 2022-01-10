@@ -44,7 +44,7 @@ namespace tbvolscroll.Forms
             this.ViewReleasesLinkLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ViewReleasesLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.ViewReleasesLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
-            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(196, 89);
+            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(79, 89);
             this.ViewReleasesLinkLabel.Name = "ViewReleasesLinkLabel";
             this.ViewReleasesLinkLabel.Size = new System.Drawing.Size(76, 13);
             this.ViewReleasesLinkLabel.TabIndex = 10;
@@ -65,21 +65,23 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CheckingForUpdatesLabel.Image = global::tbvolscroll.Properties.Resources.spinner;
             this.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(38, 14);
+            this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(12, 12);
             this.CheckingForUpdatesLabel.Name = "CheckingForUpdatesLabel";
             this.CheckingForUpdatesLabel.Size = new System.Drawing.Size(209, 26);
             this.CheckingForUpdatesLabel.TabIndex = 9;
             this.CheckingForUpdatesLabel.Text = "  Checking for updates...";
             this.CheckingForUpdatesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CheckingForUpdatesLabel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.RefreshUpdateToolTip.SetToolTip(this.CheckingForUpdatesLabel, "Click to check for updates.");
+            this.RefreshUpdateToolTip.SetToolTip(this.CheckingForUpdatesLabel, "Click to check for updates");
             this.CheckingForUpdatesLabel.UseVisualStyleBackColor = true;
             this.CheckingForUpdatesLabel.Click += new System.EventHandler(this.DoUpdateCheck);
             // 
             // DownloadButton
             // 
+            this.DownloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.DownloadButton.Enabled = false;
-            this.DownloadButton.Location = new System.Drawing.Point(38, 50);
+            this.DownloadButton.Location = new System.Drawing.Point(12, 44);
             this.DownloadButton.Name = "DownloadButton";
             this.DownloadButton.Size = new System.Drawing.Size(209, 25);
             this.DownloadButton.TabIndex = 8;
@@ -96,7 +98,7 @@ namespace tbvolscroll.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(284, 111);
+            this.ClientSize = new System.Drawing.Size(234, 111);
             this.Controls.Add(this.ViewReleasesLinkLabel);
             this.Controls.Add(this.CheckingForUpdatesLabel);
             this.Controls.Add(this.DownloadButton);
@@ -107,7 +109,7 @@ namespace tbvolscroll.Forms
             this.MinimizeBox = false;
             this.Name = "CheckForUpdatesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Check For Updates";
+            this.Text = "Check for Updates";
             this.Deactivate += new System.EventHandler(this.CloseFormOnDeacivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DontCloseOnUpdate);
             this.Shown += new System.EventHandler(this.DoUpdateCheck);
