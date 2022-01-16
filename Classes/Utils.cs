@@ -242,7 +242,7 @@ namespace tbvolscroll.Classes
                 Rectangle workingArea = screen.WorkingArea;
 
                 Size sndVolDimensions = GetWindowSize(windowHandle);
-                sndVolDimensions.Width = Convert.ToInt32(Math.Round(0.75 * workingArea.Width));
+                sndVolDimensions.Width = Convert.ToInt32(Math.Round(0.5 * workingArea.Width));
                 switch (TaskbarHandler.Position)
                 {
                     case TaskbarHandler.TaskbarPosition.Bottom:

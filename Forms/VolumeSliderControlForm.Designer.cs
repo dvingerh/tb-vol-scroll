@@ -62,9 +62,9 @@ namespace tbvolscroll.Forms
             // CloseButton
             // 
             this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.CloseButton.Location = new System.Drawing.Point(320, 3);
+            this.CloseButton.Location = new System.Drawing.Point(325, 3);
             this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(25, 20);
+            this.CloseButton.Size = new System.Drawing.Size(20, 20);
             this.CloseButton.TabIndex = 7;
             this.CloseButton.Text = "X";
             this.CloseButton.UseVisualStyleBackColor = true;
@@ -76,9 +76,9 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PeakMeterPanel.Controls.Add(this.PeakMeterPictureBox);
             this.PeakMeterPanel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 57);
+            this.PeakMeterPanel.Location = new System.Drawing.Point(6, 59);
             this.PeakMeterPanel.Name = "PeakMeterPanel";
-            this.PeakMeterPanel.Size = new System.Drawing.Size(285, 10);
+            this.PeakMeterPanel.Size = new System.Drawing.Size(296, 10);
             this.PeakMeterPanel.TabIndex = 6;
             // 
             // PeakMeterPictureBox
@@ -106,7 +106,7 @@ namespace tbvolscroll.Forms
             this.AudioDeviceNameLabel.AutoEllipsis = true;
             this.AudioDeviceNameLabel.Location = new System.Drawing.Point(3, 3);
             this.AudioDeviceNameLabel.Name = "AudioDeviceNameLabel";
-            this.AudioDeviceNameLabel.Size = new System.Drawing.Size(292, 16);
+            this.AudioDeviceNameLabel.Size = new System.Drawing.Size(299, 16);
             this.AudioDeviceNameLabel.TabIndex = 4;
             this.AudioDeviceNameLabel.Text = "Audio Device";
             // 
@@ -115,7 +115,7 @@ namespace tbvolscroll.Forms
             this.VolumeTrackBar.Location = new System.Drawing.Point(-2, 22);
             this.VolumeTrackBar.Maximum = 100;
             this.VolumeTrackBar.Name = "VolumeTrackBar";
-            this.VolumeTrackBar.Size = new System.Drawing.Size(300, 45);
+            this.VolumeTrackBar.Size = new System.Drawing.Size(312, 45);
             this.VolumeTrackBar.TabIndex = 3;
             this.VolumeTrackBar.TickFrequency = 4;
             this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;

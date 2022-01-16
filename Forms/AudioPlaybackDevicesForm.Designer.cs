@@ -93,9 +93,9 @@ namespace tbvolscroll.Forms
             // CloseButton
             // 
             this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.CloseButton.Location = new System.Drawing.Point(570, 3);
+            this.CloseButton.Location = new System.Drawing.Point(575, 3);
             this.CloseButton.Name = "CloseButton";
-            this.CloseButton.Size = new System.Drawing.Size(25, 20);
+            this.CloseButton.Size = new System.Drawing.Size(20, 20);
             this.CloseButton.TabIndex = 8;
             this.CloseButton.Text = "X";
             this.CloseButton.UseVisualStyleBackColor = true;

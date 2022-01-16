@@ -12,6 +12,7 @@ namespace tbvolscroll.Forms
         {
             InitializeComponent();
             updateHandler = new UpdateHandler(this);
+            CurrentVersionLabel.Text = Application.ProductVersion;
         }
 
         private bool isUpdating = false;
@@ -20,7 +21,6 @@ namespace tbvolscroll.Forms
 
         private async void DoUpdateCheck(object sender, EventArgs e)
         {
-            Application.DoEvents();
             if (!isUpdating)
             {
                 CheckingForUpdatesLabel.Text = $"  Checking for updates...";

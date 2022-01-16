@@ -35,6 +35,7 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel = new System.Windows.Forms.Button();
             this.DownloadButton = new System.Windows.Forms.Button();
             this.RefreshUpdateToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.CurrentVersionLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ViewReleasesLinkLabel
@@ -44,7 +45,7 @@ namespace tbvolscroll.Forms
             this.ViewReleasesLinkLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ViewReleasesLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.ViewReleasesLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
-            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(79, 89);
+            this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(150, 89);
             this.ViewReleasesLinkLabel.Name = "ViewReleasesLinkLabel";
             this.ViewReleasesLinkLabel.Size = new System.Drawing.Size(76, 13);
             this.ViewReleasesLinkLabel.TabIndex = 10;
@@ -65,7 +66,7 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.CheckingForUpdatesLabel.Image = global::tbvolscroll.Properties.Resources.spinner;
             this.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(12, 12);
+            this.CheckingForUpdatesLabel.Location = new System.Drawing.Point(12, 13);
             this.CheckingForUpdatesLabel.Name = "CheckingForUpdatesLabel";
             this.CheckingForUpdatesLabel.Size = new System.Drawing.Size(209, 26);
             this.CheckingForUpdatesLabel.TabIndex = 9;
@@ -81,9 +82,9 @@ namespace tbvolscroll.Forms
             this.DownloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DownloadButton.Enabled = false;
-            this.DownloadButton.Location = new System.Drawing.Point(12, 44);
+            this.DownloadButton.Location = new System.Drawing.Point(11, 45);
             this.DownloadButton.Name = "DownloadButton";
-            this.DownloadButton.Size = new System.Drawing.Size(209, 25);
+            this.DownloadButton.Size = new System.Drawing.Size(211, 25);
             this.DownloadButton.TabIndex = 8;
             this.DownloadButton.Text = "Download && Install";
             this.DownloadButton.UseVisualStyleBackColor = true;
@@ -94,11 +95,21 @@ namespace tbvolscroll.Forms
             this.RefreshUpdateToolTip.AutomaticDelay = 100;
             this.RefreshUpdateToolTip.BackColor = System.Drawing.Color.White;
             // 
+            // CurrentVersionLabel
+            // 
+            this.CurrentVersionLabel.AutoSize = true;
+            this.CurrentVersionLabel.Location = new System.Drawing.Point(8, 89);
+            this.CurrentVersionLabel.Name = "CurrentVersionLabel";
+            this.CurrentVersionLabel.Size = new System.Drawing.Size(31, 13);
+            this.CurrentVersionLabel.TabIndex = 11;
+            this.CurrentVersionLabel.Text = "0.0.0";
+            // 
             // CheckForUpdatesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(234, 111);
+            this.Controls.Add(this.CurrentVersionLabel);
             this.Controls.Add(this.ViewReleasesLinkLabel);
             this.Controls.Add(this.CheckingForUpdatesLabel);
             this.Controls.Add(this.DownloadButton);
@@ -125,5 +136,6 @@ namespace tbvolscroll.Forms
         public System.Windows.Forms.Button CheckingForUpdatesLabel;
         public System.Windows.Forms.Button DownloadButton;
         private System.Windows.Forms.ToolTip RefreshUpdateToolTip;
+        private System.Windows.Forms.Label CurrentVersionLabel;
     }
 }
