@@ -29,6 +29,7 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.BorderPanel = new System.Windows.Forms.Panel();
             this.CloseButton = new System.Windows.Forms.Button();
             this.PeakMeterPanel = new System.Windows.Forms.Panel();
@@ -36,6 +37,7 @@ namespace tbvolscroll.Forms
             this.VolumeLabel = new System.Windows.Forms.Label();
             this.AudioDeviceNameLabel = new System.Windows.Forms.Label();
             this.VolumeTrackBar = new tbvolscroll.Classes.TrackBarNoFocus();
+            this.VolumeSliderTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.BorderPanel.SuspendLayout();
             this.PeakMeterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PeakMeterPictureBox)).BeginInit();
@@ -101,6 +103,7 @@ namespace tbvolscroll.Forms
             // 
             // AudioDeviceNameLabel
             // 
+            this.AudioDeviceNameLabel.AutoEllipsis = true;
             this.AudioDeviceNameLabel.Location = new System.Drawing.Point(3, 3);
             this.AudioDeviceNameLabel.Name = "AudioDeviceNameLabel";
             this.AudioDeviceNameLabel.Size = new System.Drawing.Size(292, 16);
@@ -117,6 +120,15 @@ namespace tbvolscroll.Forms
             this.VolumeTrackBar.TickFrequency = 4;
             this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.VolumeTrackBar.Scroll += new System.EventHandler(this.UpdateVolumeFromTrackBar);
+            // 
+            // VolumeSliderTooltip
+            // 
+            this.VolumeSliderTooltip.AutomaticDelay = 0;
+            this.VolumeSliderTooltip.AutoPopDelay = 0;
+            this.VolumeSliderTooltip.InitialDelay = 0;
+            this.VolumeSliderTooltip.ReshowDelay = 100;
+            this.VolumeSliderTooltip.UseAnimation = false;
+            this.VolumeSliderTooltip.UseFading = false;
             // 
             // VolumeSliderControlForm
             // 
@@ -152,5 +164,6 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.Panel PeakMeterPanel;
         private System.Windows.Forms.PictureBox PeakMeterPictureBox;
         private System.Windows.Forms.Button CloseButton;
+        private System.Windows.Forms.ToolTip VolumeSliderTooltip;
     }
 }

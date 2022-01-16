@@ -25,6 +25,9 @@ namespace tbvolscroll.Classes
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public extern static bool DestroyIcon(IntPtr handle);
+
         [DllImport("user32.dll")]
         internal static extern bool MoveWindow(
         IntPtr hWnd,
@@ -93,19 +96,20 @@ namespace tbvolscroll.Classes
 
         private static Font FindBestFitFont(Graphics g, string text, Font font, Size proposedSize, float expandAmount)
         {
-            while (true)
+            Font oldFont = font;
+            try
             {
-                try
+                while (true)
                 {
+
                     SizeF size = g.MeasureString(text, font);
                     if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount)
                     { return font; }
 
-                    Font oldFont = font;
                     font = new Font(font.Name, font.Size - 1, font.Style);
                 }
-                catch (Exception ex) { Console.WriteLine(ex.ToString()); }
             }
+            catch { return oldFont; }
         }
 
         public static float GetDpiScale()
@@ -137,77 +141,77 @@ namespace tbvolscroll.Classes
 
         public static Icon GenerateTrayIcon(string text)
         {
-            try
+            Globals.MainForm.TrayNotifyIcon.Icon.Dispose();
+
+            float iconWidth = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+            float iconHeight = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+            float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+            float expandAmount = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+
+            if (!Settings.Default.TrayIconIsDisplayModeAutomatic)
             {
-                float iconWidth = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
-                float iconHeight = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
-                float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
-                float expandAmount = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+                iconWidth = Settings.Default.TrayIconWidth;
+                iconHeight = Settings.Default.TrayIconHeight;
+                fontSize = Settings.Default.TrayIconFontStyle.Size;
+                expandAmount = Settings.Default.TrayIconPadding;
+            }
 
-                if (!Settings.Default.TrayIconIsDisplayModeAutomatic)
+            TextRenderingHint hinting;
+
+            switch (Globals.TextRenderingHintType)
+            {
+                case 0:
+                    hinting = TextRenderingHint.SystemDefault;
+                    break;
+                case 1:
+                    hinting = TextRenderingHint.ClearTypeGridFit;
+                    break;
+                case 2:
+                    hinting = TextRenderingHint.AntiAliasGridFit;
+                    break;
+                case 3:
+                    hinting = TextRenderingHint.SingleBitPerPixelGridFit;
+                    break;
+                default:
+                    hinting = Globals.DpiScale < 1.25 ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.AntiAliasGridFit;
+                    break;
+            }
+
+            using (Bitmap bitmap = new Bitmap((int)iconWidth, (int)iconHeight, PixelFormat.Format32bppArgb))
+            {
+                Font font = Settings.Default.TrayIconIsDisplayModeAutomatic ? new Font("Segoe UI Semibold", fontSize, FontStyle.Regular) : Settings.Default.TrayIconFontStyle;
+                Color textColor = Settings.Default.TrayIconTextSolidColor;
+
+                switch (text)
                 {
-                    iconWidth = Settings.Default.TrayIconWidth;
-                    iconHeight = Settings.Default.TrayIconHeight;
-                    fontSize = Settings.Default.TrayIconFontStyle.Size;
-                    expandAmount = Settings.Default.TrayIconPadding;
-                }
-
-                TextRenderingHint hinting;
-
-                switch (Globals.TextRenderingHintType)
-                {
-                    case 0:
-                        hinting = TextRenderingHint.SystemDefault;
+                    case "M":
+                    case "X":
+                        textColor = CalculateColor(0);
                         break;
-                    case 1:
-                        hinting = TextRenderingHint.ClearTypeGridFit;
-                        break;
-                    case 2:
-                        hinting = TextRenderingHint.AntiAliasGridFit;
-                        break;
-                    case 3:
-                        hinting = TextRenderingHint.SingleBitPerPixelGridFit;
+                    case "T":
+                        textColor = Globals.DefaultColor;
                         break;
                     default:
-                        hinting = Globals.DpiScale < 1.25 ? TextRenderingHint.ClearTypeGridFit : TextRenderingHint.AntiAliasGridFit;
+                        textColor = Settings.Default.TrayIconTextUseGradientColor ? CalculateColor(AudioState.Volume) : Settings.Default.TrayIconTextSolidColor;
                         break;
                 }
 
-                using (Bitmap bitmap = new Bitmap((int)iconWidth, (int)iconHeight, PixelFormat.Format32bppArgb))
+                bitmap.MakeTransparent(Color.Transparent);
+                using (Graphics graphics = Graphics.FromImage(bitmap))
                 {
-                    Font font = Settings.Default.TrayIconIsDisplayModeAutomatic ? new Font("Segoe UI Semibold", fontSize, FontStyle.Regular) : Settings.Default.TrayIconFontStyle;
-                    Color textColor = Settings.Default.TrayIconTextSolidColor;
-
-                    switch (text)
+                    graphics.Clear(Color.Transparent);
+                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                    graphics.TextRenderingHint = hinting;
+                    font = FindBestFitFont(graphics, text, font, bitmap.Size, expandAmount);
+                    SizeF size = graphics.MeasureString(text, font).ToSize();
+                    graphics.DrawString(text, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
+                    using (Icon tmpIcon = Icon.FromHandle(bitmap.GetHicon()))
                     {
-                        case "M":
-                        case "X":
-                            textColor = CalculateColor(0);
-                            break;
-                        case "T":
-                            textColor = Globals.DefaultColor;
-                            break;
-                        default:
-                            textColor = Settings.Default.TrayIconTextUseGradientColor ? CalculateColor(AudioState.Volume) : Settings.Default.TrayIconTextSolidColor;
-                            break;
+                        Icon newIcon = (Icon)tmpIcon.Clone();
+                        DestroyIcon(tmpIcon.Handle);
+                        return newIcon;
                     }
-
-                    bitmap.MakeTransparent(Color.Transparent);
-                    using (Graphics graphics = Graphics.FromImage(bitmap))
-                    {
-                        graphics.Clear(Color.Transparent);
-                        graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                        graphics.TextRenderingHint = hinting;
-                        font = FindBestFitFont(graphics, text, font, bitmap.Size, expandAmount); 
-                        SizeF size = graphics.MeasureString(text, font).ToSize();
-                        graphics.DrawString(text, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
-                    }
-                    return Icon.FromHandle(bitmap.GetHicon());
                 }
-            }
-            catch
-            {
-                return Resources.voltray;
             }
         }
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConfigurationForm));
             this.ApplyConfigurationButton = new System.Windows.Forms.Button();
             this.VolumeBarPaddingLabel = new System.Windows.Forms.Label();
@@ -58,7 +59,7 @@
             this.VolumeBarPaddingPixelsLabel = new System.Windows.Forms.Label();
             this.VolumeBarColorPreviewPictureBox = new System.Windows.Forms.PictureBox();
             this.TrayIconDisplayModeLabel = new System.Windows.Forms.Label();
-            this.TrayIconDisplayModeAutomaticCheckBox = new System.Windows.Forms.CheckBox();
+            this.TrayIconPropertiesAutomaticCheckBox = new System.Windows.Forms.CheckBox();
             this.TrayIconDisplayModeUserDefinedCheckBox = new System.Windows.Forms.CheckBox();
             this.TrayIconDimensionsPixelsLabel = new System.Windows.Forms.Label();
             this.TrayIconDimensionsLabel = new System.Windows.Forms.Label();
@@ -84,7 +85,8 @@
             this.InvertScrollingDirectionCheckBox = new System.Windows.Forms.CheckBox();
             this.ManualPreciseVolumeCheckBox = new System.Windows.Forms.CheckBox();
             this.IgnoreTaskbarVisibilityCheckBox = new System.Windows.Forms.CheckBox();
-            this.BehaviourGroupBox = new System.Windows.Forms.GroupBox();
+            this.BehaviorGroupBox = new System.Windows.Forms.GroupBox();
+            this.ConfigurationTooltip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.VolumeBarPaddingWidthNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeBarPaddingHeightNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeBarOpacityTrackBar)).BeginInit();
@@ -97,7 +99,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.AutoHideTimeOutNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeStepNumericUpDown)).BeginInit();
-            this.BehaviourGroupBox.SuspendLayout();
+            this.BehaviorGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // ApplyConfigurationButton
@@ -270,7 +272,7 @@
             this.AppearanceGroupBox.Controls.Add(this.VolumeBarOpacityTrackBar);
             this.AppearanceGroupBox.Controls.Add(this.VolumeBarPaddingWidthNumericUpDown);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconDisplayModeLabel);
-            this.AppearanceGroupBox.Controls.Add(this.TrayIconDisplayModeAutomaticCheckBox);
+            this.AppearanceGroupBox.Controls.Add(this.TrayIconPropertiesAutomaticCheckBox);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconDisplayModeUserDefinedCheckBox);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconDimensionsPixelsLabel);
             this.AppearanceGroupBox.Controls.Add(this.TrayIconDimensionsLabel);
@@ -382,6 +384,7 @@
             this.TrayIconTextColorPreviewPictureBox.Size = new System.Drawing.Size(27, 23);
             this.TrayIconTextColorPreviewPictureBox.TabIndex = 26;
             this.TrayIconTextColorPreviewPictureBox.TabStop = false;
+            this.ConfigurationTooltip.SetToolTip(this.TrayIconTextColorPreviewPictureBox, "Click to select solid color");
             this.TrayIconTextColorPreviewPictureBox.Click += new System.EventHandler(this.PickNotificationTextColor);
             // 
             // TrayIconTextGradientColorCheckBox
@@ -425,6 +428,7 @@
             // VolumeBarFontPreviewLabel
             // 
             this.VolumeBarFontPreviewLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.VolumeBarFontPreviewLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.VolumeBarFontPreviewLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
             this.VolumeBarFontPreviewLabel.Location = new System.Drawing.Point(227, 110);
             this.VolumeBarFontPreviewLabel.Name = "VolumeBarFontPreviewLabel";
@@ -432,6 +436,8 @@
             this.VolumeBarFontPreviewLabel.TabIndex = 17;
             this.VolumeBarFontPreviewLabel.Text = "Aa 50%";
             this.VolumeBarFontPreviewLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ConfigurationTooltip.SetToolTip(this.VolumeBarFontPreviewLabel, "Click to preview font");
+            this.VolumeBarFontPreviewLabel.Click += new System.EventHandler(this.PreviewFontStyle);
             // 
             // VolumeBarPaddingPixelsLabel
             // 
@@ -453,6 +459,7 @@
             this.VolumeBarColorPreviewPictureBox.Size = new System.Drawing.Size(27, 23);
             this.VolumeBarColorPreviewPictureBox.TabIndex = 10;
             this.VolumeBarColorPreviewPictureBox.TabStop = false;
+            this.ConfigurationTooltip.SetToolTip(this.VolumeBarColorPreviewPictureBox, "Click to select solid color");
             this.VolumeBarColorPreviewPictureBox.Click += new System.EventHandler(this.PickVolumeBarColor);
             // 
             // TrayIconDisplayModeLabel
@@ -465,19 +472,19 @@
             this.TrayIconDisplayModeLabel.Text = "Tray icon properties:";
             this.TrayIconDisplayModeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // TrayIconDisplayModeAutomaticCheckBox
+            // TrayIconPropertiesAutomaticCheckBox
             // 
-            this.TrayIconDisplayModeAutomaticCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.TrayIconDisplayModeAutomaticCheckBox.Checked = true;
-            this.TrayIconDisplayModeAutomaticCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TrayIconDisplayModeAutomaticCheckBox.Location = new System.Drawing.Point(151, 278);
-            this.TrayIconDisplayModeAutomaticCheckBox.Name = "TrayIconDisplayModeAutomaticCheckBox";
-            this.TrayIconDisplayModeAutomaticCheckBox.Size = new System.Drawing.Size(70, 25);
-            this.TrayIconDisplayModeAutomaticCheckBox.TabIndex = 11;
-            this.TrayIconDisplayModeAutomaticCheckBox.Text = "Automatic";
-            this.TrayIconDisplayModeAutomaticCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.TrayIconDisplayModeAutomaticCheckBox.UseVisualStyleBackColor = true;
-            this.TrayIconDisplayModeAutomaticCheckBox.Click += new System.EventHandler(this.SetTrayIconDisplayModeAutomatic);
+            this.TrayIconPropertiesAutomaticCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.TrayIconPropertiesAutomaticCheckBox.Checked = true;
+            this.TrayIconPropertiesAutomaticCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TrayIconPropertiesAutomaticCheckBox.Location = new System.Drawing.Point(151, 278);
+            this.TrayIconPropertiesAutomaticCheckBox.Name = "TrayIconPropertiesAutomaticCheckBox";
+            this.TrayIconPropertiesAutomaticCheckBox.Size = new System.Drawing.Size(70, 25);
+            this.TrayIconPropertiesAutomaticCheckBox.TabIndex = 11;
+            this.TrayIconPropertiesAutomaticCheckBox.Text = "Automatic";
+            this.TrayIconPropertiesAutomaticCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.TrayIconPropertiesAutomaticCheckBox.UseVisualStyleBackColor = true;
+            this.TrayIconPropertiesAutomaticCheckBox.Click += new System.EventHandler(this.SetTrayIconDisplayModeAutomatic);
             // 
             // TrayIconDisplayModeUserDefinedCheckBox
             // 
@@ -554,6 +561,7 @@
             // TrayIconFontPreviewLabel
             // 
             this.TrayIconFontPreviewLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TrayIconFontPreviewLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TrayIconFontPreviewLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold);
             this.TrayIconFontPreviewLabel.Location = new System.Drawing.Point(227, 309);
             this.TrayIconFontPreviewLabel.Name = "TrayIconFontPreviewLabel";
@@ -561,6 +569,8 @@
             this.TrayIconFontPreviewLabel.TabIndex = 42;
             this.TrayIconFontPreviewLabel.Text = "Aa 50%";
             this.TrayIconFontPreviewLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.ConfigurationTooltip.SetToolTip(this.TrayIconFontPreviewLabel, "Click to preview font");
+            this.TrayIconFontPreviewLabel.Click += new System.EventHandler(this.PreviewFontStyle);
             // 
             // TrayIconFontStyleButton
             // 
@@ -775,29 +785,38 @@
             this.IgnoreTaskbarVisibilityCheckBox.Text = "Always handle scroll actions regardless of the\r\ntaskbar being visible or not";
             this.IgnoreTaskbarVisibilityCheckBox.UseVisualStyleBackColor = true;
             // 
-            // BehaviourGroupBox
+            // BehaviorGroupBox
             // 
-            this.BehaviourGroupBox.Controls.Add(this.IgnoreTaskbarVisibilityCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.ManualPreciseVolumeCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.InvertScrollingDirectionCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.EnableSwitchPlaybackDeviceOptionCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.EnableMuteUnmuteOptionCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
-            this.BehaviourGroupBox.Controls.Add(this.Percent2Label);
-            this.BehaviourGroupBox.Controls.Add(this.Percent1Label);
-            this.BehaviourGroupBox.Controls.Add(this.MillisecondsLabel);
-            this.BehaviourGroupBox.Controls.Add(this.SetVolumeStepLabel);
-            this.BehaviourGroupBox.Controls.Add(this.SetVolumeStepNumericUpDown);
-            this.BehaviourGroupBox.Controls.Add(this.ThresholdLabel);
-            this.BehaviourGroupBox.Controls.Add(this.ThresholdNumericUpDown);
-            this.BehaviourGroupBox.Controls.Add(this.AutoHideTimeOutNumericUpDown);
-            this.BehaviourGroupBox.Controls.Add(this.AutoHideTimeOutLabel);
-            this.BehaviourGroupBox.Location = new System.Drawing.Point(359, 9);
-            this.BehaviourGroupBox.Name = "BehaviourGroupBox";
-            this.BehaviourGroupBox.Size = new System.Drawing.Size(310, 330);
-            this.BehaviourGroupBox.TabIndex = 19;
-            this.BehaviourGroupBox.TabStop = false;
-            this.BehaviourGroupBox.Text = "Behaviour";
+            this.BehaviorGroupBox.Controls.Add(this.IgnoreTaskbarVisibilityCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.ManualPreciseVolumeCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.InvertScrollingDirectionCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.EnableSwitchPlaybackDeviceOptionCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.EnableMuteUnmuteOptionCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.AutoRetryAdminCheckBox);
+            this.BehaviorGroupBox.Controls.Add(this.Percent2Label);
+            this.BehaviorGroupBox.Controls.Add(this.Percent1Label);
+            this.BehaviorGroupBox.Controls.Add(this.MillisecondsLabel);
+            this.BehaviorGroupBox.Controls.Add(this.SetVolumeStepLabel);
+            this.BehaviorGroupBox.Controls.Add(this.SetVolumeStepNumericUpDown);
+            this.BehaviorGroupBox.Controls.Add(this.ThresholdLabel);
+            this.BehaviorGroupBox.Controls.Add(this.ThresholdNumericUpDown);
+            this.BehaviorGroupBox.Controls.Add(this.AutoHideTimeOutNumericUpDown);
+            this.BehaviorGroupBox.Controls.Add(this.AutoHideTimeOutLabel);
+            this.BehaviorGroupBox.Location = new System.Drawing.Point(359, 9);
+            this.BehaviorGroupBox.Name = "BehaviorGroupBox";
+            this.BehaviorGroupBox.Size = new System.Drawing.Size(310, 330);
+            this.BehaviorGroupBox.TabIndex = 19;
+            this.BehaviorGroupBox.TabStop = false;
+            this.BehaviorGroupBox.Text = "Behavior";
+            // 
+            // ConfigurationTooltip
+            // 
+            this.ConfigurationTooltip.AutomaticDelay = 0;
+            this.ConfigurationTooltip.AutoPopDelay = 0;
+            this.ConfigurationTooltip.InitialDelay = 0;
+            this.ConfigurationTooltip.ReshowDelay = 100;
+            this.ConfigurationTooltip.UseAnimation = false;
+            this.ConfigurationTooltip.UseFading = false;
             // 
             // ConfigurationForm
             // 
@@ -807,7 +826,7 @@
             this.ClientSize = new System.Drawing.Size(679, 421);
             this.Controls.Add(this.RestoreDefaultValuesButton);
             this.Controls.Add(this.ApplyConfigurationButton);
-            this.Controls.Add(this.BehaviourGroupBox);
+            this.Controls.Add(this.BehaviorGroupBox);
             this.Controls.Add(this.AppearanceGroupBox);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -815,6 +834,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ConfigurationForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuration";
             this.Deactivate += new System.EventHandler(this.CloseOnDeactivate);
@@ -833,8 +853,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.AutoHideTimeOutNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ThresholdNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SetVolumeStepNumericUpDown)).EndInit();
-            this.BehaviourGroupBox.ResumeLayout(false);
-            this.BehaviourGroupBox.PerformLayout();
+            this.BehaviorGroupBox.ResumeLayout(false);
+            this.BehaviorGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -868,7 +888,7 @@
         private System.Windows.Forms.Label TrayIconTextRenderingLabel;
         private System.Windows.Forms.ComboBox TrayIconTextRenderingHintComboBox;
         private System.Windows.Forms.Label TrayIconDisplayModeLabel;
-        private System.Windows.Forms.CheckBox TrayIconDisplayModeAutomaticCheckBox;
+        private System.Windows.Forms.CheckBox TrayIconPropertiesAutomaticCheckBox;
         private System.Windows.Forms.CheckBox TrayIconDisplayModeUserDefinedCheckBox;
         private System.Windows.Forms.Label TrayIconDimensionsPixelsLabel;
         private System.Windows.Forms.Label TrayIconDimensionsLabel;
@@ -896,6 +916,7 @@
         private System.Windows.Forms.CheckBox InvertScrollingDirectionCheckBox;
         private System.Windows.Forms.CheckBox ManualPreciseVolumeCheckBox;
         private System.Windows.Forms.CheckBox IgnoreTaskbarVisibilityCheckBox;
-        private System.Windows.Forms.GroupBox BehaviourGroupBox;
+        private System.Windows.Forms.GroupBox BehaviorGroupBox;
+        private System.Windows.Forms.ToolTip ConfigurationTooltip;
     }
 }

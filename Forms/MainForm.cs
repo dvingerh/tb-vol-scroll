@@ -92,7 +92,12 @@ namespace tbvolscroll
                    Size labelSize = Utils.CalculateLabelSize(VolumeTextLabel, "100%");
                    Size volumeBarMinSize = new Size(Settings.Default.BarWidthPadding + labelSize.Width, Settings.Default.BarHeightPadding + labelSize.Height + 5);
                    if (Settings.Default.DisplayTrayIconAsText)
-                       TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("T");
+                   {
+                       Icon newIcon = Utils.GenerateTrayIcon("T");
+                       if (newIcon != null)
+                           TrayNotifyIcon.Icon = newIcon;
+                       Utils.DestroyIcon(newIcon.Handle);
+                   }
                    MinimumSize = volumeBarMinSize;
                    Height = volumeBarMinSize.Height;
                    Width = volumeBarMinSize.Width;
@@ -346,14 +351,15 @@ namespace tbvolscroll
                 SystemSounds.Exclamation.Play();
         }
 
-        private void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
+        private async void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
         {
             if (AudioState.AudioAvailable && e.Button == MouseButtons.Middle)
             {
                 TrayContextMenu.Hide();
-                Globals.VolumeSliderControlForm = new VolumeSliderControlForm();
-                Globals.VolumeSliderControlForm.ShowDialog();
-                Globals.VolumeSliderControlForm = null;
+                //Globals.VolumeSliderControlForm = new VolumeSliderControlForm();
+                //Globals.VolumeSliderControlForm.ShowDialog();
+                //Globals.VolumeSliderControlForm = null;
+                await Globals.AudioHandler.SetDeviceMute(!AudioState.Muted);
 
             }
         }

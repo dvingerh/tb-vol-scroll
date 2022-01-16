@@ -33,15 +33,15 @@ namespace tbvolscroll.Forms
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlaybackDevicesForm));
             this.ApplyButton = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
+            this.DescriptionLabel = new System.Windows.Forms.Label();
+            this.BorderPanel = new System.Windows.Forms.Panel();
+            this.CloseButton = new System.Windows.Forms.Button();
             this.DevicesListView = new tbvolscroll.Classes.DoubleBufferedListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IsDefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.VolumeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MutedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.RefreshButton = new System.Windows.Forms.Button();
-            this.DescriptionLabel = new System.Windows.Forms.Label();
-            this.BorderPanel = new System.Windows.Forms.Panel();
-            this.CloseButton = new System.Windows.Forms.Button();
             this.BorderPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,42 +55,6 @@ namespace tbvolscroll.Forms
             this.ApplyButton.Text = "Apply";
             this.ApplyButton.UseVisualStyleBackColor = true;
             this.ApplyButton.Click += new System.EventHandler(this.ApplyButtonClick);
-            // 
-            // DevicesListView
-            // 
-            this.DevicesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.NameColumn,
-            this.IsDefaultColumn,
-            this.VolumeColumn,
-            this.MutedColumn});
-            this.DevicesListView.FullRowSelect = true;
-            this.DevicesListView.HideSelection = false;
-            this.DevicesListView.Location = new System.Drawing.Point(12, 37);
-            this.DevicesListView.MultiSelect = false;
-            this.DevicesListView.Name = "DevicesListView";
-            this.DevicesListView.Size = new System.Drawing.Size(576, 158);
-            this.DevicesListView.TabIndex = 1;
-            this.DevicesListView.UseCompatibleStateImageBehavior = false;
-            this.DevicesListView.View = System.Windows.Forms.View.Details;
-            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.ToggleApplyButton);
-            this.DevicesListView.DoubleClick += new System.EventHandler(this.DevicesListViewDoubleClick);
-            // 
-            // NameColumn
-            // 
-            this.NameColumn.Text = "Name";
-            this.NameColumn.Width = 370;
-            // 
-            // IsDefaultColumn
-            // 
-            this.IsDefaultColumn.Text = "Default";
-            // 
-            // VolumeColumn
-            // 
-            this.VolumeColumn.Text = "Volume";
-            // 
-            // MutedColumn
-            // 
-            this.MutedColumn.Text = "Muted";
             // 
             // RefreshButton
             // 
@@ -136,6 +100,42 @@ namespace tbvolscroll.Forms
             this.CloseButton.Text = "X";
             this.CloseButton.UseVisualStyleBackColor = true;
             this.CloseButton.Click += new System.EventHandler(this.CloseForm);
+            // 
+            // DevicesListView
+            // 
+            this.DevicesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.NameColumn,
+            this.IsDefaultColumn,
+            this.VolumeColumn,
+            this.MutedColumn});
+            this.DevicesListView.FullRowSelect = true;
+            this.DevicesListView.HideSelection = false;
+            this.DevicesListView.Location = new System.Drawing.Point(12, 37);
+            this.DevicesListView.MultiSelect = false;
+            this.DevicesListView.Name = "DevicesListView";
+            this.DevicesListView.Size = new System.Drawing.Size(576, 158);
+            this.DevicesListView.TabIndex = 1;
+            this.DevicesListView.UseCompatibleStateImageBehavior = false;
+            this.DevicesListView.View = System.Windows.Forms.View.Details;
+            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.ToggleApplyButton);
+            this.DevicesListView.DoubleClick += new System.EventHandler(this.DevicesListViewDoubleClick);
+            // 
+            // NameColumn
+            // 
+            this.NameColumn.Text = "Name";
+            this.NameColumn.Width = 370;
+            // 
+            // IsDefaultColumn
+            // 
+            this.IsDefaultColumn.Text = "Default";
+            // 
+            // VolumeColumn
+            // 
+            this.VolumeColumn.Text = "Volume";
+            // 
+            // MutedColumn
+            // 
+            this.MutedColumn.Text = "Muted";
             // 
             // AudioPlaybackDevicesForm
             // 

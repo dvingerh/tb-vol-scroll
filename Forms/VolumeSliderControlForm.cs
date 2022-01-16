@@ -34,6 +34,7 @@ namespace tbvolscroll.Forms
             VolumeTrackBar.Value = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
             VolumeLabel.Text = $"{(int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume)}%";
             AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
+            VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, AudioDeviceNameLabel.Text);
             PeakMeterPictureBox.BackColor = Globals.DefaultColor;
 
 
@@ -146,6 +147,7 @@ namespace tbvolscroll.Forms
                         double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                         PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
                         AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
+                        VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, AudioDeviceNameLabel.Text);
                     });
                 }
                 catch (Exception ex){
