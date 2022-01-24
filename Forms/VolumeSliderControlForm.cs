@@ -58,6 +58,7 @@ namespace tbvolscroll.Forms
                     break;
 
             }
+            Focus();
         }
        
 
@@ -176,8 +177,19 @@ namespace tbvolscroll.Forms
                     updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
                     await ProcessVolumeQueue();
                 }
-                SystemSounds.Exclamation.Play();
             }
+            Utils.AvoidControlFocus(Handle);
+        }
+
+        private void PlaySound(object sender, MouseEventArgs e)
+        {
+            SystemSounds.Exclamation.Play();
+
+        }
+
+        private void AvoidControlFocus(object sender, EventArgs e)
+        {
+            Utils.AvoidControlFocus(Handle);
         }
     }
 }

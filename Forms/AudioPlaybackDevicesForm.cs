@@ -61,9 +61,11 @@ namespace tbvolscroll.Forms
                 {
                     Utils.ExtractIconEx(d.IconPath.Split(',')[0], int.Parse(d.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
                     DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
-                    ListViewItem deviceItem = new ListViewItem();
-                    deviceItem.ImageIndex = audioDeviceList.IndexOf(d);
-                    deviceItem.Text = d.FullName;
+                    ListViewItem deviceItem = new ListViewItem
+                    {
+                        ImageIndex = audioDeviceList.IndexOf(d),
+                        Text = d.FullName
+                    };
                     deviceItem.SubItems.Add($"{(int)Math.Round(d.Volume)}%");
                     deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
                     deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");

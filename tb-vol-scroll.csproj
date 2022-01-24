@@ -127,9 +127,6 @@
     </Compile>
     <Compile Include="Classes\Globals.cs" />
     <Compile Include="Classes\Handlers\TaskbarHandler.cs" />
-    <Compile Include="Classes\ExControls\TrackBarNoFocus.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Classes\Handlers\UpdateHandler.cs" />
     <Compile Include="Classes\Utils.cs" />
     <Compile Include="Forms\MainForm.cs">

@@ -40,6 +40,20 @@ namespace tbvolscroll.Classes
         [DllImport("shell32", CharSet = CharSet.Unicode)]
         public static extern int ExtractIconEx(string lpszFile, int nIconIndex, out IntPtr phiconLarge, IntPtr phiconSmall, int nIcons);
 
+        [DllImport("user32.dll")]
+        public extern static int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+
+        private static int MakeParam(int loWord, int hiWord)
+        {
+            return (hiWord << 16) | (loWord & 0xffff);
+        }
+
+        public static void AvoidControlFocus(IntPtr handle)
+        {
+            SendMessage(handle, 0x0128, MakeParam(1, 0x1), 0);
+        }
+
+
         private struct RECT
         {
             public int Left; 
