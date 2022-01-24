@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AudioSwitcher.AudioApi.CoreAudio;
@@ -14,11 +15,6 @@ namespace tbvolscroll.Forms
         public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
-            ImageList listViewHeightFix = new ImageList
-            {
-                ImageSize = new Size(1, 30)
-            };
-            DevicesListView.SmallImageList = listViewHeightFix;
             Globals.AudioPlaybackDevicesForm = this;
         }
 
@@ -44,7 +40,7 @@ namespace tbvolscroll.Forms
                     break;
             }
             await LoadAudioPlaybackDevicesList();
-            DevicesListView.Columns[0].Width = DevicesListView.Width - 210;
+            DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - 25;
         }
 
         public async Task LoadAudioPlaybackDevicesList()
@@ -63,12 +59,13 @@ namespace tbvolscroll.Forms
             {
                 foreach (CoreAudioDevice d in audioDeviceList)
                 {
-                    ListViewItem deviceItem = new ListViewItem()
-                    {
-                        Text = d.FullName
-                    };
-                    deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
+                    Utils.ExtractIconEx(d.IconPath.Split(',')[0], int.Parse(d.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
+                    DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
+                    ListViewItem deviceItem = new ListViewItem();
+                    deviceItem.ImageIndex = audioDeviceList.IndexOf(d);
+                    deviceItem.Text = d.FullName;
                     deviceItem.SubItems.Add($"{(int)Math.Round(d.Volume)}%");
+                    deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
                     deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");
                     deviceItem.BackColor = d.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
                     deviceItem.Tag = d;
@@ -89,7 +86,6 @@ namespace tbvolscroll.Forms
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
-                await LoadAudioPlaybackDevicesList();
             }
             ApplyButton.Enabled = false;
         }
@@ -115,7 +111,48 @@ namespace tbvolscroll.Forms
             if (!isRefreshing)
             {
                 isRefreshing = true;
-                await LoadAudioPlaybackDevicesList();
+                List<CoreAudioDevice> coreAudioDevices = await Globals.AudioHandler.GetPlaybackDevices();
+                Invoke((MethodInvoker)delegate
+                {
+                    foreach (ListViewItem deviceItem in DevicesListView.Items)
+                    {
+                        if (coreAudioDevices.Contains(deviceItem.Tag))
+                        {
+                            deviceItem.SubItems[1].Text = $"{(int)Math.Round(((CoreAudioDevice)deviceItem.Tag).Volume)}%";
+                            deviceItem.SubItems[2].Text = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? "Yes" : "No";
+                            deviceItem.SubItems[3].Text = ((CoreAudioDevice)deviceItem.Tag).IsMuted ? "Yes" : "No";
+                            deviceItem.BackColor = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
+                        }
+                        else
+                            deviceItem.Remove();
+                        coreAudioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
+                    }
+                    if (coreAudioDevices.Count > 0)
+                    {
+                        foreach (CoreAudioDevice device in coreAudioDevices)
+                        {
+                            ListViewItem deviceItem = new ListViewItem
+                            {
+                                Text = device.FullName
+                            };
+                            deviceItem.SubItems.Add($"{(int)Math.Round(device.Volume)}%");
+                            deviceItem.SubItems.Add(device.IsDefaultDevice ? "Yes" : "No");
+                            deviceItem.SubItems.Add(device.IsMuted ? "Yes" : "No");
+                            deviceItem.BackColor = device.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
+                            deviceItem.Tag = device;
+                            DevicesListView.Items.Add(deviceItem);
+                        }
+                    }
+                    DevicesListViewImageList.Images.Clear();
+                    foreach(ListViewItem deviceItem in DevicesListView.Items)
+                    {
+                        CoreAudioDevice audioDevice = ((CoreAudioDevice)deviceItem.Tag);
+                        Utils.ExtractIconEx(audioDevice.IconPath.Split(',')[0], int.Parse(audioDevice.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
+                        DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
+                        deviceItem.ImageIndex = DevicesListView.Items.IndexOf(deviceItem);
+
+                    }
+                });
                 isRefreshing = false;
             }
         }
@@ -123,7 +160,7 @@ namespace tbvolscroll.Forms
 
         private async void RefreshButtonClick(object sender, EventArgs e)
         {
-            await LoadAudioPlaybackDevicesList();
+            await RefreshOnDeviceActivity();
         }
 
         private void CloseForm(object sender, EventArgs e)

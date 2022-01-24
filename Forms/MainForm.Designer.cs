@@ -75,7 +75,6 @@ namespace tbvolscroll
             this.TrayNotifyIcon.Visible = true;
             this.TrayNotifyIcon.BalloonTipClicked += new System.EventHandler(this.HandleBalloonTipHide);
             this.TrayNotifyIcon.BalloonTipClosed += new System.EventHandler(this.HandleBalloonTipHide);
-            this.TrayNotifyIcon.Click += new System.EventHandler(this.ShowTrayMenuOnClick);
             this.TrayNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ShowVolumeSliderPopupForm);
             // 
             // TrayContextMenu

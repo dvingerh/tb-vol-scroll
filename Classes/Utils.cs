@@ -37,6 +37,9 @@ namespace tbvolscroll.Classes
         int nHeight,
         bool bRepaint);
 
+        [DllImport("shell32", CharSet = CharSet.Unicode)]
+        public static extern int ExtractIconEx(string lpszFile, int nIconIndex, out IntPtr phiconLarge, IntPtr phiconSmall, int nIcons);
+
         private struct RECT
         {
             public int Left; 

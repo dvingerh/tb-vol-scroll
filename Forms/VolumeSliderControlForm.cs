@@ -157,7 +157,7 @@ namespace tbvolscroll.Forms
         }
 
 
-        private void CloseFormOnDeactivate(object sender, EventArgs e)
+        public void CloseFormOnDeactivate(object sender, EventArgs e)
         {
             updatePeakValueQueue.Clear();
             updateVolumeQueue.Clear();

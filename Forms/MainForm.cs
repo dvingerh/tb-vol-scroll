@@ -196,12 +196,6 @@ namespace tbvolscroll
             HandleApplicationExit(proc, 0);
         }
 
-        private void ShowTrayMenuOnClick(object sender, EventArgs e)
-        {
-            MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
-            mi.Invoke(TrayNotifyIcon, null);
-        }
-
         private void OpenConfigureDialog(object sender, EventArgs e)
         {
             new ConfigurationForm().ShowDialog();
@@ -353,14 +347,23 @@ namespace tbvolscroll
 
         private async void ShowVolumeSliderPopupForm(object sender, MouseEventArgs e)
         {
-            if (AudioState.AudioAvailable && e.Button == MouseButtons.Middle)
+            if (AudioState.AudioAvailable && e.Button == MouseButtons.Left)
             {
-                TrayContextMenu.Hide();
-                //Globals.VolumeSliderControlForm = new VolumeSliderControlForm();
-                //Globals.VolumeSliderControlForm.ShowDialog();
-                //Globals.VolumeSliderControlForm = null;
+                if (Globals.VolumeSliderControlForm != null)
+                    Globals.VolumeSliderControlForm.CloseFormOnDeactivate(null, null);
+                else
+                {
+                    Globals.VolumeSliderControlForm = new VolumeSliderControlForm();
+                    Globals.VolumeSliderControlForm.ShowDialog();
+                }
+                Globals.VolumeSliderControlForm = null;
+            }
+            else if (AudioState.AudioAvailable && e.Button == MouseButtons.Middle)
                 await Globals.AudioHandler.SetDeviceMute(!AudioState.Muted);
-
+            else
+            {
+                MethodInfo mi = typeof(NotifyIcon).GetMethod("ShowContextMenu", BindingFlags.Instance | BindingFlags.NonPublic);
+                mi.Invoke(TrayNotifyIcon, null);
             }
         }
 
