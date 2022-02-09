@@ -1,9 +1,7 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 3.9
+## tb-vol-scroll 4.0
 
-Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.
-
-The volume bar will follow the cursor when it's moved around and display the current volume when scrolling up or down.
+Simple and customizable utility to enable audio control by scrolling inside the taskbar.
 
 ### Functionality
 
@@ -13,20 +11,20 @@ The volume bar will follow the cursor when it's moved around and display the cur
 - Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
 
 ###### Available Menus
-- System Volume Mixer: Opens the built-in volume mixer for per-application audio volume control.
+- System Volume Mixer: Opens the built-in Windows volume mixer for per-application audio volume control.
 - Audio Playback Devices: Switch default audio playback device from a list of available devices.
-- Volume Slider Control: Open a popup with a volume slider and peak volume meter. (Also accessible via <kbd>Middle Mouse Button</kbd> on the tray icon.)
-- Check For Updates: Check for a new version of tb-vol-scroll and update the executable when one is found.
+- Volume Slider Control: Open a popup with a volume slider and peak volume meter.
 
 ### Configuration
 
 - Appearance:
-  - Colour
+  - Color
   - Font
   - Opacity
   - Padding (affects volume bar size)
+  - Tray icon style
 
-- Behaviour:
+- Behavior:
   - Volume bar autohide time-out
   - Volume scroll step percentage
   - Precise volume control threshold

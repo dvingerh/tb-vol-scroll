@@ -36,7 +36,7 @@ namespace tbvolscroll
             GC.KeepAlive(Globals.AppMutex);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTray: noTrayArg, attemptedAdmin: adminArg, updateDoneArg: updateDoneArg));
+            Application.Run(new MainForm(noTrayArg: noTrayArg, adminArg: adminArg, updateDoneArg: updateDoneArg));
         }
     }
 }

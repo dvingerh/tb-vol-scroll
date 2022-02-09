@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("tb-vol-scroll")]
-[assembly: AssemblyDescription("Simple utility to enable volume control when your mouse cursor is positioned above the taskbar, among a few other options.")]
+[assembly: AssemblyDescription("Simple and customizable utility to enable audio control by scrolling inside the taskbar.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dirk Vingerhoeds")]
 [assembly: AssemblyProduct("tb-vol-scroll")]

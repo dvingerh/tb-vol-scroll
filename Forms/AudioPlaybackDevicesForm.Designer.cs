@@ -34,43 +34,48 @@ namespace tbvolscroll.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlaybackDevicesForm));
             this.RefreshButton = new System.Windows.Forms.Button();
-            this.ApplyButton = new System.Windows.Forms.Button();
+            this.SetDefaultButton = new System.Windows.Forms.Button();
+            this.DevicesListViewImageList = new System.Windows.Forms.ImageList(this.components);
             this.DevicesListView = new tbvolscroll.Classes.DoubleBufferedListView();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.IsDefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.VolumeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IsDefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MutedColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.DevicesListViewImageList = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshButton.Enabled = false;
-            this.RefreshButton.Location = new System.Drawing.Point(265, 167);
+            this.RefreshButton.Location = new System.Drawing.Point(270, 174);
             this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(100, 23);
+            this.RefreshButton.Size = new System.Drawing.Size(100, 25);
             this.RefreshButton.TabIndex = 5;
             this.RefreshButton.Text = "Refresh";
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButtonClick);
             // 
-            // ApplyButton
+            // SetDefaultButton
             // 
-            this.ApplyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ApplyButton.Enabled = false;
-            this.ApplyButton.Location = new System.Drawing.Point(159, 167);
-            this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.Size = new System.Drawing.Size(100, 23);
-            this.ApplyButton.TabIndex = 3;
-            this.ApplyButton.Text = "Make default";
-            this.ApplyButton.UseVisualStyleBackColor = true;
-            this.ApplyButton.Click += new System.EventHandler(this.ApplyButtonClick);
+            this.SetDefaultButton.Enabled = false;
+            this.SetDefaultButton.Location = new System.Drawing.Point(164, 174);
+            this.SetDefaultButton.Name = "SetDefaultButton";
+            this.SetDefaultButton.Size = new System.Drawing.Size(100, 25);
+            this.SetDefaultButton.TabIndex = 3;
+            this.SetDefaultButton.Text = "Set default";
+            this.SetDefaultButton.UseVisualStyleBackColor = true;
+            this.SetDefaultButton.Click += new System.EventHandler(this.SetDefaultButtonClick);
+            // 
+            // DevicesListViewImageList
+            // 
+            this.DevicesListViewImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.DevicesListViewImageList.ImageSize = new System.Drawing.Size(32, 32);
+            this.DevicesListViewImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // DevicesListView
             // 
             this.DevicesListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.DevicesListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.DevicesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameColumn,
             this.VolumeColumn,
@@ -82,12 +87,12 @@ namespace tbvolscroll.Forms
             this.DevicesListView.Location = new System.Drawing.Point(12, 12);
             this.DevicesListView.MultiSelect = false;
             this.DevicesListView.Name = "DevicesListView";
-            this.DevicesListView.Size = new System.Drawing.Size(501, 149);
+            this.DevicesListView.Size = new System.Drawing.Size(510, 156);
             this.DevicesListView.SmallImageList = this.DevicesListViewImageList;
             this.DevicesListView.TabIndex = 4;
             this.DevicesListView.UseCompatibleStateImageBehavior = false;
             this.DevicesListView.View = System.Windows.Forms.View.Details;
-            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.ToggleApplyButton);
+            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.ToggleSetDefaultButton);
             this.DevicesListView.DoubleClick += new System.EventHandler(this.DevicesListViewDoubleClick);
             // 
             // NameColumn
@@ -95,32 +100,27 @@ namespace tbvolscroll.Forms
             this.NameColumn.Text = "Name";
             this.NameColumn.Width = 300;
             // 
-            // IsDefaultColumn
-            // 
-            this.IsDefaultColumn.Text = "Default";
-            // 
             // VolumeColumn
             // 
             this.VolumeColumn.Text = "Volume";
+            // 
+            // IsDefaultColumn
+            // 
+            this.IsDefaultColumn.Text = "Default";
             // 
             // MutedColumn
             // 
             this.MutedColumn.Text = "Muted";
             // 
-            // DevicesListViewImageList
-            // 
-            this.DevicesListViewImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.DevicesListViewImageList.ImageSize = new System.Drawing.Size(32, 32);
-            this.DevicesListViewImageList.TransparentColor = System.Drawing.Color.Transparent;
-            // 
             // AudioPlaybackDevicesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(525, 200);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(534, 211);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DevicesListView);
-            this.Controls.Add(this.ApplyButton);
+            this.Controls.Add(this.SetDefaultButton);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -143,7 +143,7 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.ColumnHeader IsDefaultColumn;
         private System.Windows.Forms.ColumnHeader VolumeColumn;
         private System.Windows.Forms.ColumnHeader MutedColumn;
-        private System.Windows.Forms.Button ApplyButton;
+        private System.Windows.Forms.Button SetDefaultButton;
         private System.Windows.Forms.ImageList DevicesListViewImageList;
     }
 }

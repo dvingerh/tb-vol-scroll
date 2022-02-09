@@ -77,7 +77,7 @@ namespace tbvolscroll
             {
                 if (mouseScrollQueue.Count <= 5)
                     mouseScrollQueue.Enqueue(e);
-                if ((currentMouseTask == null || currentMouseTask.IsCompleted) && mouseScrollQueue.Count > 0)
+                if (mouseScrollQueue.Count > 0)
                     await ProcessMouseScrollActionQueue();
             }
 
@@ -90,7 +90,6 @@ namespace tbvolscroll
                 if (mouseScrollQueue.Count > 0)
                 {
                     var refreshArgs = mouseScrollQueue.Dequeue();
-
                     currentMouseTask = HandleMouseScrollAction(refreshArgs);
                     await currentMouseTask;
                     if (mouseScrollQueue.Count > 0)

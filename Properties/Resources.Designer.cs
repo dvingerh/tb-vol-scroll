@@ -83,9 +83,9 @@ namespace tbvolscroll.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap exlamation {
+        internal static System.Drawing.Bitmap exclamation {
             get {
-                object obj = ResourceManager.GetObject("exlamation", resourceCulture);
+                object obj = ResourceManager.GetObject("exclamation", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

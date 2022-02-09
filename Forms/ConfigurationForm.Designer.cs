@@ -42,7 +42,6 @@
             this.VolumeBarOpacityValueLabel = new System.Windows.Forms.Label();
             this.VolumeBarFontStyleLabel = new System.Windows.Forms.Label();
             this.VolumeBarFontStyleButton = new System.Windows.Forms.Button();
-            this.VolumeBarCustomFontDialog = new System.Windows.Forms.FontDialog();
             this.AppearanceGroupBox = new System.Windows.Forms.GroupBox();
             this.TrayIconPaddingPixelsLabel = new System.Windows.Forms.Label();
             this.TrayIconPaddingNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -69,7 +68,6 @@
             this.TrayIconFontStyleButton = new System.Windows.Forms.Button();
             this.TrayIconFontStyleLabel = new System.Windows.Forms.Label();
             this.RestoreDefaultValuesButton = new System.Windows.Forms.Button();
-            this.TrayIconCustomFontDialog = new System.Windows.Forms.FontDialog();
             this.AutoHideTimeOutLabel = new System.Windows.Forms.Label();
             this.AutoHideTimeOutNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.ThresholdNumericUpDown = new System.Windows.Forms.NumericUpDown();
@@ -238,11 +236,6 @@
             this.VolumeBarFontStyleButton.Text = "Select font";
             this.VolumeBarFontStyleButton.UseVisualStyleBackColor = true;
             this.VolumeBarFontStyleButton.Click += new System.EventHandler(this.SetVolumeBarFontStyle);
-            // 
-            // VolumeBarCustomFontDialog
-            // 
-            this.VolumeBarCustomFontDialog.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VolumeBarCustomFontDialog.FontMustExist = true;
             // 
             // AppearanceGroupBox
             // 
@@ -603,11 +596,6 @@
             this.RestoreDefaultValuesButton.UseVisualStyleBackColor = true;
             this.RestoreDefaultValuesButton.Click += new System.EventHandler(this.RestoreDefaultValues);
             // 
-            // TrayIconCustomFontDialog
-            // 
-            this.TrayIconCustomFontDialog.Font = new System.Drawing.Font("Segoe UI Semibold", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TrayIconCustomFontDialog.FontMustExist = true;
-            // 
             // AutoHideTimeOutLabel
             // 
             this.AutoHideTimeOutLabel.AutoSize = true;
@@ -621,7 +609,7 @@
             // AutoHideTimeOutNumericUpDown
             // 
             this.AutoHideTimeOutNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(186, 81);
+            this.AutoHideTimeOutNumericUpDown.Location = new System.Drawing.Point(190, 81);
             this.AutoHideTimeOutNumericUpDown.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -633,7 +621,7 @@
             0,
             0});
             this.AutoHideTimeOutNumericUpDown.Name = "AutoHideTimeOutNumericUpDown";
-            this.AutoHideTimeOutNumericUpDown.Size = new System.Drawing.Size(59, 22);
+            this.AutoHideTimeOutNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.AutoHideTimeOutNumericUpDown.TabIndex = 19;
             this.AutoHideTimeOutNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.AutoHideTimeOutNumericUpDown.Value = new decimal(new int[] {
@@ -645,9 +633,9 @@
             // ThresholdNumericUpDown
             // 
             this.ThresholdNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(186, 53);
+            this.ThresholdNumericUpDown.Location = new System.Drawing.Point(190, 53);
             this.ThresholdNumericUpDown.Name = "ThresholdNumericUpDown";
-            this.ThresholdNumericUpDown.Size = new System.Drawing.Size(59, 22);
+            this.ThresholdNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.ThresholdNumericUpDown.TabIndex = 18;
             this.ThresholdNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ThresholdNumericUpDown.Value = new decimal(new int[] {
@@ -669,14 +657,14 @@
             // SetVolumeStepNumericUpDown
             // 
             this.SetVolumeStepNumericUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(186, 25);
+            this.SetVolumeStepNumericUpDown.Location = new System.Drawing.Point(190, 25);
             this.SetVolumeStepNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
             this.SetVolumeStepNumericUpDown.Name = "SetVolumeStepNumericUpDown";
-            this.SetVolumeStepNumericUpDown.Size = new System.Drawing.Size(59, 22);
+            this.SetVolumeStepNumericUpDown.Size = new System.Drawing.Size(55, 22);
             this.SetVolumeStepNumericUpDown.TabIndex = 17;
             this.SetVolumeStepNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SetVolumeStepNumericUpDown.Value = new decimal(new int[] {
@@ -822,7 +810,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(679, 421);
             this.Controls.Add(this.RestoreDefaultValuesButton);
             this.Controls.Add(this.ApplyConfigurationButton);
@@ -874,7 +862,6 @@
         private System.Windows.Forms.Label VolumeBarOpacityValueLabel;
         private System.Windows.Forms.Label VolumeBarFontStyleLabel;
         private System.Windows.Forms.Button VolumeBarFontStyleButton;
-        private System.Windows.Forms.FontDialog VolumeBarCustomFontDialog;
         private System.Windows.Forms.GroupBox AppearanceGroupBox;
         private System.Windows.Forms.Button RestoreDefaultValuesButton;
         private System.Windows.Forms.Label VolumeBarFontPreviewLabel;
@@ -897,7 +884,6 @@
         private System.Windows.Forms.Label TrayIconFontPreviewLabel;
         private System.Windows.Forms.Button TrayIconFontStyleButton;
         private System.Windows.Forms.Label TrayIconFontStyleLabel;
-        private System.Windows.Forms.FontDialog TrayIconCustomFontDialog;
         private System.Windows.Forms.Label TrayIconPaddingPixelsLabel;
         private System.Windows.Forms.NumericUpDown TrayIconPaddingNumericUpDown;
         private System.Windows.Forms.Label TrayIconTextPaddingLabel;

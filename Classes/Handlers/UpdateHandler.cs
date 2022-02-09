@@ -54,13 +54,15 @@ namespace tbvolscroll.Classes
                         exeUrl = assetsEle.XPathSelectElement("//browser_download_url").Value;
 
                         callback.CheckingForUpdatesLabel.Text = $"  New version available: {latestVersion.ToString().Replace(",", ".")}";
-                        callback.CheckingForUpdatesLabel.Image = Properties.Resources.exlamation;
+                        callback.CheckingForUpdatesLabel.Image = Properties.Resources.exclamation;
+                        callback.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                         callback.DownloadButton.Enabled = true;
                     }
                     else
                     {
                         callback.CheckingForUpdatesLabel.Text = $"  No new version available.";
                         callback.CheckingForUpdatesLabel.Image = Properties.Resources.success;
+                        callback.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                     }
                 }
             }
@@ -68,6 +70,7 @@ namespace tbvolscroll.Classes
             {
                 callback.CheckingForUpdatesLabel.Text = "  Error checking for updates.";
                 callback.CheckingForUpdatesLabel.Image = Properties.Resources.error;
+                callback.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                 callback.IsUpdating = false;
             }
         }
@@ -83,6 +86,7 @@ namespace tbvolscroll.Classes
                 callback.DownloadButton.Enabled = false;
                 callback.CheckingForUpdatesLabel.Text = $"  Retrieving file...";
                 callback.CheckingForUpdatesLabel.Image = Properties.Resources.spinner;
+                callback.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
                 using (WebClient wc = new WebClient())
                 {
                     wc.DownloadFileCompleted += new AsyncCompletedEventHandler(OnUpdateDownloaded);
@@ -104,6 +108,8 @@ namespace tbvolscroll.Classes
             {
                 callback.CheckingForUpdatesLabel.Text = "  Error retrieving file.";
                 callback.CheckingForUpdatesLabel.Image = Properties.Resources.error;
+                callback.CheckingForUpdatesLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+
                 callback.IsUpdating = false;
                 return;
             }

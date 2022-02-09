@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
+using tbvolscroll.Forms;
 using tbvolscroll.Properties;
 
 namespace tbvolscroll
@@ -15,6 +16,9 @@ namespace tbvolscroll
         {
             FullOpen = true
         };
+         FontDialogForm TrayIconCustomFontDialog;
+         FontDialogForm VolumeBarCustomFontDialog;
+
         public ConfigurationForm()
         {
             InitializeComponent();
@@ -22,6 +26,8 @@ namespace tbvolscroll
 
         private void LoadBarConfiguration(object sender, EventArgs e)
         {
+            TrayIconCustomFontDialog = new FontDialogForm();
+            VolumeBarCustomFontDialog = new FontDialogForm();
             EnableSwitchPlaybackDeviceOptionCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
             InvertScrollingDirectionCheckBox.Checked = Settings.Default.InvertScrollingDirection;
             EnableMuteUnmuteOptionCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
@@ -34,8 +40,8 @@ namespace tbvolscroll
             TrayIconTextGradientColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextSolidColorCheckBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
             TrayIconTextColorPreviewPictureBox.Enabled = DisplayTrayIconAsTextCheckBox.Checked;
-            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
-            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+            TrayIconCustomFontDialog.SelectedFont = Settings.Default.TrayIconFontStyle;
+            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.SelectedFont;
             TrayIconPropertiesAutomaticCheckBox.Checked = Settings.Default.TrayIconIsDisplayModeAutomatic;
             TrayIconDisplayModeUserDefinedCheckBox.Checked = !Settings.Default.TrayIconIsDisplayModeAutomatic;
             TrayIconWidthNumericUpDown.Value = Settings.Default.TrayIconWidth;
@@ -51,7 +57,7 @@ namespace tbvolscroll
             VolumeBarColorPreviewPictureBox.BackColor = Settings.Default.VolumeBarSolidColor;
             TrayIconTextColorPreviewPictureBox.BackColor = Settings.Default.TrayIconTextSolidColor;
             VolumeBarOpacityTrackBar.Value = Convert.ToInt32(Settings.Default.VolumeBarOpacity * 100);
-            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
+            VolumeBarCustomFontDialog.SelectedFont = Settings.Default.VolumeBarFontStyle;
             VolumeBarFontPreviewLabel.Font = Settings.Default.VolumeBarFontStyle;
 
             TrayIconTextRenderingHintComboBox.SelectedIndex = Settings.Default.TextRenderingHintType;
@@ -175,9 +181,16 @@ namespace tbvolscroll
 
 
             if (doSetVolumeBarFont)
-                Settings.Default.VolumeBarFontStyle = VolumeBarCustomFontDialog.Font;
+            {
+                Font newFont = new Font(VolumeBarCustomFontDialog.SelectedFont.FontFamily, VolumeBarCustomFontDialog.SelectedFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+                Settings.Default.VolumeBarFontStyle = newFont;
+
+            }
             if (doSetTrayIconFont)
-                Settings.Default.TrayIconFontStyle = TrayIconCustomFontDialog.Font;
+            {
+                Font newFont = new Font(TrayIconCustomFontDialog.SelectedFont.FontFamily, TrayIconCustomFontDialog.SelectedFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+                Settings.Default.TrayIconFontStyle = newFont;
+            }
 
             Settings.Default.VolumeBarUseGradientColor = VolumeBarGradientColorCheckBox.Checked;
             Settings.Default.VolumeBarSolidColor = VolumeBarColorPreviewPictureBox.BackColor;
@@ -198,8 +211,9 @@ namespace tbvolscroll
 
             Settings.Default.Save();
 
+
             if (doSetVolumeBarFont)
-                Globals.MainForm.VolumeTextLabel.Font = VolumeBarCustomFontDialog.Font;
+                Globals.MainForm.VolumeTextLabel.Font = VolumeBarCustomFontDialog.SelectedFont;
            
             Size newMinSizes = Utils.CalculateLabelSize(Globals.MainForm.VolumeTextLabel, "100%");
             Globals.MainForm.MinimumSize = new Size(Settings.Default.BarWidthPadding + newMinSizes.Width, Settings.Default.BarHeightPadding + 5 + newMinSizes.Height);
@@ -231,12 +245,12 @@ namespace tbvolscroll
         private void SetVolumeBarFontStyle(object sender, EventArgs e)
         {
             isShowingDialog = true;
-            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
+            VolumeBarCustomFontDialog.SelectedFont = Settings.Default.VolumeBarFontStyle;
             DialogResult dialogResult = VolumeBarCustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
                 doSetVolumeBarFont = true;
-                VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.Font;
+                VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.SelectedFont;
                 OnSettingsChanged(null, null);
             }
             isShowingDialog = false;
@@ -266,10 +280,10 @@ namespace tbvolscroll
             VolumeBarSolidColorCheckBox.Checked = false;
             VolumeBarOpacityValueLabel.Text = $"{VolumeBarOpacityTrackBar.Value}%";
             Settings.Default.VolumeBarFontStyle = new Font("Segoe UI Semibold", 8.25F, FontStyle.Bold);
-            VolumeBarCustomFontDialog.Font = Settings.Default.VolumeBarFontStyle;
-            VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.Font;
-            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
-            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+            VolumeBarCustomFontDialog.SelectedFont = Settings.Default.VolumeBarFontStyle;
+            VolumeBarFontPreviewLabel.Font = VolumeBarCustomFontDialog.SelectedFont;
+            TrayIconCustomFontDialog.SelectedFont = Settings.Default.TrayIconFontStyle;
+            TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.SelectedFont;
             TrayIconWidthNumericUpDown.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconHeightNumericUpDown.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconWidthNumericUpDown.Value = 32;
@@ -361,12 +375,12 @@ namespace tbvolscroll
         private void SetTrayIconFontStyle(object sender, EventArgs e)
         {
             isShowingDialog = true;
-            TrayIconCustomFontDialog.Font = Settings.Default.TrayIconFontStyle;
+            TrayIconCustomFontDialog.SelectedFont = Settings.Default.TrayIconFontStyle;
             DialogResult dialogResult = TrayIconCustomFontDialog.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
                 doSetTrayIconFont = true;
-                TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.Font;
+                TrayIconFontPreviewLabel.Font = TrayIconCustomFontDialog.SelectedFont;
                 OnSettingsChanged(null, null);
             }
             isShowingDialog = false;

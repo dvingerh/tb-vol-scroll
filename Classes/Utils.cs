@@ -37,6 +37,33 @@ namespace tbvolscroll.Classes
         int nHeight,
         bool bRepaint);
 
+        [DllImport("Shell32.dll", SetLastError = false)]
+        public static extern Int32 SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
+
+        public enum SHSTOCKICONID : uint
+        {
+            SIID_SHIELD = 77
+        }
+
+        [Flags]
+        public enum SHGSI : uint
+        {
+            SHGSI_ICON = 0x000000100,
+            SHGSI_SMALLICON = 0x000000001
+        }
+
+        [StructLayoutAttribute(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct SHSTOCKICONINFO
+        {
+            public UInt32 cbSize;
+            public IntPtr hIcon;
+            public Int32 iSysIconIndex;
+            public Int32 iIcon;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szPath;
+        }
+
         [DllImport("shell32", CharSet = CharSet.Unicode)]
         public static extern int ExtractIconEx(string lpszFile, int nIconIndex, out IntPtr phiconLarge, IntPtr phiconSmall, int nIcons);
 
@@ -51,6 +78,20 @@ namespace tbvolscroll.Classes
         public static void AvoidControlFocus(IntPtr handle)
         {
             SendMessage(handle, 0x0128, MakeParam(1, 0x1), 0);
+        }
+
+        public static Bitmap GetUacShield()
+        {
+            SHSTOCKICONINFO iconResult = new SHSTOCKICONINFO();
+            iconResult.cbSize = (uint)Marshal.SizeOf(iconResult);
+
+            SHGetStockIconInfo(SHSTOCKICONID.SIID_SHIELD, SHGSI.SHGSI_ICON | SHGSI.SHGSI_SMALLICON, ref iconResult);
+            using (Icon tmpIcon = Icon.FromHandle(iconResult.hIcon))
+            {
+                Icon newIcon = (Icon)tmpIcon.Clone();
+                DestroyIcon(tmpIcon.Handle);
+                return newIcon.ToBitmap();
+            }
         }
 
 
@@ -123,7 +164,7 @@ namespace tbvolscroll.Classes
                     if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount)
                     { return font; }
 
-                    font = new Font(font.Name, font.Size - 1, font.Style);
+                    font = new Font(font.Name, font.Size - 2, FontStyle.Regular);
                 }
             }
             catch { return oldFont; }
@@ -221,6 +262,14 @@ namespace tbvolscroll.Classes
                     graphics.TextRenderingHint = hinting;
                     font = FindBestFitFont(graphics, text, font, bitmap.Size, expandAmount);
                     SizeF size = graphics.MeasureString(text, font).ToSize();
+                    Console.WriteLine(iconWidth);
+                    Console.WriteLine(iconHeight);
+                    Console.WriteLine(fontSize);
+                    Console.WriteLine(expandAmount);
+                    Console.WriteLine(hinting);
+                    Console.WriteLine(font);
+                    Console.WriteLine(font.Style);
+
                     graphics.DrawString(text, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
                     using (Icon tmpIcon = Icon.FromHandle(bitmap.GetHicon()))
                     {

@@ -10,6 +10,7 @@ using System.Media;
 using System.IO;
 using tbvolscroll.Classes;
 using System.ServiceProcess;
+using System.Drawing.Drawing2D;
 
 namespace tbvolscroll
 {
@@ -30,86 +31,66 @@ namespace tbvolscroll
         private readonly Timer hideVolumeBarTimer = new Timer();
 
 
-        public MainForm(bool noTray = false, bool attemptedAdmin = false, bool updateDoneArg = false)
+        public MainForm(bool noTrayArg = false, bool adminArg = false, bool updateDoneArg = false)
         {
             InitializeComponent();
+            Globals.MainForm = this;
             hideVolumeBarTimer.Tick += (s, e) => HideVolumeBar();
 
 
             if (updateDoneArg)
             {
+                Settings.Default.UpdateSettings = true;
                 TrayNotifyIcon.Visible = true;
                 TrayNotifyIcon.ShowBalloonTip(2500, "Update complete", $"Successfully updated {Application.ProductName} to version {Application.ProductVersion}.", ToolTipIcon.Info);
             }
 
-            if (noTray)
+            if (Settings.Default.UpdateSettings)
             {
-                Globals.DisplayTrayIcon = false;
-                TrayNotifyIcon.Visible = false;
+                Settings.Default.Upgrade();
+                Settings.Default.UpdateSettings = false;
+                Settings.Default.Save();
             }
 
+
+            if (!noTrayArg)
+            {
+                Globals.DisplayTrayIcon = true;
+                TrayNotifyIcon.Visible = true;
+            }
+
+            if (Settings.Default.DisplayTrayIconAsText)
+            {
+                Icon newIcon = Utils.GenerateTrayIcon("T");
+                if (newIcon != null)
+                    TrayNotifyIcon.Icon = newIcon;
+                Utils.DestroyIcon(newIcon.Handle);
+            }
 
             bool isAdmin = Utils.IsAdministrator();
 
-            TitleLabelMenuItem.Text = $"{Application.ProductName} v{Application.ProductVersion}" + (isAdmin ? " (Administrator)" : "");
+            TitleLabelMenuItem.Text = $"{Application.ProductName} {Application.ProductVersion}";
 
+            if (isAdmin)
+                TitleLabelMenuItem.Image = Utils.GetUacShield();
 
-            if (!attemptedAdmin && !isAdmin && Settings.Default.AutoRetryAdmin)
+            if (!adminArg && !isAdmin && Settings.Default.AutoRetryAdmin)
             {
-                new Task( () =>
-                {
-                    Process proc = new Process();
-                    proc.StartInfo.FileName = Application.ExecutablePath;
-                    proc.StartInfo.UseShellExecute = true;
-                    proc.StartInfo.Verb = "runas";
-                    proc.StartInfo.Arguments = "admin";
-                    HandleApplicationExit(proc, 0);
-                }).Start();
+                new Task(() =>
+               {
+                   Process proc = new Process();
+                   proc.StartInfo.FileName = Application.ExecutablePath;
+                   proc.StartInfo.UseShellExecute = true;
+                   proc.StartInfo.Verb = "runas";
+                   proc.StartInfo.Arguments = "admin";
+                   HandleApplicationExit(proc, 0);
+               }).Start();
             }
             else
-                InitialiseProgram().ConfigureAwait(false);
-        }
-
-        private async Task InitialiseProgram()
-        {
-            Globals.InputHandler = new InputHandler();
-            await Task.Run(() =>
             {
-                if (Settings.Default.UpdateSettings)
-                {
-                    Settings.Default.Upgrade();
-                    Settings.Default.UpdateSettings = false;
-                    Settings.Default.Save();
-                }
-
-                Globals.MainForm = this;
-
-                Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
-
-                Invoke((MethodInvoker)delegate
-               {
-                   VolumeTextLabel.Font = Settings.Default.VolumeBarFontStyle;
-                   Size labelSize = Utils.CalculateLabelSize(VolumeTextLabel, "100%");
-                   Size volumeBarMinSize = new Size(Settings.Default.BarWidthPadding + labelSize.Width, Settings.Default.BarHeightPadding + labelSize.Height + 5);
-                   if (Settings.Default.DisplayTrayIconAsText)
-                   {
-                       Icon newIcon = Utils.GenerateTrayIcon("T");
-                       if (newIcon != null)
-                           TrayNotifyIcon.Icon = newIcon;
-                       Utils.DestroyIcon(newIcon.Handle);
-                   }
-                   MinimumSize = volumeBarMinSize;
-                   Height = volumeBarMinSize.Height;
-                   Width = volumeBarMinSize.Width;
-                   SetVolumeBarPosition();
-                   Utils.ShowWindow(Handle, 4);
-                   HideVolumeBar();
-               });
-                Globals.AudioHandler = new AudioHandler();
-            });
+                InitApplication.RunWorkerAsync();
+            }
         }
-
-
         public void SetVolumeBarPosition()
         {
             Point cursorPosition = Cursor.Position;
@@ -151,15 +132,15 @@ namespace tbvolscroll
             Opacity = Settings.Default.VolumeBarOpacity;
             Globals.IsDisplayingVolumeBar = true;
             Utils.ShowInactiveTopmost(this);
-            hideVolumeBarTimer.Interval = (Globals.VolumeBarAutoHideTimeout);
+            hideVolumeBarTimer.Interval = Globals.VolumeBarAutoHideTimeout;
             hideVolumeBarTimer.Start();
         }
 
         public void HideVolumeBar()
         {
-                Hide();
-                hideVolumeBarTimer.Stop();
-                Globals.IsDisplayingVolumeBar = false;
+            Hide();
+            hideVolumeBarTimer.Stop();
+            Globals.IsDisplayingVolumeBar = false;
         }
 
         public void HandleApplicationExit(Process process, int code = 0)
@@ -213,7 +194,11 @@ namespace tbvolscroll
 
         private void DrawVolumeBarBorder(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawRectangle(new Pen(Color.Black, 2), DisplayRectangle);
+            using (Pen pen = new Pen(Color.Black, 2))
+            {
+                Rectangle rect = VolumeTextLabel.DisplayRectangle;
+                e.Graphics.DrawRectangle(pen, rect);
+            }
         }
 
         private void OpenStartupFolder(object sender, EventArgs e)
@@ -246,7 +231,7 @@ namespace tbvolscroll
                         case "volume":
                             VolumeTextLabel.Text = $"{AudioState.Volume}%";
                             TrayNotifyIcon.Text = $"{AudioState.CoreAudioController.DefaultPlaybackDevice.Name}: {AudioState.Volume}%";
-                            Width = Utils.CalculateLabelSize(VolumeTextLabel, "100%").Width + AudioState.Volume + Settings.Default.BarWidthPadding;
+                            Width = MinimumSize.Width + AudioState.Volume + Settings.Default.BarWidthPadding;
                             if (Settings.Default.VolumeBarUseGradientColor)
                                 VolumeTextLabel.BackColor = Utils.CalculateColor(AudioState.Volume);
                             else
@@ -272,11 +257,12 @@ namespace tbvolscroll
                             VolumeTextLabel.BackColor = Color.SkyBlue;
                             break;
                     }
-                    SetVolumeBarPosition();
                     ResumeLayout();
+                    SetVolumeBarPosition();
                     if (!Settings.Default.DisplayVolumeBarScrolling && updateType == "volume")
                         return;
                     ShowVolumeBar();
+
                 });
             });
         }
@@ -338,7 +324,7 @@ namespace tbvolscroll
                     TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(AudioState.Volume.ToString());
             }
         }
-        
+
         private void PlaySystemSoundTrayMenu(object sender, MouseEventArgs e)
         {
             if (TitleLabelMenuItem.ContentRectangle.Contains(e.Location))
@@ -390,6 +376,35 @@ namespace tbvolscroll
         {
             if (!Globals.DisplayTrayIcon)
                 TrayNotifyIcon.Visible = false;
+        }
+
+        private void PreventTitleFromClosingContextMenu(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            e.Cancel = e.CloseReason == ToolStripDropDownCloseReason.ItemClicked;
+        }
+
+        private void DoInitApplication(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+            Globals.AudioHandler = new AudioHandler();
+        }
+
+        private void FinaliseInitApplication(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+
+            VolumeTextLabel.Font = Settings.Default.VolumeBarFontStyle;
+            Size labelSize = Utils.CalculateLabelSize(VolumeTextLabel, "100%");
+
+            Size volumeBarMinSize = new Size(Settings.Default.BarWidthPadding + labelSize.Width, Settings.Default.BarHeightPadding + labelSize.Height + 5);
+            MinimumSize = volumeBarMinSize;
+            Height = volumeBarMinSize.Height;
+            Width = volumeBarMinSize.Width;
+
+            SetVolumeBarPosition();
+            Utils.ShowWindow(Handle, 4);
+            HideVolumeBar();
+
+            Globals.InputHandler = new InputHandler();
         }
     }
 }

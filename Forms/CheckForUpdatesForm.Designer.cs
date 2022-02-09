@@ -42,7 +42,6 @@ namespace tbvolscroll.Forms
             // 
             this.ViewReleasesLinkLabel.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
             this.ViewReleasesLinkLabel.AutoSize = true;
-            this.ViewReleasesLinkLabel.BackColor = System.Drawing.SystemColors.Control;
             this.ViewReleasesLinkLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
             this.ViewReleasesLinkLabel.LinkColor = System.Drawing.SystemColors.Highlight;
             this.ViewReleasesLinkLabel.Location = new System.Drawing.Point(150, 89);
@@ -58,6 +57,7 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.CheckingForUpdatesLabel.BackColor = System.Drawing.SystemColors.Control;
             this.CheckingForUpdatesLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.CheckingForUpdatesLabel.FlatAppearance.BorderColor = System.Drawing.SystemColors.Control;
             this.CheckingForUpdatesLabel.FlatAppearance.BorderSize = 0;
@@ -74,7 +74,7 @@ namespace tbvolscroll.Forms
             this.CheckingForUpdatesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CheckingForUpdatesLabel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.RefreshUpdateToolTip.SetToolTip(this.CheckingForUpdatesLabel, "Click to check for updates");
-            this.CheckingForUpdatesLabel.UseVisualStyleBackColor = true;
+            this.CheckingForUpdatesLabel.UseVisualStyleBackColor = false;
             this.CheckingForUpdatesLabel.Click += new System.EventHandler(this.DoUpdateCheck);
             // 
             // DownloadButton
@@ -82,7 +82,7 @@ namespace tbvolscroll.Forms
             this.DownloadButton.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DownloadButton.Enabled = false;
-            this.DownloadButton.Location = new System.Drawing.Point(11, 45);
+            this.DownloadButton.Location = new System.Drawing.Point(11, 43);
             this.DownloadButton.Name = "DownloadButton";
             this.DownloadButton.Size = new System.Drawing.Size(211, 25);
             this.DownloadButton.TabIndex = 8;
@@ -108,7 +108,7 @@ namespace tbvolscroll.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(234, 111);
             this.Controls.Add(this.CurrentVersionLabel);
             this.Controls.Add(this.ViewReleasesLinkLabel);

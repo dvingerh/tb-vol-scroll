@@ -143,13 +143,31 @@ namespace tbvolscroll
                         break;
                 }
                 if (Globals.AudioPlaybackDevicesForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
-                    await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
+                {
+                    await Task.Run(() =>
+                    {
+                        Globals.AudioPlaybackDevicesForm.Invoke((MethodInvoker)async delegate
+                        {
+                            await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
+                        });
+                    });
+                }
+                if (Globals.VolumeSliderControlForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
+                {
+                    await Task.Run(() =>
+                    {
+                        Globals.VolumeSliderControlForm.Invoke((MethodInvoker)delegate
+                        {
+                            Globals.VolumeSliderControlForm.RefreshOnDeviceActivity(updateDeviceInfo: value.ChangedType == DeviceChangedType.DefaultChanged);
+                        });
+                    });
+                }
             }
         }
 
         public async void DeviceStateChanged(DeviceChangedArgs value)
         {
-            if (deviceStateEventQueue.Count < 5)
+            if (deviceStateEventQueue.Count <= 5)
                 deviceStateEventQueue.Enqueue(value);
             if (deviceStateEventQueue.Count > 0)
                 await ProcessDeviceEventQueue();
@@ -157,32 +175,30 @@ namespace tbvolscroll
 
         public async Task UpdateAudioState()
         {
-            Console.WriteLine("UpdateAudioState");
-            if (AudioState.CoreAudioController.DefaultPlaybackDevice != null)
+            await Task.Run(() =>
             {
-                if (AudioState.CoreAudioController.DefaultPlaybackDevice.State == DeviceState.Active)
+                if (AudioState.CoreAudioController.DefaultPlaybackDevice != null)
                 {
-                    AudioState.Volume = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
-                    AudioState.Muted = AudioState.CoreAudioController.DefaultPlaybackDevice.IsMuted;
-                    AudioState.AudioAvailable = true;
+                    if (AudioState.CoreAudioController.DefaultPlaybackDevice.State == DeviceState.Active)
+                    {
+                        AudioState.Volume = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
+                        AudioState.Muted = AudioState.CoreAudioController.DefaultPlaybackDevice.IsMuted;
+                        AudioState.AudioAvailable = true;
+                    }
+                    else
+                        AudioState.AudioAvailable = false;
                 }
                 else
                     AudioState.AudioAvailable = false;
-            }
-            else
-                AudioState.AudioAvailable = false;
 
-            if (!AudioState.AudioAvailable)
-            {
-                Globals.InputHandler.MouseScrollQueue.Clear();
-                Globals.InputHandler.CurrentMouseTask = null;
-                DeviceStateEventQueue.Clear();
-                currentDeviceStateEventTask = null;
-            }    
-
-            await Task.Run(() =>
-            {
-                Globals.MainForm.Invoke((MethodInvoker)delegate
+                if (!AudioState.AudioAvailable)
+                {
+                    Globals.InputHandler.MouseScrollQueue.Clear();
+                    Globals.InputHandler.CurrentMouseTask = null;
+                    DeviceStateEventQueue.Clear();
+                    currentDeviceStateEventTask = null;
+                }
+                Globals.MainForm.BeginInvoke((MethodInvoker)delegate
                 {
                     Globals.MainForm.VolumeSliderControlMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.AudioPlaybackDevicesMenuItem.Enabled = AudioState.AudioAvailable;
@@ -192,7 +208,7 @@ namespace tbvolscroll
                 });
             });
         }
-
+        
         public async Task SetDeviceVolume(int volume)
         {
             if (AudioState.CoreAudioController.DefaultPlaybackDevice != null)

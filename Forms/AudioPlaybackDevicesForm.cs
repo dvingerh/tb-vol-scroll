@@ -40,7 +40,6 @@ namespace tbvolscroll.Forms
                     break;
             }
             await LoadAudioPlaybackDevicesList();
-            DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - 25;
         }
 
         public async Task LoadAudioPlaybackDevicesList()
@@ -49,7 +48,7 @@ namespace tbvolscroll.Forms
             {
                 SuspendLayout();
                 DevicesListView.Items.Clear();
-                ApplyButton.Enabled = false;
+                SetDefaultButton.Enabled = false;
                 RefreshButton.Enabled = false;
             });
 
@@ -69,7 +68,7 @@ namespace tbvolscroll.Forms
                     deviceItem.SubItems.Add($"{(int)Math.Round(d.Volume)}%");
                     deviceItem.SubItems.Add(d.IsDefaultDevice ? "Yes" : "No");
                     deviceItem.SubItems.Add(d.IsMuted ? "Yes" : "No");
-                    deviceItem.BackColor = d.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
+                    deviceItem.BackColor = d.IsDefaultDevice ? Color.FromArgb(225, 255, 225) : Color.White;
                     deviceItem.Tag = d;
                     deviceListViewItem.Add(deviceItem);
                 }
@@ -78,23 +77,25 @@ namespace tbvolscroll.Forms
             {
                 DevicesListView.Items.AddRange(deviceListViewItem.ToArray());
                 RefreshButton.Enabled = true;
+                bool hasScrollBars = DevicesListView.ClientSize.Height < (DevicesListView.Items.Count + 1) * DevicesListView.Items[0].Bounds.Height;
+                DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - (hasScrollBars ? 25 : 0);
                 ResumeLayout();
             });
         }
 
-        private async void ApplyButtonClick(object sender, EventArgs e)
+        private async void SetDefaultButtonClick(object sender, EventArgs e)
         {
             if (DevicesListView.SelectedItems.Count > 0)
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
             }
-            ApplyButton.Enabled = false;
+            SetDefaultButton.Enabled = false;
         }
 
-        private void ToggleApplyButton(object sender, EventArgs e)
+        private void ToggleSetDefaultButton(object sender, EventArgs e)
         {
-            ApplyButton.Enabled = DevicesListView.SelectedItems.Count > 0;
+            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count > 0;
         }
 
         private async void DevicesListViewDoubleClick(object sender, EventArgs e)
@@ -123,7 +124,7 @@ namespace tbvolscroll.Forms
                             deviceItem.SubItems[1].Text = $"{(int)Math.Round(((CoreAudioDevice)deviceItem.Tag).Volume)}%";
                             deviceItem.SubItems[2].Text = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? "Yes" : "No";
                             deviceItem.SubItems[3].Text = ((CoreAudioDevice)deviceItem.Tag).IsMuted ? "Yes" : "No";
-                            deviceItem.BackColor = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
+                            deviceItem.BackColor = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? Color.FromArgb(225, 255, 225) : Color.White;
                         }
                         else
                             deviceItem.Remove();
@@ -154,6 +155,9 @@ namespace tbvolscroll.Forms
                         deviceItem.ImageIndex = DevicesListView.Items.IndexOf(deviceItem);
 
                     }
+                    bool hasScrollBars = DevicesListView.ClientSize.Height < (DevicesListView.Items.Count + 1) * DevicesListView.Items[0].Bounds.Height;
+                    DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - (hasScrollBars ? 25 : 0);
+
                 });
                 isRefreshing = false;
             }

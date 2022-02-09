@@ -117,6 +117,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ExControls\FontList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\ExControls\FontList.Designer.cs">
+      <DependentUpon>FontList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ExControls\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Classes\Handlers\AudioHandler.cs" />
     <Compile Include="Classes\AudioState.cs" />
     <Compile Include="Classes\ExControls\DoubleBufferedListView.cs">
@@ -129,6 +138,12 @@
     <Compile Include="Classes\Handlers\TaskbarHandler.cs" />
     <Compile Include="Classes\Handlers\UpdateHandler.cs" />
     <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Forms\FontDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FontDialogForm.Designer.cs">
+      <DependentUpon>FontDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,6 +178,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Classes\ExControls\FontList.resx">
+      <DependentUpon>FontList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FontDialogForm.resx">
+      <DependentUpon>FontDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,7 +223,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\exlamation.png" />
+    <None Include="Resources\exclamation.png" />
     <Content Include="voltray.ico" />
     <None Include="Resources\mixer.png" />
     <None Include="Resources\speaker.png" />

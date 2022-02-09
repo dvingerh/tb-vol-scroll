@@ -20,27 +20,15 @@ namespace tbvolscroll.Forms
         private Task currentUpdateVolumeTask = null;
         private readonly Queue<double> updatePeakValueQueue = new Queue<double>();
         private Task currentPeakValueTask = null;
-        private int lastTrackBarValue = 0;
 
         public VolumeSliderControlForm()
         {
             InitializeComponent();
             Globals.VolumeSliderControlForm = this;
-        }
-
-        private void OnFormShown(object sender, EventArgs e)
-        {
-            lastTrackBarValue = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
-            VolumeTrackBar.Value = (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume);
-            VolumeLabel.Text = $"{(int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume)}%";
-            AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
-            VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, AudioDeviceNameLabel.Text);
-            PeakMeterPictureBox.BackColor = Globals.DefaultColor;
-
-
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
+            PeakMeterPictureBox.BackColor = Globals.DefaultColor;
 
             switch (TaskbarHandler.Position)
             {
@@ -58,7 +46,35 @@ namespace tbvolscroll.Forms
                     break;
 
             }
-            Focus();
+
+            VolumeTrackBar.Value = AudioState.Volume;
+            RefreshOnDeviceActivity(updateDeviceInfo: true);
+            
+
+        }
+
+        public void RefreshOnDeviceActivity(bool updateDeviceInfo = false)
+        {
+            VolumeTrackBar.Value = AudioState.Volume;
+            VolumeLabel.Text = $"{(AudioState.Muted ? ("Muted") : AudioState.Volume + "%")}";
+            if (updateDeviceInfo)
+            {
+                AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.Name;
+                VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, AudioState.CoreAudioController.DefaultPlaybackDevice.FullName);
+                Utils.ExtractIconEx(AudioState.CoreAudioController.DefaultPlaybackDevice.IconPath.Split(',')[0], int.Parse(AudioState.CoreAudioController.DefaultPlaybackDevice.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
+                using (Icon tmpIcon = Icon.FromHandle(hIcon))
+                {
+                    Icon newIcon = (Icon)tmpIcon.Clone();
+                    Utils.DestroyIcon(tmpIcon.Handle);
+                    AudioDevicePictureBox.Image = newIcon.ToBitmap();
+                }
+            }
+        }
+
+        private void OnFormShown(object sender, EventArgs e)
+        {
+            Activate();
+            Invalidate();
         }
        
 
@@ -109,29 +125,28 @@ namespace tbvolscroll.Forms
         {
             if (AudioState.Volume != volume)
             {
-                await Task.Run(async () =>
+                try
                 {
-                    try
+                    if (AudioState.Volume == 0)
+                        await Globals.AudioHandler.SetDeviceVolume(10);
+                    await Globals.AudioHandler.SetDeviceVolume(volume);
+                    if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) == 0 && AudioState.Muted == false)
                     {
-                        if (AudioState.Volume == 0)
-                            await Globals.AudioHandler.SetDeviceVolume(10);
-                        await Globals.AudioHandler.SetDeviceVolume(volume);
-                        if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) == 0 && AudioState.Muted == false)
+                        await Globals.AudioHandler.SetDeviceMute(isMuted: true);
+                        Invoke((MethodInvoker)delegate
                         {
-                            await Globals.AudioHandler.SetDeviceMute(isMuted: true);
                             PeakMeterPictureBox.BackColor = SystemColors.ControlLight;
-                        }
-                        else if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) > 0 && AudioState.Muted == true)
-                            await Globals.AudioHandler.SetDeviceMute(isMuted: false);
-
-
-                        Invoke((MethodInvoker) delegate
-                        {
-                            VolumeLabel.Text = $"{VolumeTrackBar.Value}%";
                         });
                     }
-                    catch { }
-                });
+                    else if ((int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) > 0 && AudioState.Muted == true)
+                        await Globals.AudioHandler.SetDeviceMute(isMuted: false);
+
+                    Invoke((MethodInvoker)delegate
+                   {
+                       VolumeLabel.Text = $"{(AudioState.CoreAudioController.DefaultPlaybackDevice.IsMuted ? ("Muted") : (int)Math.Round(AudioState.CoreAudioController.DefaultPlaybackDevice.Volume) + "%")}";
+                   });
+                }
+                catch { }
             }
         }
 
@@ -147,12 +162,10 @@ namespace tbvolscroll.Forms
                         PeakMeterPictureBox.BackColor = Utils.CalculateColor(100 - value);
                         double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                         PeakMeterPictureBox.Width = (int)Math.Round(value * widthPerc);
-                        AudioDeviceNameLabel.Text = AudioState.CoreAudioController.DefaultPlaybackDevice.FullName;
-                        VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, AudioDeviceNameLabel.Text);
                     });
                 }
-                catch (Exception ex){
-                    Console.WriteLine(ex.ToString());
+                catch {
+                  
                 }
             });
         }
@@ -169,16 +182,14 @@ namespace tbvolscroll.Forms
 
         private async void UpdateVolumeFromTrackBar(object sender, EventArgs e)
         {
-            if (lastTrackBarValue != VolumeTrackBar.Value)
-            {
-                lastTrackBarValue = VolumeTrackBar.Value;
-                if (updateVolumeQueue.Count < 100)
+                if (updateVolumeQueue.Count < 10)
                 {
                     updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
-                    await ProcessVolumeQueue();
                 }
-            }
+                await ProcessVolumeQueue();
+
             Utils.AvoidControlFocus(Handle);
+
         }
 
         private void PlaySound(object sender, MouseEventArgs e)
@@ -190,6 +201,15 @@ namespace tbvolscroll.Forms
         private void AvoidControlFocus(object sender, EventArgs e)
         {
             Utils.AvoidControlFocus(Handle);
+        }
+
+        private void DrawVolumeSliderBorder(object sender, PaintEventArgs e)
+        {
+            using (Pen pen = new Pen(Color.Black, 2))
+            {
+                Rectangle rect = DisplayRectangle;
+                e.Graphics.DrawRectangle(pen, rect);
+            }
         }
     }
 }
