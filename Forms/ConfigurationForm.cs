@@ -22,12 +22,13 @@ namespace tbvolscroll
         public ConfigurationForm()
         {
             InitializeComponent();
+            TrayIconCustomFontDialog = new FontDialogForm();
+            VolumeBarCustomFontDialog = new FontDialogForm();
+
         }
 
         private void LoadBarConfiguration(object sender, EventArgs e)
         {
-            TrayIconCustomFontDialog = new FontDialogForm();
-            VolumeBarCustomFontDialog = new FontDialogForm();
             EnableSwitchPlaybackDeviceOptionCheckBox.Checked = Settings.Default.SwitchDefaultPlaybackDeviceShortcut;
             InvertScrollingDirectionCheckBox.Checked = Settings.Default.InvertScrollingDirection;
             EnableMuteUnmuteOptionCheckBox.Checked = Settings.Default.ToggleMuteShortcut;
@@ -182,13 +183,13 @@ namespace tbvolscroll
 
             if (doSetVolumeBarFont)
             {
-                Font newFont = new Font(VolumeBarCustomFontDialog.SelectedFont.FontFamily, VolumeBarCustomFontDialog.SelectedFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font newFont = new Font(VolumeBarCustomFontDialog.SelectedFont.FontFamily, VolumeBarCustomFontDialog.SelectedFont.Size, VolumeBarCustomFontDialog.SelectedFont.Style, VolumeBarCustomFontDialog.SelectedFont.Unit);
                 Settings.Default.VolumeBarFontStyle = newFont;
 
             }
             if (doSetTrayIconFont)
             {
-                Font newFont = new Font(TrayIconCustomFontDialog.SelectedFont.FontFamily, TrayIconCustomFontDialog.SelectedFont.Size, FontStyle.Regular, GraphicsUnit.Pixel);
+                Font newFont = new Font(TrayIconCustomFontDialog.SelectedFont.FontFamily, TrayIconCustomFontDialog.SelectedFont.Size, TrayIconCustomFontDialog.SelectedFont.Style, TrayIconCustomFontDialog.SelectedFont.Unit);
                 Settings.Default.TrayIconFontStyle = newFont;
             }
 
@@ -288,7 +289,7 @@ namespace tbvolscroll
             TrayIconHeightNumericUpDown.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconWidthNumericUpDown.Value = 32;
             TrayIconHeightNumericUpDown.Value = 32;
-            TrayIconPaddingNumericUpDown.Value = 1;
+            TrayIconPaddingNumericUpDown.Value = 0;
             TrayIconFontStyleButton.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconFontPreviewLabel.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconTextRenderingHintComboBox.SelectedIndex = 1;

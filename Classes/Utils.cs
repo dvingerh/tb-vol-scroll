@@ -164,7 +164,7 @@ namespace tbvolscroll.Classes
                     if (size.Height <= proposedSize.Height + expandAmount && size.Width <= proposedSize.Width + expandAmount)
                     { return font; }
 
-                    font = new Font(font.Name, font.Size - 2, FontStyle.Regular);
+                    font = new Font(font.Name, font.Size - 2, font.Style);
                 }
             }
             catch { return oldFont; }
@@ -262,13 +262,6 @@ namespace tbvolscroll.Classes
                     graphics.TextRenderingHint = hinting;
                     font = FindBestFitFont(graphics, text, font, bitmap.Size, expandAmount);
                     SizeF size = graphics.MeasureString(text, font).ToSize();
-                    Console.WriteLine(iconWidth);
-                    Console.WriteLine(iconHeight);
-                    Console.WriteLine(fontSize);
-                    Console.WriteLine(expandAmount);
-                    Console.WriteLine(hinting);
-                    Console.WriteLine(font);
-                    Console.WriteLine(font.Style);
 
                     graphics.DrawString(text, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
                     using (Icon tmpIcon = Icon.FromHandle(bitmap.GetHicon()))

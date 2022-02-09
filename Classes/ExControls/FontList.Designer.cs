@@ -41,10 +41,10 @@ namespace tbvolscroll.Classes.ExControls
             this.FontListComponent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FontListComponent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.FontListComponent.IntegralHeight = false;
-            this.FontListComponent.ItemHeight = 20;
+            this.FontListComponent.ItemHeight = 25;
             this.FontListComponent.Location = new System.Drawing.Point(0, 22);
             this.FontListComponent.Name = "FontListComponent";
-            this.FontListComponent.Size = new System.Drawing.Size(220, 284);
+            this.FontListComponent.Size = new System.Drawing.Size(220, 285);
             this.FontListComponent.TabIndex = 0;
             this.FontListComponent.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.FontListComponent_DrawItem);
             this.FontListComponent.SelectedIndexChanged += new System.EventHandler(this.FontListComponent_SelectedIndexChanged);

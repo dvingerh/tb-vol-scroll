@@ -16,6 +16,7 @@ namespace tbvolscroll.Classes
         private static MainForm mainForm;
         private static AudioPlaybackDevicesForm audioPlaybackDevicesForm;
         private static VolumeSliderControlForm volumeSliderControlForm;
+        private static ConfigurationForm configurationForm;
         private static Mutex appMutex;
         private static int textRenderingHintType;
         public static int VolumeBarAutoHideTimeout { get => volumeBarAutoHideTimeout; set => volumeBarAutoHideTimeout = value; }
@@ -30,5 +31,6 @@ namespace tbvolscroll.Classes
         public static float DpiScale { get => dpiScale; set => dpiScale = value; }
         public static int TextRenderingHintType { get => textRenderingHintType; set => textRenderingHintType = value; }
         public static Color DefaultColor { get => defaultColor; set => defaultColor = value; }
+        public static ConfigurationForm ConfigurationForm { get => configurationForm; set => configurationForm = value; }
     }
 }

@@ -131,10 +131,10 @@ namespace tbvolscroll
                             double currentPeakValue = Math.Round(peakVal.PeakValue);
                             if (currentPeakValue < 0)
                                 currentPeakValue = 0;
-                            if (currentPeakValue > 100)
-                                currentPeakValue = 100;
+                            if (currentPeakValue > 1)
+                                currentPeakValue = 1;
 
-                            Globals.VolumeSliderControlForm.UpdatePeakValue(currentPeakValue);
+                            Globals.VolumeSliderControlForm.UpdatePeakValue(peakVal.PeakValue);
                             isUpdatingPeakValue = false;
                         }
                         break;
@@ -144,22 +144,43 @@ namespace tbvolscroll
                 }
                 if (Globals.AudioPlaybackDevicesForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
                 {
-                    await Task.Run(() =>
+
+                    await Task.Run(async() =>
                     {
-                        Globals.AudioPlaybackDevicesForm.Invoke((MethodInvoker)async delegate
+                        try
                         {
-                            await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
-                        });
+                            if (Globals.AudioPlaybackDevicesForm.InvokeRequired)
+                            {
+                                Globals.AudioPlaybackDevicesForm.Invoke((MethodInvoker)async delegate
+                                {
+                                    await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
+                                });
+                            }
+                            else
+                                await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
+                        }
+                        catch { }
+
                     });
                 }
-                if (Globals.VolumeSliderControlForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
+                if (Globals.VolumeSliderControlForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged && !isUpdatingPeakValue)
                 {
                     await Task.Run(() =>
                     {
-                        Globals.VolumeSliderControlForm.Invoke((MethodInvoker)delegate
+                        try
                         {
-                            Globals.VolumeSliderControlForm.RefreshOnDeviceActivity(updateDeviceInfo: value.ChangedType == DeviceChangedType.DefaultChanged);
-                        });
+                            if (Globals.VolumeSliderControlForm.InvokeRequired)
+                            {
+                                Globals.VolumeSliderControlForm.Invoke((MethodInvoker)delegate
+                                {
+                                    Globals.VolumeSliderControlForm.RefreshOnDeviceActivity(updateDeviceInfo: value.ChangedType == DeviceChangedType.DefaultChanged);
+                                });
+                            }
+                            else
+                                Globals.VolumeSliderControlForm.RefreshOnDeviceActivity(updateDeviceInfo: value.ChangedType == DeviceChangedType.DefaultChanged);
+
+                        }
+                        catch { }
                     });
                 }
             }
@@ -167,7 +188,7 @@ namespace tbvolscroll
 
         public async void DeviceStateChanged(DeviceChangedArgs value)
         {
-            if (deviceStateEventQueue.Count <= 5)
+            if (deviceStateEventQueue.Count < 5)
                 deviceStateEventQueue.Enqueue(value);
             if (deviceStateEventQueue.Count > 0)
                 await ProcessDeviceEventQueue();
@@ -198,14 +219,24 @@ namespace tbvolscroll
                     DeviceStateEventQueue.Clear();
                     currentDeviceStateEventTask = null;
                 }
-                Globals.MainForm.BeginInvoke((MethodInvoker)delegate
+                if (Globals.MainForm.InvokeRequired)
+                {
+                    Globals.MainForm.Invoke((MethodInvoker)delegate
+                    {
+                        Globals.MainForm.VolumeSliderControlMenuItem.Enabled = AudioState.AudioAvailable;
+                        Globals.MainForm.AudioPlaybackDevicesMenuItem.Enabled = AudioState.AudioAvailable;
+                        Globals.MainForm.SystemVolumeMixerMenuItem.Enabled = AudioState.AudioAvailable;
+                        Globals.MainForm.OptionsMenuItem.Enabled = AudioState.AudioAvailable;
+                        Globals.MainForm.SetTrayIcon();
+                    });
+                }else
                 {
                     Globals.MainForm.VolumeSliderControlMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.AudioPlaybackDevicesMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.SystemVolumeMixerMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.OptionsMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.SetTrayIcon();
-                });
+                }
             });
         }
         

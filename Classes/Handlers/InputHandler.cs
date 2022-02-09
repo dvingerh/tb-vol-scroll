@@ -75,7 +75,7 @@ namespace tbvolscroll
         {
             if (TaskbarHandler.IsCursorInTaskbar() && Globals.VolumeSliderControlForm == null && AudioState.AudioAvailable)
             {
-                if (mouseScrollQueue.Count <= 5)
+                if (mouseScrollQueue.Count < 5)
                     mouseScrollQueue.Enqueue(e);
                 if (mouseScrollQueue.Count > 0)
                     await ProcessMouseScrollActionQueue();
@@ -100,6 +100,7 @@ namespace tbvolscroll
 
         private async Task HandleMouseScrollAction(MouseEventArgs e)
         {
+
             int scrollDirection = e.Delta;
             if (Settings.Default.InvertScrollingDirection)
                 if (scrollDirection < 0)

@@ -52,6 +52,7 @@ namespace tbvolscroll
                 Settings.Default.Save();
             }
 
+            Globals.TextRenderingHintType = Settings.Default.TextRenderingHintType;
 
             if (!noTrayArg)
             {
@@ -179,7 +180,7 @@ namespace tbvolscroll
 
         private void OpenConfigureDialog(object sender, EventArgs e)
         {
-            new ConfigurationForm().ShowDialog();
+            Globals.ConfigurationForm.ShowDialog();
         }
 
         private void RestartAppAsAdministrator(object sender, EventArgs e)
@@ -224,6 +225,8 @@ namespace tbvolscroll
             {
                 Invoke((MethodInvoker)delegate
                 {
+                    Console.WriteLine(Globals.MainForm.VolumeTextLabel.Font.Unit);
+
                     hideVolumeBarTimer.Stop();
                     SuspendLayout();
                     switch (updateType)
@@ -386,6 +389,7 @@ namespace tbvolscroll
         private void DoInitApplication(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             Globals.VolumeBarAutoHideTimeout = Settings.Default.AutoHideTimeOut;
+            Globals.ConfigurationForm = new ConfigurationForm();
             Globals.AudioHandler = new AudioHandler();
         }
 

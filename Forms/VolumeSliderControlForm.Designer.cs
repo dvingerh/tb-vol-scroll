@@ -37,10 +37,12 @@ namespace tbvolscroll.Forms
             this.AudioDeviceNameLabel = new System.Windows.Forms.Label();
             this.VolumeTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeSliderTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.AudioDevicePictureBox)).BeginInit();
             this.PeakMeterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PeakMeterPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // VolumeLabel
@@ -70,6 +72,7 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.PeakMeterPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PeakMeterPanel.Controls.Add(this.PeakMeterPictureBox);
+            this.PeakMeterPanel.Controls.Add(this.pictureBox1);
             this.PeakMeterPanel.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.PeakMeterPanel.Location = new System.Drawing.Point(7, 66);
             this.PeakMeterPanel.Name = "PeakMeterPanel";
@@ -79,7 +82,6 @@ namespace tbvolscroll.Forms
             // PeakMeterPictureBox
             // 
             this.PeakMeterPictureBox.BackColor = System.Drawing.Color.Lime;
-            this.PeakMeterPictureBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.PeakMeterPictureBox.Location = new System.Drawing.Point(0, 0);
             this.PeakMeterPictureBox.Name = "PeakMeterPictureBox";
             this.PeakMeterPictureBox.Size = new System.Drawing.Size(0, 8);
@@ -120,6 +122,15 @@ namespace tbvolscroll.Forms
             this.VolumeSliderTooltip.UseAnimation = false;
             this.VolumeSliderTooltip.UseFading = false;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Lime;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(0, 8);
+            this.pictureBox1.TabIndex = 8;
+            this.pictureBox1.TabStop = false;
+            // 
             // VolumeSliderControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -149,6 +160,7 @@ namespace tbvolscroll.Forms
             this.PeakMeterPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PeakMeterPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VolumeTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -163,5 +175,6 @@ namespace tbvolscroll.Forms
         private System.Windows.Forms.Label AudioDeviceNameLabel;
         private System.Windows.Forms.TrackBar VolumeTrackBar;
         private System.Windows.Forms.ToolTip VolumeSliderTooltip;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
