@@ -11,8 +11,8 @@ Simple and customizable utility to enable audio control by scrolling inside the 
 - Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
 
 ###### Available Menus
-- System Volume Mixer: Opens the built-in Windows volume mixer for per-application audio volume control.
 - Audio Playback Devices: Switch default audio playback device from a list of available devices.
+- System Volume Mixer: Opens the built-in Windows volume mixer for per-application audio volume control.
 - Volume Slider Control: Open a popup with a volume slider and peak volume meter.
 
 ### Configuration
@@ -34,8 +34,7 @@ Simple and customizable utility to enable audio control by scrolling inside the 
   - Enable/disable requesting of Administrator permissions on start
   - Enable/disable reverse scrolling direction for scroll actions
 
-## Preview (not always up-to-date)
-
+## Preview
 
 #### Volume bar
 ![Volume bar](Images/gif_volumebar.gif?raw=true)
@@ -64,3 +63,4 @@ Simple and customizable utility to enable audio control by scrolling inside the 
 ## Thanks
  #
 - [Taskbar.cs by Franz Alex Gaisie-Essilfie](https://gist.githubusercontent.com/franzalex/e747e6b318ab8f328aa02301f25ec534/raw/84f731f2e2396dc8ce28b564a75b712bf56b184f/Taskbar.cs)
+- [CustomFontDialog by umaranis](https://github.com/umaranis/CustomFontDialog)
