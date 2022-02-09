@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace tbvolscroll.Classes.ExControls
@@ -23,14 +18,11 @@ namespace tbvolscroll.Classes.ExControls
             {
                 try
                 {
-                    if (f.Name != null || f.Name != "")
-                        FontListComponent.Items.Add(new Font(f, 12));
+                    if (!string.IsNullOrWhiteSpace(f.Name))
+                        FontListComponent.Items.Add(new Font(f, 10));
                 }
                 catch { }
-
             }
-
-
         }
 
 
@@ -45,11 +37,10 @@ namespace tbvolscroll.Classes.ExControls
             }
             set
             {
-                if (value == null) FontListComponent.ClearSelected();
+                if (value == null)
+                    FontListComponent.ClearSelected();
                 else
-                {
                     FontListComponent.SelectedIndex = IndexOf(value);
-                }
 
             }
         }
@@ -60,34 +51,30 @@ namespace tbvolscroll.Classes.ExControls
             {
                 Font f = (Font)FontListComponent.Items[i];
                 if (f.FontFamily.Name == ff.Name)
-                {
                     return i;
-                }
             }
 
             return -1;
         }
 
-        private void FontListComponent_DrawItem(object sender, DrawItemEventArgs e)
+        private void FontListComponentDrawItem(object sender, DrawItemEventArgs e)
         {
-
-
-            // Draw the background of the ListBox control for each item.
-            e.DrawBackground();
-
             Font font = (Font)FontListComponent.Items[e.Index];
-            e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds, StringFormat.GenericDefault);
-
-            // If the ListBox has focus, draw a focus rectangle around the selected item.
-            e.DrawFocusRectangle();
-
-
-
-
-
+            e.DrawBackground();
+            e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            StringFormat format = new StringFormat
+            {
+                LineAlignment = StringAlignment.Center,
+                Trimming = StringTrimming.EllipsisWord
+            };
+            if (e.State.HasFlag(DrawItemState.Selected))
+                e.Graphics.DrawString(font.Name, font, Brushes.White, e.Bounds, format);
+            else
+                e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds, format);
         }
 
-        private void FontListComponent_SelectedIndexChanged(object sender, EventArgs e)
+        private void FontListComponentSelectedIndexChanged(object sender, EventArgs e)
         {
 
             if (FontListComponent.SelectedItem != null)
@@ -97,50 +84,35 @@ namespace tbvolscroll.Classes.ExControls
                     Font f = (Font)FontListComponent.SelectedItem;
                     FontNameTextBox.Text = f.Name;
                 }
-
                 SelectedFontFamilyChanged(FontListComponent, new EventArgs());
             }
         }
 
-        private void TextSizeTextBox_TextChanged(object sender, EventArgs e)
+        private void TextSizeTextBoxTextChanged(object sender, EventArgs e)
         {
-            if (!FontNameTextBox.Focused) return;
+            if (!FontNameTextBox.Focused) 
+                return;
 
             for (int i = 0; i < FontListComponent.Items.Count; i++)
             {
-                string str = ((Font)FontListComponent.Items[i]).Name;
-                if (str.StartsWith(FontNameTextBox.Text, true, null))
+                string str = ((Font)FontListComponent.Items[i]).Name.ToLower();
+                if (str.Contains(FontNameTextBox.Text.ToLower()))
                 {
                     FontListComponent.SelectedIndex = i;
-
-                    const uint WM_VSCROLL = 0x0115;
-                    const uint SB_THUMBPOSITION = 4;
-
-                    uint b = ((uint)(FontListComponent.SelectedIndex) << 16) | (SB_THUMBPOSITION & 0xffff);
-                    SendMessage(FontListComponent.Handle, WM_VSCROLL, b, 0);
-
+                    FontListComponent.TopIndex = FontListComponent.SelectedIndex - (FontListComponent.ClientSize.Height / 25) / 2;
                     return;
                 }
             }
         }
 
-        private void TextSizeTextBox_MouseClick(object sender, MouseEventArgs e)
+        private void TextSizeTextBoxSelectAll(object sender, MouseEventArgs e)
         {
             FontNameTextBox.SelectAll();
         }
 
 
-        [DllImport("user32.dll")]
-        private static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lParam);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void FontListComponent_KeyDown(object sender, KeyEventArgs e)
+        private void FontListComponentKeyDown(object sender, KeyEventArgs e)
         {
-            // if you type alphanumeric characters while focus is on ListBox, it shifts the focus to TextBox.
             if (Char.IsLetterOrDigit((char)e.KeyValue))
             {
                 FontNameTextBox.Focus();
@@ -149,8 +121,7 @@ namespace tbvolscroll.Classes.ExControls
             }
         }
 
-        // ensures that focus is FontListComponent control whenever the form is loaded
-        private void FontList_Load(object sender, EventArgs e)
+        private void FontListLoad(object sender, EventArgs e)
         {
             this.ActiveControl = FontListComponent;
         }

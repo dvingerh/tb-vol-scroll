@@ -50,7 +50,7 @@ namespace tbvolscroll
             this.VolumeTextLabel = new System.Windows.Forms.Label();
             this.TrayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.testToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.InitApplication = new System.ComponentModel.BackgroundWorker();
+            this.InitApplicationBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             TrayContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             TrayContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -223,7 +223,7 @@ namespace tbvolscroll
             this.VolumeTextLabel.BackColor = System.Drawing.Color.SkyBlue;
             this.VolumeTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.VolumeTextLabel.Location = new System.Drawing.Point(0, 0);
-            this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(5);
+            this.VolumeTextLabel.Margin = new System.Windows.Forms.Padding(0);
             this.VolumeTextLabel.Name = "VolumeTextLabel";
             this.VolumeTextLabel.Size = new System.Drawing.Size(125, 23);
             this.VolumeTextLabel.TabIndex = 0;
@@ -248,16 +248,15 @@ namespace tbvolscroll
             this.testToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.testToolStripMenuItem.Text = "Test";
             // 
-            // InitApplication
+            // InitApplicationBackgroundWorker
             // 
-            this.InitApplication.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoInitApplication);
-            this.InitApplication.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FinaliseInitApplication);
+            this.InitApplicationBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.DoInitApplication);
+            this.InitApplicationBackgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.FinaliseInitApplication);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(125, 23);
             this.ControlBox = false;
@@ -270,12 +269,12 @@ namespace tbvolscroll
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
-            this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
+            this.Shown += new System.EventHandler(this.SetFormInvisibleOnStart);
             TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -301,7 +300,7 @@ namespace tbvolscroll
         public System.Windows.Forms.ToolStripMenuItem OptionsMenuItem;
         public System.Windows.Forms.ToolStripMenuItem ExitMenuItem;
         private System.Windows.Forms.ToolStripMenuItem testToolStripMenuItem;
-        private System.ComponentModel.BackgroundWorker InitApplication;
+        private System.ComponentModel.BackgroundWorker InitApplicationBackgroundWorker;
     }
 }
 

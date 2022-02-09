@@ -16,14 +16,15 @@ namespace tbvolscroll
 {
     public partial class MainForm : Form
     {
+        private const int WS_EX_NOACTIVATE = 0x08000000;
         protected override CreateParams CreateParams
         {
             get
             {
-                var Params = base.CreateParams;
-                Params.ExStyle |= 0x80;
+                var createParams = base.CreateParams;
 
-                return Params;
+                createParams.ExStyle |= WS_EX_NOACTIVATE;
+                return createParams;
             }
         }
 
@@ -36,7 +37,6 @@ namespace tbvolscroll
             InitializeComponent();
             Globals.MainForm = this;
             hideVolumeBarTimer.Tick += (s, e) => HideVolumeBar();
-
 
             if (updateDoneArg)
             {
@@ -89,7 +89,8 @@ namespace tbvolscroll
             }
             else
             {
-                InitApplication.RunWorkerAsync();
+                InitApplicationBackgroundWorker.RunWorkerAsync();
+
             }
         }
         public void SetVolumeBarPosition()
@@ -124,9 +125,6 @@ namespace tbvolscroll
 
             }
         }
-
-
-
 
         private void ShowVolumeBar()
         {
@@ -225,7 +223,7 @@ namespace tbvolscroll
             {
                 Invoke((MethodInvoker)delegate
                 {
-                    Console.WriteLine(Globals.MainForm.VolumeTextLabel.Font.Unit);
+                    Console.WriteLine(Height);
 
                     hideVolumeBarTimer.Stop();
                     SuspendLayout();
@@ -396,7 +394,7 @@ namespace tbvolscroll
         private void FinaliseInitApplication(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
 
-            VolumeTextLabel.Font = Settings.Default.VolumeBarFontStyle;
+            Font = Settings.Default.VolumeBarFontStyle;
             Size labelSize = Utils.CalculateLabelSize(VolumeTextLabel, "100%");
 
             Size volumeBarMinSize = new Size(Settings.Default.BarWidthPadding + labelSize.Width, Settings.Default.BarHeightPadding + labelSize.Height + 5);
@@ -404,11 +402,13 @@ namespace tbvolscroll
             Height = volumeBarMinSize.Height;
             Width = volumeBarMinSize.Width;
 
-            SetVolumeBarPosition();
-            Utils.ShowWindow(Handle, 4);
-            HideVolumeBar();
-
             Globals.InputHandler = new InputHandler();
+        }
+
+        private void SetFormInvisibleOnStart(object sender, EventArgs e)
+        {
+            Visible = false;
+
         }
     }
 }

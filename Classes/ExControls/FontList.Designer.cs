@@ -44,23 +44,23 @@ namespace tbvolscroll.Classes.ExControls
             this.FontListComponent.ItemHeight = 25;
             this.FontListComponent.Location = new System.Drawing.Point(0, 22);
             this.FontListComponent.Name = "FontListComponent";
-            this.FontListComponent.Size = new System.Drawing.Size(220, 285);
+            this.FontListComponent.Size = new System.Drawing.Size(200, 128);
+            this.FontListComponent.Sorted = true;
             this.FontListComponent.TabIndex = 0;
-            this.FontListComponent.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.FontListComponent_DrawItem);
-            this.FontListComponent.SelectedIndexChanged += new System.EventHandler(this.FontListComponent_SelectedIndexChanged);
-            this.FontListComponent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FontListComponent_KeyDown);
+            this.FontListComponent.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.FontListComponentDrawItem);
+            this.FontListComponent.SelectedIndexChanged += new System.EventHandler(this.FontListComponentSelectedIndexChanged);
+            this.FontListComponent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FontListComponentKeyDown);
             // 
             // FontNameTextBox
             // 
-            this.FontNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.FontNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FontNameTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.FontNameTextBox.Location = new System.Drawing.Point(0, 0);
             this.FontNameTextBox.Name = "FontNameTextBox";
-            this.FontNameTextBox.Size = new System.Drawing.Size(220, 22);
+            this.FontNameTextBox.Size = new System.Drawing.Size(200, 22);
             this.FontNameTextBox.TabIndex = 1;
-            this.FontNameTextBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TextSizeTextBox_MouseClick);
-            this.FontNameTextBox.TextChanged += new System.EventHandler(this.TextSizeTextBox_TextChanged);
+            this.FontNameTextBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TextSizeTextBoxSelectAll);
+            this.FontNameTextBox.TextChanged += new System.EventHandler(this.TextSizeTextBoxTextChanged);
             // 
             // FontList
             // 
@@ -69,8 +69,8 @@ namespace tbvolscroll.Classes.ExControls
             this.Controls.Add(this.FontListComponent);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "FontList";
-            this.Size = new System.Drawing.Size(220, 307);
-            this.Load += new System.EventHandler(this.FontList_Load);
+            this.Size = new System.Drawing.Size(200, 150);
+            this.Load += new System.EventHandler(this.FontListLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

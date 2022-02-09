@@ -289,7 +289,7 @@ namespace tbvolscroll
             TrayIconHeightNumericUpDown.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconWidthNumericUpDown.Value = 32;
             TrayIconHeightNumericUpDown.Value = 32;
-            TrayIconPaddingNumericUpDown.Value = 0;
+            TrayIconPaddingNumericUpDown.Value = 16;
             TrayIconFontStyleButton.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconFontPreviewLabel.Enabled = TrayIconPropertiesAutomaticCheckBox.Checked;
             TrayIconTextRenderingHintComboBox.SelectedIndex = 1;
