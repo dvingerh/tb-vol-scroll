@@ -16,8 +16,8 @@ namespace tbvolscroll
         {
             FullOpen = true
         };
-         FontDialogForm TrayIconCustomFontDialog;
-         FontDialogForm VolumeBarCustomFontDialog;
+        private readonly FontDialogForm TrayIconCustomFontDialog;
+        private readonly FontDialogForm VolumeBarCustomFontDialog;
 
         public ConfigurationForm()
         {

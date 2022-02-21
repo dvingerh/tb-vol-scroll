@@ -210,7 +210,7 @@ namespace tbvolscroll.Forms
             this.AcceptButton = this.SaveButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.CancelDialogButton;
             this.ClientSize = new System.Drawing.Size(495, 261);
             this.Controls.Add(this.PreviewTextLabel);

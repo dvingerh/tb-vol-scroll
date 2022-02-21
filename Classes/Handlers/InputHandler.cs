@@ -75,6 +75,7 @@ namespace tbvolscroll
         {
             if (TaskbarHandler.IsCursorInTaskbar() && Globals.VolumeSliderControlForm == null && AudioState.AudioAvailable)
             {
+                Console.WriteLine("MouseScrollQueue: " + MouseScrollQueue.Count);
                 if (mouseScrollQueue.Count < 5)
                     mouseScrollQueue.Enqueue(e);
                 if (mouseScrollQueue.Count > 0)

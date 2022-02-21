@@ -223,8 +223,6 @@ namespace tbvolscroll
             {
                 Invoke((MethodInvoker)delegate
                 {
-                    Console.WriteLine(Height);
-
                     hideVolumeBarTimer.Stop();
                     SuspendLayout();
                     switch (updateType)

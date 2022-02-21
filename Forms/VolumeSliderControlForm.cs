@@ -1,13 +1,7 @@
-using AudioSwitcher.AudioApi.Session;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Management;
 using System.Media;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tbvolscroll.Classes;
@@ -24,6 +18,7 @@ namespace tbvolscroll.Forms
         public VolumeSliderControlForm()
         {
             InitializeComponent();
+            new DropShadow().ApplyShadows(this);
             Globals.VolumeSliderControlForm = this;
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
@@ -125,6 +120,7 @@ namespace tbvolscroll.Forms
 
         public async void UpdatePeakValue(double peakValue)
         {
+            Console.WriteLine("UpdatePeakValueQueue: " + updatePeakValueQueue.Count);
             if (updatePeakValueQueue.Count < 5)
             {
                 updatePeakValueQueue.Enqueue(peakValue);
@@ -169,7 +165,7 @@ namespace tbvolscroll.Forms
             }
         }
 
-        private async Task HandlePeakValueUpdate(double peakValue)
+        public async Task HandlePeakValueUpdate(double peakValue)
         {
             await Task.Run(() =>
             {
@@ -215,7 +211,8 @@ namespace tbvolscroll.Forms
 
         private async void UpdateVolumeFromTrackBar(object sender, EventArgs e)
         {
-            if (updateVolumeQueue.Count < 50)
+            Console.WriteLine("UpdateVolumeQueue: " + updateVolumeQueue.Count);
+            if (updateVolumeQueue.Count < 5)
                 updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
             if (updateVolumeQueue.Count > 0)
                 await ProcessVolumeQueue();

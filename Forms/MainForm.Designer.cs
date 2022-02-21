@@ -68,7 +68,6 @@ namespace tbvolscroll
             this.OptionsMenuItem,
             this.ExitMenuItem});
             TrayContextMenu.Name = "trayContextMenu";
-            TrayContextMenu.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             TrayContextMenu.Size = new System.Drawing.Size(200, 168);
             TrayContextMenu.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.PreventTitleFromClosingContextMenu);
             TrayContextMenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.PlaySystemSoundTrayMenu);

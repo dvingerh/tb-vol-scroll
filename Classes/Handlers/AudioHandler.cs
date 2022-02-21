@@ -43,9 +43,10 @@ namespace tbvolscroll
                     deviceEventDisposables.Add(device.StateChanged.Subscribe(DeviceStateChanged));
                     deviceEventDisposables.Add(device.VolumeChanged.Subscribe(DeviceStateChanged));
                     deviceEventDisposables.Add(device.MuteChanged.Subscribe(DeviceStateChanged));
+                    device.PeakValueTimer.PeakValueInterval = 10;
                 }
+                Task.Run(async () => { await UpdateAudioState(); });
             }
-            Task.Run(async () => { await UpdateAudioState(); });
         }
 
         private async void AudioServiceStatusChanged(object sender, ServiceStatusEventArgs e)
@@ -145,7 +146,7 @@ namespace tbvolscroll
                 if (Globals.AudioPlaybackDevicesForm != null && value.ChangedType != DeviceChangedType.PeakValueChanged)
                 {
 
-                    await Task.Run(async() =>
+                    await Task.Run(async () =>
                     {
                         try
                         {
@@ -188,6 +189,7 @@ namespace tbvolscroll
 
         public async void DeviceStateChanged(DeviceChangedArgs value)
         {
+            Console.WriteLine("DeviceStateEventQueue: " + DeviceStateEventQueue.Count);
             if (deviceStateEventQueue.Count < 5)
                 deviceStateEventQueue.Enqueue(value);
             if (deviceStateEventQueue.Count > 0)
@@ -229,7 +231,8 @@ namespace tbvolscroll
                         Globals.MainForm.OptionsMenuItem.Enabled = AudioState.AudioAvailable;
                         Globals.MainForm.SetTrayIcon();
                     });
-                }else
+                }
+                else
                 {
                     Globals.MainForm.VolumeSliderControlMenuItem.Enabled = AudioState.AudioAvailable;
                     Globals.MainForm.AudioPlaybackDevicesMenuItem.Enabled = AudioState.AudioAvailable;
@@ -239,7 +242,7 @@ namespace tbvolscroll
                 }
             });
         }
-        
+
         public async Task SetDeviceVolume(int volume)
         {
             if (AudioState.CoreAudioController.DefaultPlaybackDevice != null)
@@ -249,7 +252,10 @@ namespace tbvolscroll
         public async Task SetDeviceMute(bool isMuted = false)
         {
             if (AudioState.CoreAudioController.DefaultPlaybackDevice != null)
+            {
                 await AudioState.CoreAudioController.DefaultPlaybackDevice.SetMuteAsync(isMuted);
+                await Globals.AudioHandler.UpdateAudioState();
+            }
         }
 
         public async Task DoVolumeChanges(int scrollDirection)
