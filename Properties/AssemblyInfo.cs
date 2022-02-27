@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("tb-vol-scroll")]
-[assembly: AssemblyDescription("Simple and customizable utility to enable audio control by scrolling inside the taskbar.")]
+[assembly: AssemblyDescription("Utility to enable audio control by scrolling inside the taskbar.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Dirk Vingerhoeds")]
 [assembly: AssemblyProduct("tb-vol-scroll")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6c8ddab2-eeec-48a0-a411-95ccae4cd381")]
+[assembly: Guid("9c278623-c3a4-4e45-9759-e27d036cad70")]
 
 // Version information for an assembly consists of the following four values:
 //

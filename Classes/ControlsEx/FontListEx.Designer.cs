@@ -1,5 +1,5 @@
 ﻿
-namespace tbvolscroll.Classes.ExControls
+namespace tb_vol_scroll.Classes.ControlsEx
 {
     partial class FontList
     {
@@ -35,8 +35,8 @@ namespace tbvolscroll.Classes.ExControls
             // 
             // FontListComponent
             // 
-            this.FontListComponent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.FontListComponent.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FontListComponent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FontListComponent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;

@@ -4,7 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 
-namespace tbvolscroll.Classes.ExControls
+namespace tb_vol_scroll.Classes.ControlsEx
 {
     public partial class FontList : UserControl
     {
@@ -90,7 +90,7 @@ namespace tbvolscroll.Classes.ExControls
 
         private void TextSizeTextBoxTextChanged(object sender, EventArgs e)
         {
-            if (!FontNameTextBox.Focused) 
+            if (!FontNameTextBox.Focused)
                 return;
 
             for (int i = 0; i < FontListComponent.Items.Count; i++)

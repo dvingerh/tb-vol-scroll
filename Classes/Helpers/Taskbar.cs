@@ -1,13 +1,13 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using tbvolscroll.Properties;
+using tb_vol_scroll.Properties;
 
-namespace tbvolscroll
+namespace tb_vol_scroll.Classes.Helpers
 {
-    public static class TaskbarHandler
+    public static class Taskbar
     {
 
         #region DllImports

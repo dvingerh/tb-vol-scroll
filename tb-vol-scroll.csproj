@@ -5,32 +5,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C8DDAB2-EEEC-48A0-A411-95CCAE4CD381}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>tbvolscroll</RootNamespace>
+    <ProjectGuid>{9C278623-C3A4-4E45-9759-E27D036CAD70}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>tb_vol_scroll</RootNamespace>
     <AssemblyName>tb-vol-scroll</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,35 +34,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>voltray.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup />
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
-  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\default.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AudioSwitcher.AudioApi">
@@ -91,54 +54,76 @@
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
-    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    <Reference Include="Gma.System.MouseKeyHook">
+      <HintPath>Resources\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Activities" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\DropShadow.cs" />
-    <Compile Include="Classes\ExControls\FontList.cs">
+    <Compile Include="Classes\ControlsEx\FontListEx.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Classes\ExControls\FontList.Designer.cs">
-      <DependentUpon>FontList.cs</DependentUpon>
+    <Compile Include="Classes\ControlsEx\FontListEx.Designer.cs">
+      <DependentUpon>FontListEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\ExControls\TransparentPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\Handlers\AudioHandler.cs" />
-    <Compile Include="Classes\AudioState.cs" />
-    <Compile Include="Classes\ExControls\DoubleBufferedListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Classes\ExControls\WinServicePoller.cs">
+    <Compile Include="Classes\ControlsEx\ListViewEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Globals.cs" />
-    <Compile Include="Classes\Handlers\TaskbarHandler.cs" />
+    <Compile Include="Classes\Handlers\AudioHandler.cs" />
+    <Compile Include="Classes\ControlsEx\FormShadowEx.cs" />
+    <Compile Include="Classes\Enums.cs" />
     <Compile Include="Classes\Handlers\UpdateHandler.cs" />
-    <Compile Include="Classes\Utils.cs" />
+    <Compile Include="Classes\Helpers\Utils.cs" />
+    <Compile Include="Classes\Helpers\Taskbar.cs" />
+    <Compile Include="Classes\Handlers\InputHandler.cs" />
+    <Compile Include="Classes\ControlsEx\ServiceControllerEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\AudioPlaybackDevicesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AudioPlaybackDevicesForm.Designer.cs">
+      <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfigurationForm.Designer.cs">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FontDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,24 +136,11 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ConfigurationForm.cs">
+    <Compile Include="Forms\UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ConfigurationForm.Designer.cs">
-      <DependentUpon>ConfigurationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Classes\Handlers\InputHandler.cs" />
-    <Compile Include="Forms\AudioPlaybackDevicesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AudioPlaybackDevicesForm.Designer.cs">
-      <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CheckForUpdatesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CheckForUpdatesForm.Designer.cs">
-      <DependentUpon>CheckForUpdatesForm.cs</DependentUpon>
+    <Compile Include="Forms\UpdateForm.Designer.cs">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\VolumeSliderControlForm.cs">
       <SubType>Form</SubType>
@@ -179,8 +151,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="Classes\ExControls\FontList.resx">
-      <DependentUpon>FontList.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AudioPlaybackDevicesForm.resx">
+      <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FontDialogForm.resx">
       <DependentUpon>FontDialogForm.cs</DependentUpon>
@@ -188,14 +163,8 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ConfigurationForm.resx">
-      <DependentUpon>ConfigurationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AudioPlaybackDevicesForm.resx">
-      <DependentUpon>AudioPlaybackDevicesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CheckForUpdatesForm.resx">
-      <DependentUpon>CheckForUpdatesForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\UpdateForm.resx">
+      <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VolumeSliderControlForm.resx">
       <DependentUpon>VolumeSliderControlForm.cs</DependentUpon>
@@ -210,7 +179,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -224,54 +192,48 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\exclamation.png" />
-    <Content Include="voltray.ico" />
-    <None Include="Resources\mixer.png" />
-    <None Include="Resources\speaker.png" />
-    <None Include="Resources\trackbar.png" />
-    <None Include="Resources\configuration.png" />
-    <None Include="Resources\update.png" />
-    <Content Include="Resources\voldisabled.ico" />
-    <None Include="Resources\success.png" />
-    <None Include="Resources\error.png" />
-    <None Include="Resources\spinner.gif" />
-    <None Include="Resources\volmute.ico" />
-    <None Include="Resources\vol10.ico" />
-    <None Include="Resources\vol20.ico" />
-    <None Include="Resources\vol30.ico" />
-    <None Include="Resources\vol40.ico" />
-    <None Include="Resources\vol50.ico" />
-    <None Include="Resources\vol60.ico" />
-    <None Include="Resources\vol70.ico" />
-    <None Include="Resources\vol80.ico" />
-    <None Include="Resources\vol90.ico" />
-    <None Include="Resources\vol100.ico" />
-    <None Include="Resources\voltray.ico" />
-    <Content Include="FodyWeavers.xml" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <None Include="Resources\default.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\configuration.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mixer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\speaker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spinner.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\success.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trackbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\update.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\Fody.6.6.0\build\Fody.targets" Condition="Exists('packages\Fody.6.6.0\build\Fody.targets')" />
+  <Import Project="packages\Fody.6.5.5\build\Fody.targets" Condition="Exists('packages\Fody.6.5.5\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Fody.6.6.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.6.0\build\Fody.targets'))" />
-    <Error Condition="!Exists('packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('packages\Fody.6.5.5\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Fody.6.5.5\build\Fody.targets'))" />
     <Error Condition="!Exists('packages\Costura.Fody.5.7.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Costura.Fody.5.7.0\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Costura.Fody.5.7.0\build\Costura.Fody.targets'))" />
   </Target>
-  <Import Project="packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="packages\Costura.Fody.5.7.0\build\Costura.Fody.targets" Condition="Exists('packages\Costura.Fody.5.7.0\build\Costura.Fody.targets')" />
 </Project>

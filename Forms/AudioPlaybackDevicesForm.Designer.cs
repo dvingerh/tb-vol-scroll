@@ -1,7 +1,9 @@
 ﻿
-using tbvolscroll.Classes;
 
-namespace tbvolscroll.Forms
+using System.Windows.Forms;
+using tb_vol_scroll.Classes.ControlsExt;
+
+namespace tb_vol_scroll.Forms
 {
     partial class AudioPlaybackDevicesForm
     {
@@ -36,7 +38,7 @@ namespace tbvolscroll.Forms
             this.RefreshButton = new System.Windows.Forms.Button();
             this.SetDefaultButton = new System.Windows.Forms.Button();
             this.DevicesListViewImageList = new System.Windows.Forms.ImageList(this.components);
-            this.DevicesListView = new tbvolscroll.Classes.DoubleBufferedListView();
+            this.DevicesListView = new tb_vol_scroll.Classes.ControlsExt.ListViewExt();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.VolumeColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IsDefaultColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -52,7 +54,7 @@ namespace tbvolscroll.Forms
             this.RefreshButton.TabIndex = 5;
             this.RefreshButton.Text = "Refresh";
             this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButtonClick);
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // SetDefaultButton
             // 
@@ -63,7 +65,7 @@ namespace tbvolscroll.Forms
             this.SetDefaultButton.TabIndex = 3;
             this.SetDefaultButton.Text = "Set default";
             this.SetDefaultButton.UseVisualStyleBackColor = true;
-            this.SetDefaultButton.Click += new System.EventHandler(this.SetDefaultButtonClick);
+            this.SetDefaultButton.Click += new System.EventHandler(this.SetDefaultButton_Click);
             // 
             // DevicesListViewImageList
             // 
@@ -75,7 +77,7 @@ namespace tbvolscroll.Forms
             // 
             this.DevicesListView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DevicesListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DevicesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DevicesListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameColumn,
             this.VolumeColumn,
@@ -89,11 +91,12 @@ namespace tbvolscroll.Forms
             this.DevicesListView.Name = "DevicesListView";
             this.DevicesListView.Size = new System.Drawing.Size(510, 156);
             this.DevicesListView.SmallImageList = this.DevicesListViewImageList;
+            this.DevicesListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.DevicesListView.TabIndex = 4;
             this.DevicesListView.UseCompatibleStateImageBehavior = false;
             this.DevicesListView.View = System.Windows.Forms.View.Details;
-            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.ToggleSetDefaultButton);
-            this.DevicesListView.DoubleClick += new System.EventHandler(this.DevicesListViewDoubleClick);
+            this.DevicesListView.SelectedIndexChanged += new System.EventHandler(this.DevicesListView_SelectedIndexChanged);
+            this.DevicesListView.DoubleClick += new System.EventHandler(this.DevicesListView_DoubleClick);
             // 
             // NameColumn
             // 
@@ -116,21 +119,23 @@ namespace tbvolscroll.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(534, 211);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DevicesListView);
             this.Controls.Add(this.SetDefaultButton);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AudioPlaybackDevicesForm";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Audio Playback Devices";
-            this.Deactivate += new System.EventHandler(this.CloseForm);
-            this.Shown += new System.EventHandler(this.OnFormShown);
+            this.Text = "Audio Playback Devices (tb-vol-scroll)";
+            this.Deactivate += new System.EventHandler(this.AudioPlaybackDevicesForm_Deactivate);
+            this.Shown += new System.EventHandler(this.AudioPlaybackDevicesForm_Shown);
             this.ResumeLayout(false);
 
         }
@@ -138,7 +143,7 @@ namespace tbvolscroll.Forms
         #endregion
 
         public System.Windows.Forms.Button RefreshButton;
-        private DoubleBufferedListView DevicesListView;
+        private ListViewExt DevicesListView;
         private System.Windows.Forms.ColumnHeader NameColumn;
         private System.Windows.Forms.ColumnHeader IsDefaultColumn;
         private System.Windows.Forms.ColumnHeader VolumeColumn;

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tbvolscroll.Classes
+namespace tb_vol_scroll.Classes.ControlsEx
 {
-    public class DropShadow
+    // By https://stackoverflow.com/a/60916421
+
+    public class FormShadowEx
     {
         #region Shadowing
-
-
 
         #region Structures
 
@@ -99,4 +95,5 @@ namespace tbvolscroll.Classes
 
         #endregion
     }
+
 }

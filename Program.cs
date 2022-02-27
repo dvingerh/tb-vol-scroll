@@ -1,42 +1,34 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using tbvolscroll.Classes;
+using tb_vol_scroll.Classes;
 
-namespace tbvolscroll
+namespace tb_vol_scroll
 {
     static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        /// 
-
-
         [STAThread]
         static void Main(string[] args)
         {
-
-
-            bool noTrayArg = args.Any("no-tray".Contains);
-            bool updateDoneArg = args.Any("update-done".Contains);
-            bool adminArg = args.Any("admin".Contains);
-
+            Globals.AppArgs = new List<string>(args);
             Globals.AppMutex = new Mutex(true, @"Global\" + Application.ProductName, out bool didCreate);
-
-
 
             if (!Globals.AppMutex.WaitOne(0, false) || !didCreate)
             {
                 MessageBox.Show("Another instance is already running.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Environment.Exit(1);
             }
-
             GC.KeepAlive(Globals.AppMutex);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm(noTrayArg: noTrayArg, adminArg: adminArg, updateDoneArg: updateDoneArg));
+            Application.Run(new MainForm());
         }
     }
 }

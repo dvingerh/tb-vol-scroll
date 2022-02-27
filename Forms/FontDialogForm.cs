@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace tbvolscroll.Forms
+namespace tb_vol_scroll.Forms
 {
     public partial class FontDialogForm : Form
     {
@@ -111,11 +105,7 @@ namespace tbvolscroll.Forms
             PreviewTextLabel.Font = new Font(FontList.SelectedFontFamily, size, style);
         }
 
-        /// <summary>
-        /// Handles CheckedChanged event for Bold, 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+    
         private void CheckBoxCheckedChanged(object sender, EventArgs e)
         {
             UpdatePreviewText();
@@ -131,6 +121,11 @@ namespace tbvolscroll.Forms
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void FontDialogForm_Load(object sender, EventArgs e)
+        {
+            FormBorderStyle = FormBorderStyle.FixedDialog;
         }
     }
 }

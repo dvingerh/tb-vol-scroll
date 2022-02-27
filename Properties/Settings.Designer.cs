@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace tbvolscroll.Properties {
+namespace tb_vol_scroll.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,246 +20,6 @@ namespace tbvolscroll.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int VolumeStep {
-            get {
-                return ((int)(this["VolumeStep"]));
-            }
-            set {
-                this["VolumeStep"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int PreciseScrollThreshold {
-            get {
-                return ((int)(this["PreciseScrollThreshold"]));
-            }
-            set {
-                this["PreciseScrollThreshold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int BarWidthPadding {
-            get {
-                return ((int)(this["BarWidthPadding"]));
-            }
-            set {
-                this["BarWidthPadding"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int BarHeightPadding {
-            get {
-                return ((int)(this["BarHeightPadding"]));
-            }
-            set {
-                this["BarHeightPadding"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool VolumeBarUseGradientColor {
-            get {
-                return ((bool)(this["VolumeBarUseGradientColor"]));
-            }
-            set {
-                this["VolumeBarUseGradientColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
-        public global::System.Drawing.Color VolumeBarSolidColor {
-            get {
-                return ((global::System.Drawing.Color)(this["VolumeBarSolidColor"]));
-            }
-            set {
-                this["VolumeBarSolidColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public double VolumeBarOpacity {
-            get {
-                return ((double)(this["VolumeBarOpacity"]));
-            }
-            set {
-                this["VolumeBarOpacity"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 8.25pt, style=Bold")]
-        public global::System.Drawing.Font VolumeBarFontStyle {
-            get {
-                return ((global::System.Drawing.Font)(this["VolumeBarFontStyle"]));
-            }
-            set {
-                this["VolumeBarFontStyle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool UpdateSettings {
-            get {
-                return ((bool)(this["UpdateSettings"]));
-            }
-            set {
-                this["UpdateSettings"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
-        public int AutoHideTimeOut {
-            get {
-                return ((int)(this["AutoHideTimeOut"]));
-            }
-            set {
-                this["AutoHideTimeOut"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoRetryAdmin {
-            get {
-                return ((bool)(this["AutoRetryAdmin"]));
-            }
-            set {
-                this["AutoRetryAdmin"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ToggleMuteShortcut {
-            get {
-                return ((bool)(this["ToggleMuteShortcut"]));
-            }
-            set {
-                this["ToggleMuteShortcut"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SwitchDefaultPlaybackDeviceShortcut {
-            get {
-                return ((bool)(this["SwitchDefaultPlaybackDeviceShortcut"]));
-            }
-            set {
-                this["SwitchDefaultPlaybackDeviceShortcut"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool InvertScrollingDirection {
-            get {
-                return ((bool)(this["InvertScrollingDirection"]));
-            }
-            set {
-                this["InvertScrollingDirection"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ManualPreciseVolumeShortcut {
-            get {
-                return ((bool)(this["ManualPreciseVolumeShortcut"]));
-            }
-            set {
-                this["ManualPreciseVolumeShortcut"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool DisplayTrayIconAsText {
-            get {
-                return ((bool)(this["DisplayTrayIconAsText"]));
-            }
-            set {
-                this["DisplayTrayIconAsText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TrayIconTextUseGradientColor {
-            get {
-                return ((bool)(this["TrayIconTextUseGradientColor"]));
-            }
-            set {
-                this["TrayIconTextUseGradientColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
-        public global::System.Drawing.Color TrayIconTextSolidColor {
-            get {
-                return ((global::System.Drawing.Color)(this["TrayIconTextSolidColor"]));
-            }
-            set {
-                this["TrayIconTextSolidColor"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool DisplayVolumeBarScrolling {
-            get {
-                return ((bool)(this["DisplayVolumeBarScrolling"]));
-            }
-            set {
-                this["DisplayVolumeBarScrolling"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int TextRenderingHintType {
-            get {
-                return ((int)(this["TextRenderingHintType"]));
-            }
-            set {
-                this["TextRenderingHintType"] = value;
             }
         }
         
@@ -277,25 +37,61 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 8.25pt, style=Bold")]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int NormalVolumeStep {
+            get {
+                return ((int)(this["NormalVolumeStep"]));
+            }
+            set {
+                this["NormalVolumeStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int PreciseVolumeStep {
+            get {
+                return ((int)(this["PreciseVolumeStep"]));
+            }
+            set {
+                this["PreciseVolumeStep"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int PreciseVolumeThreshold {
+            get {
+                return ((int)(this["PreciseVolumeThreshold"]));
+            }
+            set {
+                this["PreciseVolumeThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TrayIconOverrideAutoSettings {
+            get {
+                return ((bool)(this["TrayIconOverrideAutoSettings"]));
+            }
+            set {
+                this["TrayIconOverrideAutoSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 36pt")]
         public global::System.Drawing.Font TrayIconFontStyle {
             get {
                 return ((global::System.Drawing.Font)(this["TrayIconFontStyle"]));
             }
             set {
                 this["TrayIconFontStyle"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool TrayIconIsDisplayModeAutomatic {
-            get {
-                return ((bool)(this["TrayIconIsDisplayModeAutomatic"]));
-            }
-            set {
-                this["TrayIconIsDisplayModeAutomatic"] = value;
             }
         }
         
@@ -325,13 +121,217 @@ namespace tbvolscroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("16")]
-        public int TrayIconPadding {
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int TrayIconWidthPadding {
             get {
-                return ((int)(this["TrayIconPadding"]));
+                return ((int)(this["TrayIconWidthPadding"]));
             }
             set {
-                this["TrayIconPadding"] = value;
+                this["TrayIconWidthPadding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
+        public global::System.Drawing.Color TrayIconColorText {
+            get {
+                return ((global::System.Drawing.Color)(this["TrayIconColorText"]));
+            }
+            set {
+                this["TrayIconColorText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TrayIconColorTextIsGradient {
+            get {
+                return ((bool)(this["TrayIconColorTextIsGradient"]));
+            }
+            set {
+                this["TrayIconColorTextIsGradient"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TrayIconTextRenderingHinting {
+            get {
+                return ((int)(this["TrayIconTextRenderingHinting"]));
+            }
+            set {
+                this["TrayIconTextRenderingHinting"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoRetryAdmin {
+            get {
+                return ((bool)(this["AutoRetryAdmin"]));
+            }
+            set {
+                this["AutoRetryAdmin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool InvertScrollingDirection {
+            get {
+                return ((bool)(this["InvertScrollingDirection"]));
+            }
+            set {
+                this["InvertScrollingDirection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ShiftHotkeyEnabled {
+            get {
+                return ((bool)(this["ShiftHotkeyEnabled"]));
+            }
+            set {
+                this["ShiftHotkeyEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CtrlHotkeyEnabled {
+            get {
+                return ((bool)(this["CtrlHotkeyEnabled"]));
+            }
+            set {
+                this["CtrlHotkeyEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AltHotkeyEnabled {
+            get {
+                return ((bool)(this["AltHotkeyEnabled"]));
+            }
+            set {
+                this["AltHotkeyEnabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int AutoHideTimeOut {
+            get {
+                return ((int)(this["AutoHideTimeOut"]));
+            }
+            set {
+                this["AutoHideTimeOut"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SkyBlue")]
+        public global::System.Drawing.Color StatusBarColor {
+            get {
+                return ((global::System.Drawing.Color)(this["StatusBarColor"]));
+            }
+            set {
+                this["StatusBarColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StatusBarColorIsGradient {
+            get {
+                return ((bool)(this["StatusBarColorIsGradient"]));
+            }
+            set {
+                this["StatusBarColorIsGradient"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int StatusBarWidthPadding {
+            get {
+                return ((int)(this["StatusBarWidthPadding"]));
+            }
+            set {
+                this["StatusBarWidthPadding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int StatusBarHeightPadding {
+            get {
+                return ((int)(this["StatusBarHeightPadding"]));
+            }
+            set {
+                this["StatusBarHeightPadding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public double StatusBarOpacity {
+            get {
+                return ((double)(this["StatusBarOpacity"]));
+            }
+            set {
+                this["StatusBarOpacity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DisplayStatusBarScrollActions {
+            get {
+                return ((bool)(this["DisplayStatusBarScrollActions"]));
+            }
+            set {
+                this["DisplayStatusBarScrollActions"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int TrayIconHeightPadding {
+            get {
+                return ((int)(this["TrayIconHeightPadding"]));
+            }
+            set {
+                this["TrayIconHeightPadding"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI Semibold, 9pt, style=Bold")]
+        public global::System.Drawing.Font StatusBarFontStyle {
+            get {
+                return ((global::System.Drawing.Font)(this["StatusBarFontStyle"]));
+            }
+            set {
+                this["StatusBarFontStyle"] = value;
             }
         }
     }

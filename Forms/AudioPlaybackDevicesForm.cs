@@ -1,13 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AudioSwitcher.AudioApi;
 using AudioSwitcher.AudioApi.CoreAudio;
-using tbvolscroll.Classes;
+using tb_vol_scroll.Classes;
+using tb_vol_scroll.Classes.Helpers;
 
-namespace tbvolscroll.Forms
+namespace tb_vol_scroll.Forms
 {
     public partial class AudioPlaybackDevicesForm : Form
     {
@@ -15,36 +17,37 @@ namespace tbvolscroll.Forms
         public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
-            Globals.AudioPlaybackDevicesForm = this;
+
         }
 
-        private async void OnFormShown(object sender, EventArgs e)
+        private async void AudioPlaybackDevicesForm_Shown(object sender, EventArgs e)
         {
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Point position = Cursor.Position;
             Screen screen = Screen.FromPoint(position);
             Rectangle workingArea = screen.WorkingArea;
-
-            switch (TaskbarHandler.Position)
+            switch (Taskbar.Position)
             {
-                case TaskbarHandler.TaskbarPosition.Bottom:
+                case Taskbar.TaskbarPosition.Bottom:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHandler.TaskbarPosition.Right:
+                case Taskbar.TaskbarPosition.Right:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHandler.TaskbarPosition.Left:
+                case Taskbar.TaskbarPosition.Left:
                     Location = new Point(workingArea.Left + 10, workingArea.Bottom - Height - 10);
                     break;
-                case TaskbarHandler.TaskbarPosition.Top:
+                case Taskbar.TaskbarPosition.Top:
                     Location = new Point(workingArea.Right - Width - 10, workingArea.Top + 10);
                     break;
+
             }
             await LoadAudioPlaybackDevicesList();
         }
 
         public async Task LoadAudioPlaybackDevicesList()
         {
-            Invoke((MethodInvoker)delegate
+            Utils.InvokeIfRequired(this, () =>
             {
                 SuspendLayout();
                 DevicesListView.Items.Clear();
@@ -53,16 +56,16 @@ namespace tbvolscroll.Forms
             });
 
             List<ListViewItem> deviceListViewItem = new List<ListViewItem>();
-            List<CoreAudioDevice> audioDeviceList = await Globals.AudioHandler.GetPlaybackDevices();
-            if (audioDeviceList != null)
+            List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
+            if (audioDevices.Count > 0)
             {
-                foreach (CoreAudioDevice d in audioDeviceList)
+                foreach (CoreAudioDevice d in audioDevices)
                 {
                     Utils.ExtractIconEx(d.IconPath.Split(',')[0], int.Parse(d.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
                     DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
                     ListViewItem deviceItem = new ListViewItem
                     {
-                        ImageIndex = audioDeviceList.IndexOf(d),
+                        ImageIndex = audioDevices.IndexOf(d),
                         Text = d.FullName
                     };
                     deviceItem.SubItems.Add($"{(int)Math.Round(d.Volume)}%");
@@ -73,7 +76,7 @@ namespace tbvolscroll.Forms
                     deviceListViewItem.Add(deviceItem);
                 }
             }
-            Invoke((MethodInvoker)delegate
+            Utils.InvokeIfRequired(this, () =>
             {
                 DevicesListView.Items.AddRange(deviceListViewItem.ToArray());
                 RefreshButton.Enabled = true;
@@ -83,7 +86,7 @@ namespace tbvolscroll.Forms
             });
         }
 
-        private async void SetDefaultButtonClick(object sender, EventArgs e)
+        private async void SetDefaultButton_Click(object sender, EventArgs e)
         {
             if (DevicesListView.SelectedItems.Count > 0)
             {
@@ -93,33 +96,17 @@ namespace tbvolscroll.Forms
             SetDefaultButton.Enabled = false;
         }
 
-        private void ToggleSetDefaultButton(object sender, EventArgs e)
-        {
-            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count > 0;
-        }
-
-        private async void DevicesListViewDoubleClick(object sender, EventArgs e)
-        {
-            if (DevicesListView.SelectedItems.Count > 0)
-            {
-                CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
-                await Globals.AudioHandler.SetDefaultDevice(newPlaybackDevice);
-                if (!isRefreshing)
-                    Close();
-            }
-        }
-
         public async Task RefreshOnDeviceActivity()
         {
             if (!isRefreshing)
             {
                 isRefreshing = true;
-                List<CoreAudioDevice> coreAudioDevices = await Globals.AudioHandler.GetPlaybackDevices();
-                Invoke((MethodInvoker)delegate
+                List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
+                Utils.InvokeIfRequired(this, () =>
                 {
                     foreach (ListViewItem deviceItem in DevicesListView.Items)
                     {
-                        if (coreAudioDevices.Contains(deviceItem.Tag))
+                        if (audioDevices.Contains(deviceItem.Tag))
                         {
                             deviceItem.SubItems[1].Text = $"{(int)Math.Round(((CoreAudioDevice)deviceItem.Tag).Volume)}%";
                             deviceItem.SubItems[2].Text = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? "Yes" : "No";
@@ -128,11 +115,11 @@ namespace tbvolscroll.Forms
                         }
                         else
                             deviceItem.Remove();
-                        coreAudioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
+                        audioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
                     }
-                    if (coreAudioDevices.Count > 0)
+                    if (audioDevices.Count > 0)
                     {
-                        foreach (CoreAudioDevice device in coreAudioDevices)
+                        foreach (CoreAudioDevice device in audioDevices)
                         {
                             ListViewItem deviceItem = new ListViewItem
                             {
@@ -147,7 +134,7 @@ namespace tbvolscroll.Forms
                         }
                     }
                     DevicesListViewImageList.Images.Clear();
-                    foreach(ListViewItem deviceItem in DevicesListView.Items)
+                    foreach (ListViewItem deviceItem in DevicesListView.Items)
                     {
                         CoreAudioDevice audioDevice = ((CoreAudioDevice)deviceItem.Tag);
                         Utils.ExtractIconEx(audioDevice.IconPath.Split(',')[0], int.Parse(audioDevice.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
@@ -164,15 +151,31 @@ namespace tbvolscroll.Forms
         }
 
 
-        private async void RefreshButtonClick(object sender, EventArgs e)
+        private async void RefreshButton_Click(object sender, EventArgs e)
         {
             await RefreshOnDeviceActivity();
         }
 
-        private void CloseForm(object sender, EventArgs e)
+        private void AudioPlaybackDevicesForm_Deactivate(object sender, EventArgs e)
         {
             if (!isRefreshing)
                 Close();
+        }
+
+        private void DevicesListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count > 0;
+        }
+
+        private async void DevicesListView_DoubleClick(object sender, EventArgs e)
+        {
+            if (DevicesListView.SelectedItems.Count > 0)
+            {
+                CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
+                await newPlaybackDevice.SetAsDefaultAsync();
+                if (!isRefreshing)
+                    Close();
+            }
         }
     }
 }

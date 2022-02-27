@@ -1,4 +1,4 @@
-﻿namespace tbvolscroll.Properties {
+﻿namespace tb_vol_scroll.Properties {
     
     
     // This class allows you to handle specific events on the settings class:

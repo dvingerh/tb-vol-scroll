@@ -1,7 +1,6 @@
-﻿
-using tbvolscroll.Classes.ExControls;
+﻿using tb_vol_scroll.Classes.ControlsEx;
 
-namespace tbvolscroll.Forms
+namespace tb_vol_scroll.Forms
 {
     partial class FontDialogForm
     {
@@ -31,6 +30,7 @@ namespace tbvolscroll.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FontDialogForm));
             this.FontLabel = new System.Windows.Forms.Label();
             this.SizeLabel = new System.Windows.Forms.Label();
             this.FontBoldCheckBox = new System.Windows.Forms.CheckBox();
@@ -42,7 +42,7 @@ namespace tbvolscroll.Forms
             this.panel1 = new System.Windows.Forms.Panel();
             this.FontSizeListBox = new System.Windows.Forms.ListBox();
             this.FontSizeTextBox = new System.Windows.Forms.TextBox();
-            this.FontList = new tbvolscroll.Classes.ExControls.FontList();
+            this.FontList = new tb_vol_scroll.Classes.ControlsEx.FontList();
             this.PreviewTextLabel = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -227,13 +227,15 @@ namespace tbvolscroll.Forms
             this.Controls.Add(this.panel1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FontDialogForm";
             this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Font";
+            this.Text = "Select Font (tb-vol-scroll)";
+            this.Load += new System.EventHandler(this.FontDialogForm_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

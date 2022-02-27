@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.ServiceProcess;
 
-namespace tbvolscroll.Classes
+namespace tb_vol_scroll.Classes.ControlsExt
 {
     // By https://stackoverflow.com/a/68154774
 
-    public class WinServicePoller : ServiceController
+    public class ServiceControllerExt : ServiceController
     {
         public event EventHandler<ServiceStatusEventArgs> StatusChanged;
         private readonly Dictionary<ServiceControllerStatus, Task> _tasks = new Dictionary<ServiceControllerStatus, Task>();
@@ -21,7 +21,7 @@ namespace tbvolscroll.Classes
             }
         }
 
-        public WinServicePoller(string ServiceName) : base(ServiceName)
+        public ServiceControllerExt(string ServiceName) : base(ServiceName)
         {
             foreach (ServiceControllerStatus status in Enum.GetValues(typeof(ServiceControllerStatus)))
             {

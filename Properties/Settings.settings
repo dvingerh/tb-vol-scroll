@@ -1,75 +1,24 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="tbvolscroll.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="tb_vol_scroll.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="VolumeStep" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
-    </Setting>
-    <Setting Name="PreciseScrollThreshold" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
-    </Setting>
-    <Setting Name="BarWidthPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="BarHeightPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="VolumeBarUseGradientColor" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="VolumeBarSolidColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">SkyBlue</Value>
-    </Setting>
-    <Setting Name="VolumeBarOpacity" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="VolumeBarFontStyle" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
-    </Setting>
-    <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="AutoHideTimeOut" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1000</Value>
-    </Setting>
-    <Setting Name="AutoRetryAdmin" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ToggleMuteShortcut" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="SwitchDefaultPlaybackDeviceShortcut" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="InvertScrollingDirection" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="ManualPreciseVolumeShortcut" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="DisplayTrayIconAsText" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
-    <Setting Name="TrayIconTextUseGradientColor" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="TrayIconTextSolidColor" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">SkyBlue</Value>
-    </Setting>
-    <Setting Name="DisplayVolumeBarScrolling" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
-    <Setting Name="TextRenderingHintType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
     <Setting Name="IgnoreTaskbarVisibility" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="TrayIconFontStyle" Type="System.Drawing.Font" Scope="User">
-      <Value Profile="(Default)">Segoe UI Semibold, 8.25pt, style=Bold</Value>
+    <Setting Name="NormalVolumeStep" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
     </Setting>
-    <Setting Name="TrayIconIsDisplayModeAutomatic" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="PreciseVolumeStep" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="PreciseVolumeThreshold" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="TrayIconOverrideAutoSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TrayIconFontStyle" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI Semibold, 36pt</Value>
     </Setting>
     <Setting Name="TrayIconWidth" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32</Value>
@@ -77,8 +26,59 @@
     <Setting Name="TrayIconHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
-    <Setting Name="TrayIconPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">16</Value>
+    <Setting Name="TrayIconWidthPadding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="TrayIconColorText" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">SkyBlue</Value>
+    </Setting>
+    <Setting Name="TrayIconColorTextIsGradient" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TrayIconTextRenderingHinting" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AutoRetryAdmin" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="InvertScrollingDirection" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShiftHotkeyEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CtrlHotkeyEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AltHotkeyEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AutoHideTimeOut" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="StatusBarColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">SkyBlue</Value>
+    </Setting>
+    <Setting Name="StatusBarColorIsGradient" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="StatusBarWidthPadding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="StatusBarHeightPadding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="StatusBarOpacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="DisplayStatusBarScrollActions" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TrayIconHeightPadding" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="StatusBarFontStyle" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Segoe UI Semibold, 9pt, style=Bold</Value>
     </Setting>
   </Settings>
 </SettingsFile>
