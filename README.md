@@ -1,66 +1,65 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 4.0.1
+## tb-vol-scroll 4.1.0
 
-Simple and customizable utility to enable audio control by scrolling inside the taskbar.
+Simple and customizable utility to enable audio control by scrolling inside the taskbar area with your mouse cursor.
 
 ### Functionality
 
-- Taskbar scroll: Control system volume.
-- Hold <kbd>ALT</kbd>: Enable precise volume control.
-- Hold <kbd>CTRL</kbd>: Toggle system audio mute.
-- Hold <kbd>SHIFT</kbd>: Cycle through available audio playback devices.
+- Scroll up or down to adjust the system volume
+- Hold <kbd>CTRL</kbd>: Mute and unmute system volume
+- Hold <kbd>ALT</kbd>: Activate precise volume scroll mode
+- Hold <kbd>SHIFT</kbd>: Switch between available audio playback devices
+##
+- Tray icon showing the current system volume level (to hide, pass the `trayless` argument)
 
-###### Available Menus
-- Audio Playback Devices: Switch default audio playback device from a list of available devices.
-- System Volume Mixer: Opens the built-in Windows volume mixer for per-application audio volume control.
-- Volume Slider Control: Open a popup with a volume slider and peak volume meter.
-
-### Configuration
-
-- Appearance:
-  - Color
-  - Font
-  - Opacity
-  - Padding (affects volume bar size)
-  - Tray icon style
-
-- Behavior:
-  - Volume bar autohide time-out
-  - Volume scroll step percentage
-  - Precise volume control threshold
-  - Enable/disable <kbd>CTRL</kbd> to toggle system audio mute
-  - Enable/disable <kbd>SHIFT</kbd> to cycle through available audio playback devices
-  - Enable/disable <kbd>ALT</kbd> to manually enable precise volume control
-  - Enable/disable requesting of Administrator permissions on start
-  - Enable/disable reverse scrolling direction for scroll actions
+### Available Menus
+- Audio Playback Devices: Change the default audio playback device from a list of available devices
+- System Volume Mixer: Opens the built-in Windows volume mixer for per-application audio volume control
+- Volume Slider Control: Open a popup with a volume slider and volume meter
+##
+- Configuration: List of available settings to change and appearance customization options
+- Update: Check for new updates and automatically replace the current executable
 
 ## Preview
 
-#### Volume bar
+### Status Bar & Tray Icon
+
+##### Volume control
 ![Volume bar](Images/gif_volumebar.gif?raw=true)
 
-#### Cycle audio playback devices
-![Volume bar](Images/gif_audiodevices.gif?raw=true)
+##### Switch audio playback device
+![Audio Devices](Images/gif_audiodevices.gif?raw=true)
 
-#### Mute and unmute
-![Volume bar](Images/gif_mute.gif?raw=true)
+##### Mute and unmute system volume
+![Mute Unmute](Images/gif_mute.gif?raw=true)
 
-#### Audio Playback Devices
+
+### Menus
+
+##### Audio Playback Devices
 ![Audio Playback Devices](Images/audioplaybackdevices.png?raw=true)
 
-#### Volume Slider Control
+##### System Volume Mixer
+![Audio Playback Devices](Images/systemvolumemixer.png?raw=true)
 
-![Tray menu](Images/gif_volumeslidercontrol.gif?raw=true)
+##### Volume Slider Control
 
-#### Configuration
-![Configuration](Images/configuration.png?raw=true)
+![Volume Slider Control](Images/gif_volumeslidercontrol.gif?raw=true)
 
 #### Tray menu
 
 ![Tray menu](Images/traymenu.png?raw=true)
 
+#### Configuration
+
+![Behavior](Images/configuration1.png?raw=true)
+![Appearance](Images/configuration2.png?raw=true)
+
+#### Update
+
+![Update](Images/update.gif?raw=true)
 
 ## Thanks
- #
+
 - [Taskbar.cs by Franz Alex Gaisie-Essilfie](https://gist.githubusercontent.com/franzalex/e747e6b318ab8f328aa02301f25ec534/raw/84f731f2e2396dc8ce28b564a75b712bf56b184f/Taskbar.cs)
 - [CustomFontDialog by umaranis](https://github.com/umaranis/CustomFontDialog)
