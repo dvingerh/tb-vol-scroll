@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -39,21 +39,26 @@ namespace tb_vol_scroll
         {
             InitializeComponent();
             Globals.MainForm = this;
+            if (!Globals.AppArgs.Contains("administrator") && !Utils.IsAdministrator() && Settings.Default.AutoRetryAdmin)
+            {
+                Globals.AppArgs.Add("administrator");
+                Process proc = new Process();
+                proc.StartInfo.FileName = Application.ExecutablePath;
+                proc.StartInfo.UseShellExecute = true;
+                proc.StartInfo.Verb = "runas";
+                proc.StartInfo.Arguments = string.Join(" ", Globals.AppArgs.ToArray() );
+                Utils.HandleApplicationExit(proc);
+            }
 
             if (Globals.AppArgs.Contains("updated"))
             {
-                Settings.Default.Upgrade();
-                ShowNotification("Update complete", $"Successfully updated {Application.ProductName} to version {Application.ProductVersion}.", ToolTipIcon.Info);
-            }
-
-            if (!Globals.AppArgs.Contains("administrator") && !Utils.IsAdministrator() && Settings.Default.AutoRetryAdmin)
-            {
-                    Process proc = new Process();
-                    proc.StartInfo.FileName = Application.ExecutablePath;
-                    proc.StartInfo.UseShellExecute = true;
-                    proc.StartInfo.Verb = "runas";
-                    proc.StartInfo.Arguments = "administrator";
-                    Utils.HandleApplicationExit(proc);
+                if (Settings.Default.UpgradeRequired)
+                {
+                    Settings.Default.Upgrade();
+                    Settings.Default.UpgradeRequired = false;
+                    Settings.Default.Save();
+                    ShowNotification("Update complete", $"Successfully updated {Application.ProductName} to version {Application.ProductVersion}.", ToolTipIcon.Info);
+                }
             }
 
             hideBarTimer.Tick += (s, e) => { SetBarVisibility(false); hideBarTimer.Stop(); };
