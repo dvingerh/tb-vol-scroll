@@ -66,7 +66,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
             StringFormat format = new StringFormat
             {
                 LineAlignment = StringAlignment.Center,
-                Trimming = StringTrimming.EllipsisWord
+                Trimming = StringTrimming.Character
             };
             if (e.State.HasFlag(DrawItemState.Selected))
                 e.Graphics.DrawString(font.Name, font, Brushes.White, e.Bounds, format);

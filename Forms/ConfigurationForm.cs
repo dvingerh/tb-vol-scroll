@@ -4,6 +4,7 @@ using tb_vol_scroll.Properties;
 using tb_vol_scroll.Classes.Helpers;
 using tb_vol_scroll.Classes;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace tb_vol_scroll.Forms
 {
@@ -14,7 +15,7 @@ namespace tb_vol_scroll.Forms
             InitializeComponent();
         }
 
-        private readonly FontDialogForm fontPickerDialog = new FontDialogForm();
+        private FontDialogForm fontPickerDialog;
         private Font statusBarFont;
         private Font trayIconFont;
         private bool isShowingDialog = false;
@@ -24,10 +25,9 @@ namespace tb_vol_scroll.Forms
             FullOpen = true
         };
 
-        private void ConfigurationForm_Load(object sender, EventArgs e)
+        private async void ConfigurationForm_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedDialog;
-
             #region Behavior
             NormalVolumeStepNumericUpDown.Value = Settings.Default.NormalVolumeStep;
             PreciseVolumeThresholdNumericUpDown.Value = Settings.Default.PreciseVolumeThreshold;
@@ -57,7 +57,6 @@ namespace tb_vol_scroll.Forms
                 }
             }
             #endregion
-
             #region Appearance
             DisplayStatusBarScrollActionsCheckBox.Checked = Settings.Default.DisplayStatusBarScrollActions;
             StatusBarWidthPaddingNumericUpDown.Value = Settings.Default.StatusBarWidthPadding;
@@ -111,6 +110,7 @@ namespace tb_vol_scroll.Forms
                 }
             }
             #endregion
+            await Task.Run(() => { fontPickerDialog = new FontDialogForm(); });
         }
 
 
