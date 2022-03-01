@@ -157,9 +157,12 @@ namespace tb_vol_scroll
 
         public void ShowNotification(string title, string text, ToolTipIcon icon)
         {
+            if (icon == ToolTipIcon.Info)
+                TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("T");
+            if (icon == ToolTipIcon.Warning)
+                TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("X");
             TrayNotifyIcon.Visible = true;
-            TrayNotifyIcon.ShowBalloonTip(5000, title, text, icon);
-            TrayNotifyIcon.Visible = !Globals.AppArgs.Contains("trayless");
+            TrayNotifyIcon.ShowBalloonTip(5000, title, text, ToolTipIcon.None);
         }
         public void SetBarPosition()
         {
@@ -324,6 +327,22 @@ namespace tb_vol_scroll
         {
             ConfigurationForm configurationForm = new ConfigurationForm();
             configurationForm.ShowDialog();
+        }
+
+        private void OpenCurrentDirectoryMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+        }
+
+        private void OpenStartupDirectoryMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.Startup));
+        }
+
+        private void TrayNotifyIcon_BalloonTipClosed(object sender, EventArgs e)
+        {
+            TrayNotifyIcon.Visible = !Globals.AppArgs.Contains("trayless");
+
         }
     }
 }

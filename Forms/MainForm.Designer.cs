@@ -156,6 +156,7 @@ namespace tb_vol_scroll
             this.OpenCurrentDirectoryMenuItem.Name = "OpenCurrentDirectoryMenuItem";
             this.OpenCurrentDirectoryMenuItem.Size = new System.Drawing.Size(197, 22);
             this.OpenCurrentDirectoryMenuItem.Text = "Open Current Directory";
+            this.OpenCurrentDirectoryMenuItem.Click += new System.EventHandler(this.OpenCurrentDirectoryMenuItem_Click);
             // 
             // OpenStartupDirectoryMenuItem
             // 
@@ -163,6 +164,7 @@ namespace tb_vol_scroll
             this.OpenStartupDirectoryMenuItem.Name = "OpenStartupDirectoryMenuItem";
             this.OpenStartupDirectoryMenuItem.Size = new System.Drawing.Size(197, 22);
             this.OpenStartupDirectoryMenuItem.Text = "Open Startup Directory";
+            this.OpenStartupDirectoryMenuItem.Click += new System.EventHandler(this.OpenStartupDirectoryMenuItem_Click);
             // 
             // SeparatorMenuItem2
             // 
@@ -212,6 +214,7 @@ namespace tb_vol_scroll
             this.TrayNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayNotifyIcon.Icon")));
             this.TrayNotifyIcon.Tag = "tb-vol-scroll";
             this.TrayNotifyIcon.Text = "Loading...";
+            this.TrayNotifyIcon.BalloonTipClosed += new System.EventHandler(this.TrayNotifyIcon_BalloonTipClosed);
             this.TrayNotifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TrayNotifyIcon_MouseClick);
             // 
             // TrayContextMenu
