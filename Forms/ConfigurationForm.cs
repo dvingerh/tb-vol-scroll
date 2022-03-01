@@ -70,8 +70,8 @@ namespace tb_vol_scroll.Forms
             TrayIconTextRenderingHintingComboBox.SelectedIndex = Settings.Default.TrayIconTextRenderingHinting;
             TrayIconWidthNumericUpDown.Value = Settings.Default.TrayIconWidth;
             TrayIconHeightNumericUpDown.Value = Settings.Default.TrayIconHeight;
-            TrayIconWidthPaddingNumericUpDown.Value = Settings.Default.TrayIconWidthPadding;
-            TrayIconHeightPaddingNumericUpDown.Value = Settings.Default.TrayIconHeightPadding;
+            TrayIconWidthPaddingNumericUpDown.Value = Settings.Default.TrayIconXAlignment;
+            TrayIconHeightPaddingNumericUpDown.Value = Settings.Default.TrayIconYAlignment;
             trayIconFont = Settings.Default.TrayIconFontStyle;
             TrayIconFontStyleValueLabel.Text = GetFontDetails(trayIconFont);
 
@@ -149,8 +149,8 @@ namespace tb_vol_scroll.Forms
             Settings.Default.TrayIconTextRenderingHinting = TrayIconTextRenderingHintingComboBox.SelectedIndex;
             Settings.Default.TrayIconWidth = (int)TrayIconWidthNumericUpDown.Value;
             Settings.Default.TrayIconHeight = (int)TrayIconHeightNumericUpDown.Value;
-            Settings.Default.TrayIconWidthPadding = (int)TrayIconWidthPaddingNumericUpDown.Value;
-            Settings.Default.TrayIconHeightPadding = (int)TrayIconHeightPaddingNumericUpDown.Value;
+            Settings.Default.TrayIconXAlignment = (int)TrayIconWidthPaddingNumericUpDown.Value;
+            Settings.Default.TrayIconYAlignment = (int)TrayIconHeightPaddingNumericUpDown.Value;
             Font newTrayIconFont = new Font(trayIconFont.FontFamily, trayIconFont.Size, trayIconFont.Style, trayIconFont.Unit);
             Settings.Default.TrayIconFontStyle = newTrayIconFont;
 
@@ -379,8 +379,8 @@ namespace tb_vol_scroll.Forms
             TrayIconTextRenderingHintingComboBox.SelectedIndex = 0;
             TrayIconWidthNumericUpDown.Value = 32;
             TrayIconHeightNumericUpDown.Value = 32;
-            TrayIconWidthPaddingNumericUpDown.Value = 10;
-            TrayIconHeightPaddingNumericUpDown.Value = 10;
+            TrayIconWidthPaddingNumericUpDown.Value = 0;
+            TrayIconHeightPaddingNumericUpDown.Value = 0;
             trayIconFont = new Font("Segoe UI Semibold", 36, FontStyle.Regular, GraphicsUnit.Point);
             TrayIconFontStyleValueLabel.Text = GetFontDetails(trayIconFont);
 
@@ -401,6 +401,7 @@ namespace tb_vol_scroll.Forms
             $"B: {StatusBarColorValuePictureBox.BackColor.B}";
 
             #endregion
+
             RestoreDefaultsButton.Enabled = false;
             ApplyConfigurationButton.Enabled = true;
         }

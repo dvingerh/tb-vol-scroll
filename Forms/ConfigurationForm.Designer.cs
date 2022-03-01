@@ -56,7 +56,7 @@ namespace tb_vol_scroll.Forms
             this.AppearanceTabPage = new System.Windows.Forms.TabPage();
             this.AppearanceTrayIconGroupBox = new System.Windows.Forms.GroupBox();
             this.TrayIconTextRenderingHintingDescriptionLabel = new System.Windows.Forms.Label();
-            this.TrayIconPaddingLabel = new System.Windows.Forms.Label();
+            this.TrayIconAlignmentLabel = new System.Windows.Forms.Label();
             this.TrayIconHeightPaddingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TrayIconPaddingPixelsLabel = new System.Windows.Forms.Label();
             this.TrayIconFontStyleValueLabel = new System.Windows.Forms.Label();
@@ -68,7 +68,7 @@ namespace tb_vol_scroll.Forms
             this.TrayIconTextRenderingHintingLabel = new System.Windows.Forms.Label();
             this.TrayIconWidthPaddingNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TrayIconSizesPixelsLabel = new System.Windows.Forms.Label();
-            this.TrayIconSizesLabel = new System.Windows.Forms.Label();
+            this.TrayIconSizeLabel = new System.Windows.Forms.Label();
             this.TrayIconHeightNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.TrayIconWidthNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.AppearanceStatusBarGoupBox = new System.Windows.Forms.GroupBox();
@@ -403,7 +403,7 @@ namespace tb_vol_scroll.Forms
             // AppearanceTrayIconGroupBox
             // 
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconTextRenderingHintingDescriptionLabel);
-            this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconPaddingLabel);
+            this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconAlignmentLabel);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconHeightPaddingNumericUpDown);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconPaddingPixelsLabel);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconFontStyleValueLabel);
@@ -415,7 +415,7 @@ namespace tb_vol_scroll.Forms
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconTextRenderingHintingLabel);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconWidthPaddingNumericUpDown);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconSizesPixelsLabel);
-            this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconSizesLabel);
+            this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconSizeLabel);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconHeightNumericUpDown);
             this.AppearanceTrayIconGroupBox.Controls.Add(this.TrayIconWidthNumericUpDown);
             this.AppearanceTrayIconGroupBox.Location = new System.Drawing.Point(6, 154);
@@ -434,15 +434,15 @@ namespace tb_vol_scroll.Forms
             this.TrayIconTextRenderingHintingDescriptionLabel.TabIndex = 58;
             this.TrayIconTextRenderingHintingDescriptionLabel.Text = "Uses the default hinting";
             // 
-            // TrayIconPaddingLabel
+            // TrayIconAlignmentLabel
             // 
-            this.TrayIconPaddingLabel.AutoSize = true;
-            this.TrayIconPaddingLabel.Location = new System.Drawing.Point(6, 138);
-            this.TrayIconPaddingLabel.Name = "TrayIconPaddingLabel";
-            this.TrayIconPaddingLabel.Size = new System.Drawing.Size(102, 13);
-            this.TrayIconPaddingLabel.TabIndex = 57;
-            this.TrayIconPaddingLabel.Text = "Tray icon padding:\r\n";
-            this.TrayIconPaddingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TrayIconAlignmentLabel.AutoSize = true;
+            this.TrayIconAlignmentLabel.Location = new System.Drawing.Point(6, 138);
+            this.TrayIconAlignmentLabel.Name = "TrayIconAlignmentLabel";
+            this.TrayIconAlignmentLabel.Size = new System.Drawing.Size(110, 13);
+            this.TrayIconAlignmentLabel.TabIndex = 57;
+            this.TrayIconAlignmentLabel.Text = "Tray icon alignment:\r\n";
+            this.TrayIconAlignmentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TrayIconHeightPaddingNumericUpDown
             // 
@@ -453,15 +453,15 @@ namespace tb_vol_scroll.Forms
             0,
             0,
             0});
+            this.TrayIconHeightPaddingNumericUpDown.Minimum = new decimal(new int[] {
+            512,
+            0,
+            0,
+            -2147483648});
             this.TrayIconHeightPaddingNumericUpDown.Name = "TrayIconHeightPaddingNumericUpDown";
             this.TrayIconHeightPaddingNumericUpDown.Size = new System.Drawing.Size(70, 22);
             this.TrayIconHeightPaddingNumericUpDown.TabIndex = 22;
             this.TrayIconHeightPaddingNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TrayIconHeightPaddingNumericUpDown.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // TrayIconPaddingPixelsLabel
             // 
@@ -556,15 +556,15 @@ namespace tb_vol_scroll.Forms
             0,
             0,
             0});
+            this.TrayIconWidthPaddingNumericUpDown.Minimum = new decimal(new int[] {
+            512,
+            0,
+            0,
+            -2147483648});
             this.TrayIconWidthPaddingNumericUpDown.Name = "TrayIconWidthPaddingNumericUpDown";
             this.TrayIconWidthPaddingNumericUpDown.Size = new System.Drawing.Size(70, 22);
             this.TrayIconWidthPaddingNumericUpDown.TabIndex = 21;
             this.TrayIconWidthPaddingNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TrayIconWidthPaddingNumericUpDown.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // TrayIconSizesPixelsLabel
             // 
@@ -576,15 +576,15 @@ namespace tb_vol_scroll.Forms
             this.TrayIconSizesPixelsLabel.Text = "Pixels (width x height)";
             this.TrayIconSizesPixelsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // TrayIconSizesLabel
+            // TrayIconSizeLabel
             // 
-            this.TrayIconSizesLabel.AutoSize = true;
-            this.TrayIconSizesLabel.Location = new System.Drawing.Point(6, 110);
-            this.TrayIconSizesLabel.Name = "TrayIconSizesLabel";
-            this.TrayIconSizesLabel.Size = new System.Drawing.Size(82, 13);
-            this.TrayIconSizesLabel.TabIndex = 49;
-            this.TrayIconSizesLabel.Text = "Tray icon sizes:\r\n";
-            this.TrayIconSizesLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.TrayIconSizeLabel.AutoSize = true;
+            this.TrayIconSizeLabel.Location = new System.Drawing.Point(6, 110);
+            this.TrayIconSizeLabel.Name = "TrayIconSizeLabel";
+            this.TrayIconSizeLabel.Size = new System.Drawing.Size(77, 13);
+            this.TrayIconSizeLabel.TabIndex = 49;
+            this.TrayIconSizeLabel.Text = "Tray icon size:\r\n";
+            this.TrayIconSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TrayIconHeightNumericUpDown
             // 
@@ -1036,13 +1036,13 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.Label TrayIconTextRenderingHintingLabel;
         private System.Windows.Forms.NumericUpDown TrayIconWidthPaddingNumericUpDown;
         private System.Windows.Forms.Label TrayIconSizesPixelsLabel;
-        private System.Windows.Forms.Label TrayIconSizesLabel;
+        private System.Windows.Forms.Label TrayIconSizeLabel;
         private System.Windows.Forms.NumericUpDown TrayIconHeightNumericUpDown;
         private System.Windows.Forms.NumericUpDown TrayIconWidthNumericUpDown;
         private System.Windows.Forms.CheckBox TrayIconOverrideAutoSettingsCheckBox;
         private System.Windows.Forms.Label TrayIconPaddingPixelsLabel;
         private System.Windows.Forms.NumericUpDown TrayIconHeightPaddingNumericUpDown;
-        private System.Windows.Forms.Label TrayIconPaddingLabel;
+        private System.Windows.Forms.Label TrayIconAlignmentLabel;
         private System.Windows.Forms.Label TrayIconTextRenderingHintingDescriptionLabel;
     }
 }

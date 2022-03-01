@@ -121,13 +121,13 @@ namespace tb_vol_scroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int TrayIconWidthPadding {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TrayIconXAlignment {
             get {
-                return ((int)(this["TrayIconWidthPadding"]));
+                return ((int)(this["TrayIconXAlignment"]));
             }
             set {
-                this["TrayIconWidthPadding"] = value;
+                this["TrayIconXAlignment"] = value;
             }
         }
         
@@ -313,13 +313,13 @@ namespace tb_vol_scroll.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public int TrayIconHeightPadding {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TrayIconYAlignment {
             get {
-                return ((int)(this["TrayIconHeightPadding"]));
+                return ((int)(this["TrayIconYAlignment"]));
             }
             set {
-                this["TrayIconHeightPadding"] = value;
+                this["TrayIconYAlignment"] = value;
             }
         }
         

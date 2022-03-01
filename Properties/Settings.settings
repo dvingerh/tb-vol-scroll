@@ -26,8 +26,8 @@
     <Setting Name="TrayIconHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">32</Value>
     </Setting>
-    <Setting Name="TrayIconWidthPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="TrayIconXAlignment" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="TrayIconColorText" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">SkyBlue</Value>
@@ -74,8 +74,8 @@
     <Setting Name="DisplayStatusBarScrollActions" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TrayIconHeightPadding" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="TrayIconYAlignment" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="StatusBarFontStyle" Type="System.Drawing.Font" Scope="User">
       <Value Profile="(Default)">Segoe UI Semibold, 9pt, style=Bold</Value>

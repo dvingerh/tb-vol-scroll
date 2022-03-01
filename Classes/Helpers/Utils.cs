@@ -168,7 +168,7 @@ namespace tb_vol_scroll.Classes.Helpers
             return Color.FromArgb((int)redVal, (int)greenVal, (int)blueVal);
         }
 
-        private static Font FindBestFitFont(Graphics g, string text, Font font, Size proposedSize, float paddingWidth, float paddingHeight)
+        private static Font FindBestFitFont(Graphics g, string text, Font font, Size proposedSize, float iconPadding)
         {
             Font oldFont = font;
             try
@@ -177,10 +177,10 @@ namespace tb_vol_scroll.Classes.Helpers
                 {
 
                     SizeF size = g.MeasureString(text, font);
-                    if (size.Height <= proposedSize.Height + paddingHeight && size.Width <= proposedSize.Width + paddingWidth)
+                    if (size.Height <= proposedSize.Height + iconPadding && size.Width <= proposedSize.Width + iconPadding)
                     { return font; }
 
-                    font = new Font(font.Name, font.Size - 2, font.Style);
+                    font = new Font(font.Name, font.Size *0.99F, font.Style);
                 }
             }
             catch { return oldFont; }
@@ -213,13 +213,14 @@ namespace tb_vol_scroll.Classes.Helpers
             catch { return 1.0F; }
         }
 
-        public static Icon UpdateTrayIconArea(string iconText)
+        public static Icon GenerateTrayIcon(string iconText)
         {
             float iconWidth = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
             float iconHeight = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
             float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
-            float paddingWidth = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
-            float paddingHeight = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+            float iconPadding = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+            float alignmentX = 0;// = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+            float alignmentY = 0;// = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
 
             TextRenderingHint hinting = TextRenderingHint.ClearTypeGridFit;
 
@@ -228,8 +229,8 @@ namespace tb_vol_scroll.Classes.Helpers
                 iconWidth = Settings.Default.TrayIconWidth;
                 iconHeight = Settings.Default.TrayIconHeight;
                 fontSize = Settings.Default.TrayIconFontStyle.Size;
-                paddingWidth = Settings.Default.TrayIconWidthPadding;
-                paddingHeight = Settings.Default.TrayIconHeightPadding;
+                alignmentX = Settings.Default.TrayIconXAlignment;
+                alignmentY = Settings.Default.TrayIconYAlignment;
 
                 if (iconWidth == 0)
                     iconWidth = 1;
@@ -281,9 +282,9 @@ namespace tb_vol_scroll.Classes.Helpers
                     graphics.Clear(Color.Transparent);
                     graphics.SmoothingMode = SmoothingMode.AntiAlias;
                     graphics.TextRenderingHint = hinting;
-                    font = FindBestFitFont(graphics, iconText, font, bitmap.Size, paddingWidth, paddingHeight);
+                    font = FindBestFitFont(graphics, iconText, font, bitmap.Size, iconPadding);
                     SizeF size = graphics.MeasureString(iconText, font).ToSize();
-                    graphics.DrawString(iconText, font, new SolidBrush(textColor), (iconWidth - size.Width) / 2, (iconHeight - size.Height) / 2);
+                    graphics.DrawString(iconText, font, new SolidBrush(textColor), ((iconWidth - size.Width) / 2) + alignmentX, ((iconHeight - size.Height) / 2) + alignmentY);
                     using (Icon tmpIcon = Icon.FromHandle(bitmap.GetHicon()))
                     {
                         Icon newIcon = (Icon)tmpIcon.Clone();
