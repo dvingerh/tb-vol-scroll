@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -108,13 +109,13 @@ namespace tb_vol_scroll
                         Width = MinimumSize.Width + Utils.CalculateMinimumBarSize(BarTextLabel, BarTextLabel.Text).Width + Settings.Default.StatusBarWidthPadding;
                         break;
                     case ActionTriggerType.InternalEvent:
-                        TrayNotifyIcon.Icon = Utils.UpdateTrayIconArea(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
+                        TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
                         TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         break;
                     case ActionTriggerType.ConfigurationApplied:
                         Font = Settings.Default.StatusBarFontStyle;
                         MinimumSize = Utils.CalculateMinimumBarSize(BarTextLabel, "100%");
-                        TrayNotifyIcon.Icon = Utils.UpdateTrayIconArea(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
+                        TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
                         TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         Width = MinimumSize.Width + Globals.AudioHandler.FriendlyVolume + Settings.Default.StatusBarWidthPadding;
                         Height = MinimumSize.Height + Settings.Default.StatusBarHeightPadding;
@@ -125,15 +126,13 @@ namespace tb_vol_scroll
                         Globals.InputHandler.InputEnabled = false;
                         AudioPlaybackDevicesMenuItem.Enabled = false;
                         VolumeSliderControlMenuItem.Enabled = false;
-                        TrayNotifyIcon.Icon = Utils.UpdateTrayIconArea("X");
                         TrayNotifyIcon.Text = "Audio playback device unavailable";
                         ShowNotification("Audio playback device unavailable", $"Audio control has been disabled.", ToolTipIcon.Warning);
                         break;
                     case ActionTriggerType.AudioEnabled:
                         Globals.InputHandler.InputEnabled = true;
-                        AudioPlaybackDevicesMenuItem.Enabled = false;
-                        VolumeSliderControlMenuItem.Enabled = false;
-                        TrayNotifyIcon.Icon = Utils.UpdateTrayIconArea(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
+                        AudioPlaybackDevicesMenuItem.Enabled = true;
+                        VolumeSliderControlMenuItem.Enabled = true;
                         TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         ShowNotification("Audio playback device available", $"Audio control has been enabled.", ToolTipIcon.Info);
                         break;
@@ -145,7 +144,8 @@ namespace tb_vol_scroll
                         Width = volumeBarMinSize.Width + Settings.Default.StatusBarWidthPadding;
                         Opacity = Settings.Default.StatusBarOpacity;
                         Font = Settings.Default.StatusBarFontStyle;
-                        TrayNotifyIcon.Icon = Utils.UpdateTrayIconArea("T");
+                        hideBarTimer.Interval = Settings.Default.AutoHideTimeOut;
+                        TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("T");
                         TrayNotifyIcon.Visible = !Globals.AppArgs.Contains("trayless");
                         break;
 
@@ -291,7 +291,7 @@ namespace tb_vol_scroll
 
         private async void TrayNotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            if (Globals.AudioHandler != null)
+            if (Globals.AudioAvailable)
             {
                 if (e.Button == MouseButtons.Left)
                 {
@@ -305,10 +305,7 @@ namespace tb_vol_scroll
                     Globals.VolumeSliderControlForm = null;
                 }
                 else if (e.Button == MouseButtons.Middle)
-                {
-                    if (Globals.AudioAvailable)
-                        await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, !Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted);
-                }
+                    await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, !Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted);
             }
             else
             {
