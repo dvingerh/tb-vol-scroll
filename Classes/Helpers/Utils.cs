@@ -218,7 +218,7 @@ namespace tb_vol_scroll.Classes.Helpers
             float iconWidth = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
             float iconHeight = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
             float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
-            float iconPadding = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
+            float iconPadding = Globals.DpiScale < 1.25 ? 4 * Globals.DpiScale : 8 * Globals.DpiScale;
             float alignmentX = 0;// = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
             float alignmentY = 0;// = Globals.DpiScale < 1.25 ? 5 * Globals.DpiScale : 10 * Globals.DpiScale;
 
