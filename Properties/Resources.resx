@@ -152,7 +152,7 @@ TASKKILL /F /IM "[SELFEXE]"
 TIMEOUT /T 1 /NOBREAK
 DEL "[SELF]"
 MOVE "[TEMP]" "[SELF]"
-START /B "" "[SELF]" update-done
+START /B "" "[SELF]" updated
 DEL "%~f0"</value>
   </data>
   <data name="_default" type="System.Resources.ResXFileRef, System.Windows.Forms">

@@ -167,7 +167,7 @@ namespace tb_vol_scroll.Properties {
         ///TIMEOUT /T 1 /NOBREAK
         ///DEL &quot;[SELF]&quot;
         ///MOVE &quot;[TEMP]&quot; &quot;[SELF]&quot;
-        ///START /B &quot;&quot; &quot;[SELF]&quot; update-done
+        ///START /B &quot;&quot; &quot;[SELF]&quot; updated
         ///DEL &quot;%~f0&quot;.
         /// </summary>
         internal static string UpdateCmd {
