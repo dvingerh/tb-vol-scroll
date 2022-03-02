@@ -1,5 +1,5 @@
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
-## tb-vol-scroll 4.1.0
+## tb-vol-scroll 4.1.1
 
 Simple and customizable utility to enable audio control by scrolling inside the taskbar area with your mouse cursor.
 
