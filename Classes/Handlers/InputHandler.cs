@@ -1,4 +1,4 @@
-﻿using Gma.System.MouseKeyHook;
+using Gma.System.MouseKeyHook;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -62,14 +62,14 @@ namespace tb_vol_scroll.Classes.Handlers
         {
             if (mouseScrollTask == null || mouseScrollTask.IsCompleted)
             {
-                if (mouseScrollQueue.Count > 0)
+                if (mouseScrollQueue.Count != 0)
                 {
                     var wheelArgs = mouseScrollQueue.Dequeue();
                     MouseWheelDirection direction = wheelArgs.Delta > 0 ? MouseWheelDirection.Up : MouseWheelDirection.Down;
                     mouseScrollTask = HandleMouseWheelScroll(direction);
                     if (Settings.Default.DisplayStatusBarScrollActions)
                         await mouseScrollTask.ContinueWith(result => Globals.MainForm.SetBarVisibility(true));
-                    if (mouseScrollQueue.Count > 0)
+                    if (mouseScrollQueue.Count != 0)
                         await ProcessMouseWheelScrollActionQueue();
                 }
             }

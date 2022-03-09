@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
@@ -79,12 +79,12 @@ namespace tb_vol_scroll.Forms
         {
             if ((currentUpdateVolumeTask == null) || currentUpdateVolumeTask.IsCompleted)
             {
-                if (updateVolumeQueue.Count > 0)
+                if (updateVolumeQueue.Count != 0)
                 {
                     var volumeArgs = updateVolumeQueue.Dequeue();
                     currentUpdateVolumeTask = HandleVolumeUpdate(volumeArgs);
                     await currentUpdateVolumeTask.ContinueWith(async(result) => await UpdateVolumeState());
-                    if (updateVolumeQueue.Count > 0)
+                    if (updateVolumeQueue.Count != 0)
                         await ProcessVolumeQueue();
                 }
             }
@@ -109,12 +109,12 @@ namespace tb_vol_scroll.Forms
         {
             if ((currentPeakValueTask == null) || currentPeakValueTask.IsCompleted)
             {
-                if (updatePeakValueQueue.Count > 0)
+                if (updatePeakValueQueue.Count != 0)
                 {
                     var peakValueArgs = updatePeakValueQueue.Dequeue();
                     currentPeakValueTask = HandlePeakValueUpdate(peakValueArgs);
                     await currentPeakValueTask;
-                    if (updatePeakValueQueue.Count > 0)
+                    if (updatePeakValueQueue.Count != 0)
                         await ProcessPeakValueEventQueue();
                 }
             }
