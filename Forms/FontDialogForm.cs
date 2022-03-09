@@ -10,8 +10,8 @@ namespace tb_vol_scroll.Forms
         {
             InitializeComponent();
 
-            FontList.SelectedFontFamilyChanged += SelectedFontChanged;
             FontList.SelectedFontFamily = FontFamily.GenericSansSerif;
+            FontList.SelectedFontFamilyChanged += SelectedFontChanged;
             FontSizeTextBox.Text = Convert.ToString(10);
             DialogResult = DialogResult.Cancel;
         }
@@ -96,13 +96,16 @@ namespace tb_vol_scroll.Forms
 
         private void UpdatePreviewText()
         {
-            float size = FontSizeTextBox.Text != "" ? float.Parse(FontSizeTextBox.Text) : 8;
-            FontStyle style = FontBoldCheckBox.Checked ? FontStyle.Bold : FontStyle.Regular;
-            if (FontItalicCheckBox.Checked)
-                style |= FontStyle.Italic;
-            if (FontStrikeoutCheckBox.Checked)
-                style |= FontStyle.Strikeout;
-            PreviewTextLabel.Font = new Font(FontList.SelectedFontFamily, size, style);
+            if (FontList.SelectedFontFamily != null)
+            {
+                float size = FontSizeTextBox.Text != "" ? float.Parse(FontSizeTextBox.Text) : 8;
+                FontStyle style = FontBoldCheckBox.Checked ? FontStyle.Bold : FontStyle.Regular;
+                if (FontItalicCheckBox.Checked)
+                    style |= FontStyle.Italic;
+                if (FontStrikeoutCheckBox.Checked)
+                    style |= FontStyle.Strikeout;
+                PreviewTextLabel.Font = new Font(FontList.SelectedFontFamily, size, style);
+            }
         }
 
     

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace tb_vol_scroll.Classes.ControlsEx
@@ -10,7 +8,6 @@ namespace tb_vol_scroll.Classes.ControlsEx
     {
 
         public event EventHandler SelectedFontFamilyChanged;
-
         public FontList()
         {
             InitializeComponent();
@@ -19,10 +16,20 @@ namespace tb_vol_scroll.Classes.ControlsEx
                 try
                 {
                     if (!string.IsNullOrWhiteSpace(f.Name))
-                        FontListComponent.Items.Add(new Font(f, 10));
+                    {
+                        ListViewItem listViewItem = new ListViewItem
+                        {
+                            Text = f.Name,
+                            Font = new Font(f, 10),
+                            ForeColor = Color.Black,
+                            Tag = new Font(f, 10)
+                        };
+                        FontListComponent.Items.Add(listViewItem);
+                    }
                 }
                 catch { }
             }
+
         }
 
 
@@ -30,18 +37,17 @@ namespace tb_vol_scroll.Classes.ControlsEx
         {
             get
             {
-                if (FontListComponent.SelectedItem != null)
-                    return ((Font)FontListComponent.SelectedItem).FontFamily;
+                if (FontListComponent.SelectedItems.Count != 0)
+                    return ((Font)FontListComponent.SelectedItems[0].Tag).FontFamily;
                 else
                     return null;
             }
             set
             {
                 if (value == null)
-                    FontListComponent.ClearSelected();
+                    FontListComponent.SelectedItems.Clear();
                 else
-                    FontListComponent.SelectedIndex = IndexOf(value);
-
+                    FontListComponent.Items[IndexOf(value)].Selected = true;
             }
         }
 
@@ -49,7 +55,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
         {
             for (int i = 0; i < FontListComponent.Items.Count; i++)
             {
-                Font f = (Font)FontListComponent.Items[i];
+                Font f = (Font)FontListComponent.Items[i].Tag;
                 if (f.FontFamily.Name == ff.Name)
                     return i;
             }
@@ -57,49 +63,41 @@ namespace tb_vol_scroll.Classes.ControlsEx
             return -1;
         }
 
-        private void FontListComponentDrawItem(object sender, DrawItemEventArgs e)
-        {
-            Font font = (Font)FontListComponent.Items[e.Index];
-            e.DrawBackground();
-            e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            StringFormat format = new StringFormat
-            {
-                LineAlignment = StringAlignment.Center,
-                Trimming = StringTrimming.Character
-            };
-            if (e.State.HasFlag(DrawItemState.Selected))
-                e.Graphics.DrawString(font.Name, font, Brushes.White, e.Bounds, format);
-            else
-                e.Graphics.DrawString(font.Name, font, Brushes.Black, e.Bounds, format);
-        }
-
         private void FontListComponentSelectedIndexChanged(object sender, EventArgs e)
         {
 
-            if (FontListComponent.SelectedItem != null)
+            if (FontListComponent.SelectedItems.Count != 0)
             {
                 if (!FontNameTextBox.Focused)
                 {
-                    Font f = (Font)FontListComponent.SelectedItem;
+                    Font f = (Font)FontListComponent.SelectedItems[0].Tag;
                     FontNameTextBox.Text = f.Name;
                 }
                 SelectedFontFamilyChanged(FontListComponent, new EventArgs());
             }
         }
 
-        private void TextSizeTextBoxTextChanged(object sender, EventArgs e)
+        private void FontNameTextBox_TextChanged(object sender, EventArgs e)
         {
             if (!FontNameTextBox.Focused)
                 return;
 
             for (int i = 0; i < FontListComponent.Items.Count; i++)
             {
-                string str = ((Font)FontListComponent.Items[i]).Name.ToLower();
+                string str = ((Font)FontListComponent.Items[i].Tag).Name.ToLower();
                 if (str.Contains(FontNameTextBox.Text.ToLower()))
                 {
-                    FontListComponent.SelectedIndex = i;
-                    FontListComponent.TopIndex = FontListComponent.SelectedIndex - (FontListComponent.ClientSize.Height / 25) / 2;
+                    FontListComponent.Items[i].Selected = true;
+                    FontListComponent.Items[i].EnsureVisible();
+                    FontListComponent.TopItem = FontListComponent.Items[i];
+                    int top = i - (int)Math.Round((FontListComponent.DisplayRectangle.Height / 25F) / 2) + 1;
+                    if (top < 0)
+                        top = 0;
+                    if (top > FontListComponent.Items.Count)
+                        top = FontListComponent.Items.Count;
+                    FontListComponent.TopItem = FontListComponent.Items[top];
+                    FontListComponent.TopItem.EnsureVisible();
+
                     return;
                 }
             }
@@ -113,7 +111,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
 
         private void FontListComponentKeyDown(object sender, KeyEventArgs e)
         {
-            if (Char.IsLetterOrDigit((char)e.KeyValue))
+            if (char.IsLetterOrDigit((char)e.KeyValue))
             {
                 FontNameTextBox.Focus();
                 FontNameTextBox.Text = ((char)e.KeyValue).ToString();
@@ -123,10 +121,9 @@ namespace tb_vol_scroll.Classes.ControlsEx
 
         private void FontListLoad(object sender, EventArgs e)
         {
-            this.ActiveControl = FontListComponent;
+            ActiveControl = FontListComponent;
+            FontListComponent.Columns[0].Width = FontListComponent.ClientSize.Width;
         }
-
-
     }
 
 

@@ -42,8 +42,8 @@ namespace tb_vol_scroll.Forms
             this.FontSizePanel = new System.Windows.Forms.Panel();
             this.FontSizeListBox = new System.Windows.Forms.ListBox();
             this.FontSizeTextBox = new System.Windows.Forms.TextBox();
-            this.FontList = new tb_vol_scroll.Classes.ControlsEx.FontList();
             this.PreviewTextLabel = new System.Windows.Forms.Label();
+            this.FontList = new tb_vol_scroll.Classes.ControlsEx.FontList();
             this.FontSizePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -182,15 +182,6 @@ namespace tb_vol_scroll.Forms
             this.FontSizeTextBox.TextChanged += new System.EventHandler(this.FontSizeTextChanged);
             this.FontSizeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FontSizeTextBoxKeyDown);
             // 
-            // FontList
-            // 
-            this.FontList.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FontList.Location = new System.Drawing.Point(15, 25);
-            this.FontList.Name = "FontList";
-            this.FontList.SelectedFontFamily = null;
-            this.FontList.Size = new System.Drawing.Size(238, 271);
-            this.FontList.TabIndex = 16;
-            // 
             // PreviewTextLabel
             // 
             this.PreviewTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -205,6 +196,17 @@ namespace tb_vol_scroll.Forms
             this.PreviewTextLabel.Text = "ABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n1234567890 %";
             this.PreviewTextLabel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
+            // FontList
+            // 
+            this.FontList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FontList.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FontList.Location = new System.Drawing.Point(15, 25);
+            this.FontList.Name = "FontList";
+            this.FontList.Size = new System.Drawing.Size(238, 270);
+            this.FontList.TabIndex = 20;
+            // 
             // FontDialogForm
             // 
             this.AcceptButton = this.SaveButton;
@@ -213,8 +215,8 @@ namespace tb_vol_scroll.Forms
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.CancelDialogButton;
             this.ClientSize = new System.Drawing.Size(584, 311);
-            this.Controls.Add(this.PreviewTextLabel);
             this.Controls.Add(this.FontList);
+            this.Controls.Add(this.PreviewTextLabel);
             this.Controls.Add(this.FontSizeTextBox);
             this.Controls.Add(this.CancelDialogButton);
             this.Controls.Add(this.PreviewLabel);
@@ -255,7 +257,7 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.Panel FontSizePanel;
         private System.Windows.Forms.ListBox FontSizeListBox;
         private System.Windows.Forms.TextBox FontSizeTextBox;
-        private FontList FontList;
         private System.Windows.Forms.Label PreviewTextLabel;
+        private FontList FontList;
     }
 }
