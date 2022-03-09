@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Media;
@@ -48,7 +48,7 @@ namespace tb_vol_scroll.Forms
             {
                 Utils.InvokeIfRequired(this, () =>
                 {
-                    AudioDeviceNameLabel.Text = Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name;
+                    AudioDeviceNameLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}";
                     VolumeLabel.Text = $"{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? ("Muted") : VolumeTrackBar.Value + "%")}";
                     VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name);
                     string[] iconInfo = Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IconPath.Split(',');
