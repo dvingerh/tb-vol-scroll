@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using tb_vol_scroll.Classes;
 using tb_vol_scroll.Classes.Handlers;
@@ -89,14 +88,13 @@ namespace tb_vol_scroll
         {
             Utils.InvokeIfRequired(this, () =>
             {
-                SuspendLayout();
                 switch (type)
                 {
                     case ActionTriggerType.RegularVolumeScroll:
                     case ActionTriggerType.PreciseVolumeScroll:
+                        Width = MinimumSize.Width + Globals.AudioHandler.FriendlyVolume + Settings.Default.StatusBarWidthPadding;
                         BarTextLabel.Text = $"{Globals.AudioHandler.FriendlyVolume}%";
                         BarTextLabel.BackColor = Settings.Default.StatusBarColorIsGradient ? Utils.GetColorByPercentage(Globals.AudioHandler.FriendlyVolume) : Settings.Default.StatusBarColor;
-                        Width = MinimumSize.Width + Globals.AudioHandler.FriendlyVolume + Settings.Default.StatusBarWidthPadding;
                         break;
                     case ActionTriggerType.MuteToggleScroll:
                         BarTextLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : "Unmuted")}";
@@ -110,13 +108,14 @@ namespace tb_vol_scroll
                         break;
                     case ActionTriggerType.InternalEvent:
                         TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
-                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
+                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         break;
                     case ActionTriggerType.ConfigurationApplied:
                         Font = Settings.Default.StatusBarFontStyle;
                         MinimumSize = Utils.CalculateMinimumBarSize(BarTextLabel, "100%");
+                        
                         TrayNotifyIcon.Icon = Utils.GenerateTrayIcon(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "M" : Globals.AudioHandler.FriendlyVolume.ToString());
-                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
+                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         Width = MinimumSize.Width + Globals.AudioHandler.FriendlyVolume + Settings.Default.StatusBarWidthPadding;
                         Height = MinimumSize.Height + Settings.Default.StatusBarHeightPadding;
                         Opacity = Settings.Default.StatusBarOpacity;
@@ -133,7 +132,7 @@ namespace tb_vol_scroll
                         Globals.InputHandler.InputEnabled = true;
                         AudioPlaybackDevicesMenuItem.Enabled = true;
                         VolumeSliderControlMenuItem.Enabled = true;
-                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
+                        TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
                         ShowNotification("Audio playback device available", $"Audio control has been enabled.", ToolTipIcon.Info);
                         break;
                     case ActionTriggerType.Startup:
@@ -150,8 +149,8 @@ namespace tb_vol_scroll
                         break;
 
                 }
-                ResumeLayout();
-                Refresh();
+                Invalidate();
+                Update();
             });
         }
 
@@ -340,6 +339,18 @@ namespace tb_vol_scroll
         {
             TrayNotifyIcon.Visible = !Globals.AppArgs.Contains("trayless");
 
+        }
+
+        private void MainForm_ResizeBegin(object sender, EventArgs e)
+        {
+            SuspendLayout();
+            base.OnResizeBegin(e);
+        }
+
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
+        {
+            ResumeLayout();
+            base.OnResizeEnd(e);
         }
     }
 }

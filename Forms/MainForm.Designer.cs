@@ -198,7 +198,9 @@ namespace tb_vol_scroll
             // 
             // BarTextLabel
             // 
-            this.BarTextLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.BarTextLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.BarTextLabel.Location = new System.Drawing.Point(0, 0);
             this.BarTextLabel.Name = "BarTextLabel";
             this.BarTextLabel.Size = new System.Drawing.Size(120, 23);
@@ -249,6 +251,8 @@ namespace tb_vol_scroll
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
+            this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
