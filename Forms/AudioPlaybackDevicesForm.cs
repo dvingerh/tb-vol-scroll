@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -17,6 +17,7 @@ namespace tb_vol_scroll.Forms
         public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
+            Utils.SetWindowTheme(DevicesListView.Handle, "Explorer", null);
 
         }
 

@@ -57,6 +57,9 @@ namespace tb_vol_scroll.Classes.Helpers
 
         [DllImport("user32.dll")]
         private extern static int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+        
+        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         private static int MakeParam(int loWord, int hiWord)
         {

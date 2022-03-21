@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,18 +18,18 @@ namespace tb_vol_scroll.Classes.ControlsEx
                 foreach (FontFamily f in FontFamily.Families)
                 {
                     try
-                {
-                    if (!string.IsNullOrWhiteSpace(f.Name))
                     {
-                        ListViewItem listViewItem = new ListViewItem
+                        if (!string.IsNullOrWhiteSpace(f.Name))
                         {
-                            Text = f.Name,
-                            Font = new Font(f, 10),
-                            ForeColor = Color.Black,
-                            Tag = new Font(f, 10)
-                        };
-                        FontListComponent.Items.Add(listViewItem);
-                    }
+                            ListViewItem listViewItem = new ListViewItem
+                            {
+                                Text = f.Name,
+                                Font = new Font(f, 10),
+                                ForeColor = Color.Black,
+                                Tag = new Font(f, 10)
+                            };
+                            FontListComponent.Items.Add(listViewItem);
+                        }
                     }
                     catch { }
                 }
@@ -127,6 +127,9 @@ namespace tb_vol_scroll.Classes.ControlsEx
         {
             ActiveControl = FontListComponent;
             FontListComponent.Columns[0].Width = FontListComponent.ClientSize.Width;
+            Utils.InvokeIfRequired(this, () => {
+                Utils.SetWindowTheme(FontListComponent.Handle, "Explorer", null);
+            });
         }
     }
 
