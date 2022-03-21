@@ -80,7 +80,7 @@ namespace tb_vol_scroll.Classes.Handlers
         public async Task ChangePlaybackDevice(MouseWheelDirection direction)
         {
             List<CoreAudioDevice> audioDevices = (await Task.Run(() => AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
-            if (audioDevices.Count > 0)
+            if (audioDevices.Count != 0)
             {
                 int curDeviceIndex = audioDevices.IndexOf(AudioController.DefaultPlaybackDevice);
                 CoreAudioDevice newAudioDevice = null;

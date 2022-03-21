@@ -34,8 +34,8 @@ namespace tb_vol_scroll.Forms
                         if(updateVolumeQueue.Count == 0)
                             VolumeTrackBar.Value = Globals.AudioHandler.FriendlyVolume;
                         VolumeLabel.Text = $"{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? ("Muted") : VolumeTrackBar.Value + "%")}";
-                        AudioDeviceNameLabel.Refresh();
-                        VolumeTrackBar.Refresh();
+                        Invalidate();
+                        Update();
                         if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
                             UpdatePeakValue(0);
                     });
@@ -69,7 +69,7 @@ namespace tb_vol_scroll.Forms
             if (updatePeakValueQueue.Count == 0)
             {
                 updatePeakValueQueue.Enqueue(peakValue);
-                if (updatePeakValueQueue.Count > 0)
+                if (updatePeakValueQueue.Count != 0)
                     await ProcessPeakValueEventQueue();
             }
         }
@@ -134,8 +134,8 @@ namespace tb_vol_scroll.Forms
                         PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(100 - curValue);
                         PeakMeterPictureBox.Width = (int)Math.Round(curValue * widthPerc);
                         TruePeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc);
-                        PeakMeterPictureBox.Refresh();
-                        TruePeakMeterPictureBox.Refresh();
+                        Invalidate();
+                        Update();
 
                     });
                 });
@@ -198,10 +198,10 @@ namespace tb_vol_scroll.Forms
         {
             if(updateVolumeQueue.Count == 0)
                 updateVolumeQueue.Enqueue(VolumeTrackBar.Value);
-            if (updateVolumeQueue.Count > 0)
+            if (updateVolumeQueue.Count != 0)
                 await ProcessVolumeQueue();
             Utils.AvoidControlFocus(Handle);
-            SystemSounds.Exclamation.Play();
+            //SystemSounds.Exclamation.Play();
         }
 
 
@@ -219,6 +219,11 @@ namespace tb_vol_scroll.Forms
             updateVolumeQueue.Clear();
             updatePeakValueQueue.Clear();
             currentPeakValueTask = null;
+        }
+
+        private void VolumeTrackBar_MouseUp(object sender, MouseEventArgs e)
+        {
+            SystemSounds.Exclamation.Play();
         }
     }
 }

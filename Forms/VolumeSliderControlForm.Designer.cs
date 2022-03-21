@@ -99,6 +99,7 @@ namespace tb_vol_scroll.Forms
             this.VolumeTrackBar.TickFrequency = 2;
             this.VolumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft;
             this.VolumeTrackBar.Scroll += new System.EventHandler(this.VolumeTrackBar_Scroll);
+            this.VolumeTrackBar.MouseUp += new System.Windows.Forms.MouseEventHandler(this.VolumeTrackBar_MouseUp);
             // 
             // VolumeSliderTooltip
             // 

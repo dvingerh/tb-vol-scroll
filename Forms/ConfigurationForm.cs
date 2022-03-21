@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Forms;
 using tb_vol_scroll.Properties;
 using tb_vol_scroll.Classes.Helpers;
@@ -110,7 +110,7 @@ namespace tb_vol_scroll.Forms
                 }
             }
             #endregion
-            await Task.Run(() => { fontPickerDialog = new FontDialogForm(); });
+            await Task.Run(() => { Utils.InvokeIfRequired(this, () => { fontPickerDialog = new FontDialogForm(); }); });
         }
 
 

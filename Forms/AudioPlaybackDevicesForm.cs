@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -57,7 +57,7 @@ namespace tb_vol_scroll.Forms
 
             List<ListViewItem> deviceListViewItem = new List<ListViewItem>();
             List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
-            if (audioDevices.Count > 0)
+            if (audioDevices.Count != 0)
             {
                 foreach (CoreAudioDevice d in audioDevices)
                 {
@@ -88,7 +88,7 @@ namespace tb_vol_scroll.Forms
 
         private async void SetDefaultButton_Click(object sender, EventArgs e)
         {
-            if (DevicesListView.SelectedItems.Count > 0)
+            if (DevicesListView.SelectedItems.Count == 0)
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();
@@ -117,7 +117,7 @@ namespace tb_vol_scroll.Forms
                             deviceItem.Remove();
                         audioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
                     }
-                    if (audioDevices.Count > 0)
+                    if (audioDevices.Count != 0)
                     {
                         foreach (CoreAudioDevice device in audioDevices)
                         {
@@ -164,12 +164,12 @@ namespace tb_vol_scroll.Forms
 
         private void DevicesListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count > 0;
+            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count == 1;
         }
 
         private async void DevicesListView_DoubleClick(object sender, EventArgs e)
         {
-            if (DevicesListView.SelectedItems.Count > 0)
+            if (DevicesListView.SelectedItems.Count == 1)
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
                 await newPlaybackDevice.SetAsDefaultAsync();

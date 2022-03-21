@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using tb_vol_scroll.Classes.Helpers;
 
 namespace tb_vol_scroll.Classes.ControlsEx
 {
@@ -11,9 +13,11 @@ namespace tb_vol_scroll.Classes.ControlsEx
         public FontList()
         {
             InitializeComponent();
-            foreach (FontFamily f in FontFamily.Families)
+            Task.Run(() =>
             {
-                try
+                foreach (FontFamily f in FontFamily.Families)
+                {
+                    try
                 {
                     if (!string.IsNullOrWhiteSpace(f.Name))
                     {
@@ -26,10 +30,10 @@ namespace tb_vol_scroll.Classes.ControlsEx
                         };
                         FontListComponent.Items.Add(listViewItem);
                     }
+                    }
+                    catch { }
                 }
-                catch { }
-            }
-
+            }).ConfigureAwait(false);
         }
 
 
@@ -44,7 +48,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
             }
             set
             {
-                if (value == null)
+                if (value == null || IndexOf(value) == -1)
                     FontListComponent.SelectedItems.Clear();
                 else
                     FontListComponent.Items[IndexOf(value)].Selected = true;
