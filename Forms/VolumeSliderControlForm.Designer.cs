@@ -37,8 +37,8 @@ namespace tb_vol_scroll.Forms
             this.AudioDeviceNameLabel = new System.Windows.Forms.Label();
             this.VolumeTrackBar = new System.Windows.Forms.TrackBar();
             this.VolumeSliderTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.AudioDevicePictureBox = new System.Windows.Forms.PictureBox();
             this.VolumeLabel = new System.Windows.Forms.Label();
+            this.AudioDevicePictureBox = new System.Windows.Forms.PictureBox();
             this.PeakMeterPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PeakMeterPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TruePeakMeterPictureBox)).BeginInit();
@@ -110,15 +110,6 @@ namespace tb_vol_scroll.Forms
             this.VolumeSliderTooltip.UseAnimation = false;
             this.VolumeSliderTooltip.UseFading = false;
             // 
-            // AudioDevicePictureBox
-            // 
-            this.AudioDevicePictureBox.Location = new System.Drawing.Point(11, 11);
-            this.AudioDevicePictureBox.Name = "AudioDevicePictureBox";
-            this.AudioDevicePictureBox.Size = new System.Drawing.Size(24, 24);
-            this.AudioDevicePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.AudioDevicePictureBox.TabIndex = 13;
-            this.AudioDevicePictureBox.TabStop = false;
-            // 
             // VolumeLabel
             // 
             this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -130,6 +121,15 @@ namespace tb_vol_scroll.Forms
             this.VolumeLabel.TabIndex = 14;
             this.VolumeLabel.Text = "Volume";
             this.VolumeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // AudioDevicePictureBox
+            // 
+            this.AudioDevicePictureBox.Location = new System.Drawing.Point(11, 11);
+            this.AudioDevicePictureBox.Name = "AudioDevicePictureBox";
+            this.AudioDevicePictureBox.Size = new System.Drawing.Size(24, 24);
+            this.AudioDevicePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.AudioDevicePictureBox.TabIndex = 13;
+            this.AudioDevicePictureBox.TabStop = false;
             // 
             // VolumeSliderControlForm
             // 
@@ -171,7 +171,6 @@ namespace tb_vol_scroll.Forms
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox AudioDevicePictureBox;
         private System.Windows.Forms.Panel PeakMeterPanel;
         private System.Windows.Forms.PictureBox PeakMeterPictureBox;
         private System.Windows.Forms.Label AudioDeviceNameLabel;
@@ -179,5 +178,6 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.ToolTip VolumeSliderTooltip;
         private System.Windows.Forms.PictureBox TruePeakMeterPictureBox;
         private System.Windows.Forms.Label VolumeLabel;
+        private System.Windows.Forms.PictureBox AudioDevicePictureBox;
     }
 }

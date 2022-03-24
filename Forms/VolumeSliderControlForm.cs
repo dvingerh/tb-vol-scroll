@@ -34,6 +34,12 @@ namespace tb_vol_scroll.Forms
                         if(updateVolumeQueue.Count == 0)
                             VolumeTrackBar.Value = Globals.AudioHandler.FriendlyVolume;
                         VolumeLabel.Text = $"{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? ("Muted") : VolumeTrackBar.Value + "%")}";
+     
+                        Image iconImg = Utils.GetIconFromResource(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IconPath).ToBitmap();
+                        if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
+                            iconImg = ToolStripRenderer.CreateDisabledImage(iconImg);
+                        AudioDevicePictureBox.Image = iconImg;
+
                         Invalidate();
                         Update();
                         if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
@@ -51,14 +57,10 @@ namespace tb_vol_scroll.Forms
                     AudioDeviceNameLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}";
                     VolumeLabel.Text = $"{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? ("Muted") : VolumeTrackBar.Value + "%")}";
                     VolumeSliderTooltip.SetToolTip(AudioDeviceNameLabel, Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name);
-                    string[] iconInfo = Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IconPath.Split(',');
-                    Utils.ExtractIconEx(iconInfo[0], int.Parse(iconInfo[1]), out IntPtr hIcon, IntPtr.Zero, 1);
-                    using (Icon tmpIcon = Icon.FromHandle(hIcon))
-                    {
-                        Icon newIcon = (Icon)tmpIcon.Clone();
-                        Utils.DestroyIcon(tmpIcon.Handle);
-                        AudioDevicePictureBox.Image = newIcon.ToBitmap();
-                    }
+                    Image iconImg = Utils.GetIconFromResource(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IconPath).ToBitmap();
+                    if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
+                        iconImg = ToolStripRenderer.CreateDisabledImage(iconImg);
+                    AudioDevicePictureBox.Image = iconImg;
                     UpdateVolumeState().ConfigureAwait(false);
                 });
             }
@@ -131,9 +133,17 @@ namespace tb_vol_scroll.Forms
                         double curValue = Math.Round(peakValue / 100 * Globals.AudioHandler.FriendlyVolume, 2);
                         double widthPerc = Math.Round((double)PeakMeterPanel.Width / 100, 2);
                         double maxValue = Math.Round(peakValue / 100 * 100, 2);
-                        PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(100 - curValue);
-                        PeakMeterPictureBox.Width = (int)Math.Round(curValue * widthPerc);
-                        TruePeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc);
+                        if (peakValue != 100)
+                        {
+                            PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(100 - curValue);
+                            PeakMeterPictureBox.Width = (int)Math.Round(curValue * widthPerc) - 2;
+                        }
+                        else
+                        {
+                            PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(0);
+                            PeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc) - 2;  
+                        }
+                        TruePeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc) - 2;
                         Invalidate();
                         Update();
 

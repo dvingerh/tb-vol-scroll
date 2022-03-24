@@ -148,6 +148,18 @@ namespace tb_vol_scroll.Classes.Helpers
             catch { }
         }
 
+        public static Icon GetIconFromResource(string resPath)
+        {
+            string[] iconInfo = resPath.Split(',');
+            ExtractIconEx(iconInfo[0], int.Parse(iconInfo[1]), out IntPtr hIcon, IntPtr.Zero, 1);
+            using (Icon tmpIcon = Icon.FromHandle(hIcon))
+            {
+                Icon newIcon = (Icon)tmpIcon.Clone();
+                DestroyIcon(tmpIcon.Handle);
+                return newIcon;
+            }
+        }
+
         public static Color GetColorByPercentage(double percentage)
         {
             if (percentage > 100)
