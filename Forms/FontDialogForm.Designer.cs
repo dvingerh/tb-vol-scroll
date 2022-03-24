@@ -204,6 +204,7 @@ namespace tb_vol_scroll.Forms
             this.FontList.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FontList.Location = new System.Drawing.Point(15, 25);
             this.FontList.Name = "FontList";
+            this.FontList.SelectedFontFamily = null;
             this.FontList.Size = new System.Drawing.Size(238, 270);
             this.FontList.TabIndex = 20;
             // 

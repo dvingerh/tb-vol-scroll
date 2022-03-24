@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,10 +15,15 @@ namespace tb_vol_scroll.Forms
     public partial class AudioPlaybackDevicesForm : Form
     {
         private bool isRefreshing = false;
+
+        private Queue updateDeviceTaskQueue = new Queue();
+        private Task updateDeviceTask = null;
+
+
         public AudioPlaybackDevicesForm()
         {
             InitializeComponent();
-            Utils.SetWindowTheme(DevicesListView.Handle, "Explorer", null);
+            //Utils.SetWindowTheme(DevicesListView.Handle, "Explorer", null);
 
         }
 
@@ -46,24 +52,31 @@ namespace tb_vol_scroll.Forms
             await LoadAudioPlaybackDevicesList();
         }
 
+        private async Task ProcessUpdateDeviceQueue()
+        {
+            if ((updateDeviceTask == null) || updateDeviceTask.IsCompleted)
+            {
+                if (updateDeviceTaskQueue.Count != 0)
+                {
+                    updateDeviceTaskQueue.Dequeue();
+                    updateDeviceTask = RefreshOnDeviceActivity();
+                    await updateDeviceTask;
+                    if (updateDeviceTaskQueue.Count != 0)
+                        await ProcessUpdateDeviceQueue();
+                }
+            }
+        }
+
         public async Task LoadAudioPlaybackDevicesList()
         {
-            Utils.InvokeIfRequired(this, () =>
-            {
-                SuspendLayout();
-                DevicesListView.Items.Clear();
-                SetDefaultButton.Enabled = false;
-                RefreshButton.Enabled = false;
-            });
-
             List<ListViewItem> deviceListViewItem = new List<ListViewItem>();
             List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
             if (audioDevices.Count != 0)
             {
                 foreach (CoreAudioDevice d in audioDevices)
                 {
-                    Utils.ExtractIconEx(d.IconPath.Split(',')[0], int.Parse(d.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
-                    DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
+                    Icon iconImg = Utils.GetIconFromResource(d.IconPath);
+                    DevicesListViewImageList.Images.Add(iconImg);
                     ListViewItem deviceItem = new ListViewItem
                     {
                         ImageIndex = audioDevices.IndexOf(d),
@@ -80,92 +93,99 @@ namespace tb_vol_scroll.Forms
             Utils.InvokeIfRequired(this, () =>
             {
                 DevicesListView.Items.AddRange(deviceListViewItem.ToArray());
-                RefreshButton.Enabled = true;
                 bool hasScrollBars = DevicesListView.ClientSize.Height < (DevicesListView.Items.Count + 1) * DevicesListView.Items[0].Bounds.Height;
                 DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - (hasScrollBars ? 25 : 0);
-                ResumeLayout();
+                RefreshButton.Enabled = true;
             });
         }
 
         private async void SetDefaultButton_Click(object sender, EventArgs e)
         {
-            if (DevicesListView.SelectedItems.Count == 0)
+            if (DevicesListView.SelectedItems.Count == 1)
             {
                 CoreAudioDevice newPlaybackDevice = (CoreAudioDevice)DevicesListView.SelectedItems[0].Tag;
+                DevicesListView.SelectedItems.Clear();
                 await newPlaybackDevice.SetAsDefaultAsync();
             }
-            SetDefaultButton.Enabled = false;
+            MakeDefaultButton.Enabled = false;
         }
 
         public async Task RefreshOnDeviceActivity()
         {
-            if (!isRefreshing)
+            List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
+            Utils.InvokeIfRequired(this, () =>
             {
-                isRefreshing = true;
-                List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
-                Utils.InvokeIfRequired(this, () =>
+                RefreshButton.Enabled = false;
+                foreach (ListViewItem deviceItem in DevicesListView.Items)
                 {
-                    foreach (ListViewItem deviceItem in DevicesListView.Items)
+                    if (audioDevices.Contains(deviceItem.Tag))
                     {
-                        if (audioDevices.Contains(deviceItem.Tag))
-                        {
-                            deviceItem.SubItems[1].Text = $"{(int)Math.Round(((CoreAudioDevice)deviceItem.Tag).Volume)}%";
-                            deviceItem.SubItems[2].Text = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? "Yes" : "No";
-                            deviceItem.SubItems[3].Text = ((CoreAudioDevice)deviceItem.Tag).IsMuted ? "Yes" : "No";
-                            deviceItem.BackColor = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? Color.FromArgb(225, 255, 225) : Color.White;
-                        }
-                        else
-                            deviceItem.Remove();
-                        audioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
+                        deviceItem.SubItems[1].Text = $"{(int)Math.Round(((CoreAudioDevice)deviceItem.Tag).Volume)}%";
+                        deviceItem.SubItems[2].Text = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? "Yes" : "No";
+                        deviceItem.SubItems[3].Text = ((CoreAudioDevice)deviceItem.Tag).IsMuted ? "Yes" : "No";
+                        deviceItem.BackColor = ((CoreAudioDevice)deviceItem.Tag).IsDefaultDevice ? Color.FromArgb(225, 255, 225) : Color.White;
                     }
-                    if (audioDevices.Count != 0)
+                    else
+                        deviceItem.Remove();
+                    audioDevices.Remove((CoreAudioDevice)deviceItem.Tag);
+                }
+                if (audioDevices.Count != 0)
+                {
+                    foreach (CoreAudioDevice device in audioDevices)
                     {
-                        foreach (CoreAudioDevice device in audioDevices)
+                        ListViewItem deviceItem = new ListViewItem
                         {
-                            ListViewItem deviceItem = new ListViewItem
-                            {
-                                Text = device.FullName
-                            };
-                            deviceItem.SubItems.Add($"{(int)Math.Round(device.Volume)}%");
-                            deviceItem.SubItems.Add(device.IsDefaultDevice ? "Yes" : "No");
-                            deviceItem.SubItems.Add(device.IsMuted ? "Yes" : "No");
-                            deviceItem.BackColor = device.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
-                            deviceItem.Tag = device;
-                            DevicesListView.Items.Add(deviceItem);
-                        }
+                            Text = device.FullName
+                        };
+                        deviceItem.SubItems.Add($"{(int)Math.Round(device.Volume)}%");
+                        deviceItem.SubItems.Add(device.IsDefaultDevice ? "Yes" : "No");
+                        deviceItem.SubItems.Add(device.IsMuted ? "Yes" : "No");
+                        deviceItem.BackColor = device.IsDefaultDevice ? Color.FromArgb(230, 255, 230) : Color.White;
+                        deviceItem.Tag = device;
+                        DevicesListView.Items.Add(deviceItem);
                     }
-                    DevicesListViewImageList.Images.Clear();
-                    foreach (ListViewItem deviceItem in DevicesListView.Items)
-                    {
-                        CoreAudioDevice audioDevice = ((CoreAudioDevice)deviceItem.Tag);
-                        Utils.ExtractIconEx(audioDevice.IconPath.Split(',')[0], int.Parse(audioDevice.IconPath.Split(',')[1]), out IntPtr hIcon, IntPtr.Zero, 1);
-                        DevicesListViewImageList.Images.Add(Icon.FromHandle(hIcon));
-                        deviceItem.ImageIndex = DevicesListView.Items.IndexOf(deviceItem);
+                }
+                DevicesListViewImageList.Images.Clear();
+                foreach (ListViewItem deviceItem in DevicesListView.Items)
+                {
+                    CoreAudioDevice audioDevice = (CoreAudioDevice)deviceItem.Tag;
+                    Icon iconImg = Utils.GetIconFromResource(audioDevice.IconPath);
+                    DevicesListViewImageList.Images.Add(iconImg);
+                    deviceItem.ImageIndex = DevicesListView.Items.IndexOf(deviceItem);
 
-                    }
                     bool hasScrollBars = DevicesListView.ClientSize.Height < (DevicesListView.Items.Count + 1) * DevicesListView.Items[0].Bounds.Height;
                     DevicesListView.Columns[0].Width = DevicesListView.Width - (60 * 3) - (hasScrollBars ? 25 : 0);
+                    RefreshButton.Enabled = true;
 
-                });
-                isRefreshing = false;
-            }
+                }
+            });
+        }
+
+        public async Task OnDeviceChanged()
+        {
+            if (updateDeviceTaskQueue.Count == 0)
+                updateDeviceTaskQueue.Enqueue(null);
+            if (updateDeviceTaskQueue.Count != 0)
+                await ProcessUpdateDeviceQueue();
+
+
         }
 
 
         private async void RefreshButton_Click(object sender, EventArgs e)
         {
-            await RefreshOnDeviceActivity();
+            await OnDeviceChanged();
         }
 
         private void AudioPlaybackDevicesForm_Deactivate(object sender, EventArgs e)
         {
-            if (!isRefreshing)
                 Close();
         }
 
         private void DevicesListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SetDefaultButton.Enabled = DevicesListView.SelectedItems.Count == 1;
+            MakeDefaultButton.Enabled = DevicesListView.SelectedItems.Count == 1;
+            Utils.AvoidControlFocus(DevicesListView.Handle);
         }
 
         private async void DevicesListView_DoubleClick(object sender, EventArgs e)
@@ -177,6 +197,12 @@ namespace tb_vol_scroll.Forms
                 if (!isRefreshing)
                     Close();
             }
+        }
+
+        private void AudioPlaybackDevicesForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            updateDeviceTaskQueue.Clear();
+            updateDeviceTask = null;
         }
     }
 }

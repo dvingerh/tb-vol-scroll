@@ -127,12 +127,12 @@ namespace tb_vol_scroll.Classes.Handlers
                     case DeviceChangedType.VolumeChanged:
                         Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
                         if (Globals.VolumeSliderControlForm != null)
-                            await Globals.VolumeSliderControlForm.UpdateVolumeState();
+                            Globals.VolumeSliderControlForm.UpdateVolumeState();
                         break;
                     case DeviceChangedType.MuteChanged:
                         Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
                         if (Globals.VolumeSliderControlForm != null)
-                            await Globals.VolumeSliderControlForm.UpdateVolumeState();
+                            Globals.VolumeSliderControlForm.UpdateVolumeState();
                         break;
                     case DeviceChangedType.DefaultChanged:
                         if (Globals.AudioAvailable && Globals.InputAvailable)
@@ -154,14 +154,15 @@ namespace tb_vol_scroll.Classes.Handlers
                             if (currentPeakValue > 1)
                                 currentPeakValue = 1;
 
-                            Globals.VolumeSliderControlForm.UpdatePeakValue(peakVal.PeakValue);
+                            if (Globals.VolumeSliderControlForm != null)
+                                Globals.VolumeSliderControlForm.UpdatePeakValue(peakVal.PeakValue);
                         }
                         break;
                     default:
                         break;
                 }
                 if (value.ChangedType != DeviceChangedType.PeakValueChanged && Globals.AudioPlaybackDevicesForm != null)
-                   await Globals.AudioPlaybackDevicesForm.RefreshOnDeviceActivity();
+                    await Globals.AudioPlaybackDevicesForm.OnDeviceChanged();
             }
         }
 

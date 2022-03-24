@@ -161,9 +161,9 @@ namespace tb_vol_scroll.Forms
             this.BehaviorTabPage.Controls.Add(this.BehaviorGeneralGroupBox);
             this.BehaviorTabPage.Controls.Add(this.BehaviorHotkeysGroupBox);
             this.BehaviorTabPage.Controls.Add(this.BehaviorMiscGroupBox);
-            this.BehaviorTabPage.Location = new System.Drawing.Point(4, 22);
+            this.BehaviorTabPage.Location = new System.Drawing.Point(4, 24);
             this.BehaviorTabPage.Name = "BehaviorTabPage";
-            this.BehaviorTabPage.Size = new System.Drawing.Size(552, 334);
+            this.BehaviorTabPage.Size = new System.Drawing.Size(552, 332);
             this.BehaviorTabPage.TabIndex = 1;
             this.BehaviorTabPage.Text = "Behavior";
             // 

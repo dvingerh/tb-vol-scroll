@@ -251,8 +251,6 @@ namespace tb_vol_scroll
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "tb-vol-scroll";
             this.Shown += new System.EventHandler(this.MainForm_Shown);
-            this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.TrayContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

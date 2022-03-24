@@ -23,12 +23,10 @@ namespace tb_vol_scroll.Forms
             UpdateDeviceState();
         }
 
-        public async Task UpdateVolumeState()
+        public void UpdateVolumeState()
         {
             if (Globals.AudioAvailable)
             {
-                await Task.Run(() =>
-                {
                     Utils.InvokeIfRequired(this, () =>
                     {
                         if(updateVolumeQueue.Count == 0)
@@ -39,13 +37,15 @@ namespace tb_vol_scroll.Forms
                         if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
                             iconImg = ToolStripRenderer.CreateDisabledImage(iconImg);
                         AudioDevicePictureBox.Image = iconImg;
-
+                        if (!Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
+                            AudioDevicePictureBox.BackColor = Color.Transparent;
+                        else
+                            AudioDevicePictureBox.BackColor = Color.FromArgb(255, 225, 225, 225);
                         Invalidate();
                         Update();
                         if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
                             UpdatePeakValue(0);
                     });
-                });
             }
         }
         public void UpdateDeviceState()
@@ -61,7 +61,7 @@ namespace tb_vol_scroll.Forms
                     if (Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
                         iconImg = ToolStripRenderer.CreateDisabledImage(iconImg);
                     AudioDevicePictureBox.Image = iconImg;
-                    UpdateVolumeState().ConfigureAwait(false);
+                    UpdateVolumeState();
                 });
             }
         }
@@ -85,7 +85,7 @@ namespace tb_vol_scroll.Forms
                 {
                     var volumeArgs = updateVolumeQueue.Dequeue();
                     currentUpdateVolumeTask = HandleVolumeUpdate(volumeArgs);
-                    await currentUpdateVolumeTask.ContinueWith(async(result) => await UpdateVolumeState());
+                    await currentUpdateVolumeTask.ContinueWith(result => UpdateVolumeState());
                     if (updateVolumeQueue.Count != 0)
                         await ProcessVolumeQueue();
                 }
@@ -136,12 +136,15 @@ namespace tb_vol_scroll.Forms
                         if (peakValue != 100)
                         {
                             PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(100 - curValue);
+                            TruePeakMeterPictureBox.BackColor = Color.FromArgb(255, 200, 200, 200);
                             PeakMeterPictureBox.Width = (int)Math.Round(curValue * widthPerc) - 2;
+
                         }
                         else
                         {
-                            PeakMeterPictureBox.BackColor = Utils.GetColorByPercentage(0);
-                            PeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc) - 2;  
+                            Color curColor = Utils.GetColorByPercentage(100 - curValue);
+                            PeakMeterPictureBox.BackColor = Color.FromArgb(255, (int)(curColor.R * 0.8), (int)(curColor.G * 0.8), (int)(curColor.B * 0.8));
+                            TruePeakMeterPictureBox.BackColor = Color.FromArgb(255, 170, 170, 170);
                         }
                         TruePeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc) - 2;
                         Invalidate();
@@ -228,12 +231,41 @@ namespace tb_vol_scroll.Forms
         {
             updateVolumeQueue.Clear();
             updatePeakValueQueue.Clear();
+            currentUpdateVolumeTask = null;
             currentPeakValueTask = null;
         }
 
         private void VolumeTrackBar_MouseUp(object sender, MouseEventArgs e)
         {
             SystemSounds.Exclamation.Play();
+        }
+
+        private async void AudioDevicePictureBox_Click(object sender, EventArgs e)
+        {
+            await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, !Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted);
+        }
+
+        private void AudioDevicePictureBox_MouseEnter(object sender, EventArgs e)
+        {
+                AudioDevicePictureBox.BackColor = Color.FromArgb(255, 225, 225, 225);
+
+        }
+
+        private void AudioDevicePictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            if (!Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted)
+                AudioDevicePictureBox.BackColor = Color.Transparent;
+
+        }
+
+        private void AudioDevicePictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            using (Pen pen = new Pen(Color.FromArgb(255, 200, 200, 200), 2))
+            {
+                Rectangle rect = AudioDevicePictureBox.DisplayRectangle;
+                e.Graphics.DrawRectangle(pen, rect);
+            }
+
         }
     }
 }

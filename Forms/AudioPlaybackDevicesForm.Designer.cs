@@ -36,7 +36,7 @@ namespace tb_vol_scroll.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AudioPlaybackDevicesForm));
             this.RefreshButton = new System.Windows.Forms.Button();
-            this.SetDefaultButton = new System.Windows.Forms.Button();
+            this.MakeDefaultButton = new System.Windows.Forms.Button();
             this.DevicesListViewImageList = new System.Windows.Forms.ImageList(this.components);
             this.DevicesListView = new tb_vol_scroll.Classes.ControlsExt.ListViewExt();
             this.NameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -56,16 +56,16 @@ namespace tb_vol_scroll.Forms
             this.RefreshButton.UseVisualStyleBackColor = true;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
-            // SetDefaultButton
+            // MakeDefaultButton
             // 
-            this.SetDefaultButton.Enabled = false;
-            this.SetDefaultButton.Location = new System.Drawing.Point(164, 174);
-            this.SetDefaultButton.Name = "SetDefaultButton";
-            this.SetDefaultButton.Size = new System.Drawing.Size(100, 25);
-            this.SetDefaultButton.TabIndex = 3;
-            this.SetDefaultButton.Text = "Set default";
-            this.SetDefaultButton.UseVisualStyleBackColor = true;
-            this.SetDefaultButton.Click += new System.EventHandler(this.SetDefaultButton_Click);
+            this.MakeDefaultButton.Enabled = false;
+            this.MakeDefaultButton.Location = new System.Drawing.Point(164, 174);
+            this.MakeDefaultButton.Name = "MakeDefaultButton";
+            this.MakeDefaultButton.Size = new System.Drawing.Size(100, 25);
+            this.MakeDefaultButton.TabIndex = 3;
+            this.MakeDefaultButton.Text = "Make default";
+            this.MakeDefaultButton.UseVisualStyleBackColor = true;
+            this.MakeDefaultButton.Click += new System.EventHandler(this.SetDefaultButton_Click);
             // 
             // DevicesListViewImageList
             // 
@@ -123,7 +123,7 @@ namespace tb_vol_scroll.Forms
             this.ClientSize = new System.Drawing.Size(534, 211);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.DevicesListView);
-            this.Controls.Add(this.SetDefaultButton);
+            this.Controls.Add(this.MakeDefaultButton);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -135,6 +135,7 @@ namespace tb_vol_scroll.Forms
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Audio Playback Devices (tb-vol-scroll)";
             this.Deactivate += new System.EventHandler(this.AudioPlaybackDevicesForm_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AudioPlaybackDevicesForm_FormClosing);
             this.Shown += new System.EventHandler(this.AudioPlaybackDevicesForm_Shown);
             this.ResumeLayout(false);
 
@@ -148,7 +149,7 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.ColumnHeader IsDefaultColumn;
         private System.Windows.Forms.ColumnHeader VolumeColumn;
         private System.Windows.Forms.ColumnHeader MutedColumn;
-        private System.Windows.Forms.Button SetDefaultButton;
+        private System.Windows.Forms.Button MakeDefaultButton;
         private System.Windows.Forms.ImageList DevicesListViewImageList;
     }
 }

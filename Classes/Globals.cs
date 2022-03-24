@@ -21,6 +21,7 @@ namespace tb_vol_scroll.Classes
 
         private static float dpiScale = Utils.GetDpiScale();
         private static readonly Color defaultColor = Color.SkyBlue;
+
         public static MainForm MainForm { get => mainForm; set => mainForm = value; }
         public static InputHandler InputHandler { get => inputHandler; set => inputHandler = value; }
         public static AudioHandler AudioHandler { get => audioHandler; set => audioHandler = value; }

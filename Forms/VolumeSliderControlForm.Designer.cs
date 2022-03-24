@@ -51,7 +51,7 @@ namespace tb_vol_scroll.Forms
             this.PeakMeterPanel.BackColor = System.Drawing.SystemColors.ControlLight;
             this.PeakMeterPanel.Controls.Add(this.PeakMeterPictureBox);
             this.PeakMeterPanel.Controls.Add(this.TruePeakMeterPictureBox);
-            this.PeakMeterPanel.Location = new System.Drawing.Point(12, 79);
+            this.PeakMeterPanel.Location = new System.Drawing.Point(12, 89);
             this.PeakMeterPanel.Name = "PeakMeterPanel";
             this.PeakMeterPanel.Size = new System.Drawing.Size(300, 10);
             this.PeakMeterPanel.TabIndex = 12;
@@ -80,18 +80,19 @@ namespace tb_vol_scroll.Forms
             this.AudioDeviceNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.AudioDeviceNameLabel.AutoEllipsis = true;
-            this.AudioDeviceNameLabel.Location = new System.Drawing.Point(41, 15);
+            this.AudioDeviceNameLabel.Location = new System.Drawing.Point(43, 11);
             this.AudioDeviceNameLabel.Name = "AudioDeviceNameLabel";
-            this.AudioDeviceNameLabel.Size = new System.Drawing.Size(213, 14);
+            this.AudioDeviceNameLabel.Size = new System.Drawing.Size(219, 24);
             this.AudioDeviceNameLabel.TabIndex = 11;
             this.AudioDeviceNameLabel.Text = "Audio Device";
+            this.AudioDeviceNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // VolumeTrackBar
             // 
             this.VolumeTrackBar.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.VolumeTrackBar.Location = new System.Drawing.Point(5, 38);
+            this.VolumeTrackBar.Location = new System.Drawing.Point(5, 48);
             this.VolumeTrackBar.Maximum = 100;
             this.VolumeTrackBar.Name = "VolumeTrackBar";
             this.VolumeTrackBar.Size = new System.Drawing.Size(315, 45);
@@ -115,28 +116,35 @@ namespace tb_vol_scroll.Forms
             this.VolumeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.VolumeLabel.AutoEllipsis = true;
-            this.VolumeLabel.Location = new System.Drawing.Point(260, 15);
+            this.VolumeLabel.Location = new System.Drawing.Point(260, 11);
             this.VolumeLabel.Name = "VolumeLabel";
-            this.VolumeLabel.Size = new System.Drawing.Size(52, 14);
+            this.VolumeLabel.Size = new System.Drawing.Size(52, 24);
             this.VolumeLabel.TabIndex = 14;
             this.VolumeLabel.Text = "Volume";
-            this.VolumeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.VolumeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AudioDevicePictureBox
             // 
+            this.AudioDevicePictureBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.AudioDevicePictureBox.Location = new System.Drawing.Point(11, 11);
             this.AudioDevicePictureBox.Name = "AudioDevicePictureBox";
-            this.AudioDevicePictureBox.Size = new System.Drawing.Size(24, 24);
+            this.AudioDevicePictureBox.Padding = new System.Windows.Forms.Padding(2);
+            this.AudioDevicePictureBox.Size = new System.Drawing.Size(26, 26);
             this.AudioDevicePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.AudioDevicePictureBox.TabIndex = 13;
             this.AudioDevicePictureBox.TabStop = false;
+            this.VolumeSliderTooltip.SetToolTip(this.AudioDevicePictureBox, "Click to toggle mute");
+            this.AudioDevicePictureBox.Click += new System.EventHandler(this.AudioDevicePictureBox_Click);
+            this.AudioDevicePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.AudioDevicePictureBox_Paint);
+            this.AudioDevicePictureBox.MouseEnter += new System.EventHandler(this.AudioDevicePictureBox_MouseEnter);
+            this.AudioDevicePictureBox.MouseLeave += new System.EventHandler(this.AudioDevicePictureBox_MouseLeave);
             // 
             // VolumeSliderControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(325, 100);
+            this.ClientSize = new System.Drawing.Size(325, 111);
             this.ControlBox = false;
             this.Controls.Add(this.VolumeLabel);
             this.Controls.Add(this.AudioDevicePictureBox);
