@@ -85,6 +85,11 @@ namespace tb_vol_scroll.Forms
             this.StatusBarSelectFontStyleButton = new System.Windows.Forms.Button();
             this.StatusBarFontStyleLabel = new System.Windows.Forms.Label();
             this.AppearanceColorsGroupBox = new System.Windows.Forms.GroupBox();
+            this.StatusBarTextColorRgbValueLabel = new System.Windows.Forms.Label();
+            this.StatusBarTextColorLabel = new System.Windows.Forms.Label();
+            this.StatusBarTextColorValuePictureBox = new System.Windows.Forms.PictureBox();
+            this.StatusBarTextColorGradientCheckBox = new System.Windows.Forms.CheckBox();
+            this.StatusBarTextColorSolidCheckBox = new System.Windows.Forms.CheckBox();
             this.TrayIconColorRgbValueLabel = new System.Windows.Forms.Label();
             this.StatusBarColorRgbValueLabel = new System.Windows.Forms.Label();
             this.TrayIconColorLabel = new System.Windows.Forms.Label();
@@ -114,6 +119,7 @@ namespace tb_vol_scroll.Forms
             ((System.ComponentModel.ISupportInitialize)(this.StatusBarOpacityTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatusBarWidthPaddingNumericUpDown)).BeginInit();
             this.AppearanceColorsGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StatusBarTextColorValuePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrayIconColorValuePictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatusBarColorValuePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -161,9 +167,9 @@ namespace tb_vol_scroll.Forms
             this.BehaviorTabPage.Controls.Add(this.BehaviorGeneralGroupBox);
             this.BehaviorTabPage.Controls.Add(this.BehaviorHotkeysGroupBox);
             this.BehaviorTabPage.Controls.Add(this.BehaviorMiscGroupBox);
-            this.BehaviorTabPage.Location = new System.Drawing.Point(4, 24);
+            this.BehaviorTabPage.Location = new System.Drawing.Point(4, 22);
             this.BehaviorTabPage.Name = "BehaviorTabPage";
-            this.BehaviorTabPage.Size = new System.Drawing.Size(552, 332);
+            this.BehaviorTabPage.Size = new System.Drawing.Size(552, 334);
             this.BehaviorTabPage.TabIndex = 1;
             this.BehaviorTabPage.Text = "Behavior";
             // 
@@ -475,8 +481,9 @@ namespace tb_vol_scroll.Forms
             // 
             // TrayIconFontStyleValueLabel
             // 
+            this.TrayIconFontStyleValueLabel.AutoEllipsis = true;
             this.TrayIconFontStyleValueLabel.AutoSize = true;
-            this.TrayIconFontStyleValueLabel.Location = new System.Drawing.Point(273, 84);
+            this.TrayIconFontStyleValueLabel.Location = new System.Drawing.Point(273, 83);
             this.TrayIconFontStyleValueLabel.Name = "TrayIconFontStyleValueLabel";
             this.TrayIconFontStyleValueLabel.Size = new System.Drawing.Size(179, 13);
             this.TrayIconFontStyleValueLabel.TabIndex = 45;
@@ -759,6 +766,7 @@ namespace tb_vol_scroll.Forms
             // 
             // StatusBarFontStyleValueLabel
             // 
+            this.StatusBarFontStyleValueLabel.AutoEllipsis = true;
             this.StatusBarFontStyleValueLabel.AutoSize = true;
             this.StatusBarFontStyleValueLabel.Location = new System.Drawing.Point(273, 83);
             this.StatusBarFontStyleValueLabel.Name = "StatusBarFontStyleValueLabel";
@@ -798,6 +806,11 @@ namespace tb_vol_scroll.Forms
             // 
             // AppearanceColorsGroupBox
             // 
+            this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarTextColorRgbValueLabel);
+            this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarTextColorLabel);
+            this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarTextColorValuePictureBox);
+            this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarTextColorGradientCheckBox);
+            this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarTextColorSolidCheckBox);
             this.AppearanceColorsGroupBox.Controls.Add(this.TrayIconColorRgbValueLabel);
             this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarColorRgbValueLabel);
             this.AppearanceColorsGroupBox.Controls.Add(this.TrayIconColorLabel);
@@ -810,15 +823,71 @@ namespace tb_vol_scroll.Forms
             this.AppearanceColorsGroupBox.Controls.Add(this.StatusBarColorSolidCheckBox);
             this.AppearanceColorsGroupBox.Location = new System.Drawing.Point(6, 337);
             this.AppearanceColorsGroupBox.Name = "AppearanceColorsGroupBox";
-            this.AppearanceColorsGroupBox.Size = new System.Drawing.Size(525, 95);
+            this.AppearanceColorsGroupBox.Size = new System.Drawing.Size(525, 130);
             this.AppearanceColorsGroupBox.TabIndex = 2;
             this.AppearanceColorsGroupBox.TabStop = false;
             this.AppearanceColorsGroupBox.Text = "Colors";
             // 
+            // StatusBarTextColorRgbValueLabel
+            // 
+            this.StatusBarTextColorRgbValueLabel.AutoSize = true;
+            this.StatusBarTextColorRgbValueLabel.Location = new System.Drawing.Point(309, 27);
+            this.StatusBarTextColorRgbValueLabel.Name = "StatusBarTextColorRgbValueLabel";
+            this.StatusBarTextColorRgbValueLabel.Size = new System.Drawing.Size(70, 13);
+            this.StatusBarTextColorRgbValueLabel.TabIndex = 52;
+            this.StatusBarTextColorRgbValueLabel.Text = "R: 0 G: 0 B: 0";
+            // 
+            // StatusBarTextColorLabel
+            // 
+            this.StatusBarTextColorLabel.AutoSize = true;
+            this.StatusBarTextColorLabel.Location = new System.Drawing.Point(6, 27);
+            this.StatusBarTextColorLabel.Name = "StatusBarTextColorLabel";
+            this.StatusBarTextColorLabel.Size = new System.Drawing.Size(113, 13);
+            this.StatusBarTextColorLabel.TabIndex = 50;
+            this.StatusBarTextColorLabel.Text = "Status bar text color:";
+            this.StatusBarTextColorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // StatusBarTextColorValuePictureBox
+            // 
+            this.StatusBarTextColorValuePictureBox.BackColor = System.Drawing.Color.Black;
+            this.StatusBarTextColorValuePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.StatusBarTextColorValuePictureBox.Cursor = System.Windows.Forms.Cursors.Default;
+            this.StatusBarTextColorValuePictureBox.Location = new System.Drawing.Point(276, 22);
+            this.StatusBarTextColorValuePictureBox.Name = "StatusBarTextColorValuePictureBox";
+            this.StatusBarTextColorValuePictureBox.Size = new System.Drawing.Size(27, 23);
+            this.StatusBarTextColorValuePictureBox.TabIndex = 51;
+            this.StatusBarTextColorValuePictureBox.TabStop = false;
+            // 
+            // StatusBarTextColorGradientCheckBox
+            // 
+            this.StatusBarTextColorGradientCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.StatusBarTextColorGradientCheckBox.Location = new System.Drawing.Point(120, 21);
+            this.StatusBarTextColorGradientCheckBox.Name = "StatusBarTextColorGradientCheckBox";
+            this.StatusBarTextColorGradientCheckBox.Size = new System.Drawing.Size(72, 25);
+            this.StatusBarTextColorGradientCheckBox.TabIndex = 48;
+            this.StatusBarTextColorGradientCheckBox.Text = "Gradient";
+            this.StatusBarTextColorGradientCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.StatusBarTextColorGradientCheckBox.UseVisualStyleBackColor = true;
+            this.StatusBarTextColorGradientCheckBox.Click += new System.EventHandler(this.StatusBarTextColorGradientCheckBox_Click);
+            // 
+            // StatusBarTextColorSolidCheckBox
+            // 
+            this.StatusBarTextColorSolidCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
+            this.StatusBarTextColorSolidCheckBox.Checked = true;
+            this.StatusBarTextColorSolidCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.StatusBarTextColorSolidCheckBox.Location = new System.Drawing.Point(195, 21);
+            this.StatusBarTextColorSolidCheckBox.Name = "StatusBarTextColorSolidCheckBox";
+            this.StatusBarTextColorSolidCheckBox.Size = new System.Drawing.Size(72, 25);
+            this.StatusBarTextColorSolidCheckBox.TabIndex = 49;
+            this.StatusBarTextColorSolidCheckBox.Text = "Solid...";
+            this.StatusBarTextColorSolidCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.StatusBarTextColorSolidCheckBox.UseVisualStyleBackColor = true;
+            this.StatusBarTextColorSolidCheckBox.Click += new System.EventHandler(this.StatusBarTextColorSolidCheckBox_Click);
+            // 
             // TrayIconColorRgbValueLabel
             // 
             this.TrayIconColorRgbValueLabel.AutoSize = true;
-            this.TrayIconColorRgbValueLabel.Location = new System.Drawing.Point(309, 63);
+            this.TrayIconColorRgbValueLabel.Location = new System.Drawing.Point(309, 89);
             this.TrayIconColorRgbValueLabel.Name = "TrayIconColorRgbValueLabel";
             this.TrayIconColorRgbValueLabel.Size = new System.Drawing.Size(106, 13);
             this.TrayIconColorRgbValueLabel.TabIndex = 47;
@@ -827,7 +896,7 @@ namespace tb_vol_scroll.Forms
             // StatusBarColorRgbValueLabel
             // 
             this.StatusBarColorRgbValueLabel.AutoSize = true;
-            this.StatusBarColorRgbValueLabel.Location = new System.Drawing.Point(309, 27);
+            this.StatusBarColorRgbValueLabel.Location = new System.Drawing.Point(309, 58);
             this.StatusBarColorRgbValueLabel.Name = "StatusBarColorRgbValueLabel";
             this.StatusBarColorRgbValueLabel.Size = new System.Drawing.Size(106, 13);
             this.StatusBarColorRgbValueLabel.TabIndex = 46;
@@ -836,7 +905,7 @@ namespace tb_vol_scroll.Forms
             // TrayIconColorLabel
             // 
             this.TrayIconColorLabel.AutoSize = true;
-            this.TrayIconColorLabel.Location = new System.Drawing.Point(6, 63);
+            this.TrayIconColorLabel.Location = new System.Drawing.Point(6, 89);
             this.TrayIconColorLabel.Name = "TrayIconColorLabel";
             this.TrayIconColorLabel.Size = new System.Drawing.Size(84, 13);
             this.TrayIconColorLabel.TabIndex = 30;
@@ -848,7 +917,7 @@ namespace tb_vol_scroll.Forms
             this.TrayIconColorValuePictureBox.BackColor = System.Drawing.Color.SkyBlue;
             this.TrayIconColorValuePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.TrayIconColorValuePictureBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.TrayIconColorValuePictureBox.Location = new System.Drawing.Point(276, 58);
+            this.TrayIconColorValuePictureBox.Location = new System.Drawing.Point(276, 84);
             this.TrayIconColorValuePictureBox.Name = "TrayIconColorValuePictureBox";
             this.TrayIconColorValuePictureBox.Size = new System.Drawing.Size(27, 23);
             this.TrayIconColorValuePictureBox.TabIndex = 31;
@@ -859,7 +928,7 @@ namespace tb_vol_scroll.Forms
             this.TrayIconTextColorGradientCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.TrayIconTextColorGradientCheckBox.Checked = true;
             this.TrayIconTextColorGradientCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TrayIconTextColorGradientCheckBox.Location = new System.Drawing.Point(120, 57);
+            this.TrayIconTextColorGradientCheckBox.Location = new System.Drawing.Point(120, 83);
             this.TrayIconTextColorGradientCheckBox.Name = "TrayIconTextColorGradientCheckBox";
             this.TrayIconTextColorGradientCheckBox.Size = new System.Drawing.Size(72, 25);
             this.TrayIconTextColorGradientCheckBox.TabIndex = 25;
@@ -871,7 +940,7 @@ namespace tb_vol_scroll.Forms
             // TrayIconTextColorSolidCheckBox
             // 
             this.TrayIconTextColorSolidCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.TrayIconTextColorSolidCheckBox.Location = new System.Drawing.Point(195, 57);
+            this.TrayIconTextColorSolidCheckBox.Location = new System.Drawing.Point(195, 83);
             this.TrayIconTextColorSolidCheckBox.Name = "TrayIconTextColorSolidCheckBox";
             this.TrayIconTextColorSolidCheckBox.Size = new System.Drawing.Size(72, 25);
             this.TrayIconTextColorSolidCheckBox.TabIndex = 26;
@@ -883,7 +952,7 @@ namespace tb_vol_scroll.Forms
             // StatusBarColorLabel
             // 
             this.StatusBarColorLabel.AutoSize = true;
-            this.StatusBarColorLabel.Location = new System.Drawing.Point(6, 27);
+            this.StatusBarColorLabel.Location = new System.Drawing.Point(6, 58);
             this.StatusBarColorLabel.Name = "StatusBarColorLabel";
             this.StatusBarColorLabel.Size = new System.Drawing.Size(91, 13);
             this.StatusBarColorLabel.TabIndex = 26;
@@ -895,7 +964,7 @@ namespace tb_vol_scroll.Forms
             this.StatusBarColorValuePictureBox.BackColor = System.Drawing.Color.SkyBlue;
             this.StatusBarColorValuePictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.StatusBarColorValuePictureBox.Cursor = System.Windows.Forms.Cursors.Default;
-            this.StatusBarColorValuePictureBox.Location = new System.Drawing.Point(276, 22);
+            this.StatusBarColorValuePictureBox.Location = new System.Drawing.Point(276, 53);
             this.StatusBarColorValuePictureBox.Name = "StatusBarColorValuePictureBox";
             this.StatusBarColorValuePictureBox.Size = new System.Drawing.Size(27, 23);
             this.StatusBarColorValuePictureBox.TabIndex = 27;
@@ -906,7 +975,7 @@ namespace tb_vol_scroll.Forms
             this.StatusBarColorGradientCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
             this.StatusBarColorGradientCheckBox.Checked = true;
             this.StatusBarColorGradientCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.StatusBarColorGradientCheckBox.Location = new System.Drawing.Point(120, 21);
+            this.StatusBarColorGradientCheckBox.Location = new System.Drawing.Point(120, 52);
             this.StatusBarColorGradientCheckBox.Name = "StatusBarColorGradientCheckBox";
             this.StatusBarColorGradientCheckBox.Size = new System.Drawing.Size(72, 25);
             this.StatusBarColorGradientCheckBox.TabIndex = 23;
@@ -918,7 +987,7 @@ namespace tb_vol_scroll.Forms
             // StatusBarColorSolidCheckBox
             // 
             this.StatusBarColorSolidCheckBox.Appearance = System.Windows.Forms.Appearance.Button;
-            this.StatusBarColorSolidCheckBox.Location = new System.Drawing.Point(195, 21);
+            this.StatusBarColorSolidCheckBox.Location = new System.Drawing.Point(195, 52);
             this.StatusBarColorSolidCheckBox.Name = "StatusBarColorSolidCheckBox";
             this.StatusBarColorSolidCheckBox.Size = new System.Drawing.Size(72, 25);
             this.StatusBarColorSolidCheckBox.TabIndex = 24;
@@ -972,6 +1041,7 @@ namespace tb_vol_scroll.Forms
             ((System.ComponentModel.ISupportInitialize)(this.StatusBarWidthPaddingNumericUpDown)).EndInit();
             this.AppearanceColorsGroupBox.ResumeLayout(false);
             this.AppearanceColorsGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.StatusBarTextColorValuePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.TrayIconColorValuePictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StatusBarColorValuePictureBox)).EndInit();
             this.ResumeLayout(false);
@@ -1044,5 +1114,10 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.NumericUpDown TrayIconHeightPaddingNumericUpDown;
         private System.Windows.Forms.Label TrayIconAlignmentLabel;
         private System.Windows.Forms.Label TrayIconTextRenderingHintingDescriptionLabel;
+        private System.Windows.Forms.Label StatusBarTextColorRgbValueLabel;
+        private System.Windows.Forms.Label StatusBarTextColorLabel;
+        private System.Windows.Forms.PictureBox StatusBarTextColorValuePictureBox;
+        private System.Windows.Forms.CheckBox StatusBarTextColorGradientCheckBox;
+        private System.Windows.Forms.CheckBox StatusBarTextColorSolidCheckBox;
     }
 }

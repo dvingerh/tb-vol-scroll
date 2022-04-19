@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -94,15 +94,18 @@ namespace tb_vol_scroll
                     case ActionTriggerType.PreciseVolumeScroll:
                         Width = MinimumSize.Width + Globals.AudioHandler.FriendlyVolume + Settings.Default.StatusBarWidthPadding;
                         BarTextLabel.Text = $"{Globals.AudioHandler.FriendlyVolume}%";
+                        BarTextLabel.ForeColor = Settings.Default.StatusBarTextColorIsGradient ? Utils.GetColorByPercentage(Globals.AudioHandler.FriendlyVolume) : Settings.Default.StatusBarTextColor;
                         BarTextLabel.BackColor = Settings.Default.StatusBarColorIsGradient ? Utils.GetColorByPercentage(Globals.AudioHandler.FriendlyVolume) : Settings.Default.StatusBarColor;
                         break;
                     case ActionTriggerType.MuteToggleScroll:
                         BarTextLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : "Unmuted")}";
+                        BarTextLabel.ForeColor = Color.Black;
                         BarTextLabel.BackColor = Color.SkyBlue;
                         Width = MinimumSize.Width + Utils.CalculateMinimumBarSize(BarTextLabel, BarTextLabel.Text).Width + Settings.Default.StatusBarWidthPadding;
                         break;
                     case ActionTriggerType.DeviceSwitchScroll:
                         BarTextLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: Active";
+                        BarTextLabel.ForeColor = Color.Black;
                         BarTextLabel.BackColor = Color.SkyBlue;
                         Width = MinimumSize.Width + Utils.CalculateMinimumBarSize(BarTextLabel, BarTextLabel.Text).Width + Settings.Default.StatusBarWidthPadding;
                         break;

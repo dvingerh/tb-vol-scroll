@@ -57,6 +57,7 @@ namespace tb_vol_scroll.Forms
                 }
             }
             #endregion
+
             #region Appearance
             DisplayStatusBarScrollActionsCheckBox.Checked = Settings.Default.DisplayStatusBarScrollActions;
             StatusBarWidthPaddingNumericUpDown.Value = Settings.Default.StatusBarWidthPadding;
@@ -81,6 +82,10 @@ namespace tb_vol_scroll.Forms
             TrayIconColorValuePictureBox.BackColor = Settings.Default.TrayIconColorText;
             TrayIconTextColorSolidCheckBox.Checked = !Settings.Default.TrayIconColorTextIsGradient;
             TrayIconTextColorGradientCheckBox.Checked = Settings.Default.TrayIconColorTextIsGradient;
+
+            StatusBarTextColorValuePictureBox.BackColor = Settings.Default.StatusBarTextColor;
+            StatusBarTextColorSolidCheckBox.Checked = !Settings.Default.StatusBarTextColorIsGradient;
+            StatusBarTextColorGradientCheckBox.Checked = Settings.Default.StatusBarTextColorIsGradient;
 
             TrayIconColorRgbValueLabel.Text = $"R: {TrayIconColorValuePictureBox.BackColor.R} " +
             $"G: {TrayIconColorValuePictureBox.BackColor.G} " +
@@ -110,6 +115,7 @@ namespace tb_vol_scroll.Forms
                 }
             }
             #endregion
+
             await Task.Run(() => { Utils.InvokeIfRequired(this, () => { fontPickerDialog = new FontDialogForm(); }); });
         }
 
@@ -162,6 +168,8 @@ namespace tb_vol_scroll.Forms
             Settings.Default.TrayIconColorText = TrayIconColorValuePictureBox.BackColor;
             Settings.Default.TrayIconColorTextIsGradient = TrayIconTextColorGradientCheckBox.Checked;
 
+            Settings.Default.StatusBarTextColor = StatusBarTextColorValuePictureBox.BackColor;
+            Settings.Default.StatusBarTextColorIsGradient = StatusBarTextColorGradientCheckBox.Checked;
             #endregion
 
             Settings.Default.Save();
@@ -392,6 +400,11 @@ namespace tb_vol_scroll.Forms
             TrayIconTextColorSolidCheckBox.Checked = false;
             TrayIconTextColorGradientCheckBox.Checked = true;
 
+            StatusBarTextColorValuePictureBox.BackColor = Color.Black;
+            StatusBarTextColorSolidCheckBox.Checked = true;
+            StatusBarTextColorGradientCheckBox.Checked = false;
+
+
             TrayIconColorRgbValueLabel.Text = $"R: {TrayIconColorValuePictureBox.BackColor.R} " +
             $"G: {TrayIconColorValuePictureBox.BackColor.G} " +
             $"B: {TrayIconColorValuePictureBox.BackColor.B}";
@@ -404,6 +417,32 @@ namespace tb_vol_scroll.Forms
 
             RestoreDefaultsButton.Enabled = false;
             ApplyConfigurationButton.Enabled = true;
+        }
+
+        private void StatusBarTextColorSolidCheckBox_Click(object sender, EventArgs e)
+        {
+            isShowingDialog = true;
+
+            StatusBarTextColorSolidCheckBox.Checked = true;
+            StatusBarTextColorGradientCheckBox.Checked = false;
+
+            colorPickerDialog.Color = StatusBarTextColorValuePictureBox.BackColor;
+            if (colorPickerDialog.ShowDialog() == DialogResult.OK)
+            {
+                StatusBarTextColorValuePictureBox.BackColor = colorPickerDialog.Color;
+                StatusBarTextColorRgbValueLabel.Text =
+                $"R: {StatusBarTextColorValuePictureBox.BackColor.R} " +
+                $"G: {StatusBarTextColorValuePictureBox.BackColor.G} " +
+                $"B: {StatusBarTextColorValuePictureBox.BackColor.B}";
+                OnSettingsChanged(null, null);
+            }
+            isShowingDialog = false;
+        }
+
+        private void StatusBarTextColorGradientCheckBox_Click(object sender, EventArgs e)
+        {
+            StatusBarTextColorSolidCheckBox.Checked = false;
+            StatusBarTextColorGradientCheckBox.Checked = true;
         }
     }
 }
