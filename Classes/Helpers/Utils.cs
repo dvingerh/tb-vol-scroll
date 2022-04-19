@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,6 +8,7 @@ using System.Drawing.Text;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using tb_vol_scroll.Properties;
@@ -331,10 +332,11 @@ namespace tb_vol_scroll.Classes.Helpers
             Environment.Exit(code);
         }
 
-        public static async Task OpenSystemVolumeMixer()
+        public static void OpenSystemVolumeMixer()
         {
-            await Task.Run(() =>
+            Task.Run(() =>
             {
+                Application.DoEvents();
                 foreach (Process proc in Process.GetProcessesByName("sndvol"))
                     proc.CloseMainWindow();
                 Process sndvolProc = new Process();
@@ -352,6 +354,8 @@ namespace tb_vol_scroll.Classes.Helpers
                         windowHandle = tempHandle;
                         hasWindow = true;
                     }
+                    else
+                        sndvolProc.Refresh();
                 }
 
                 Screen screen = Screen.FromPoint(Cursor.Position);
@@ -376,7 +380,7 @@ namespace tb_vol_scroll.Classes.Helpers
                         break;
                 }
                 MoveWindow(windowHandle, location.X, location.Y, sndVolDimensions.Width, sndVolDimensions.Height, true);
-            });
+            }).ConfigureAwait(false);
         }
 
 

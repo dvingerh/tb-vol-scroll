@@ -33,7 +33,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
                     }
                     catch { }
                 }
-            }).ConfigureAwait(false);
+            });
         }
 
 
@@ -41,8 +41,8 @@ namespace tb_vol_scroll.Classes.ControlsEx
         {
             get
             {
-                if (FontListComponent.SelectedItems.Count != 0)
-                    return ((Font)FontListComponent.SelectedItems[0].Tag).FontFamily;
+                if (FontListComponent.SelectedItems.Count != 0) { 
+                    return ((Font)FontListComponent.SelectedItems[0].Tag).FontFamily;}
                 else
                     return null;
             }
@@ -52,6 +52,8 @@ namespace tb_vol_scroll.Classes.ControlsEx
                     FontListComponent.SelectedItems.Clear();
                 else
                     FontListComponent.Items[IndexOf(value)].Selected = true;
+                FontNameTextBox_TextChanged(null, null);
+
             }
         }
 
@@ -83,7 +85,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
 
         private void FontNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (!FontNameTextBox.Focused)
+            if (String.IsNullOrWhiteSpace(FontNameTextBox.Text))
                 return;
 
             for (int i = 0; i < FontListComponent.Items.Count; i++)
@@ -129,6 +131,7 @@ namespace tb_vol_scroll.Classes.ControlsEx
             FontListComponent.Columns[0].Width = FontListComponent.ClientSize.Width;
             Utils.InvokeIfRequired(this, () => {
                 Utils.SetWindowTheme(FontListComponent.Handle, "Explorer", null);
+
             });
         }
     }

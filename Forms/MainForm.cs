@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -276,9 +276,9 @@ namespace tb_vol_scroll
             }
         }
 
-        private async void SystemVolumeMixerMenuItem_Click(object sender, EventArgs e)
+        private void SystemVolumeMixerMenuItem_Click(object sender, EventArgs e)
         {
-            await Utils.OpenSystemVolumeMixer();
+            Utils.OpenSystemVolumeMixer();
         }
 
         private void VolumeSliderControlMenuItem_Click(object sender, EventArgs e)

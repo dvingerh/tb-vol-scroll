@@ -214,7 +214,6 @@ namespace tb_vol_scroll.Forms
             if (updateVolumeQueue.Count != 0)
                 await ProcessVolumeQueue();
             Utils.AvoidControlFocus(Handle);
-            //SystemSounds.Exclamation.Play();
         }
 
 

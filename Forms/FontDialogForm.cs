@@ -14,6 +14,7 @@ namespace tb_vol_scroll.Forms
             FontList.SelectedFontFamilyChanged += SelectedFontChanged;
             FontSizeTextBox.Text = Convert.ToString(10);
             DialogResult = DialogResult.Cancel;
+            
         }
 
         public Font SelectedFont
@@ -50,7 +51,6 @@ namespace tb_vol_scroll.Forms
                 FontSizeListBox.SelectedItem = FontSizeTextBox.Text;
             else
                 FontSizeListBox.ClearSelected();
-
             UpdatePreviewText();
         }
 

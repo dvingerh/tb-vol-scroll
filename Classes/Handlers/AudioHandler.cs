@@ -20,11 +20,12 @@ namespace tb_vol_scroll.Classes.Handlers
         {
             if (AudioController == null)
                 return false;
-            if (AudioController.DefaultPlaybackDevice == null)
+            else if (AudioController.DefaultPlaybackDevice == null)
                 return false;
-            if (AudioController.DefaultPlaybackDevice.State != DeviceState.Active)
+            else if (AudioController.DefaultPlaybackDevice.State != DeviceState.Active)
                 return false;
-            return true;
+            else
+                return true;
         }
         public AudioHandler()
         {
@@ -37,7 +38,7 @@ namespace tb_vol_scroll.Classes.Handlers
                     audioDeviceSubscriptions.Add(device.PeakValueChanged.Subscribe(DeviceStateChanged), device);
                     audioDeviceSubscriptions.Add(device.VolumeChanged.Subscribe(DeviceStateChanged), device);
                     audioDeviceSubscriptions.Add(device.MuteChanged.Subscribe(DeviceStateChanged), device);
-                    device.PeakValueTimer.PeakValueInterval = 10;
+                    device.PeakValueTimer.PeakValueInterval = 100;
                 }
             }
         }
@@ -104,25 +105,31 @@ namespace tb_vol_scroll.Classes.Handlers
         {
             if (value.Device.InterfaceName != "Unknown" && value.Device.IsPlaybackDevice)
             {
-
+                CoreAudioDevice audioDevice = audioController.GetDevice(value.Device.Id, DeviceState.All);
+                Console.WriteLine(value.ChangedType);
                 switch (value.ChangedType)
                 {
-                    case DeviceChangedType.DeviceRemoved:
-                        foreach (var item in audioDeviceSubscriptions.Where(x => x.Value.Id == value.Device.Id).ToList())
-                        {
-                            audioDeviceSubscriptions.Remove(item.Key);
-                            item.Key.Dispose();
-                        }
-                        break;
+                    //case DeviceChangedType.DeviceRemoved:
+                    //    foreach (var item in audioDeviceSubscriptions.Where(x => x.Value.Id == audioDevice.Id).ToList())
+                    //    {
+                    //        audioDeviceSubscriptions.Remove(item.Key);
+                    //        item.Key.Dispose();
+                    //    }
+                    //    if (!Globals.AudioAvailable && Globals.InputAvailable)
+                    //        Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioDisabled);
+
+                    //    break;
+                    case DeviceChangedType.StateChanged:
                     case DeviceChangedType.DeviceAdded:
-                        CoreAudioDevice audioDevice = audioController.GetDevice(value.Device.Id, DeviceState.Active);
                         if (audioDevice != null && !audioDeviceSubscriptions.ContainsValue(audioDevice))
                         {
                             audioDeviceSubscriptions.Add(audioDevice.PeakValueChanged.Subscribe(DeviceStateChanged), audioDevice);
                             audioDeviceSubscriptions.Add(audioDevice.VolumeChanged.Subscribe(DeviceStateChanged), audioDevice);
                             audioDeviceSubscriptions.Add(audioDevice.MuteChanged.Subscribe(DeviceStateChanged), audioDevice);
-                            audioDevice.PeakValueTimer.PeakValueInterval = 10;
+                            audioDevice.PeakValueTimer.PeakValueInterval = 100;
                         }
+                         if (Globals.AudioAvailable && !Globals.InputAvailable)
+                            Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioEnabled);
                         break;
                     case DeviceChangedType.VolumeChanged:
                         Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
@@ -137,16 +144,13 @@ namespace tb_vol_scroll.Classes.Handlers
                     case DeviceChangedType.DefaultChanged:
                         if (Globals.AudioAvailable && Globals.InputAvailable)
                             Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
-                        else if (Globals.AudioAvailable && !Globals.InputAvailable)
-                            Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioEnabled);
-                        else if (!Globals.AudioAvailable && Globals.InputAvailable)
-                            Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioDisabled);
                         if (Globals.VolumeSliderControlForm != null)
                             Globals.VolumeSliderControlForm.UpdateDeviceState();
                         break;
                     case DeviceChangedType.PeakValueChanged:
                         if (Globals.VolumeSliderControlForm != null && !AudioController.DefaultPlaybackDevice.IsMuted)
                         {
+                            audioDevice.PeakValueTimer.PeakValueInterval = 10;
                             DevicePeakValueChangedArgs peakVal = (DevicePeakValueChangedArgs)value;
                             double currentPeakValue = Math.Round(peakVal.PeakValue);
                             if (currentPeakValue < 0)
@@ -157,6 +161,8 @@ namespace tb_vol_scroll.Classes.Handlers
                             if (Globals.VolumeSliderControlForm != null)
                                 Globals.VolumeSliderControlForm.UpdatePeakValue(peakVal.PeakValue);
                         }
+                        else
+                            audioDevice.PeakValueTimer.PeakValueInterval = 100;
                         break;
                     default:
                         break;
