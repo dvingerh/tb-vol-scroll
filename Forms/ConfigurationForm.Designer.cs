@@ -498,6 +498,7 @@ namespace tb_vol_scroll.Forms
             this.TrayIconOverrideAutoSettingsCheckBox.TabIndex = 15;
             this.TrayIconOverrideAutoSettingsCheckBox.Text = "Override the automatic tray icon settings";
             this.TrayIconOverrideAutoSettingsCheckBox.UseVisualStyleBackColor = true;
+            this.TrayIconOverrideAutoSettingsCheckBox.CheckedChanged += new System.EventHandler(this.TrayIconOverrideAutoSettingsCheckBox_CheckedChanged);
             // 
             // TrayIconPreviewFontStyleButton
             // 

@@ -39,11 +39,11 @@ namespace tb_vol_scroll.Forms
             this.SaveButton = new System.Windows.Forms.Button();
             this.PreviewLabel = new System.Windows.Forms.Label();
             this.CancelDialogButton = new System.Windows.Forms.Button();
-            this.FontSizePanel = new System.Windows.Forms.Panel();
             this.FontSizeListBox = new System.Windows.Forms.ListBox();
             this.FontSizeTextBox = new System.Windows.Forms.TextBox();
             this.PreviewTextLabel = new System.Windows.Forms.Label();
             this.FontList = new tb_vol_scroll.Classes.ControlsEx.FontList();
+            this.FontSizePanel = new System.Windows.Forms.Panel();
             this.FontSizePanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +59,7 @@ namespace tb_vol_scroll.Forms
             // SizeLabel
             // 
             this.SizeLabel.AutoSize = true;
-            this.SizeLabel.Location = new System.Drawing.Point(257, 9);
+            this.SizeLabel.Location = new System.Drawing.Point(254, 9);
             this.SizeLabel.Name = "SizeLabel";
             this.SizeLabel.Size = new System.Drawing.Size(30, 13);
             this.SizeLabel.TabIndex = 3;
@@ -134,15 +134,6 @@ namespace tb_vol_scroll.Forms
             this.CancelDialogButton.UseVisualStyleBackColor = true;
             this.CancelDialogButton.Click += new System.EventHandler(this.CancelDialogButton_Click);
             // 
-            // FontSizePanel
-            // 
-            this.FontSizePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FontSizePanel.Controls.Add(this.FontSizeListBox);
-            this.FontSizePanel.Location = new System.Drawing.Point(259, 46);
-            this.FontSizePanel.Name = "FontSizePanel";
-            this.FontSizePanel.Size = new System.Drawing.Size(53, 250);
-            this.FontSizePanel.TabIndex = 18;
-            // 
             // FontSizeListBox
             // 
             this.FontSizeListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -168,14 +159,14 @@ namespace tb_vol_scroll.Forms
             "72"});
             this.FontSizeListBox.Location = new System.Drawing.Point(0, 0);
             this.FontSizeListBox.Name = "FontSizeListBox";
-            this.FontSizeListBox.Size = new System.Drawing.Size(51, 248);
+            this.FontSizeListBox.Size = new System.Drawing.Size(51, 244);
             this.FontSizeListBox.TabIndex = 17;
             this.FontSizeListBox.SelectedIndexChanged += new System.EventHandler(this.FontSizeListSelectionChanged);
             // 
             // FontSizeTextBox
             // 
             this.FontSizeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FontSizeTextBox.Location = new System.Drawing.Point(259, 25);
+            this.FontSizeTextBox.Location = new System.Drawing.Point(256, 25);
             this.FontSizeTextBox.Name = "FontSizeTextBox";
             this.FontSizeTextBox.Size = new System.Drawing.Size(53, 22);
             this.FontSizeTextBox.TabIndex = 5;
@@ -205,8 +196,17 @@ namespace tb_vol_scroll.Forms
             this.FontList.Location = new System.Drawing.Point(15, 25);
             this.FontList.Name = "FontList";
             this.FontList.SelectedFontFamily = null;
-            this.FontList.Size = new System.Drawing.Size(238, 270);
+            this.FontList.Size = new System.Drawing.Size(238, 271);
             this.FontList.TabIndex = 20;
+            // 
+            // FontSizePanel
+            // 
+            this.FontSizePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.FontSizePanel.Controls.Add(this.FontSizeListBox);
+            this.FontSizePanel.Location = new System.Drawing.Point(256, 50);
+            this.FontSizePanel.Name = "FontSizePanel";
+            this.FontSizePanel.Size = new System.Drawing.Size(53, 246);
+            this.FontSizePanel.TabIndex = 18;
             // 
             // FontDialogForm
             // 
@@ -255,10 +255,10 @@ namespace tb_vol_scroll.Forms
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.Label PreviewLabel;
         private System.Windows.Forms.Button CancelDialogButton;
-        private System.Windows.Forms.Panel FontSizePanel;
         private System.Windows.Forms.ListBox FontSizeListBox;
         private System.Windows.Forms.TextBox FontSizeTextBox;
         private System.Windows.Forms.Label PreviewTextLabel;
         private FontList FontList;
+        private System.Windows.Forms.Panel FontSizePanel;
     }
 }

@@ -104,7 +104,8 @@ namespace tb_vol_scroll
                         Width = MinimumSize.Width + Utils.CalculateMinimumBarSize(BarTextLabel, BarTextLabel.Text).Width + Settings.Default.StatusBarWidthPadding;
                         break;
                     case ActionTriggerType.DeviceSwitchScroll:
-                        BarTextLabel.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: Active";
+                        int curDeviceIndex = Globals.AudioHandler.AudioDevices.IndexOf(Globals.AudioHandler.AudioController.DefaultPlaybackDevice) + 1;
+                        BarTextLabel.Text = $"({curDeviceIndex}/{Globals.AudioHandler.AudioDevices.Count}) {Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}: Active";
                         BarTextLabel.ForeColor = Color.Black;
                         BarTextLabel.BackColor = Color.SkyBlue;
                         Width = MinimumSize.Width + Utils.CalculateMinimumBarSize(BarTextLabel, BarTextLabel.Text).Width + Settings.Default.StatusBarWidthPadding;
@@ -128,15 +129,17 @@ namespace tb_vol_scroll
                         Globals.InputHandler.InputEnabled = false;
                         AudioPlaybackDevicesMenuItem.Enabled = false;
                         VolumeSliderControlMenuItem.Enabled = false;
+                        TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("X");
                         TrayNotifyIcon.Text = "Audio playback device unavailable";
-                        ShowNotification("Audio playback device unavailable", $"Audio control has been disabled.", ToolTipIcon.Warning);
+                        //ShowNotification("Audio playback device unavailable", $"Audio control has been disabled.", ToolTipIcon.Warning);
                         break;
                     case ActionTriggerType.AudioEnabled:
                         Globals.InputHandler.InputEnabled = true;
                         AudioPlaybackDevicesMenuItem.Enabled = true;
                         VolumeSliderControlMenuItem.Enabled = true;
+                        TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("T");
                         TrayNotifyIcon.Text = $"{Globals.AudioHandler.AudioController.DefaultPlaybackDevice.Name}{(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsBluetooth ? " (Bluetooth)" : "")}: {(Globals.AudioHandler.AudioController.DefaultPlaybackDevice.IsMuted ? "Muted" : Globals.AudioHandler.FriendlyVolume.ToString() + "%")}";
-                        ShowNotification("Audio playback device available", $"Audio control has been enabled.", ToolTipIcon.Info);
+                        //ShowNotification("Audio playback device available", $"Audio control has been enabled.", ToolTipIcon.Info);
                         break;
                     case ActionTriggerType.Startup:
                         Size labelSize = Utils.CalculateMinimumBarSize(BarTextLabel, "100%");
@@ -159,12 +162,8 @@ namespace tb_vol_scroll
 
         public void ShowNotification(string title, string text, ToolTipIcon icon)
         {
-            if (icon == ToolTipIcon.Info)
-                TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("T");
-            if (icon == ToolTipIcon.Warning)
-                TrayNotifyIcon.Icon = Utils.GenerateTrayIcon("X");
             TrayNotifyIcon.Visible = true;
-            TrayNotifyIcon.ShowBalloonTip(5000, title, text, ToolTipIcon.None);
+            TrayNotifyIcon.ShowBalloonTip(5000, title, text, icon);
         }
         public void SetBarPosition()
         {
@@ -342,18 +341,6 @@ namespace tb_vol_scroll
         {
             TrayNotifyIcon.Visible = !Globals.AppArgs.Contains("trayless");
 
-        }
-
-        private void MainForm_ResizeBegin(object sender, EventArgs e)
-        {
-            SuspendLayout();
-            base.OnResizeBegin(e);
-        }
-
-        private void MainForm_ResizeEnd(object sender, EventArgs e)
-        {
-            ResumeLayout();
-            base.OnResizeEnd(e);
         }
     }
 }

@@ -78,28 +78,26 @@ namespace tb_vol_scroll.Classes.Handlers
 
         private async Task HandleMouseWheelScroll(MouseWheelDirection direction)
         {
-            Task task = null;
-
             if (!isAltDown && !isCtrlDown && !isShiftDown)
             {
                 // Regular volume
                 bool reachedThreshold = Globals.AudioHandler.FriendlyVolume < Settings.Default.PreciseVolumeThreshold;
-                task = Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
-                await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
+                await Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
+                await Task.Run(() => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
             }
             else if (isAltDown)
             {
                 // Precise Volume
                 if (Settings.Default.AltHotkeyEnabled)
                 {
-                    task = Globals.AudioHandler.AdjustVolume(direction, ActionTriggerType.PreciseVolumeScroll);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(ActionTriggerType.PreciseVolumeScroll));
+                    await Globals.AudioHandler.AdjustVolume(direction, ActionTriggerType.PreciseVolumeScroll);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(ActionTriggerType.PreciseVolumeScroll));
                 }
                 else
                 {
                     bool reachedThreshold = Globals.AudioHandler.FriendlyVolume < Settings.Default.PreciseVolumeThreshold;
-                    task = Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
+                    await Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
                 }
             }
             else if (isCtrlDown)
@@ -108,14 +106,14 @@ namespace tb_vol_scroll.Classes.Handlers
                 if (Settings.Default.CtrlHotkeyEnabled)
                 {
                     bool doMute = direction == MouseWheelDirection.Down;
-                    task = Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, doMute);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(ActionTriggerType.MuteToggleScroll));
+                    await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, doMute);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(ActionTriggerType.MuteToggleScroll));
                 }
                 else
                 {
                     bool reachedThreshold = Globals.AudioHandler.FriendlyVolume < Settings.Default.PreciseVolumeThreshold;
-                    task = Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
+                    await Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
                 }
             }
             else if (isShiftDown)
@@ -123,14 +121,14 @@ namespace tb_vol_scroll.Classes.Handlers
                 // Device switch
                 if (Settings.Default.ShiftHotkeyEnabled)
                 {
-                    task = Globals.AudioHandler.ChangePlaybackDevice(direction);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(ActionTriggerType.DeviceSwitchScroll));
+                    await Globals.AudioHandler.ChangePlaybackDevice(direction);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(ActionTriggerType.DeviceSwitchScroll));
                 }
                 else
                 {
                     bool reachedThreshold = Globals.AudioHandler.FriendlyVolume < Settings.Default.PreciseVolumeThreshold;
-                    task = Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
-                    await task.ContinueWith(result => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
+                    await Globals.AudioHandler.AdjustVolume(direction, reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll);
+                    await Task.Run(() => Globals.MainForm.SetAppAppearances(reachedThreshold ? ActionTriggerType.PreciseVolumeScroll : ActionTriggerType.RegularVolumeScroll));
                 }
             }
             else

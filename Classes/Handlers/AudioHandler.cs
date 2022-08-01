@@ -16,6 +16,8 @@ namespace tb_vol_scroll.Classes.Handlers
         private readonly Dictionary<IDisposable, CoreAudioDevice> audioDeviceSubscriptions = new Dictionary<IDisposable, CoreAudioDevice>();
         public CoreAudioController AudioController { get => audioController; set => audioController = value; }
         public int FriendlyVolume { get => audioController.DefaultPlaybackDevice != null ? (int)Math.Round(audioController.DefaultPlaybackDevice.Volume) : -1; }
+        public List<CoreAudioDevice> AudioDevices { get => AudioController.GetPlaybackDevicesAsync(DeviceState.Active).Result.ToList(); }
+
         public bool IsAudioAvailable()
         {
             if (AudioController == null)
@@ -56,7 +58,7 @@ namespace tb_vol_scroll.Classes.Handlers
                     if (type == ActionTriggerType.PreciseVolumeScroll)
                         newVolume += Settings.Default.PreciseVolumeStep;
                     if (audioController.DefaultPlaybackDevice.IsMuted)
-                        await Task.Run(() => Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, false));
+                        await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, false);
                     break;
                 case MouseWheelDirection.Down:
                     if (type == ActionTriggerType.RegularVolumeScroll)
@@ -71,57 +73,57 @@ namespace tb_vol_scroll.Classes.Handlers
             if (newVolume < 0)
                 newVolume = 0;
 
-            await Task.Run(() => SetDeviceVolume(audioController.DefaultPlaybackDevice, newVolume));
+            await SetDeviceVolume(audioController.DefaultPlaybackDevice, newVolume);
             if (newVolume == 0)
-                await Task.Run(() => Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, true));
+                await Globals.AudioHandler.SetDeviceMute(Globals.AudioHandler.AudioController.DefaultPlaybackDevice, true);
         }
 
 
 
         public async Task ChangePlaybackDevice(MouseWheelDirection direction)
         {
-            List<CoreAudioDevice> audioDevices = (await Task.Run(() => AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
-            if (audioDevices.Count != 0)
+            if (AudioDevices.Count != 0)
             {
-                int curDeviceIndex = audioDevices.IndexOf(AudioController.DefaultPlaybackDevice);
+                int curDeviceIndex = AudioDevices.IndexOf(AudioController.DefaultPlaybackDevice);
                 CoreAudioDevice newAudioDevice = null;
                 switch (direction)
                 {
                     case MouseWheelDirection.Up:
-                        if (curDeviceIndex != audioDevices.Count)
-                            newAudioDevice = audioDevices.ElementAt(curDeviceIndex + 1);
+                        if (curDeviceIndex != AudioDevices.Count)
+                            newAudioDevice = AudioDevices.ElementAt(curDeviceIndex + 1);
                         break;
                     case MouseWheelDirection.Down:
                         if (curDeviceIndex != 0)
-                            newAudioDevice = audioDevices.ElementAt(curDeviceIndex - 1);
+                            newAudioDevice = AudioDevices.ElementAt(curDeviceIndex - 1);
                         break;
                 }
                 if(newAudioDevice != null)
-                    await Task.Run(() => SetPlaybackDevice(newAudioDevice));
+                    await SetPlaybackDevice(newAudioDevice);
             }
         }
 
         public async void DeviceStateChanged(DeviceChangedArgs value)
         {
+            Console.WriteLine($"{DateTime.Now.ToString("H:mm:ss.FFF")}: {value.Device.FullName} triggered {value.ChangedType}");
+            CoreAudioDevice audioDevice = null;
             if (value.Device.InterfaceName != "Unknown" && value.Device.IsPlaybackDevice)
             {
-                CoreAudioDevice audioDevice = audioController.GetDevice(value.Device.Id, DeviceState.All);
-                Console.WriteLine(value.ChangedType);
                 switch (value.ChangedType)
                 {
-                    //case DeviceChangedType.DeviceRemoved:
-                    //    foreach (var item in audioDeviceSubscriptions.Where(x => x.Value.Id == audioDevice.Id).ToList())
-                    //    {
-                    //        audioDeviceSubscriptions.Remove(item.Key);
-                    //        item.Key.Dispose();
-                    //    }
-                    //    if (!Globals.AudioAvailable && Globals.InputAvailable)
-                    //        Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioDisabled);
+                    case DeviceChangedType.DeviceRemoved:
+                        foreach (var item in audioDeviceSubscriptions.Where(x => x.Value.Id == value.Device.Id).ToList())
+                        {
+                            audioDeviceSubscriptions.Remove(item.Key);
+                            item.Key.Dispose();
+                        }
+                        if (!Globals.AudioAvailable && Globals.InputAvailable)
+                            Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioDisabled);
 
-                    //    break;
-                    case DeviceChangedType.StateChanged:
+                        break;
                     case DeviceChangedType.DeviceAdded:
-                        if (audioDevice != null && !audioDeviceSubscriptions.ContainsValue(audioDevice))
+                        Console.WriteLine("State: " + value.Device.State);
+                        audioDevice = audioController.GetDevice(value.Device.Id, DeviceState.All);
+                        if (audioDevice != null && !audioDeviceSubscriptions.ContainsValue(audioDevice) && value.Device.State == DeviceState.Active)
                         {
                             audioDeviceSubscriptions.Add(audioDevice.PeakValueChanged.Subscribe(DeviceStateChanged), audioDevice);
                             audioDeviceSubscriptions.Add(audioDevice.VolumeChanged.Subscribe(DeviceStateChanged), audioDevice);
@@ -132,22 +134,30 @@ namespace tb_vol_scroll.Classes.Handlers
                             Globals.MainForm.SetAppAppearances(ActionTriggerType.AudioEnabled);
                         break;
                     case DeviceChangedType.VolumeChanged:
+                        Console.WriteLine("Volume: " + value.Device.Volume);
+
                         Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
                         if (Globals.VolumeSliderControlForm != null)
                             Globals.VolumeSliderControlForm.UpdateVolumeState();
                         break;
                     case DeviceChangedType.MuteChanged:
+                        Console.WriteLine("Mute: " + value.Device.IsMuted);
+
                         Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
                         if (Globals.VolumeSliderControlForm != null)
                             Globals.VolumeSliderControlForm.UpdateVolumeState();
                         break;
                     case DeviceChangedType.DefaultChanged:
+                        Console.WriteLine("Default: " + value.Device.IsPlaybackDevice);
+
                         if (Globals.AudioAvailable && Globals.InputAvailable)
                             Globals.MainForm.SetAppAppearances(ActionTriggerType.InternalEvent);
                         if (Globals.VolumeSliderControlForm != null)
                             Globals.VolumeSliderControlForm.UpdateDeviceState();
                         break;
                     case DeviceChangedType.PeakValueChanged:
+                        Console.WriteLine("PeakValue: " + value.Device.PeakValue);
+                        audioDevice = audioController.GetDevice(value.Device.Id, DeviceState.All);
                         if (Globals.VolumeSliderControlForm != null && !AudioController.DefaultPlaybackDevice.IsMuted)
                         {
                             audioDevice.PeakValueTimer.PeakValueInterval = 10;

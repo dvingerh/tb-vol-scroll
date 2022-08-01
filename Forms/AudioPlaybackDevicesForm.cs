@@ -70,7 +70,7 @@ namespace tb_vol_scroll.Forms
         public async Task LoadAudioPlaybackDevicesList()
         {
             List<ListViewItem> deviceListViewItem = new List<ListViewItem>();
-            List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
+            List<CoreAudioDevice> audioDevices = (await Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active)).ToList();
             if (audioDevices.Count != 0)
             {
                 foreach (CoreAudioDevice d in audioDevices)
@@ -112,7 +112,7 @@ namespace tb_vol_scroll.Forms
 
         public async Task RefreshOnDeviceActivity()
         {
-            List<CoreAudioDevice> audioDevices = (await Task.Run(() => Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active))).ToList();
+            List<CoreAudioDevice> audioDevices = (await Globals.AudioHandler.AudioController.GetPlaybackDevicesAsync(DeviceState.Active)).ToList();
             Utils.InvokeIfRequired(this, () =>
             {
                 RefreshButton.Enabled = false;

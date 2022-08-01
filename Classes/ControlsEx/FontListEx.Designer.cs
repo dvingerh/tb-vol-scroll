@@ -38,8 +38,9 @@ namespace tb_vol_scroll.Classes.ControlsEx
             // 
             // FontNameTextBox
             // 
+            this.FontNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.FontNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.FontNameTextBox.Dock = System.Windows.Forms.DockStyle.Top;
             this.FontNameTextBox.Location = new System.Drawing.Point(0, 0);
             this.FontNameTextBox.Name = "FontNameTextBox";
             this.FontNameTextBox.Size = new System.Drawing.Size(200, 22);
@@ -58,12 +59,12 @@ namespace tb_vol_scroll.Classes.ControlsEx
             this.FontListComponent.FullRowSelect = true;
             this.FontListComponent.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.FontListComponent.HideSelection = false;
-            this.FontListComponent.Location = new System.Drawing.Point(0, 21);
-            this.FontListComponent.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.FontListComponent.Location = new System.Drawing.Point(0, 25);
+            this.FontListComponent.Margin = new System.Windows.Forms.Padding(0);
             this.FontListComponent.MultiSelect = false;
             this.FontListComponent.Name = "FontListComponent";
             this.FontListComponent.ShowGroups = false;
-            this.FontListComponent.Size = new System.Drawing.Size(200, 129);
+            this.FontListComponent.Size = new System.Drawing.Size(200, 125);
             this.FontListComponent.SmallImageList = this.FontListImageList;
             this.FontListComponent.TabIndex = 2;
             this.FontListComponent.UseCompatibleStateImageBehavior = false;

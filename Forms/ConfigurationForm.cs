@@ -25,7 +25,7 @@ namespace tb_vol_scroll.Forms
             FullOpen = true
         };
 
-        private async void ConfigurationForm_Load(object sender, EventArgs e)
+        private void ConfigurationForm_Load(object sender, EventArgs e)
         {
             FormBorderStyle = FormBorderStyle.FixedDialog;
             #region Behavior
@@ -116,7 +116,7 @@ namespace tb_vol_scroll.Forms
             }
             #endregion
 
-            await Task.Run(() => { Utils.InvokeIfRequired(this, () => { fontPickerDialog = new FontDialogForm(); }); });
+            Utils.InvokeIfRequired(this, () => { fontPickerDialog = new FontDialogForm(); });;
         }
 
 
@@ -150,6 +150,7 @@ namespace tb_vol_scroll.Forms
             Settings.Default.StatusBarOpacity = StatusBarOpacityTrackBar.Value / 100.0;
             Font newStatusBarFont = new Font(statusBarFont.FontFamily, statusBarFont.Size, statusBarFont.Style, statusBarFont.Unit);
             Settings.Default.StatusBarFontStyle = newStatusBarFont;
+
 
             Settings.Default.TrayIconOverrideAutoSettings = TrayIconOverrideAutoSettingsCheckBox.Checked;
             Settings.Default.TrayIconTextRenderingHinting = TrayIconTextRenderingHintingComboBox.SelectedIndex;
@@ -243,7 +244,8 @@ namespace tb_vol_scroll.Forms
             if (colorPickerDialog.ShowDialog() == DialogResult.OK)
             {
                 TrayIconColorValuePictureBox.BackColor = colorPickerDialog.Color;
-                TrayIconColorRgbValueLabel.Text = $"R: {TrayIconColorValuePictureBox.BackColor.R} " +
+                TrayIconColorRgbValueLabel.Text =
+                $"R: {TrayIconColorValuePictureBox.BackColor.R} " +
                 $"G: {TrayIconColorValuePictureBox.BackColor.G} " +
                 $"B: {TrayIconColorValuePictureBox.BackColor.B}";
                 OnSettingsChanged(null, null);
@@ -305,7 +307,13 @@ namespace tb_vol_scroll.Forms
 
         private void TrayIconFontPreviewButton_Click(object sender, EventArgs e)
         {
-            PreviewFontStyle(trayIconFont);
+            if (!TrayIconOverrideAutoSettingsCheckBox.Checked)
+            {
+                float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+                PreviewFontStyle(new Font("Segoe UI Semibold", fontSize, FontStyle.Regular));
+            }
+            else
+                PreviewFontStyle(trayIconFont);
         }
 
         private string GetFontDetails(Font font)
@@ -316,7 +324,6 @@ namespace tb_vol_scroll.Forms
         private void PreviewFontStyle(Font font)
         {
             isShowingDialog = true;
-            Graphics g = Graphics.FromImage(new Bitmap(1, 1));
 
             Form fontForm = new Form
             {
@@ -443,6 +450,50 @@ namespace tb_vol_scroll.Forms
         {
             StatusBarTextColorSolidCheckBox.Checked = false;
             StatusBarTextColorGradientCheckBox.Checked = true;
+        }
+
+        private void TrayIconOverrideAutoSettingsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!TrayIconOverrideAutoSettingsCheckBox.Checked)
+            {
+                TrayIconTextRenderingHintingComboBox.Enabled = false;
+                TrayIconTextRenderingHintingComboBox.SelectedIndex = 1;
+
+                TrayIconWidthNumericUpDown.Enabled = false;
+                TrayIconWidthNumericUpDown.Value = (decimal)(Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale);
+                TrayIconHeightNumericUpDown.Enabled = false;
+                TrayIconHeightNumericUpDown.Value = (decimal)(Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale);
+
+                TrayIconWidthPaddingNumericUpDown.Enabled = false;
+                TrayIconWidthPaddingNumericUpDown.Value = 0;
+                TrayIconHeightPaddingNumericUpDown.Enabled = false;
+                TrayIconHeightPaddingNumericUpDown.Value = 0;
+
+                float fontSize = Globals.DpiScale < 1.25 ? 16 * Globals.DpiScale : 32 * Globals.DpiScale;
+                TrayIconFontStyleValueLabel.Text = GetFontDetails(new Font("Segoe UI Semibold", fontSize, FontStyle.Regular));
+                TrayIconSelectFontStyleButton.Enabled = false;
+
+            }
+            else
+            {
+                TrayIconTextRenderingHintingComboBox.Enabled = true;
+                TrayIconTextRenderingHintingComboBox.SelectedIndex = Settings.Default.TrayIconTextRenderingHinting;
+                TrayIconWidthNumericUpDown.Enabled = true;
+                TrayIconWidthNumericUpDown.Value = Settings.Default.TrayIconWidth;
+                TrayIconHeightNumericUpDown.Enabled = true;
+                TrayIconHeightNumericUpDown.Value = Settings.Default.TrayIconHeight;
+
+                TrayIconWidthPaddingNumericUpDown.Enabled = true;
+                TrayIconWidthPaddingNumericUpDown.Value = Settings.Default.TrayIconXAlignment;
+                TrayIconHeightPaddingNumericUpDown.Enabled = true;
+                TrayIconHeightPaddingNumericUpDown.Value = Settings.Default.TrayIconYAlignment;
+
+                TrayIconFontStyleValueLabel.Text = GetFontDetails(Settings.Default.TrayIconFontStyle);
+                TrayIconSelectFontStyleButton.Enabled = true;
+
+
+
+            }
         }
     }
 }

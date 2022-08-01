@@ -143,8 +143,10 @@ namespace tb_vol_scroll.Forms
                         else
                         {
                             Color curColor = Utils.GetColorByPercentage(100 - curValue);
-                            PeakMeterPictureBox.BackColor = Color.FromArgb(255, (int)(curColor.R * 0.8), (int)(curColor.G * 0.8), (int)(curColor.B * 0.8));
+                            PeakMeterPictureBox.BackColor = curColor;
                             TruePeakMeterPictureBox.BackColor = Color.FromArgb(255, 170, 170, 170);
+                            PeakMeterPictureBox.Width = 0;
+
                         }
                         TruePeakMeterPictureBox.Width = (int)Math.Round(maxValue * widthPerc) - 2;
                         Invalidate();

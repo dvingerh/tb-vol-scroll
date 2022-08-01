@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
@@ -130,8 +131,6 @@ namespace tb_vol_scroll.Classes.Helpers
             }
         }
 
-
-
         public static Size CalculateMinimumBarSize(Label label, string text)
         {
             return label.CreateGraphics().MeasureString(text, label.Font).ToSize();
@@ -151,13 +150,20 @@ namespace tb_vol_scroll.Classes.Helpers
 
         public static Icon GetIconFromResource(string resPath)
         {
-            string[] iconInfo = resPath.Split(',');
-            ExtractIconEx(iconInfo[0], int.Parse(iconInfo[1]), out IntPtr hIcon, IntPtr.Zero, 1);
-            using (Icon tmpIcon = Icon.FromHandle(hIcon))
+            try
             {
-                Icon newIcon = (Icon)tmpIcon.Clone();
-                DestroyIcon(tmpIcon.Handle);
-                return newIcon;
+                string[] iconInfo = resPath.Split(',');
+                ExtractIconEx(iconInfo[0], int.Parse(iconInfo[1]), out IntPtr hIcon, IntPtr.Zero, 1);
+                using (Icon tmpIcon = Icon.FromHandle(hIcon))
+                {
+                    Icon newIcon = (Icon)tmpIcon.Clone();
+                    DestroyIcon(tmpIcon.Handle);
+                    return newIcon;
+                }
+            }
+            catch
+            {
+                return Icon.ExtractAssociatedIcon(Path.Combine(Environment.GetEnvironmentVariable("windir"),@"System32\sndvol.exe"));
             }
         }
 
@@ -196,7 +202,7 @@ namespace tb_vol_scroll.Classes.Helpers
                     if (size.Height <= proposedSize.Height + iconPadding && size.Width <= proposedSize.Width + iconPadding)
                     { return font; }
 
-                    font = new Font(font.Name, font.Size *0.99F, font.Style);
+                    font = new Font(font.Name, font.Size * 0.99F, font.Style);
                 }
             }
             catch { return oldFont; }
