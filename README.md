@@ -1,3 +1,9 @@
+## Notice
+Active development for this script has stagnated. Issues will no longer be actively looked into and no more updates will be made at this time.
+Pull requests can still be made but there will be no more version bumps. 
+
+
+
 [![Run on Repl.it](https://repl.it/badge/github/dvingerh/TbVolScroll)](https://repl.it/github/dvingerh/TbVolScroll) 
 ## tb-vol-scroll 4.1.2
 
