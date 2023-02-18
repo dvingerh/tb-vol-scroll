@@ -97,17 +97,10 @@ namespace tb_vol_scroll.Classes.Helpers
             GetWindowRect(hWnd, out Rectangle shellTrayArea);
 
             bool cursorIsInTaskbarAreaAndTaskbarIsVisible = (className == "Shell_TrayWnd" || className == "Shell_SecondaryTrayWnd");
-            bool cursorIsInTaskbarAreaOnly = false;
-            if (Settings.Default.IgnoreTaskbarVisibility)
-            {
-                int taskbarHeight = shellTrayArea.Height - shellTrayArea.Y;
-                Rectangle workingArea = screen.Bounds;
-                workingArea.Height -= taskbarHeight;
-                if (!workingArea.Contains(position))
-                    cursorIsInTaskbarAreaOnly = true;
-            }
-            else
-                cursorIsInTaskbarAreaOnly = shellTrayArea.Contains(position);
+
+            bool cursorIsInTaskbarAreaOnly = // which .Width is X2, .Height is Y2
+                shellTrayArea.X < position.X && position.X < shellTrayArea.Width
+                && shellTrayArea.Y < position.Y && position.Y < shellTrayArea.Height;
 
             if (Settings.Default.IgnoreTaskbarVisibility)
                 return cursorIsInTaskbarAreaOnly;
