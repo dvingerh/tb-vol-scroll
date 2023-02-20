@@ -1,5 +1,5 @@
 ## Notice
-Active development for this script has stagnated. Issues will no longer be actively looked into and no more updates will be made at this time.
+Active development for this program has stagnated. Issues will no longer be actively looked into and no more updates will be made at this time.
 Pull requests can still be made but there will be no more version bumps. 
 
 
